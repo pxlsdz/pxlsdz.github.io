@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Matlab 中⾮线性规划的标准型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数学规划模型——非线性规划问题">
+<meta property="og:url" content="http://yoursite.com/2020/02/26/%E6%95%B0%E5%AD%A6%E8%A7%84%E5%88%92%E6%A8%A1%E5%9E%8B%E2%80%94%E2%80%94%E9%9D%9E%E7%BA%BF%E6%80%A7%E8%A7%84%E5%88%92%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="pxlsdz的博客">
+<meta property="og:description" content="Matlab 中⾮线性规划的标准型">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200227170054.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200227173858.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200229202832.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200229203058.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200229203233.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200229203215.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200229203248.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200301005419.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200301005440.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200301005800.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200301005729.png">
+<meta property="article:published_time" content="2020-02-26T12:10:37.000Z">
+<meta property="article:modified_time" content="2020-03-01T03:27:42.847Z">
+<meta property="article:author" content="sdz">
+<meta property="article:tag" content="MATLAB">
+<meta property="article:tag" content="数学规划模型">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200227170054.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/02/26/%E6%95%B0%E5%AD%A6%E8%A7%84%E5%88%92%E6%A8%A1%E5%9E%8B%E2%80%94%E2%80%94%E9%9D%9E%E7%BA%BF%E6%80%A7%E8%A7%84%E5%88%92%E9%97%AE%E9%A2%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>数学规划模型——非线性规划问题 | pxlsdz的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">pxlsdz的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">分享，笔记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">32</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">17</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">52</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+  </div>
+</div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/pxlsdz" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/26/%E6%95%B0%E5%AD%A6%E8%A7%84%E5%88%92%E6%A8%A1%E5%9E%8B%E2%80%94%E2%80%94%E9%9D%9E%E7%BA%BF%E6%80%A7%E8%A7%84%E5%88%92%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="sdz">
+      <meta itemprop="description" content="个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pxlsdz的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数学规划模型——非线性规划问题
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-26 20:10:37" itemprop="dateCreated datePublished" datetime="2020-02-26T20:10:37+08:00">2020-02-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-01 11:27:42" itemprop="dateModified" datetime="2020-03-01T11:27:42+08:00">2020-03-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/" itemprop="url" rel="index"><span itemprop="name">数学建模</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/02/26/%E6%95%B0%E5%AD%A6%E8%A7%84%E5%88%92%E6%A8%A1%E5%9E%8B%E2%80%94%E2%80%94%E9%9D%9E%E7%BA%BF%E6%80%A7%E8%A7%84%E5%88%92%E9%97%AE%E9%A2%98/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/02/26/%E6%95%B0%E5%AD%A6%E8%A7%84%E5%88%92%E6%A8%A1%E5%9E%8B%E2%80%94%E2%80%94%E9%9D%9E%E7%BA%BF%E6%80%A7%E8%A7%84%E5%88%92%E9%97%AE%E9%A2%98/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>9.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>9 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Matlab-中⾮线性规划的标准型"><a href="#Matlab-中⾮线性规划的标准型" class="headerlink" title="Matlab 中⾮线性规划的标准型"></a>Matlab 中⾮线性规划的标准型</h1><a id="more"></a>
+<p>$$<br>min \ f(x) \<br>\ \<br>s.t. \ \begin{cases}<br> &amp; \text{} AX&lt;=b,Aeq*x=beq \quad 线性约束\<br> &amp; \text{} c(x)&lt;=0,ceg(x)=0\quad 非线性约束 \<br> &amp; \text{}lb&lt;=x&lt;=ub \quad 上下界约束(也可以当成不等式约束)<br>\end{cases}<br>$$</p>
+<h1 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h1><p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200227170054.png" alt=""></p>
+<h1 id="Matlab求解⾮线性规划的函数"><a href="#Matlab求解⾮线性规划的函数" class="headerlink" title="Matlab求解⾮线性规划的函数"></a>Matlab求解⾮线性规划的函数</h1><p>[x,fval] = fmincon(@fun,x0,A,b,Aeq,beq,lb,ub,@nonlfun,option)</p>
+<ol>
+<li><p>⾮线性规划中对于初始值 x0 的选取⾮常重要 , 因为⾮线性规划的算法求解出来的 是⼀个局部优解 。 (线性规划不存在这个问题 )</p>
+</li>
+<li><p>如果要求全局优解! 有两种思路 : </p>
+<ul>
+<li>给定不同的初始值 , 在⾥⾯找到⼀个优解 ;</li>
+<li>先⽤蒙特卡罗模拟, 得到⼀个蒙特卡罗解 , 然后将这个解作为初始值来求优解 </li>
+</ul>
+</li>
+<li><p>“option” 选项可以给定求解的算法, ⼀共有四种 :</p>
+<ul>
+<li><p>interior.point (内点法)  </p>
+</li>
+<li><p>sqp(序列⼆次规划法) </p>
+</li>
+<li><p>active.set (有效集法) </p>
+</li>
+<li><p>trust-region.reflective (信赖域 反射算法) 。</p>
+</li>
+</ul>
+</li>
+<li><p>不同的算法有其各⾃的优缺点和适⽤情况 , 我们可以改变求解的算法来看求解的结果是否变好了 。 如何改变求解的算法请参考代码演示 。 (数模⽐赛中可以都尝试 下, 这可以体现出稳健性, 也是你的优点) </p>
+</li>
+<li><p>“@fun” 表示⽬标函数<br>我们要编写⼀个独⽴的 m ⽂件来存⽬标函数 :</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span> = <span class="title">fun</span> <span class="params">( x)</span> </span></span><br><span class="line">    f=...</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>注 fun 可以任意取名 ,  只 要符合 Matlab 命名规范 , 保存的m ⽂件 也是这个名 。</li>
+<li>f 也可以任意取名, 但返回的 f 和 函数内部的f得 完全⼀致; </li>
+<li>这⾥的x实际上是表示决策变量的向量 ,其行列方向取决于初始值。 </li>
+<li>调⽤函数 : fmincon(@fun,…) 求解 。</li>
+</ul>
+</li>
+<li><p>“ @nonlfun “ 表示⾮线性部分的约束 , 我们同样得编写⼀个独⽴的 m ⽂件储存非线性约束条件 : </p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200227173858.png" alt=""></p>
+<ul>
+<li>nonlfun 同样可任意取名 , 别和上⾯的fun相同即可, 保存的m文件也得是  这个 名字。 </li>
+<li>c,ceq中可能有多个约束 因此我们写成<strong>列向量</strong>的形式 ;</li>
+<li>若不存在⾮线性不等式约束 , 则可以令 C = [] </li>
+<li>调⽤函数 fmincon(…….,@nonlfun.options) 求解 。 </li>
+</ul>
+</li>
+<li><p>注意要把下标改写为扩号 , 例如$f=x_{1}^2+3x_{2}$名 写成 Matlab 能识别的就应该为 : $f=x(1)^2+3*x(2)$</p>
+</li>
+<li><p>若 不存在某种约束 , 则 可⽤ “ [] “替代 , 若后⾯全为 “[ ] “ 且 不指定option(使⽤默认的求解⽅法) , 则”[]”也可以省略掉 。</p>
+</li>
+</ol>
+<h1 id="练习题代码"><a href="#练习题代码" class="headerlink" title="练习题代码"></a>练习题代码</h1><h2 id="code-m"><a href="#code-m" class="headerlink" title="code.m"></a>code.m</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">% 非线性规划的函数</span></span><br><span class="line"><span class="comment">% [x,fval] = fmincon(@fun,x0,A,b,Aeq,beq,lb,ub,@nonlfun,option)</span></span><br><span class="line"><span class="comment">% x0表示给定的初始值（用行向量或者列向量表示），必须得写</span></span><br><span class="line"><span class="comment">% A b表示线性不等式约束</span></span><br><span class="line"><span class="comment">% Aeq beq 表示线性等式约束</span></span><br><span class="line"><span class="comment">% lb ub 表示上下界约束</span></span><br><span class="line"><span class="comment">% @fun表示目标函数</span></span><br><span class="line"><span class="comment">% @nonlfun表示非线性约束的函数</span></span><br><span class="line"><span class="comment">% option 表示求解非线性规划使用的方法</span></span><br><span class="line">clear;clc</span><br><span class="line">format long g   <span class="comment">%可以将Matlab的计算结果显示为一般的长数字格式（默认会保留四位小数，或使用科学计数法）</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%% 例题1的求解</span></span><br><span class="line"><span class="comment">% max f(x) = x1^2 +x2^2 -x1*x2 -2x1 -5x2</span></span><br><span class="line"><span class="comment">% s.t. -(x1-1)^2 +x2 &gt;= 0 ;  2x1-3x2+6 &gt;= 0</span></span><br><span class="line">x0 = [<span class="number">0</span> <span class="number">0</span>];  <span class="comment">%任意给定一个初始值 </span></span><br><span class="line">A = [<span class="number">-2</span> <span class="number">3</span>]; b = <span class="number">6</span>;</span><br><span class="line">[x,fval] = fmincon(@fun1,x0,A,b,[],[],[],[],@nonlfun1)  <span class="comment">% 注意 fun1.m文件和nonfun1.m文件都必须在当前文件夹目录下</span></span><br><span class="line">fval = -fval</span><br><span class="line"><span class="comment">% 一个值得讨论的地方，能不能把线性不等式约束Ax &lt;= b也写到nonlfun1函数中？</span></span><br><span class="line"><span class="comment">% 先把nonlfun1中的c改为下面这样：</span></span><br><span class="line"><span class="comment">% c = [(x(1)-1)^2-x(2); </span></span><br><span class="line"><span class="comment">%        -2*x(1)+3*x(2)-6];</span></span><br><span class="line"><span class="comment">%  [x,fval] = fmincon(@fun1,x0,[],[],[],[],[],[],@nonlfun1)</span></span><br><span class="line"><span class="comment">% 结果也是可以计算出来的，但并不推荐这样做~</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%% 使用其他算法对例题1求解</span></span><br><span class="line"><span class="comment">% edit fmincon  % 查看fmincon的“源代码”</span></span><br><span class="line"><span class="comment">% Matlab2017a默认使用的算法是'interior-point' 内点法</span></span><br><span class="line"><span class="comment">% 使用interior point算法 （内点法）</span></span><br><span class="line">option = optimoptions(<span class="string">'fmincon'</span>,<span class="string">'Algorithm'</span>,<span class="string">'interior-point'</span>)</span><br><span class="line">[x,fval] = fmincon(@fun1,x0,A,b,[],[],[],[],@nonlfun1,option)  </span><br><span class="line">fval = -fval</span><br><span class="line"><span class="comment">% 使用SQP算法 （序列二次规划法）</span></span><br><span class="line">option = optimoptions(<span class="string">'fmincon'</span>,<span class="string">'Algorithm'</span>,<span class="string">'sqp'</span>)</span><br><span class="line">[x,fval] = fmincon(@fun1,x0,A,b,[],[],[],[],@nonlfun1,option)  </span><br><span class="line">fval = -fval   <span class="comment">%得到-4.358，远远大于内点法得到的-1,猜想是初始值的影响</span></span><br><span class="line"><span class="comment">% 改变初始值试试</span></span><br><span class="line">x0 = [<span class="number">1</span> <span class="number">1</span>];  <span class="comment">%任意给定一个初始值 </span></span><br><span class="line">[x,fval] = fmincon(@fun1,x0,A,b,[],[],[],[],@nonlfun1,option)  <span class="comment">% 最小值为-1，和内点法相同（这说明内点法的适应性要好）</span></span><br><span class="line">fval = -fval  </span><br><span class="line"><span class="comment">% 使用active set算法 （有效集法）</span></span><br><span class="line">option = optimoptions(<span class="string">'fmincon'</span>,<span class="string">'Algorithm'</span>,<span class="string">'active-set'</span>)</span><br><span class="line">[x,fval] = fmincon(@fun1,x0,A,b,[],[],[],[],@nonlfun1,option)</span><br><span class="line">fval = -fval  </span><br><span class="line"><span class="comment">% 使用trust region reflective (信赖域反射算法)</span></span><br><span class="line">option = optimoptions(<span class="string">'fmincon'</span>,<span class="string">'Algorithm'</span>,<span class="string">'trust-region-reflective'</span>)</span><br><span class="line">[x,fval] = fmincon(@fun1,x0,A,b,[],[],[],[],@nonlfun1,option)  </span><br><span class="line">fval = -fval  </span><br><span class="line"><span class="comment">% this algorithm does not solve problems with the constraints you have specified. </span></span><br><span class="line"><span class="comment">% 这说明这个算法不适用我们这个约束条件，所以以后遇到了不能求解的情况，记得更换其他算法试试！！！</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%% 选取初始值得到的结果可能会不满足限定条件，出现了一个Bug 因此选择的初始值很重要</span></span><br><span class="line">x0 = [<span class="number">40.8</span>, <span class="number">10.8</span>];</span><br><span class="line">option = optimoptions(<span class="string">'fmincon'</span>,<span class="string">'Algorithm'</span>,<span class="string">'interior-point'</span>)</span><br><span class="line">[x,fval] = fmincon(@fun1,x0,A,b,[],[],[],[],@nonlfun1,option)  </span><br><span class="line">fval = -fval  </span><br><span class="line"><span class="comment">% https://cn.mathworks.com/help/optim/ug/fmincon.html</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%% 生成不同的随机初始值来优化代码，有一定几率会触发上面那个Bug，因此不推荐</span></span><br><span class="line">n = <span class="number">10</span>;  <span class="comment">% 重复n次</span></span><br><span class="line">Fval = +<span class="built_in">inf</span>; X = [<span class="number">0</span>,<span class="number">0</span>];  <span class="comment">%初始化最优的结果</span></span><br><span class="line">A = [<span class="number">-2</span> <span class="number">3</span>]; b = <span class="number">6</span>;</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:n</span><br><span class="line">    x0 = [<span class="built_in">rand</span>()*<span class="number">10</span> , <span class="built_in">rand</span>()*<span class="number">10</span>];  <span class="comment">%用随机数生成一个初始值（随机数的范围自己根据题目条件设置） </span></span><br><span class="line">    [x,f  al] = fmincon(@fun1,x0,A,b,[],[],[],[],@nonlfun1,option); <span class="comment">% 注意 fun1.m文件和nonfun1.m文件都必须在当前文件夹目录下</span></span><br><span class="line">    <span class="keyword">if</span> fval &lt; Fval  <span class="comment">% 如果找到了更小的值，那么就代替最优的结果</span></span><br><span class="line">        Fval = fval;</span><br><span class="line">        X = x;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">Fval = -Fval</span><br><span class="line">X</span><br><span class="line"></span><br><span class="line"><span class="comment">%% 使用蒙特卡罗的方法来找初始值(推荐）</span></span><br><span class="line">clc,clear;</span><br><span class="line">n=<span class="number">10000000</span>; <span class="comment">%生成的随机数组数</span></span><br><span class="line">x1=unifrnd(<span class="number">-100</span>,<span class="number">100</span>,n,<span class="number">1</span>);  <span class="comment">% 生成在[-100,100]之间均匀分布的随机数组成的n行1列的向量构成x1</span></span><br><span class="line">x2=unifrnd(<span class="number">-100</span>,<span class="number">100</span>,n,<span class="number">1</span>);  <span class="comment">% 生成在[-100,100]之间均匀分布的随机数组成的n行1列的向量构成x2</span></span><br><span class="line">fmin=+<span class="built_in">inf</span>; <span class="comment">% 初始化函数f的最小值为正无穷（后续只要找到一个比它小的我们就对其更新）</span></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:n</span><br><span class="line">    x = [x1(<span class="built_in">i</span>), x2(<span class="built_in">i</span>)];  <span class="comment">%构造x向量, 这里千万别写成了：x =[x1, x2]</span></span><br><span class="line">    <span class="keyword">if</span> ((x(<span class="number">1</span>)<span class="number">-1</span>)^<span class="number">2</span>-x(<span class="number">2</span>)&lt;=<span class="number">0</span>)  &amp; (<span class="number">-2</span>*x1(<span class="built_in">i</span>)+<span class="number">3</span>*x2(<span class="built_in">i</span>)<span class="number">-6</span> &lt;= <span class="number">0</span>)     <span class="comment">% 判断是否满足条件</span></span><br><span class="line">        result = -x(<span class="number">1</span>)^<span class="number">2</span>-x(<span class="number">2</span>)^<span class="number">2</span> +x(<span class="number">1</span>)*x(<span class="number">2</span>)+<span class="number">2</span>*x(<span class="number">1</span>)+<span class="number">5</span>*x(<span class="number">2</span>) ;  <span class="comment">% 如果满足条件就计算函数值</span></span><br><span class="line">        <span class="keyword">if</span>  result  &lt; fmin  <span class="comment">% 如果这个函数值小于我们之前计算出来的最小值</span></span><br><span class="line">            fmin = result;  <span class="comment">% 那么就更新这个函数值为新的最小值</span></span><br><span class="line">            x0 = x;  <span class="comment">% 并且将此时的x1 x2更新为初始值</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="built_in">disp</span>(<span class="string">'蒙特卡罗选取的初始值为：'</span>); <span class="built_in">disp</span>(x0)</span><br><span class="line">A = [<span class="number">-2</span> <span class="number">3</span>]; b = <span class="number">6</span>;</span><br><span class="line">[x,fval] = fmincon(@fun1,x0,A,b,[],[],[],[],@nonlfun1)</span><br><span class="line">fval = -fval  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">%% 例题二的求解</span></span><br><span class="line">x0 = [<span class="number">1</span> <span class="number">1</span> <span class="number">1</span>];  <span class="comment">%任意给定一个初始值 </span></span><br><span class="line">lb = [<span class="number">0</span> <span class="number">0</span> <span class="number">0</span>];  <span class="comment">% 决策变量的下界</span></span><br><span class="line">[x,fval] = fmincon(@fun2,x0,[],[],[],[],lb,[],@nonlfun2)  <span class="comment">% 注意 fun2.m文件和nonfun2.m文件都必须在当前文件夹目录下</span></span><br><span class="line"><span class="comment">% x =</span></span><br><span class="line"><span class="comment">%          0.552167405729277          1.20325915507969         0.947824046150443</span></span><br><span class="line"><span class="comment">% fval =</span></span><br><span class="line"><span class="comment">%           10.6510918606939</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">%% 使用蒙特卡罗的方法来找初始值(推荐）</span></span><br><span class="line">clc,clear;</span><br><span class="line">n=<span class="number">1000000</span>; <span class="comment">%生成的随机数组数</span></span><br><span class="line">x1= unifrnd(<span class="number">0</span>,<span class="number">2</span>,n,<span class="number">1</span>);   <span class="comment">% 生成在[0,2]之间均匀分布的随机数组成的n行1列的向量构成x1</span></span><br><span class="line">x2 = <span class="built_in">sqrt</span>(<span class="number">2</span>-x1);  <span class="comment">% 根据非线性等式约束用x1计算出x2</span></span><br><span class="line">x3 = <span class="built_in">sqrt</span>((<span class="number">3</span>-x2)/<span class="number">2</span>); <span class="comment">% 根据非线性等式约束用x2计算出x3</span></span><br><span class="line">fmin=+<span class="built_in">inf</span>; <span class="comment">% 初始化函数f的最小值为正无穷（后续只要找到一个比它小的我们就对其更新）</span></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:n</span><br><span class="line">    x = [x1(<span class="built_in">i</span>), x2(<span class="built_in">i</span>), x3(<span class="built_in">i</span>)];  <span class="comment">%构造x向量, 这里千万别写成了：x =[x1, x2, x3]</span></span><br><span class="line">    <span class="keyword">if</span> (-x(<span class="number">1</span>)^<span class="number">2</span>+x(<span class="number">2</span>)-x(<span class="number">3</span>)^<span class="number">2</span>&lt;=<span class="number">0</span>) &amp; (x(<span class="number">1</span>)+x(<span class="number">2</span>)^<span class="number">2</span>+x(<span class="number">3</span>)^<span class="number">2</span><span class="number">-20</span>&lt;=<span class="number">0</span>)   <span class="comment">% 判断是否满足条件</span></span><br><span class="line">        result =sum(x.*x) + <span class="number">8</span> ;  <span class="comment">% 如果满足条件就计算函数值</span></span><br><span class="line">        <span class="keyword">if</span>  result  &lt; fmin  <span class="comment">% 如果这个函数值小于我们之前计算出来的最小值</span></span><br><span class="line">            fmin = result;  <span class="comment">% 那么就更新这个函数值为新的最小值</span></span><br><span class="line">            x0 = x;  <span class="comment">% 并且将此时的x1 x2 x3更新为初始值</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="built_in">disp</span>(<span class="string">'蒙特卡罗选取的初始值为：'</span>); <span class="built_in">disp</span>(x0)</span><br><span class="line">lb = [<span class="number">0</span> <span class="number">0</span> <span class="number">0</span>];  <span class="comment">% 决策变量的下界</span></span><br><span class="line">[x,fval] = fmincon(@fun2,x0,[],[],[],[],lb,[],@nonlfun2)  <span class="comment">% 注意 fun2.m文件和nonfun2.m文件都必须在当前文件夹目录下</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%% 例题三的求解(蒙特卡罗模拟那一讲的例题)</span></span><br><span class="line">clear;clc</span><br><span class="line"><span class="comment">% 蒙特卡罗模拟得到的最大值为3445.6014</span></span><br><span class="line"><span class="comment">% 最大值处x1 x2 x3的取值为：</span></span><br><span class="line"><span class="comment">%           22.5823101903968          12.5823101903968          12.1265223966757</span></span><br><span class="line">A = [<span class="number">1</span> <span class="number">-2</span> <span class="number">-2</span>;  <span class="number">1</span> <span class="number">2</span> <span class="number">2</span>];  b = [<span class="number">0</span> <span class="number">72</span>];</span><br><span class="line">x0 = [ <span class="number">22.58</span>   <span class="number">12.58</span>  <span class="number">12.13</span>];</span><br><span class="line">Aeq = [<span class="number">1</span> <span class="number">-1</span> <span class="number">0</span>]; beq = <span class="number">10</span>;</span><br><span class="line">lb = [-<span class="built_in">inf</span> <span class="number">10</span> -<span class="built_in">inf</span>];  ub = [<span class="built_in">inf</span> <span class="number">20</span> <span class="built_in">inf</span>];  </span><br><span class="line">[x,fval] = fmincon(@fun3,x0,A,b,Aeq,beq,lb,ub,[])  <span class="comment">% 注意没有非线性约束，所以这里可以用[]替代，或者干脆不写</span></span><br><span class="line">fval = -fval</span><br></pre></td></tr></table></figure>
+
+<p>fun1.m</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span> = <span class="title">fun1</span><span class="params">(x)</span></span></span><br><span class="line">    <span class="comment">% 注意：这里的f实际上就是目标函数，函数的返回值也是f</span></span><br><span class="line">    <span class="comment">% 输入值x实际上就是决策变量，由x1和x2组成的向量</span></span><br><span class="line">    <span class="comment">% fun1是函数名称，到时候会被fmincon函数调用, 可以任意取名</span></span><br><span class="line">    <span class="comment">% 保存的m文件和函数名称得一致，也要为fun1.m</span></span><br><span class="line"><span class="comment">%      max  f(x) = x1^2 +x2^2 -x1*x2 -2x1 -5x2</span></span><br><span class="line">    f = -x(<span class="number">1</span>)^<span class="number">2</span>-x(<span class="number">2</span>)^<span class="number">2</span> +x(<span class="number">1</span>)*x(<span class="number">2</span>)+<span class="number">2</span>*x(<span class="number">1</span>)+<span class="number">5</span>*x(<span class="number">2</span>) ; </span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>fun2.m</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span> = <span class="title">fun2</span><span class="params">(x)</span></span></span><br><span class="line">    <span class="comment">%     f = x(1)^2+x(2)^2 +x(3)^2+8 ; </span></span><br><span class="line">    f = sum(x.*x) + <span class="number">8</span>;  <span class="comment">% 可别忘了x实际上是一个向量，我们可以使用矩阵的运算符号对其计算</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>fun3.m</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span> = <span class="title">fun3</span><span class="params">(x)</span></span></span><br><span class="line">    f = -prod(x);  <span class="comment">% 可别忘了x实际上是一个向量（prod表示连乘符号，用法和sum类似）</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>nonlfun1.m</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[c,ceq]</span> = <span class="title">nonlfun1</span><span class="params">(x)</span></span></span><br><span class="line">    <span class="comment">% 注意：这里的c实际上就是非线性不等式约束，ceq实际上就是非线性等式约束</span></span><br><span class="line">    <span class="comment">% 输入值x实际上就是决策变量，由x1和x2组成的一个向量</span></span><br><span class="line">    <span class="comment">% 返回值有两个，一个是非线性不等式约束c，一个是非线性等式约束ceq</span></span><br><span class="line">    <span class="comment">% nonlfun1是函数名称，到时候会被fmincon函数调用, 可以任意取名，但不能和目标函数fun1重名</span></span><br><span class="line">    <span class="comment">% 保存的m文件和函数名称得一致，也要为nonlfun1.m</span></span><br><span class="line"><span class="comment">%     -(x1-1)^2 +x2 &gt;= 0 </span></span><br><span class="line">   c = [(x(<span class="number">1</span>)<span class="number">-1</span>)^<span class="number">2</span>-x(<span class="number">2</span>)];   <span class="comment">% 千万別写成了: (x1-1)^2 -x2</span></span><br><span class="line">   ceq = [];  <span class="comment">% 不存在非线性等式约束，所以用[]表示</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>nonlfun2.m</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[c,ceq]</span> = <span class="title">nonlfun2</span><span class="params">(x)</span></span></span><br><span class="line">    <span class="comment">% 非线性不等式约束</span></span><br><span class="line">    c = [-x(<span class="number">1</span>)^<span class="number">2</span>+x(<span class="number">2</span>)-x(<span class="number">3</span>)^<span class="number">2</span>;   <span class="comment">% 一定要注意写法的规范，再次强调这里的x是一个向量！不能把x(1)写成x1</span></span><br><span class="line">            x(<span class="number">1</span>)+x(<span class="number">2</span>)^<span class="number">2</span>+x(<span class="number">3</span>)^<span class="number">2</span><span class="number">-20</span>];</span><br><span class="line">    <span class="comment">% 非线性等式约束</span></span><br><span class="line">    ceq = [-x(<span class="number">1</span>)-x(<span class="number">2</span>)^<span class="number">2</span>+<span class="number">2</span>;</span><br><span class="line">                x(<span class="number">2</span>)+<span class="number">2</span>*x(<span class="number">3</span>)^<span class="number">2</span><span class="number">-3</span>]; </span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="典型例题"><a href="#典型例题" class="headerlink" title="典型例题"></a>典型例题</h1><h2 id="选址问题"><a href="#选址问题" class="headerlink" title="选址问题"></a>选址问题</h2><p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200229202832.png" alt=""></p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200229203058.png" alt=""></p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200229203233.png" alt=""></p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200229203215.png" alt=""></p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200229203248.png" alt=""></p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">%% 选址问题</span></span><br><span class="line">clear;clc</span><br><span class="line">format long g   <span class="comment">%可以将Matlab的计算结果显示为一般的长数字格式（默认会保留四位小数，或使用科学计数法）</span></span><br><span class="line"><span class="comment">% % (1) 系数向量（原来线性规划问题的写法,我们只需要在此基础上改动一点就可以了）</span></span><br><span class="line"><span class="comment">% a=[1.25  8.75  0.5  5.75  3  7.25];  % 工地的横坐标</span></span><br><span class="line"><span class="comment">% b=[1.25  0.75  4.75	5  6.5  7.25];   % 工地的纵坐标</span></span><br><span class="line"><span class="comment">% x = [5  2];  % 料场的横坐标</span></span><br><span class="line"><span class="comment">% y = [1  7];  % 料场的纵坐标</span></span><br><span class="line"><span class="comment">% c = [];  % 初始化用来保存工地和料场距离的向量 (这个向量就是我们的系数向量）</span></span><br><span class="line"><span class="comment">% for  j =1:2</span></span><br><span class="line"><span class="comment">%     for i = 1:6</span></span><br><span class="line"><span class="comment">%         c = [c;  sqrt( (a(i)-x(j))^2 + (b(i)-y(j))^2)];  % 每循环一次就在c的末尾插入新的元素</span></span><br><span class="line"><span class="comment">%     end</span></span><br><span class="line"><span class="comment">% end</span></span><br><span class="line"><span class="comment">% (2) 不等式约束</span></span><br><span class="line">A =<span class="built_in">zeros</span>(<span class="number">2</span>,<span class="number">16</span>);  <span class="comment">% 注意这里要改成16</span></span><br><span class="line">A(<span class="number">1</span>,<span class="number">1</span>:<span class="number">6</span>) = <span class="number">1</span>;</span><br><span class="line">A(<span class="number">2</span>,<span class="number">7</span>:<span class="number">12</span>) = <span class="number">1</span>;</span><br><span class="line">b = [<span class="number">20</span>,<span class="number">20</span>]';</span><br><span class="line"><span class="comment">% (3) 等式约束</span></span><br><span class="line">Aeq = <span class="built_in">zeros</span>(<span class="number">6</span>,<span class="number">16</span>);  <span class="comment">% 注意这里要改成16</span></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:<span class="number">6</span></span><br><span class="line">    Aeq(<span class="built_in">i</span>,<span class="built_in">i</span>) = <span class="number">1</span>;  Aeq(<span class="built_in">i</span>,<span class="built_in">i</span>+<span class="number">6</span>) = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">beq = [<span class="number">3</span> <span class="number">5</span> <span class="number">4</span> <span class="number">7</span> <span class="number">6</span> <span class="number">11</span>]';  <span class="comment">% 每个工地的日需求量</span></span><br><span class="line"><span class="comment">%（4）上下界</span></span><br><span class="line">lb = <span class="built_in">zeros</span>(<span class="number">16</span>,<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">% 进行求解</span></span><br><span class="line">x0 = [<span class="number">3</span> <span class="number">5</span> <span class="number">0</span> <span class="number">7</span> <span class="number">0</span> <span class="number">1</span> <span class="number">0</span> <span class="number">0</span> <span class="number">4</span> <span class="number">0</span> <span class="number">6</span> <span class="number">10</span> <span class="number">5</span> <span class="number">1</span> <span class="number">2</span> <span class="number">7</span>];  <span class="comment">% 用第一问的结果作为初始值</span></span><br><span class="line">[x,fval] = fmincon(@fun5,x0,A,b,Aeq,beq,lb)  <span class="comment">% 注意没有非线性约束，所以这里可以用[]替代，或者干脆不写</span></span><br><span class="line"><span class="built_in">reshape</span>(x(<span class="number">1</span>:<span class="number">12</span>),<span class="number">6</span>,<span class="number">2</span>)  <span class="comment">% 将x的前12个元素变为6行2列便于观察（reshape函数是按照列的顺序进行转换的，也就是第一列读完，读第二列，即x1对应x_1,1，x2对应x_2,1）</span></span><br><span class="line"><span class="comment">% 新坐标（5.74，4.99） （7.25，7.25）</span></span><br><span class="line"><span class="comment">% fval =</span></span><br><span class="line"><span class="comment">%           89.9231692432933</span></span><br><span class="line"><span class="comment">% 第一问的fval =</span></span><br><span class="line"><span class="comment">%           135.281541790676</span></span><br><span class="line"><span class="number">135.281541790676</span> - <span class="number">89.9231692432933</span>  <span class="comment">%  45.3583725473827</span></span><br></pre></td></tr></table></figure>
+
+<p>fun5.m</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span> = <span class="title">fun5</span><span class="params">(xx)</span>  % 注意为了避免和下面的<span class="title">x</span>同号，我们把决策变量的向量符号用<span class="title">xx</span>表示（注意<span class="title">xx</span>的长度为16）</span></span><br><span class="line">    a=[<span class="number">1.25</span>  <span class="number">8.75</span>  <span class="number">0.5</span>  <span class="number">5.75</span>  <span class="number">3</span>  <span class="number">7.25</span>];  <span class="comment">% 工地的横坐标</span></span><br><span class="line">    b=[<span class="number">1.25</span>  <span class="number">0.75</span>  <span class="number">4.75</span>	<span class="number">5</span>  <span class="number">6.5</span>  <span class="number">7.25</span>];   <span class="comment">% 工地的纵坐标</span></span><br><span class="line">    x = [xx(<span class="number">13</span>)  xx(<span class="number">15</span>)];  <span class="comment">% 新料场的横坐标</span></span><br><span class="line">    y = [xx(<span class="number">14</span>)  xx(<span class="number">16</span>)];  <span class="comment">% 新料场的纵坐标</span></span><br><span class="line">    c = [];  <span class="comment">% 初始化用来保存工地和料场距离的向量 (这个向量就是我们的系数向量）</span></span><br><span class="line">    <span class="keyword">for</span>  <span class="built_in">j</span> =<span class="number">1</span>:<span class="number">2</span></span><br><span class="line">        <span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:<span class="number">6</span></span><br><span class="line">            c = [c;  <span class="built_in">sqrt</span>( (a(<span class="built_in">i</span>)-x(<span class="built_in">j</span>))^<span class="number">2</span> + (b(<span class="built_in">i</span>)-y(<span class="built_in">j</span>))^<span class="number">2</span>)];  <span class="comment">% 每循环一次就在c的末尾插入新的元素</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="comment">% 下面我们要求吨千米数，注意c是列向量，我们计算非线性规划时给定的初始值x0是行向量</span></span><br><span class="line">    f = xx(<span class="number">1</span>:<span class="number">12</span>) * c;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="飞行管理问题"><a href="#飞行管理问题" class="headerlink" title="飞行管理问题"></a>飞行管理问题</h2><p>（1995年国赛A题）在约10，000米高空的某边长160公里的正方形区域内，经常有若干架飞机作水平飞行。区域内每架飞机的位置和速度均由计算机记录其数据，以便进行飞行管理。当一架欲进入该区域的飞机到达区域边缘，记录其数据后，要立即计算并判断是否会与区域内的飞机发生碰撞。如果会碰撞，则应计算如何调整各架（包括新进入的）飞机飞行方向角，以避免碰撞。现假定条件如下：<br>1）不碰撞的标准为任意两架飞机的距离大于8公里；<br>2）飞机飞行方向角调整的幅度不应超过30度；<br>3）所有飞机飞行速度均为每小时800公里；<br>4）进入该区域的飞机在到达区域边缘时，与区域内飞机的距离应在60公里以上；<br>5）最多需考虑6架飞机；<br>6）不必考虑飞机离开此区域后的状况。</p>
+<p>设该区域4个顶点的坐标为（0，0），（160，0），（160，160），（0，160）。请你对这个避免碰撞的飞行管理问题建立数学模型，列出计算步骤，对以下数据进行计算（方向角误差不超过0.01度），要求飞机飞行方向角调整的幅度尽量小。<br>记录数据为：</p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200301005419.png" alt=""></p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200301005440.png" alt=""></p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200301005800.png" alt=""></p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200301005729.png" alt=""></p>
+<p>code</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">%% 飞行管理问题</span></span><br><span class="line">format long g</span><br><span class="line"><span class="comment">%%  （1）画六架飞机的位置</span></span><br><span class="line">clear;clc</span><br><span class="line"><span class="built_in">figure</span>(<span class="number">1</span>)  <span class="comment">% 生成一个图形</span></span><br><span class="line">box on  <span class="comment">% 显示为封闭的盒子</span></span><br><span class="line"><span class="comment">% 绘制飞机的初始位置</span></span><br><span class="line">data = [<span class="number">150</span>	<span class="number">140</span>	<span class="number">243</span>;</span><br><span class="line">    <span class="number">85</span>	<span class="number">85</span>	<span class="number">236</span>;</span><br><span class="line">    <span class="number">150</span>	<span class="number">155</span>	<span class="number">220.5</span>;</span><br><span class="line">    <span class="number">145</span>	<span class="number">50</span>	<span class="number">159</span>;</span><br><span class="line">    <span class="number">130</span>	<span class="number">150</span>	<span class="number">230</span>;</span><br><span class="line">    <span class="number">0</span>	<span class="number">0</span>	<span class="number">52</span>];</span><br><span class="line"><span class="built_in">plot</span>(data(:,<span class="number">1</span>),data(:,<span class="number">2</span>),<span class="string">'.r'</span>)</span><br><span class="line">axis([<span class="number">0</span> <span class="number">160</span>,<span class="number">0</span>,<span class="number">160</span>]);<span class="comment">% 设置坐标轴刻度范围</span></span><br><span class="line"><span class="built_in">hold</span> on;</span><br><span class="line"><span class="comment">% 在图上标上注释</span></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:<span class="number">6</span></span><br><span class="line">    txt = [<span class="string">'飞机'</span>,num2str(<span class="built_in">i</span>)];</span><br><span class="line">    text(data(<span class="built_in">i</span>,<span class="number">1</span>)+<span class="number">2</span>,data(<span class="built_in">i</span>,<span class="number">2</span>)+<span class="number">2</span>,txt,<span class="string">'FontSize'</span>,<span class="number">8</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="comment">% 把Matlab做出来的图可以导出，然后再放到PPT中画出飞机飞行方向的箭头（就和讲义上的类似）</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%% 求解非线性规划问题</span></span><br><span class="line">x0 = [<span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span>];  <span class="comment">% 初始值</span></span><br><span class="line">lb = -<span class="built_in">pi</span>/<span class="number">6</span>*<span class="built_in">ones</span>(<span class="number">6</span>,<span class="number">1</span>);</span><br><span class="line">ub = <span class="built_in">pi</span>/<span class="number">6</span>*<span class="built_in">ones</span>(<span class="number">6</span>,<span class="number">1</span>);</span><br><span class="line">[x,fval] = fmincon(@fun6,x0,[],[],[],[],lb,ub,@nonlfun6)</span><br><span class="line">x = x * <span class="number">180</span> / <span class="built_in">pi</span>    <span class="comment">% 将弧度转换为度数</span></span><br><span class="line"><span class="comment">% 定义一：fval = 3.7315° </span></span><br><span class="line"><span class="comment">% 定义二:  fval = 6.9547((°)^2)</span></span><br></pre></td></tr></table></figure>
+
+<p>nonlfun.m</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[c,ceq]</span> = <span class="title">nonlfun6</span><span class="params">(delta)</span>   % 决策变量<span class="title">delta</span>为六架飞机调整的角度</span></span><br><span class="line">     x = [<span class="number">150</span> <span class="number">85</span> <span class="number">150</span> <span class="number">145</span> <span class="number">130</span>  <span class="number">0</span>]; <span class="comment">% 飞机初始位置的横坐标</span></span><br><span class="line">     y = [<span class="number">140</span> <span class="number">85</span> <span class="number">155</span>  <span class="number">50</span> <span class="number">150</span>  <span class="number">0</span>]; <span class="comment">% 飞机初始位置的纵坐标</span></span><br><span class="line">     theta = [<span class="number">243</span> <span class="number">236</span> <span class="number">220.5</span> <span class="number">159</span> <span class="number">230</span> <span class="number">52</span>] * <span class="built_in">pi</span> / <span class="number">180</span>; <span class="comment">% 飞机初始的飞行方向角 </span></span><br><span class="line">     v = <span class="number">800</span>;  <span class="comment">% 飞机速度</span></span><br><span class="line">     co = <span class="built_in">cos</span>(theta + delta);  <span class="comment">% 包含6个元素的向量</span></span><br><span class="line">     si = <span class="built_in">sin</span>(theta + delta);  <span class="comment">% 包含6个元素的向量</span></span><br><span class="line">     <span class="comment">% 下面开始计算飞机i和j之间的最短距离（只需要计算矩阵的一半即可）</span></span><br><span class="line">     d = <span class="built_in">zeros</span>(<span class="number">6</span>);  <span class="comment">% 初始化飞机两两之间的最短距离矩阵</span></span><br><span class="line">     <span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">2</span>: <span class="number">6</span></span><br><span class="line">         <span class="keyword">for</span> <span class="built_in">j</span> = <span class="number">1</span>: <span class="built_in">i</span><span class="number">-1</span></span><br><span class="line">             <span class="comment">% 套用我们推导出来的公式计算飞机i和飞机j相距最近的时间</span></span><br><span class="line">             fenzi = ((y(<span class="built_in">j</span>)-y(<span class="built_in">i</span>))*(si(<span class="built_in">j</span>)-si(<span class="built_in">i</span>)) +(x(<span class="built_in">j</span>)-x(<span class="built_in">i</span>))*(co(<span class="built_in">j</span>)-co(<span class="built_in">i</span>))) ;  <span class="comment">% 分子</span></span><br><span class="line">             fenmu =  v * ((co(<span class="built_in">j</span>)-co(<span class="built_in">i</span>))^<span class="number">2</span> + (si(<span class="built_in">j</span>)-si(<span class="built_in">i</span>))^<span class="number">2</span>);  <span class="comment">% 分母</span></span><br><span class="line">             t(<span class="built_in">i</span>,<span class="built_in">j</span>) =- fenzi / fenmu;</span><br><span class="line">             <span class="keyword">if</span> t(<span class="built_in">i</span>,<span class="built_in">j</span>) &lt;<span class="number">0</span>  </span><br><span class="line">                 d(<span class="built_in">i</span>, <span class="built_in">j</span>) = <span class="number">1000</span>; <span class="comment">% 此时最初的位置就是相距最近的点，因为最初的时候所有飞机两两之间的距离就大于8，因此未来绝不会相撞，我们令它们的距离为一个特别大的数</span></span><br><span class="line">             <span class="keyword">else</span></span><br><span class="line">                 d(<span class="built_in">i</span>, <span class="built_in">j</span>) = <span class="built_in">sqrt</span>((x(<span class="built_in">j</span>)-x(<span class="built_in">i</span>)+v*t(<span class="built_in">i</span>,<span class="built_in">j</span>)*(co(<span class="built_in">j</span>)-co(<span class="built_in">i</span>)))^<span class="number">2</span>+(y(<span class="built_in">j</span>)-y(<span class="built_in">i</span>)+v*t(<span class="built_in">i</span>,<span class="built_in">j</span>)*(si(<span class="built_in">j</span>)-si(<span class="built_in">i</span>)))^<span class="number">2</span>); </span><br><span class="line">             <span class="keyword">end</span> </span><br><span class="line">         <span class="keyword">end</span></span><br><span class="line">     <span class="keyword">end</span></span><br><span class="line">     <span class="comment">% 非线性不等式约束</span></span><br><span class="line">     c =<span class="built_in">ones</span>(<span class="number">15</span>,<span class="number">1</span>)*<span class="number">8.000001</span> - [d(<span class="number">2</span>,<span class="number">1</span>); d(<span class="number">3</span>,<span class="number">1</span>:<span class="number">2</span>)'; d(<span class="number">4</span>,<span class="number">1</span>:<span class="number">3</span>)'; d(<span class="number">5</span>,<span class="number">1</span>:<span class="number">4</span>)'; d(<span class="number">6</span>,<span class="number">1</span>:<span class="number">5</span>)'];  </span><br><span class="line">     <span class="comment">% 12个非线性不等式约束: “最短距离&gt;8” 等价于 “8 - 最短距离&lt;0”</span></span><br><span class="line">     <span class="comment">% 注意： 由于Matlab标准型中取的是小于等于号，因此这里取一个比8略大的数：8.000001-最短距离&lt;=0 </span></span><br><span class="line">     ceq = [];  <span class="comment">% 没有非线性等式约束</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>fun.m</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span> = <span class="title">fun6</span><span class="params">(delta)</span>   % 决策变量<span class="title">delta</span>为六架飞机调整的角度</span></span><br><span class="line">   <span class="comment">%         f =sum(abs(delta)) * 180 /  pi;   % 目标函数第一种定义：绝对值的和（将弧度转换为度数）</span></span><br><span class="line">  f = sum(delta .* delta) * (<span class="number">180</span> /  <span class="built_in">pi</span>)^<span class="number">2</span>;  <span class="comment">% 目标函数第二种定义：平方和（将弧度转换为度数）</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+	
+    <div style="text-align:center;color: #ccc;font-size:14px;">
+------------- 本文结束 <i class="fa fa-heart-o"></i> 感谢您的阅读-------------
+</div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>sdz
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2020/02/26/%E6%95%B0%E5%AD%A6%E8%A7%84%E5%88%92%E6%A8%A1%E5%9E%8B%E2%80%94%E2%80%94%E9%9D%9E%E7%BA%BF%E6%80%A7%E8%A7%84%E5%88%92%E9%97%AE%E9%A2%98/" title="数学规划模型——非线性规划问题">http://yoursite.com/2020/02/26/数学规划模型——非线性规划问题/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/MATLAB/" rel="tag"><i class="fa fa-tag"></i> MATLAB</a>
+              <a href="/tags/%E6%95%B0%E5%AD%A6%E8%A7%84%E5%88%92%E6%A8%A1%E5%9E%8B/" rel="tag"><i class="fa fa-tag"></i> 数学规划模型</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/02/26/%E6%95%B0%E5%AD%A6%E8%A7%84%E5%88%92%E6%A8%A1%E5%9E%8B%E2%80%94%E2%80%94%E7%BA%BF%E6%80%A7%E8%A7%84%E5%88%92%E9%97%AE%E9%A2%98/" rel="prev" title="数学规划模型——线性规划问题">
+      <i class="fa fa-chevron-left"></i> 数学规划模型——线性规划问题
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/02/27/%E6%95%B0%E5%AD%A6%E8%A7%84%E5%88%92%E6%A8%A1%E5%9E%8B%E2%80%94%E2%80%94%E6%95%B4%E6%95%B0%E8%A7%84%E5%88%92%E9%97%AE%E9%A2%98/" rel="next" title="数学规划模型——整数规划问题">
+      数学规划模型——整数规划问题 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Matlab-中⾮线性规划的标准型"><span class="nav-number">1.</span> <span class="nav-text">Matlab 中⾮线性规划的标准型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#练习题"><span class="nav-number">2.</span> <span class="nav-text">练习题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Matlab求解⾮线性规划的函数"><span class="nav-number">3.</span> <span class="nav-text">Matlab求解⾮线性规划的函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#练习题代码"><span class="nav-number">4.</span> <span class="nav-text">练习题代码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#code-m"><span class="nav-number">4.1.</span> <span class="nav-text">code.m</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#典型例题"><span class="nav-number">5.</span> <span class="nav-text">典型例题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#选址问题"><span class="nav-number">5.1.</span> <span class="nav-text">选址问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#飞行管理问题"><span class="nav-number">5.2.</span> <span class="nav-text">飞行管理问题</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="sdz"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">sdz</p>
+  <div class="site-description" itemprop="description">个人博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/pxlsdz" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;pxlsdz" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/sdz20172133" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;sdz20172133" rel="noopener" target="_blank"><i class="fa fa-fw fa-codiepie"></i>CSDN</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sdz</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">264k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:01</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='170' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'pAM5gCGYUGBwBF62VmECeV0o-gzGzoHsz',
+      appKey     : 'myehhFCNOsN4ClPFSLov1xKd',
+      placeholder: "欢迎畅所欲言",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : ,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+  <!-- 页面点击小红心 -->
+
+      <script type="text/javascript" src="/js/clicklove.js"></script>
+
+</body>
+</html>

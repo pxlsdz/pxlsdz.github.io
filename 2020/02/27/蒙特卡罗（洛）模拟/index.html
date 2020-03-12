@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="引例布丰投针实验">
+<meta property="og:type" content="article">
+<meta property="og:title" content="蒙特卡罗（洛）模拟">
+<meta property="og:url" content="http://yoursite.com/2020/02/27/%E8%92%99%E7%89%B9%E5%8D%A1%E7%BD%97%EF%BC%88%E6%B4%9B%EF%BC%89%E6%A8%A1%E6%8B%9F/index.html">
+<meta property="og:site_name" content="pxlsdz的博客">
+<meta property="og:description" content="引例布丰投针实验">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200228111554.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/174f04ed9b0a3e2d3259cd4e06d849ee_r.jpg">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200229112918.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200229113257.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200229113321.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200229121057.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200229121137.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200229124042.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200229124115.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200229124153.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200229124305.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200229124322.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200229113852.png">
+<meta property="article:published_time" content="2020-02-27T13:26:53.000Z">
+<meta property="article:modified_time" content="2020-03-03T00:14:20.765Z">
+<meta property="article:author" content="sdz">
+<meta property="article:tag" content="MATLAB">
+<meta property="article:tag" content="蒙特卡罗模拟">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200228111554.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/02/27/%E8%92%99%E7%89%B9%E5%8D%A1%E7%BD%97%EF%BC%88%E6%B4%9B%EF%BC%89%E6%A8%A1%E6%8B%9F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>蒙特卡罗（洛）模拟 | pxlsdz的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">pxlsdz的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">分享，笔记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">32</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">17</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">52</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+  </div>
+</div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/pxlsdz" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/27/%E8%92%99%E7%89%B9%E5%8D%A1%E7%BD%97%EF%BC%88%E6%B4%9B%EF%BC%89%E6%A8%A1%E6%8B%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="sdz">
+      <meta itemprop="description" content="个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pxlsdz的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          蒙特卡罗（洛）模拟
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-27 21:26:53" itemprop="dateCreated datePublished" datetime="2020-02-27T21:26:53+08:00">2020-02-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-03 08:14:20" itemprop="dateModified" datetime="2020-03-03T08:14:20+08:00">2020-03-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/" itemprop="url" rel="index"><span itemprop="name">数学建模</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/02/27/%E8%92%99%E7%89%B9%E5%8D%A1%E7%BD%97%EF%BC%88%E6%B4%9B%EF%BC%89%E6%A8%A1%E6%8B%9F/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/02/27/%E8%92%99%E7%89%B9%E5%8D%A1%E7%BD%97%EF%BC%88%E6%B4%9B%EF%BC%89%E6%A8%A1%E6%8B%9F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>11k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="引例"><a href="#引例" class="headerlink" title="引例"></a>引例</h1><h2 id="布丰投针实验"><a href="#布丰投针实验" class="headerlink" title="布丰投针实验"></a>布丰投针实验</h2><a id="more"></a>
+
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200228111554.png" alt=""></p>
+<p>法国数学家<a href="https://baike.baidu.com/item/布丰" target="_blank" rel="noopener">布丰</a>（1707-1788）最早设计了投针试验。</p>
+<p>这一方法的步骤是：</p>
+<p>1） 取一张白纸，在上面画上许多条间距为a的平行线。</p>
+<p>2） 取一根长度为l（l≤a） 的针，随机地向画有平行直线的纸上掷n次，观察针与直线相交的次数，记为m。</p>
+<p>3）计算针与直线相交的概率．</p>
+<p>18世纪，法国数学家<a href="https://baike.baidu.com/item/布丰" target="_blank" rel="noopener">布丰</a>提出的“投针问题”，记载于布丰1777年出版的著作中：“在平面上画有一组间距为a的<a href="https://baike.baidu.com/item/平行线" target="_blank" rel="noopener">平行线</a>，将一根长度为l（l≤a）的针任意掷在这个平面上，求此针与平行线中任一条相交的<a href="https://baike.baidu.com/item/概率" target="_blank" rel="noopener">概率</a>。”</p>
+<p>布丰本人证明了，这个概率是：<br>$$<br>p=\frac{2l}{\pi a}<br>$$</p>
+<p>(其中π为<a href="https://baike.baidu.com/item/圆周率" target="_blank" rel="noopener">圆周率</a>）</p>
+<p>由于它与π有关，于是人们想到利用投针试验来估计圆周率的值。</p>
+<p>布丰惊奇地发现：有利的扔出与不利的扔出两者次数的比，是一个包含π的表示式．如果针的长度等于a/2，那么有利扔出的<a href="https://baike.baidu.com/item/概率" target="_blank" rel="noopener">概率</a>为1/π．扔的次数越多，由此能求出越为精确的π的值。</p>
+<p>下面是利用这个公式，用概率的方法得到圆周率的近似值的一些资料。</p>
+<table>
+<thead>
+<tr>
+<th align="left">试验者</th>
+<th align="left">时间</th>
+<th align="left">投掷次数</th>
+<th align="left">相交次数</th>
+<th align="left">圆周率估计值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Wolf</td>
+<td align="left">1850年</td>
+<td align="left">5000</td>
+<td align="left">2532</td>
+<td align="left">3.1596</td>
+</tr>
+<tr>
+<td align="left">Smith</td>
+<td align="left">1855年</td>
+<td align="left">3204</td>
+<td align="left">1218.5</td>
+<td align="left">3.1554</td>
+</tr>
+<tr>
+<td align="left">C.De Morgan</td>
+<td align="left">1860年</td>
+<td align="left">600</td>
+<td align="left">382.5</td>
+<td align="left">3.137</td>
+</tr>
+<tr>
+<td align="left"><a href="https://baike.baidu.com/item/Fox" target="_blank" rel="noopener">Fox</a></td>
+<td align="left">1884年</td>
+<td align="left">1030</td>
+<td align="left">489</td>
+<td align="left">3.1595</td>
+</tr>
+<tr>
+<td align="left">Lazzerini</td>
+<td align="left">1901年</td>
+<td align="left">3408</td>
+<td align="left">1808</td>
+<td align="left">3.1415929</td>
+</tr>
+<tr>
+<td align="left">Reina</td>
+<td align="left">1925年</td>
+<td align="left">2520</td>
+<td align="left">859</td>
+<td align="left">3.1795</td>
+</tr>
+</tbody></table>
+<h2 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h2><p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/174f04ed9b0a3e2d3259cd4e06d849ee_r.jpg" alt=""></p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">%%  蒙特卡罗用于布丰投针实验</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%% （1）预备知识</span></span><br><span class="line"><span class="comment">%  rand(m,n)函数产生由在[0,1]之间均匀分布的随机数组成的m行n列的矩阵（或称为数组）。</span></span><br><span class="line"><span class="built_in">rand</span>(<span class="number">5</span>,<span class="number">4</span>)</span><br><span class="line"><span class="comment">%     0.8300    0.1048    0.2396    0.4398</span></span><br><span class="line"><span class="comment">%     0.5663    0.1196    0.8559    0.5817</span></span><br><span class="line"><span class="comment">%     0.9281    0.2574    0.3013    0.9355</span></span><br><span class="line"><span class="comment">%     0.3910    0.3173    0.2108    0.1676</span></span><br><span class="line"><span class="comment">%     0.3645    0.4372    0.8819    0.9232</span></span><br><span class="line"><span class="built_in">rand</span>(<span class="number">3</span>) <span class="comment">% 若只给一个输入，则会生成一个方阵</span></span><br><span class="line"><span class="comment">%     0.1709    0.4951    0.0541</span></span><br><span class="line"><span class="comment">%     0.9374    0.8500    0.6155</span></span><br><span class="line"><span class="comment">%     0.2400    0.3156    0.5741</span></span><br><span class="line"><span class="comment">% a + rand(m,n)*(b-a) 可以输出在[a,b]之间均匀分布的随机数组成的m行n列的矩阵。</span></span><br><span class="line"><span class="number">-2</span> + <span class="built_in">rand</span>(<span class="number">3</span>,<span class="number">2</span>) * (<span class="number">2</span> - (<span class="number">-2</span>))  <span class="comment">% 输出在[-2,2]之间均匀分布的随机数组成的3行2列的矩阵。</span></span><br><span class="line"><span class="comment">%    -1.2743    0.6013</span></span><br><span class="line"><span class="comment">%    -1.3084    0.0766</span></span><br><span class="line"><span class="comment">%     1.5075    0.7563</span></span><br><span class="line"><span class="comment">% a + rand(m,n)*(b-a)等价于unifrnd(a,b,m,n)</span></span><br><span class="line">unifrnd(<span class="number">-2</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">%% （2）代码部分</span></span><br><span class="line">l =  <span class="number">0.520</span>;     <span class="comment">% 针的长度（任意给的）</span></span><br><span class="line">a = <span class="number">1.314</span>;    <span class="comment">% 平行线的宽度(大于针的长度l即可)</span></span><br><span class="line">n = <span class="number">1000000</span>;    <span class="comment">% 做n次投针试验，n越大求出来的pi越准确</span></span><br><span class="line">m = <span class="number">0</span>;    <span class="comment">% 记录针与平行线相交的次数</span></span><br><span class="line">x = <span class="built_in">rand</span>(<span class="number">1</span>, n) * a / <span class="number">2</span> ;   <span class="comment">% 在[0, a/2]内服从均匀分布随机产生n个数， x中每一个元素表示针的中点和最近的一条平行线的距离</span></span><br><span class="line">phi = <span class="built_in">rand</span>(<span class="number">1</span>, n) * <span class="built_in">pi</span>;    <span class="comment">% 在[0, pi]内服从均匀分布随机产生n个数，phi中的每一个元素表示针和最近的一条平行线的夹角</span></span><br><span class="line"><span class="comment">% axis([0,pi, 0,a/2]);   box on;  % 画一个坐标轴的框架，x轴位于0-pi，y轴位于0-a/2， 并打开图形的边框</span></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:n  <span class="comment">% 开始循环，依次看每根针是否和直线相交</span></span><br><span class="line">    <span class="keyword">if</span> x(<span class="built_in">i</span>) &lt;= l / <span class="number">2</span> * <span class="built_in">sin</span>(phi (<span class="built_in">i</span>))     <span class="comment">% 如果针和平行线相交</span></span><br><span class="line">        m = m + <span class="number">1</span>;    <span class="comment">% 那么m就要加1</span></span><br><span class="line"><span class="comment">%         plot(phi(i), x(i), 'r.')   % 模仿书上的那个图，横坐标为phi，纵坐标为x , 用红色的小点进行标记</span></span><br><span class="line"><span class="comment">%         hold on  % 在原来的图形上继续绘制</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">p = m / n;    <span class="comment">% 针和平行线相交出现的频率</span></span><br><span class="line">mypi = (<span class="number">2</span> * l) / (a * p);  <span class="comment">% 我们根据公式计算得到的pi</span></span><br><span class="line"><span class="built_in">disp</span>([<span class="string">'蒙特卡罗方法得到pi为：'</span>, num2str(mypi)])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">%% （3） 由于一次模拟的结果具有偶然性，因此我们可以重复100次后再来求一个平均的pi</span></span><br><span class="line">result = <span class="built_in">zeros</span>(<span class="number">100</span>,<span class="number">1</span>);  <span class="comment">% 初始化保存100次结果的矩阵</span></span><br><span class="line">l =  <span class="number">0.520</span>;     a = <span class="number">1.314</span>;</span><br><span class="line">n = <span class="number">1000000</span>;    </span><br><span class="line"><span class="keyword">for</span> num = <span class="number">1</span>:<span class="number">100</span></span><br><span class="line">    m = <span class="number">0</span>;  </span><br><span class="line">    x = <span class="built_in">rand</span>(<span class="number">1</span>, n) * a / <span class="number">2</span> ;</span><br><span class="line">    phi = <span class="built_in">rand</span>(<span class="number">1</span>, n) * <span class="built_in">pi</span>;</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:n</span><br><span class="line">        <span class="keyword">if</span> x(<span class="built_in">i</span>) &lt;= l / <span class="number">2</span> * <span class="built_in">sin</span>(phi (<span class="built_in">i</span>))</span><br><span class="line">            m = m + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    p = m / n;</span><br><span class="line">    mypi = (<span class="number">2</span> * l) / (a * p);</span><br><span class="line">    result(num) = mypi;  <span class="comment">% 把求出来的myphi保存到结果矩阵中</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">mymeanpi = <span class="built_in">mean</span>(result);  <span class="comment">% 计算result矩阵中保存的100次结果的均值</span></span><br><span class="line"><span class="built_in">disp</span>([<span class="string">'蒙特卡罗方法得到pi为：'</span>, num2str(mymeanpi)])</span><br></pre></td></tr></table></figure>
+
+<h1 id="蒙特卡罗方法概述"><a href="#蒙特卡罗方法概述" class="headerlink" title="蒙特卡罗方法概述"></a>蒙特卡罗方法概述</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>​       蒙特卡罗⽅法⼜称统计模拟法，是⼀种随机模拟⽅法，以概率和统计理论⽅法为基础的⼀种计算⽅法，是使⽤随机数 （或更常⻅的伪随机数）来解决很多计算问题的⽅法。将所求解的问题同⼀定的概率模型相联系，⽤电⼦计算机实现统计模拟或抽样，以获得问题的近似解。为象征性地表明这⼀⽅法的概率统计特征，故借⽤赌城蒙特卡罗命名。</p>
+<h2 id="提出"><a href="#提出" class="headerlink" title="提出"></a>提出</h2><p>​       蒙特卡罗⽅法于20世纪40年代美国在第⼆次世界⼤战中研制原⼦弹的“曼哈顿计划”计划的成员S.M.乌拉姆和J. 冯·诺伊曼⾸先提出。数学家冯·诺伊曼⽤驰名世界的赌城—摩纳哥的Monte Carlo—来命名这种⽅法，为它蒙上了⼀ 层神秘⾊彩。在这之前，蒙特卡罗⽅法就已经存在。1777年，法国Buffon提出⽤投针实验的⽅法求圆周率，这被认 为是蒙特卡罗⽅法的起源。</p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>由⼤数定理可知，当样本容量⾜够⼤时，事件的发⽣频率即为其概率。</p>
+<h2 id="讨论"><a href="#讨论" class="headerlink" title="讨论"></a>讨论</h2><ol>
+<li><p>蒙特卡罗是⼀种算法吗 ?</p>
+<p>算法（Algorithm）是指解题⽅案的准确⽽完整的描述，是⼀系列解决问题的清晰指令。蒙特卡罗准确的来说只是⼀ 种思想，或者是是⼀种⽅法。如果我们所求解的问题与概率模型有⼀定的关联，那么我们就可以使⽤计算机多次模拟事 件发⽣，以获得问题的近似解。从数学建模⻆度来看，⼤家千万别认为蒙特卡罗有⼀个通⽤的代码。每个问题对应的代 码都是不同的，我们分析清楚题⽬后，就要⾃⼰进⾏编写适⽤于这个题⽬的代码。</p>
+</li>
+<li><p>蒙特卡罗与计算机仿真的关系</p>
+<p> 计算机仿真（模拟）早期称为蒙特卡罗⽅法，是⼀⻔利⽤随机数实验求解随机问题的⽅法，其主要应⽤在复杂问题的数 值模拟上。但随着计算机的性能的提⾼以及各种新兴产业的发展，⽬前计算机仿真涉及的内容要⼴得多，例如过程控制、动 画仿真、图像静态模拟等都属于计算机仿真的应⽤（例如⽤计算机模拟原⼦弹爆炸的过程、使⽤计算机⽣成特效⼤⽚等）。 在数学建模中，我们不⽤刻意的去区分两者的区别，⼤家只需要知道如何使⽤计算机对问题进⾏模拟即可。</p>
+</li>
+<li><p>蒙特卡罗与枚举法</p>
+<p>枚举法是我们中学就接触的算法，就是把所有可能发⽣情况都考虑进去，最终计算出来⼀个确定结果。这就与蒙特卡罗 ⽅法的想法很类似，蒙特卡罗法模拟的次数越多，计算的就越准确。由于⽣活中有许多事件发⽣的结果都有⽆限种可能（例如⼀个连续分布的取值）,因此我们不可能枚举出所有的结果，这时候就只能通过蒙特卡罗模拟，将⼀个不确定性的问题转 化成很多个确定性问题，并得到⼀个近似解，因此蒙特卡罗算法也可以看成是枚举法的⼀种变异。</p>
+</li>
+</ol>
+<h2 id="已经学过的例⼦"><a href="#已经学过的例⼦" class="headerlink" title="已经学过的例⼦"></a>已经学过的例⼦</h2><p>第⼀期 视频 (AOL) 第七讲 : 多元回归分析 </p>
+<p>探究内⽣性对回归结果的影响</p>
+<p>第⼀期 视频 (AOL) 番外篇 : 基于熵权法对印的模型的修正 </p>
+<p>信息熵和标准差的关系</p>
+<h1 id="蒙特卡罗⽅法-的应⽤实例"><a href="#蒙特卡罗⽅法-的应⽤实例" class="headerlink" title="蒙特卡罗⽅法 的应⽤实例"></a>蒙特卡罗⽅法 的应⽤实例</h1><h2 id="三⻔问题"><a href="#三⻔问题" class="headerlink" title="三⻔问题"></a>三⻔问题</h2><p>​        你参加⼀档电视节⽬，节⽬组提供了ABC三扇⻔， 主持⼈告诉你，其中⼀扇⻔后边有辆汽⻋，其它两扇⻔ 后是空的。 假如你选择了B⻔，这时，主持⼈打开了C⻔，让你 看到C⻔后什么都没有，然后问你要不要改选A⻔？</p>
+<h2 id="有约束的⾮线性规划问题"><a href="#有约束的⾮线性规划问题" class="headerlink" title="有约束的⾮线性规划问题"></a>有约束的⾮线性规划问题</h2><p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200229112918.png" alt=""></p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200229113257.png" alt=""></p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200229113321.png" alt=""></p>
+<p>代码</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">%%  蒙特卡罗求解有约束的非线性规划问题</span></span><br><span class="line"><span class="comment">% max f(x) = x1*x2*x3</span></span><br><span class="line"><span class="comment">% s.t.</span></span><br><span class="line"><span class="comment">% (1) -x1+2*x2+2*x3&gt;=0</span></span><br><span class="line"><span class="comment">% (2) x1+2*x2+2*x3&lt;=72</span></span><br><span class="line"><span class="comment">% (3) x2&lt;=20 &amp; x2&gt;=10</span></span><br><span class="line"><span class="comment">% (4) x1-x2 == 10</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%% （1）预备知识</span></span><br><span class="line"><span class="comment">%  (1) format long g  可以将Matlab的计算结果显示为一般的长数字格式（默认会保留四位小数，或使用科学计数法）</span></span><br><span class="line"><span class="number">5</span>/<span class="number">7</span></span><br><span class="line"><span class="number">5895</span>*<span class="number">514100</span></span><br><span class="line">format long g</span><br><span class="line"><span class="number">5</span>/<span class="number">7</span></span><br><span class="line"><span class="number">5895</span>*<span class="number">514100</span></span><br><span class="line"><span class="comment">%  (2)unifrnd(a,b,m,n)可以输出在[a,b]之间均匀分布的随机数组成的m行n列的矩阵。(等价于 a + rand(m,n)*(b-a))</span></span><br><span class="line">unifrnd(<span class="number">0</span>,<span class="number">5</span>,<span class="number">4</span>,<span class="number">3</span>)</span><br><span class="line"><span class="comment">%           4.07361843196589          3.16179623112705          4.78753417717149</span></span><br><span class="line"><span class="comment">%            4.5289596853781         0.487702024997048          4.82444267599638</span></span><br><span class="line"><span class="comment">%           0.63493408146753          1.39249109433524         0.788065408387741</span></span><br><span class="line"><span class="comment">%            4.5668792806951          2.73440759602492          4.85296390880308</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%% （2）代码部分</span></span><br><span class="line">clc,clear;</span><br><span class="line">tic <span class="comment">%计算tic和toc中间部分的代码的运行时间</span></span><br><span class="line">n=<span class="number">10000000</span>; <span class="comment">%生成的随机数组数</span></span><br><span class="line">x1=unifrnd(<span class="number">20</span>,<span class="number">30</span>,n,<span class="number">1</span>);  <span class="comment">% 生成在[20,30]之间均匀分布的随机数组成的n行1列的向量构成x1</span></span><br><span class="line">x2=x1 - <span class="number">10</span>;</span><br><span class="line">x3=unifrnd(<span class="number">-10</span>,<span class="number">16</span>,n,<span class="number">1</span>);  <span class="comment">% 生成在[-10,16]之间均匀分布的随机数组成的n行1列的向量构成x3</span></span><br><span class="line">fmax=-<span class="built_in">inf</span>; <span class="comment">% 初始化函数f的最大值为负无穷（后续只要找到一个比它大的我们就对其更新）</span></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:n</span><br><span class="line">    x = [x1(<span class="built_in">i</span>), x2(<span class="built_in">i</span>), x3(<span class="built_in">i</span>)];  <span class="comment">%构造x向量, 这里千万别写成了：x =[x1, x2, x3]</span></span><br><span class="line">    <span class="keyword">if</span> (-x(<span class="number">1</span>)+<span class="number">2</span>*x(<span class="number">2</span>)+<span class="number">2</span>*x(<span class="number">3</span>)&gt;=<span class="number">0</span>)  &amp;  (x(<span class="number">1</span>)+<span class="number">2</span>*x(<span class="number">2</span>)+<span class="number">2</span>*x(<span class="number">3</span>)&lt;=<span class="number">72</span>)     <span class="comment">% 判断是否满足条件</span></span><br><span class="line">        result = x(<span class="number">1</span>)*x(<span class="number">2</span>)*x(<span class="number">3</span>);  <span class="comment">% 如果满足条件就计算函数值</span></span><br><span class="line">        <span class="keyword">if</span>  result  &gt; fmax  <span class="comment">% 如果这个函数值大于我们之前计算出来的最大值</span></span><br><span class="line">            fmax = result;  <span class="comment">% 那么就更新这个函数值为新的最大值</span></span><br><span class="line">            X = x;  <span class="comment">% 并且将此时的x1 x2 x3保存到一个变量中</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="built_in">disp</span>(strcat(<span class="string">'蒙特卡罗模拟得到的最大值为'</span>,num2str(fmax)))</span><br><span class="line"><span class="built_in">disp</span>(<span class="string">'最大值处x1 x2 x3的取值为：'</span>)</span><br><span class="line"><span class="built_in">disp</span>(X)</span><br><span class="line">toc <span class="comment">%计算tic和toc中间部分的代码的运行时间</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">%% （3）缩小范围重新模拟得到更加精确的取值</span></span><br><span class="line">clc,clear;</span><br><span class="line">tic <span class="comment">%计算tic和toc中间部分的代码的运行时间</span></span><br><span class="line">n=<span class="number">10000000</span>; <span class="comment">%生成的随机数组数</span></span><br><span class="line">x1=unifrnd(<span class="number">22</span>,<span class="number">23</span>,n,<span class="number">1</span>);  <span class="comment">% 生成在[22,23]之间均匀分布的随机数组成的n行1列的向量构成x1</span></span><br><span class="line">x2=x1 - <span class="number">10</span>;</span><br><span class="line">x3=unifrnd(<span class="number">11</span>,<span class="number">13</span>,n,<span class="number">1</span>);  <span class="comment">% 生成在[11,13]之间均匀分布的随机数组成的n行1列的向量构成x3</span></span><br><span class="line">fmax=-<span class="built_in">inf</span>; <span class="comment">% 初始化函数f的最大值为负无穷（后续只要找到一个比它大的我们就对其更新）</span></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:n</span><br><span class="line">    x = [x1(<span class="built_in">i</span>), x2(<span class="built_in">i</span>), x3(<span class="built_in">i</span>)];  <span class="comment">%构造x向量, 这里千万别写成了：x =[x1, x2, x3]</span></span><br><span class="line">    <span class="keyword">if</span> (-x(<span class="number">1</span>)+<span class="number">2</span>*x(<span class="number">2</span>)+<span class="number">2</span>*x(<span class="number">3</span>)&gt;=<span class="number">0</span>)  &amp;  (x(<span class="number">1</span>)+<span class="number">2</span>*x(<span class="number">2</span>)+<span class="number">2</span>*x(<span class="number">3</span>)&lt;=<span class="number">72</span>)     <span class="comment">% 判断是否满足条件</span></span><br><span class="line">        result = x(<span class="number">1</span>)*x(<span class="number">2</span>)*x(<span class="number">3</span>);  <span class="comment">% 如果满足条件就计算函数值</span></span><br><span class="line">        <span class="keyword">if</span>  result  &gt; fmax  <span class="comment">% 如果这个函数值大于我们之前计算出来的最大值</span></span><br><span class="line">            fmax = result;  <span class="comment">% 那么就更新这个函数值为新的最大值</span></span><br><span class="line">            X = x;  <span class="comment">% 并且将此时的x1 x2 x3保存到一个变量中</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="built_in">disp</span>(strcat(<span class="string">'蒙特卡罗模拟得到的最大值为'</span>,num2str(fmax)))</span><br><span class="line"><span class="built_in">disp</span>(<span class="string">'最大值处x1 x2 x3的取值为：'</span>)</span><br><span class="line"><span class="built_in">disp</span>(X)</span><br><span class="line">toc <span class="comment">%计算tic和toc中间部分的代码的运行时间</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="书店-买书-问题-0-1-规划-无脑"><a href="#书店-买书-问题-0-1-规划-无脑" class="headerlink" title="书店 买书 问题 ( 0 - 1 规划)(无脑)"></a>书店 买书 问题 ( 0 - 1 规划)(无脑)</h2><p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200229121057.png" alt=""></p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200229121137.png" alt=""></p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">%% 书店买书问题的蒙特卡罗的模拟</span></span><br><span class="line"><span class="comment">%% （1）预备知识</span></span><br><span class="line"><span class="comment">% (1)unique函数: 剔除一个矩阵或者向量的重复值，并将结果按照从小到大的顺序排列  </span></span><br><span class="line"><span class="comment">% adj.	唯一的; 独一无二的   [ju'ni:k]</span></span><br><span class="line">unique([<span class="number">1</span> <span class="number">2</span> <span class="number">5</span>; <span class="number">6</span> <span class="number">8</span> <span class="number">9</span>;<span class="number">2</span> <span class="number">4</span> <span class="number">6</span>])   </span><br><span class="line">unique([<span class="number">5</span> <span class="number">6</span> <span class="number">8</span> <span class="number">8</span> <span class="number">4</span> <span class="number">1</span> <span class="number">6</span> <span class="number">2</span> <span class="number">2</span> <span class="number">4</span> <span class="number">8</span> <span class="number">4</span> <span class="number">5</span> <span class="number">6</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">% (2)randi([a,b],m,n)函数可在指定区间[a,b]内随机取出大小为m*n的整数矩阵</span></span><br><span class="line">randi([<span class="number">-5</span>,<span class="number">5</span>],<span class="number">2</span>,<span class="number">6</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">%% （2）代码求解</span></span><br><span class="line">min_money = +Inf;  <span class="comment">% 初始化最小的花费为无穷大，后续只要找到比它小的就更新</span></span><br><span class="line">min_result = randi([<span class="number">1</span>, <span class="number">6</span>],<span class="number">1</span>,<span class="number">5</span>);  <span class="comment">% 初始化五本书都在哪一家书店购买，后续我们不断对其更新</span></span><br><span class="line"><span class="comment">%若min_result = [5 3 6 2 3]，则解释为：第1本书在第5家店买，第2本书在第3家店买，第3本书在第6家店买，第4本书在第2家店买，第5本书在第3家店买  </span></span><br><span class="line">n = <span class="number">100000</span>;  <span class="comment">% 蒙特卡罗模拟的次数</span></span><br><span class="line">M = [<span class="number">18</span>	 <span class="number">39</span>	<span class="number">29</span>	<span class="number">48</span>	<span class="number">59</span></span><br><span class="line">        <span class="number">24</span>	<span class="number">45</span>	<span class="number">23</span>	<span class="number">54</span>	<span class="number">44</span></span><br><span class="line">        <span class="number">22</span>	<span class="number">45</span>	<span class="number">23</span>	<span class="number">53</span>	<span class="number">53</span></span><br><span class="line">        <span class="number">28</span>	<span class="number">47</span>	<span class="number">17</span>	<span class="number">57</span>	<span class="number">47</span></span><br><span class="line">        <span class="number">24</span>	<span class="number">42</span>	<span class="number">24</span>	<span class="number">47</span>	<span class="number">59</span></span><br><span class="line">        <span class="number">27</span>	<span class="number">48</span>	<span class="number">20</span>	<span class="number">55</span>	<span class="number">53</span>];  <span class="comment">% m_ij  第j本书在第i家店的售价</span></span><br><span class="line">freight = [<span class="number">10</span> <span class="number">15</span> <span class="number">15</span> <span class="number">10</span> <span class="number">10</span> <span class="number">15</span>];  <span class="comment">% 第i家店的运费</span></span><br><span class="line"><span class="keyword">for</span> k = <span class="number">1</span>:n  <span class="comment">% 开始循环</span></span><br><span class="line">    result = k([<span class="number">1</span>, <span class="number">6</span>],<span class="number">1</span>,<span class="number">5</span>); <span class="comment">% 在1-6这些整数中随机抽取一个1*5的向量，表示这五本书分别在哪家书店购买</span></span><br><span class="line">    index = unique(result);  <span class="comment">% 在哪些商店购买了商品，因为我们等下要计算运费</span></span><br><span class="line">    money = sum(freight(index)); <span class="comment">% 计算买书花费的运费</span></span><br><span class="line">    <span class="comment">% 计算总花费：刚刚计算出来的运费 + 五本书的售价</span></span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:<span class="number">5</span>   </span><br><span class="line">        money = money + M(result(<span class="built_in">i</span>),<span class="built_in">i</span>);  </span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">if</span> money &lt; min_money  <span class="comment">% 判断刚刚随机生成的这组数据的花费是否小于最小花费，如果小于的话</span></span><br><span class="line">        min_money = money  <span class="comment">% 我们更新最小的花费</span></span><br><span class="line">        min_result = result <span class="comment">% 用这组数据更新最小花费的结果</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">min_money   <span class="comment">% 18+39+48+17+47+20</span></span><br><span class="line">min_result</span><br></pre></td></tr></table></figure>
+
+<h2 id="导弹追踪问题"><a href="#导弹追踪问题" class="headerlink" title="导弹追踪问题"></a>导弹追踪问题</h2><p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200229124042.png" alt=""></p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200229124115.png" alt=""></p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200229124153.png" alt=""></p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200229124305.png" alt=""></p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200229124322.png" alt=""></p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">%%  蒙特卡罗用于模拟导弹追击问题</span></span><br><span class="line">clear;clc</span><br><span class="line"><span class="comment">%% （1）预备知识</span></span><br><span class="line"><span class="comment">% mod(m,n)表示求m/n的余数</span></span><br><span class="line"><span class="built_in">mod</span>(<span class="number">8</span>,<span class="number">3</span>)</span><br><span class="line"><span class="built_in">mod</span>(<span class="number">1000</span>,<span class="number">50</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">% 设置横纵坐标的范围并标上字符</span></span><br><span class="line">x = <span class="number">1</span>:<span class="number">0.01</span>:<span class="number">3</span>;</span><br><span class="line">y = x .^ <span class="number">2</span>;</span><br><span class="line"><span class="built_in">plot</span>(x,y)  <span class="comment">% 画出x和y的图形</span></span><br><span class="line">axis([<span class="number">0</span> <span class="number">3</span> <span class="number">0</span> <span class="number">10</span>])  <span class="comment">% 设置横坐标范围为[0, 3] 纵坐标范围为[0, 10]</span></span><br><span class="line">pause(<span class="number">3</span>)  <span class="comment">% 暂停3秒后再继续接下来的命令</span></span><br><span class="line">text(<span class="number">2</span>,<span class="number">4</span>,<span class="string">'清风'</span>)  <span class="comment">% 在坐标为(2,4)的点上标上字符串：清风</span></span><br><span class="line">close <span class="comment">% 关闭图形窗口</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">%% (2) 代码求解</span></span><br><span class="line"><span class="comment">% 1. 不画追击的示意图</span></span><br><span class="line">clear;clc</span><br><span class="line">v=<span class="number">200</span>; <span class="comment">% 任意给定B船的速度（后期我们可以再改的）</span></span><br><span class="line">dt=<span class="number">0.0000001</span>; <span class="comment">% 定义时间间隔</span></span><br><span class="line">x=[<span class="number">0</span>,<span class="number">20</span>]; <span class="comment">% 定义导弹和B船的横坐标分别为x(1)和x(2)</span></span><br><span class="line">y=[<span class="number">0</span>,<span class="number">0</span>]; <span class="comment">% 定义导弹和B船的纵坐标分别为y(1)和y(2)</span></span><br><span class="line">t=<span class="number">0</span>; <span class="comment">% 初始化导弹击落B船的时间</span></span><br><span class="line">d=<span class="number">0</span>; <span class="comment">% 初始化导弹飞行的距离</span></span><br><span class="line">m=<span class="built_in">sqrt</span>(<span class="number">2</span>)/<span class="number">2</span>;   <span class="comment">% 将sqrt(2)/2定义为一个常量，使后面看起来很简洁</span></span><br><span class="line">dd=<span class="built_in">sqrt</span>((x(<span class="number">2</span>)-x(<span class="number">1</span>))^<span class="number">2</span>+(y(<span class="number">2</span>)-y(<span class="number">1</span>))^<span class="number">2</span>); <span class="comment">% 导弹与B船的距离</span></span><br><span class="line"><span class="keyword">while</span>(dd&gt;=<span class="number">0.001</span>)  <span class="comment">% 只要两者的距离足够大，就一直循环下去。（两者距离足够小时表示导弹击中，这里的临界值要结合dt来取，否则可能导致错过交界处的情况）</span></span><br><span class="line">    t=t+dt; <span class="comment">% 更新导弹击落B船的时间</span></span><br><span class="line">    d=d+<span class="number">3</span>*v*dt; <span class="comment">% 更新导弹飞行的距离</span></span><br><span class="line">    x(<span class="number">2</span>)=<span class="number">20</span>+t*v*m;  y(<span class="number">2</span>)=t*v*m;   <span class="comment">% 计算新的B船的位置 （注：m=sqrt(2)/2）</span></span><br><span class="line">    dd=<span class="built_in">sqrt</span>((x(<span class="number">2</span>)-x(<span class="number">1</span>))^<span class="number">2</span>+(y(<span class="number">2</span>)-y(<span class="number">1</span>))^<span class="number">2</span>);  <span class="comment">% 更新导弹与B船的距离</span></span><br><span class="line">    tan_alpha=(y(<span class="number">2</span>)-y(<span class="number">1</span>))/(x(<span class="number">2</span>)-x(<span class="number">1</span>));   <span class="comment">% 计算斜率，即tan(α)</span></span><br><span class="line">    cos_alpha=<span class="built_in">sqrt</span>(<span class="number">1</span>/(<span class="number">1</span>+tan_alpha^<span class="number">2</span>));   <span class="comment">% sec(α)^2 = (1+tan(α)^2)</span></span><br><span class="line">    sin_alpha=<span class="built_in">sqrt</span>(<span class="number">1</span>-cos_alpha^<span class="number">2</span>);  <span class="comment">% sin(α)^2 +cos(α)^2 = 1</span></span><br><span class="line">    x(<span class="number">1</span>)=x(<span class="number">1</span>)+<span class="number">3</span>*v*dt*cos_alpha;   y(<span class="number">1</span>)=y(<span class="number">1</span>)+<span class="number">3</span>*v*dt*sin_alpha; <span class="comment">% 计算新的导弹的位置</span></span><br><span class="line">    <span class="keyword">if</span> d&gt;<span class="number">50</span>  <span class="comment">% 导弹的有效射程为50个单位</span></span><br><span class="line">        <span class="built_in">disp</span>(<span class="string">'导弹没有击中B船'</span>);</span><br><span class="line">        <span class="keyword">break</span>;  <span class="comment">% 退出循环</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">if</span> d&lt;=<span class="number">50</span> &amp; dd&lt;<span class="number">0.001</span>   <span class="comment">% 导弹飞行的距离小于50个单位且导弹和B船的距离小于0.001（表示击中）</span></span><br><span class="line">        <span class="built_in">disp</span>([<span class="string">'导弹飞行'</span>,num2str(d),<span class="string">'单位后击中B船'</span>])</span><br><span class="line">        <span class="built_in">disp</span>([<span class="string">'导弹飞行的时间为'</span>,num2str(t*<span class="number">60</span>),<span class="string">'分钟'</span>])</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% 2. 画追击的示意图</span></span><br><span class="line">clear;clc</span><br><span class="line">v=<span class="number">200</span>; <span class="comment">% 任意给定B船的速度（后期我们可以再改的）</span></span><br><span class="line">dt=<span class="number">0.0000001</span>; <span class="comment">% 定义时间间隔</span></span><br><span class="line">x=[<span class="number">0</span>,<span class="number">20</span>]; <span class="comment">% 定义导弹和B船的横坐标分别为x(1)和x(2)</span></span><br><span class="line">y=[<span class="number">0</span>,<span class="number">0</span>]; <span class="comment">% 定义导弹和B船的纵坐标分别为y(1)和y(2)</span></span><br><span class="line">t=<span class="number">0</span>; <span class="comment">% 初始化导弹击落B船的时间</span></span><br><span class="line">d=<span class="number">0</span>; <span class="comment">% 初始化导弹飞行的距离</span></span><br><span class="line">m=<span class="built_in">sqrt</span>(<span class="number">2</span>)/<span class="number">2</span>;   <span class="comment">% 将sqrt(2)/2定义为一个常量，使后面看起来很简洁</span></span><br><span class="line">dd=<span class="built_in">sqrt</span>((x(<span class="number">2</span>)-x(<span class="number">1</span>))^<span class="number">2</span>+(y(<span class="number">2</span>)-y(<span class="number">1</span>))^<span class="number">2</span>); <span class="comment">% 导弹与B船的距离</span></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:<span class="number">2</span></span><br><span class="line">    <span class="built_in">plot</span>(x(<span class="built_in">i</span>),y(<span class="built_in">i</span>),<span class="string">'.k'</span>,<span class="string">'MarkerSize'</span>,<span class="number">1</span>);  <span class="comment">% 画出导弹和B船所在的坐标，点的大小为1，颜色为黑色(k)，用小点表示</span></span><br><span class="line">    grid on;  <span class="comment">% 打开网格线</span></span><br><span class="line">    <span class="built_in">hold</span> on;  <span class="comment">% 不关闭图形，继续画图</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">axis([<span class="number">0</span> <span class="number">30</span> <span class="number">0</span> <span class="number">10</span>])  <span class="comment">% 固定x轴的范围为0-30  固定y轴的范围为0-10</span></span><br><span class="line">k = <span class="number">0</span>;  <span class="comment">% 引入一个变量  为了控制画图的速度（因为Matlab中画图的速度超级慢）</span></span><br><span class="line"><span class="keyword">while</span>(dd&gt;=<span class="number">0.001</span>)  <span class="comment">% 只要两者的距离足够大，就一直循环下去。（两者距离足够小时表示导弹击中，这里的临界值要结合dt来取，否则可能导致错过交界处的情况）</span></span><br><span class="line">    t=t+dt; <span class="comment">% 更新导弹击落B船的时间</span></span><br><span class="line">    d=d+<span class="number">3</span>*v*dt; <span class="comment">% 更新导弹飞行的距离</span></span><br><span class="line">    x(<span class="number">2</span>)=<span class="number">20</span>+t*v*m;  y(<span class="number">2</span>)=t*v*m;   <span class="comment">% 计算新的B船的位置 （注：m=sqrt(2)/2）</span></span><br><span class="line">    dd=<span class="built_in">sqrt</span>((x(<span class="number">2</span>)-x(<span class="number">1</span>))^<span class="number">2</span>+(y(<span class="number">2</span>)-y(<span class="number">1</span>))^<span class="number">2</span>);  <span class="comment">% 更新导弹与B船的距离</span></span><br><span class="line">    tan_alpha=(y(<span class="number">2</span>)-y(<span class="number">1</span>))/(x(<span class="number">2</span>)-x(<span class="number">1</span>));   <span class="comment">% 计算斜率，即tan(α)</span></span><br><span class="line">    cos_alpha=<span class="built_in">sqrt</span>(<span class="number">1</span>/(<span class="number">1</span>+tan_alpha^<span class="number">2</span>));   <span class="comment">% 利用公式：sec(α)^2 = (1+tan(α)^2)  计算出cos(α)</span></span><br><span class="line">    sin_alpha=<span class="built_in">sqrt</span>(<span class="number">1</span>-cos_alpha^<span class="number">2</span>);  <span class="comment">% 利用公式： sin(α)^2 +cos(α)^2 = 1  计算出sin(α)</span></span><br><span class="line">    x(<span class="number">1</span>)=x(<span class="number">1</span>)+<span class="number">3</span>*v*dt*cos_alpha;   y(<span class="number">1</span>)=y(<span class="number">1</span>)+<span class="number">3</span>*v*dt*sin_alpha;   <span class="comment">% 计算新的导弹的位置</span></span><br><span class="line">    k = k +<span class="number">1</span> ;  </span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">mod</span>(k,<span class="number">500</span>) == <span class="number">0</span>   <span class="comment">% 每刷新500次时间就画出下一个导弹和B船所在的坐标  mod(m,n)表示求m/n的余数</span></span><br><span class="line">        <span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:<span class="number">2</span></span><br><span class="line">            <span class="built_in">plot</span>(x(<span class="built_in">i</span>),y(<span class="built_in">i</span>),<span class="string">'.k'</span>,<span class="string">'MarkerSize'</span>,<span class="number">1</span>);</span><br><span class="line">            <span class="built_in">hold</span> on; <span class="comment">% 不关闭图形，继续画图</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        pause(<span class="number">0.001</span>);  <span class="comment">% 暂停0.001s后再继续下面的操作</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">if</span> d&gt;<span class="number">50</span>  <span class="comment">% 导弹的有效射程为50个单位</span></span><br><span class="line">        <span class="built_in">disp</span>(<span class="string">'导弹没有击中B船'</span>);</span><br><span class="line">        <span class="keyword">break</span>;  <span class="comment">% 退出循环</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">if</span> d&lt;=<span class="number">50</span> &amp; dd&lt;<span class="number">0.001</span>   <span class="comment">% 导弹飞行的距离小于50个单位且导弹和B船的距离小于0.001（表示击中）</span></span><br><span class="line">        <span class="built_in">disp</span>([<span class="string">'导弹飞行'</span>,num2str(d),<span class="string">'个单位后击中B船'</span>])</span><br><span class="line">        <span class="built_in">disp</span>([<span class="string">'导弹飞行的时间为'</span>,num2str(t*<span class="number">60</span>),<span class="string">'分钟'</span>])</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h1><h2 id="作业1"><a href="#作业1" class="headerlink" title="作业1"></a>作业1</h2><p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200229113852.png" alt=""></p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">%%  蒙特卡罗求解非线性规划问题</span></span><br><span class="line"><span class="comment">% min f(x) =2*(x1^2)+x2^2-x1*x2-8*x1-3*x2</span></span><br><span class="line"><span class="comment">% s.t.</span></span><br><span class="line"><span class="comment">% (1) 3*x1+x2&gt;9</span></span><br><span class="line"><span class="comment">% (2) x1+2*x2&lt;16</span></span><br><span class="line"><span class="comment">% (3) x1&gt;0 &amp; x2&gt;0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%% （1）初次寻找最小值的代码</span></span><br><span class="line">clc,clear;</span><br><span class="line">format long g   <span class="comment">%可以将Matlab的计算结果显示为一般的长数字格式（默认会保留四位小数，或使用科学计数法）</span></span><br><span class="line">tic <span class="comment">%计算tic和toc中间部分的代码的运行时间</span></span><br><span class="line">n=<span class="number">10000000</span>; <span class="comment">%生成的随机数组数</span></span><br><span class="line">x1=unifrnd(<span class="number">0</span>,<span class="number">16</span>,n,<span class="number">1</span>);  <span class="comment">% 生成在[0,16]之间均匀分布的随机数组成的n行1列的向量构成x1</span></span><br><span class="line">x2=unifrnd(<span class="number">0</span>,<span class="number">8</span>,n,<span class="number">1</span>);  <span class="comment">% 生成在[0,8]之间均匀分布的随机数组成的n行1列的向量构成x2</span></span><br><span class="line">fmin=+<span class="built_in">inf</span>; <span class="comment">% 初始化函数f的最小值为正无穷（后续只要找到一个比它小的我们就对其更新）</span></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:n</span><br><span class="line">    x = [x1(<span class="built_in">i</span>), x2(<span class="built_in">i</span>)];  <span class="comment">%构造x向量, 这里千万别写成了：x =[x1, x2]</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="number">3</span>*x(<span class="number">1</span>)+x(<span class="number">2</span>)&gt;<span class="number">9</span>)  &amp;  (x(<span class="number">1</span>)+<span class="number">2</span>*x(<span class="number">2</span>)&lt;<span class="number">16</span>)     <span class="comment">% 判断是否满足条件</span></span><br><span class="line">        result = <span class="number">2</span>*(x(<span class="number">1</span>)^<span class="number">2</span>)+x(<span class="number">2</span>)^<span class="number">2</span>-x(<span class="number">1</span>)*x(<span class="number">2</span>)<span class="number">-8</span>*x(<span class="number">1</span>)<span class="number">-3</span>*x(<span class="number">2</span>);  <span class="comment">% 如果满足条件就计算函数值</span></span><br><span class="line">        <span class="keyword">if</span>  result  &lt; fmin  <span class="comment">% 如果这个函数值小于我们之前计算出来的最小值</span></span><br><span class="line">            fmin = result;  <span class="comment">% 那么就更新这个函数值为新的最小值</span></span><br><span class="line">            X = x;  <span class="comment">% 并且将此时的x1 x2 保存到相应的变量中</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="built_in">disp</span>(strcat(<span class="string">'蒙特卡罗模拟得到的最小值为'</span>,num2str(fmin)))</span><br><span class="line"><span class="built_in">disp</span>(<span class="string">'最小值处x1 x2的取值为：'</span>)</span><br><span class="line"><span class="built_in">disp</span>(X)</span><br><span class="line">toc <span class="comment">%计算tic和toc中间部分的代码的运行时间</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">%% （2）缩小范围重新模拟得到更加精确的取值</span></span><br><span class="line">clc,clear;</span><br><span class="line">tic <span class="comment">%计算tic和toc中间部分的代码的运行时间</span></span><br><span class="line">n=<span class="number">10000000</span>; <span class="comment">%生成的随机数组数</span></span><br><span class="line">x1=unifrnd(<span class="number">2</span>,<span class="number">3</span>,n,<span class="number">1</span>);  <span class="comment">% 生成在[2,3]之间均匀分布的随机数组成的n行1列的向量构成x1</span></span><br><span class="line">x2=unifrnd(<span class="number">2</span>,<span class="number">3</span>,n,<span class="number">1</span>);  <span class="comment">% 生成在[2,3]之间均匀分布的随机数组成的n行1列的向量构成x2</span></span><br><span class="line">fmin=+<span class="built_in">inf</span>; <span class="comment">% 初始化函数f的最小值为正无穷（后续只要找到一个比它小的我们就对其更新）</span></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:n</span><br><span class="line">    x = [x1(<span class="built_in">i</span>), x2(<span class="built_in">i</span>)];  <span class="comment">%构造x向量, 这里千万别写成了：x =[x1, x2]</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="number">3</span>*x(<span class="number">1</span>)+x(<span class="number">2</span>)&gt;<span class="number">9</span>)  &amp;  (x(<span class="number">1</span>)+<span class="number">2</span>*x(<span class="number">2</span>)&lt;<span class="number">16</span>)     <span class="comment">% 判断是否满足条件</span></span><br><span class="line">        result = <span class="number">2</span>*(x(<span class="number">1</span>)^<span class="number">2</span>)+x(<span class="number">2</span>)^<span class="number">2</span>-x(<span class="number">1</span>)*x(<span class="number">2</span>)<span class="number">-8</span>*x(<span class="number">1</span>)<span class="number">-3</span>*x(<span class="number">2</span>);  <span class="comment">% 如果满足条件就计算函数值</span></span><br><span class="line">        <span class="keyword">if</span>  result  &lt; fmin  <span class="comment">% 如果这个函数值小于我们之前计算出来的最小值</span></span><br><span class="line">            fmin = result;  <span class="comment">% 那么就更新这个函数值为新的最小值</span></span><br><span class="line">            X = x;  <span class="comment">% 并且将此时的x1 x2 保存到相应的变量中</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="built_in">disp</span>(strcat(<span class="string">'蒙特卡罗模拟得到的最小值为'</span>,num2str(fmin)))</span><br><span class="line"><span class="built_in">disp</span>(<span class="string">'最小值处x1 x2的取值为：'</span>)</span><br><span class="line"><span class="built_in">disp</span>(X)</span><br><span class="line">toc <span class="comment">%计算tic和toc中间部分的代码的运行时间</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="作业2"><a href="#作业2" class="headerlink" title="作业2"></a>作业2</h2><p>​       某设备上安装有四只型号规格完全相同的电子管，已知电子管寿命（假定为整数）为1000h~2000h之间的均匀分布.当电子管损坏时有两种维修方案，一是每次更换损坏的那一只；二是当其中一只损坏时四只同时更换.已知更换时间为换一只时需1h，4只同时换为2h.更换时机器因停止运转每小时的损失为20元，又每只电子管价格10元，试用模拟方法决定哪一个方案经济合理？</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">%% 选择决策方案的模拟</span></span><br><span class="line"><span class="comment">% 某设备上安装有四只型号规格完全相同的电子管，已知电子管寿命为1000--2000小时之间的均匀分布(假定为整数)。</span></span><br><span class="line"><span class="comment">% 当电子管损坏时有两种维修方案，一是每次更换损坏的那一只；二是当其中一只损坏时四只同时更换。</span></span><br><span class="line"><span class="comment">% 已知更换时间为换一只时需1小时，4只同时换为2小时。</span></span><br><span class="line"><span class="comment">% 更换时机器因停止运转每小时的损失为20元，又每只电子管价格10元，</span></span><br><span class="line"><span class="comment">% 试用模拟方法决定哪一个方案经济合理？</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%% （1）预备知识</span></span><br><span class="line"><span class="comment">% randi([a,b],m,n)  随机生成m*n的矩阵，矩阵中的每个元素都是[a,b]中的随机整数</span></span><br><span class="line">randi([<span class="number">1</span>, <span class="number">5</span>],<span class="number">3</span>,<span class="number">2</span>)</span><br><span class="line">randi([<span class="number">1</span>, <span class="number">5</span>])  <span class="comment">% 不写m*n代表只生成1个随机数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% find函数的用法</span></span><br><span class="line"><span class="comment">% find函数的用法在第一期视频：层次分析法那一节讲过，我们当时找最大特征值的位置</span></span><br><span class="line">a = [<span class="number">2</span> <span class="number">3</span> <span class="number">5</span> <span class="number">1</span> <span class="number">7</span> <span class="number">5</span>];</span><br><span class="line"><span class="built_in">find</span>(a)  <span class="comment">% 找到a中所有非0元素的位置</span></span><br><span class="line"><span class="built_in">find</span>(a == <span class="number">5</span>)  <span class="comment">% 找到a中等于5的元素的位置</span></span><br><span class="line"><span class="built_in">find</span>(a == <span class="number">5</span>,<span class="number">1</span>)  <span class="comment">% 找到a中第一个等于5的元素的位置</span></span><br><span class="line"><span class="built_in">find</span>(a == <span class="built_in">min</span>(a))   <span class="comment">% 找到a中最小元素的位置</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%% （2）代码部分</span></span><br><span class="line">clear;clc</span><br><span class="line">T = <span class="number">100000000</span>;   <span class="comment">% T表示模拟的总时间（单位为小时）</span></span><br><span class="line">t = <span class="number">0</span>;   <span class="comment">% 初始化当前时刻为0小时</span></span><br><span class="line">c1 = <span class="number">0</span>; c2 = <span class="number">0</span>;  <span class="comment">% 初始化两种方案的总花费都为0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%%  方案一</span></span><br><span class="line">life = randi([<span class="number">1000</span>,<span class="number">2000</span>],<span class="number">1</span>,<span class="number">4</span>);  <span class="comment">% 随机生成四个电子管的寿命，假设为整数</span></span><br><span class="line"><span class="keyword">while</span> t &lt; T  <span class="comment">% 只要现在的时刻没有超过总时刻，就不断循环下去</span></span><br><span class="line">    result = <span class="built_in">min</span>(life);  <span class="comment">% 找出寿命最短的那一个电子管的寿命</span></span><br><span class="line">    t = t+result+<span class="number">1</span>;  <span class="comment">% 现在的时间更改到有电子管损坏的时刻（加上1表示更换电子管需要花费的时间）</span></span><br><span class="line">    c1 = c1 + <span class="number">20</span> * <span class="number">1</span> +<span class="number">10</span>;  <span class="comment">% 更新方案一的花费 </span></span><br><span class="line">    k = <span class="built_in">find</span>(life == result,<span class="number">1</span>);   <span class="comment">% 找到哪一个电子管是坏的</span></span><br><span class="line">    life = life - result <span class="number">-1</span>; <span class="comment">% 更新所有电子管的寿命    </span></span><br><span class="line">    life(k) = randi([<span class="number">1000</span>,<span class="number">2000</span>]);  <span class="comment">% 把坏掉的那个电子管的寿命重置</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%%  方案二</span></span><br><span class="line">t = <span class="number">0</span>;   <span class="comment">% 初始化当前时刻为0小时</span></span><br><span class="line"><span class="keyword">while</span> t &lt; T  <span class="comment">% 只要现在的时刻没有超过总时刻，就不断循环下去</span></span><br><span class="line">    life = randi([<span class="number">1000</span>,<span class="number">2000</span>],<span class="number">1</span>,<span class="number">4</span>); <span class="comment">% 随机生成四个电子管的寿命，假设为整数</span></span><br><span class="line">    result = <span class="built_in">min</span>(life); <span class="comment">% 找出寿命最小的那一个电子管的寿命</span></span><br><span class="line">    t = t+result+<span class="number">2</span>;  <span class="comment">% 现在的时间更改到有电子管损坏的时刻（加上2表示更换所有电子管需要花费的时间）</span></span><br><span class="line">    c2 =c2 + <span class="number">20</span> * <span class="number">2</span> +<span class="number">40</span>;  <span class="comment">% 更新方案二的花费 </span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%% 两种方案的花费</span></span><br><span class="line">c1</span><br><span class="line">c2</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+	
+    <div style="text-align:center;color: #ccc;font-size:14px;">
+------------- 本文结束 <i class="fa fa-heart-o"></i> 感谢您的阅读-------------
+</div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>sdz
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2020/02/27/%E8%92%99%E7%89%B9%E5%8D%A1%E7%BD%97%EF%BC%88%E6%B4%9B%EF%BC%89%E6%A8%A1%E6%8B%9F/" title="蒙特卡罗（洛）模拟">http://yoursite.com/2020/02/27/蒙特卡罗（洛）模拟/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/MATLAB/" rel="tag"><i class="fa fa-tag"></i> MATLAB</a>
+              <a href="/tags/%E8%92%99%E7%89%B9%E5%8D%A1%E7%BD%97%E6%A8%A1%E6%8B%9F/" rel="tag"><i class="fa fa-tag"></i> 蒙特卡罗模拟</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/02/27/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90--%E6%A6%82%E8%BF%B0/" rel="prev" title="网络系统集成--概述">
+      <i class="fa fa-chevron-left"></i> 网络系统集成--概述
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/02/28/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90--%E5%AE%9E%E9%AA%8C%E5%92%8C%E5%91%BD%E4%BB%A4/" rel="next" title="网络系统集成--实验">
+      网络系统集成--实验 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#引例"><span class="nav-number">1.</span> <span class="nav-text">引例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#布丰投针实验"><span class="nav-number">1.1.</span> <span class="nav-text">布丰投针实验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#证明"><span class="nav-number">1.2.</span> <span class="nav-text">证明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">1.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#蒙特卡罗方法概述"><span class="nav-number">2.</span> <span class="nav-text">蒙特卡罗方法概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">2.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提出"><span class="nav-number">2.2.</span> <span class="nav-text">提出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原理"><span class="nav-number">2.3.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#讨论"><span class="nav-number">2.4.</span> <span class="nav-text">讨论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#已经学过的例⼦"><span class="nav-number">2.5.</span> <span class="nav-text">已经学过的例⼦</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#蒙特卡罗⽅法-的应⽤实例"><span class="nav-number">3.</span> <span class="nav-text">蒙特卡罗⽅法 的应⽤实例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#三⻔问题"><span class="nav-number">3.1.</span> <span class="nav-text">三⻔问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有约束的⾮线性规划问题"><span class="nav-number">3.2.</span> <span class="nav-text">有约束的⾮线性规划问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#书店-买书-问题-0-1-规划-无脑"><span class="nav-number">3.3.</span> <span class="nav-text">书店 买书 问题 ( 0 - 1 规划)(无脑)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导弹追踪问题"><span class="nav-number">3.4.</span> <span class="nav-text">导弹追踪问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#作业"><span class="nav-number">4.</span> <span class="nav-text">作业</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作业1"><span class="nav-number">4.1.</span> <span class="nav-text">作业1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#作业2"><span class="nav-number">4.2.</span> <span class="nav-text">作业2</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="sdz"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">sdz</p>
+  <div class="site-description" itemprop="description">个人博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/pxlsdz" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;pxlsdz" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/sdz20172133" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;sdz20172133" rel="noopener" target="_blank"><i class="fa fa-fw fa-codiepie"></i>CSDN</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sdz</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">264k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:01</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='170' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'pAM5gCGYUGBwBF62VmECeV0o-gzGzoHsz',
+      appKey     : 'myehhFCNOsN4ClPFSLov1xKd',
+      placeholder: "欢迎畅所欲言",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : ,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+  <!-- 页面点击小红心 -->
+
+      <script type="text/javascript" src="/js/clicklove.js"></script>
+
+</body>
+</html>

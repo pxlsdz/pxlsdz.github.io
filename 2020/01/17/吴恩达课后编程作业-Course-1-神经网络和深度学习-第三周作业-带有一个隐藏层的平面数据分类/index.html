@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="任务 构建具有单隐藏层的2类分类神经网络。 使用具有非线性激活功能激活函数，例如tanh。 计算交叉熵损失（损失函数）。 实现向前和向后传播。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="吴恩达课后编程作业 Course 1 神经网络和深度学习 - 第三周作业 -  带有一个隐藏层的平面数据分类">
+<meta property="og:url" content="http://yoursite.com/2020/01/17/%E5%90%B4%E6%81%A9%E8%BE%BE%E8%AF%BE%E5%90%8E%E7%BC%96%E7%A8%8B%E4%BD%9C%E4%B8%9A-Course-1-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E7%AC%AC%E4%B8%89%E5%91%A8%E4%BD%9C%E4%B8%9A-%E5%B8%A6%E6%9C%89%E4%B8%80%E4%B8%AA%E9%9A%90%E8%97%8F%E5%B1%82%E7%9A%84%E5%B9%B3%E9%9D%A2%E6%95%B0%E6%8D%AE%E5%88%86%E7%B1%BB/index.html">
+<meta property="og:site_name" content="pxlsdz的博客">
+<meta property="og:description" content="任务 构建具有单隐藏层的2类分类神经网络。 使用具有非线性激活功能激活函数，例如tanh。 计算交叉熵损失（损失函数）。 实现向前和向后传播。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-17/%E8%8A%B1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-17/%E6%A8%A1%E5%9E%8B.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-17/grad_summary.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-17/sgd.gif">
+<meta property="og:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-17/sgd_bad.gif">
+<meta property="og:image" content="https://raw.github.com/pxlsdz/MarkDown-images/master/2020-1-17/%E8%8A%B13.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-17/%E5%9B%9B%E4%B8%AA.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-17/%E4%B8%89%E4%B8%AA.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-17/end.png">
+<meta property="article:published_time" content="2020-01-17T09:54:27.000Z">
+<meta property="article:modified_time" content="2020-03-12T12:10:02.564Z">
+<meta property="article:author" content="sdz">
+<meta property="article:tag" content="神经网络">
+<meta property="article:tag" content="浅层神经网络">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-17/%E8%8A%B1.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/01/17/%E5%90%B4%E6%81%A9%E8%BE%BE%E8%AF%BE%E5%90%8E%E7%BC%96%E7%A8%8B%E4%BD%9C%E4%B8%9A-Course-1-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E7%AC%AC%E4%B8%89%E5%91%A8%E4%BD%9C%E4%B8%9A-%E5%B8%A6%E6%9C%89%E4%B8%80%E4%B8%AA%E9%9A%90%E8%97%8F%E5%B1%82%E7%9A%84%E5%B9%B3%E9%9D%A2%E6%95%B0%E6%8D%AE%E5%88%86%E7%B1%BB/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>吴恩达课后编程作业 Course 1 神经网络和深度学习 - 第三周作业 -  带有一个隐藏层的平面数据分类 | pxlsdz的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">pxlsdz的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">分享，笔记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">32</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">17</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">52</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+  </div>
+</div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/pxlsdz" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/17/%E5%90%B4%E6%81%A9%E8%BE%BE%E8%AF%BE%E5%90%8E%E7%BC%96%E7%A8%8B%E4%BD%9C%E4%B8%9A-Course-1-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E7%AC%AC%E4%B8%89%E5%91%A8%E4%BD%9C%E4%B8%9A-%E5%B8%A6%E6%9C%89%E4%B8%80%E4%B8%AA%E9%9A%90%E8%97%8F%E5%B1%82%E7%9A%84%E5%B9%B3%E9%9D%A2%E6%95%B0%E6%8D%AE%E5%88%86%E7%B1%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="sdz">
+      <meta itemprop="description" content="个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pxlsdz的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          吴恩达课后编程作业 Course 1 神经网络和深度学习 - 第三周作业 -  带有一个隐藏层的平面数据分类
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-01-17 17:54:27" itemprop="dateCreated datePublished" datetime="2020-01-17T17:54:27+08:00">2020-01-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-12 20:10:02" itemprop="dateModified" datetime="2020-03-12T20:10:02+08:00">2020-03-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/01/17/%E5%90%B4%E6%81%A9%E8%BE%BE%E8%AF%BE%E5%90%8E%E7%BC%96%E7%A8%8B%E4%BD%9C%E4%B8%9A-Course-1-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E7%AC%AC%E4%B8%89%E5%91%A8%E4%BD%9C%E4%B8%9A-%E5%B8%A6%E6%9C%89%E4%B8%80%E4%B8%AA%E9%9A%90%E8%97%8F%E5%B1%82%E7%9A%84%E5%B9%B3%E9%9D%A2%E6%95%B0%E6%8D%AE%E5%88%86%E7%B1%BB/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/01/17/%E5%90%B4%E6%81%A9%E8%BE%BE%E8%AF%BE%E5%90%8E%E7%BC%96%E7%A8%8B%E4%BD%9C%E4%B8%9A-Course-1-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E7%AC%AC%E4%B8%89%E5%91%A8%E4%BD%9C%E4%B8%9A-%E5%B8%A6%E6%9C%89%E4%B8%80%E4%B8%AA%E9%9A%90%E8%97%8F%E5%B1%82%E7%9A%84%E5%B9%B3%E9%9D%A2%E6%95%B0%E6%8D%AE%E5%88%86%E7%B1%BB/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>28k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>26 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="任务"><a href="#任务" class="headerlink" title="任务"></a><strong>任务</strong></h1><ul>
+<li>构建具有单隐藏层的2类分类神经网络。</li>
+<li>使用具有非线性激活功能激活函数，例如tanh。</li>
+<li>计算交叉熵损失（损失函数）。</li>
+<li>实现向前和向后传播。</li>
+</ul>
+<a id="more"></a>
+
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a><strong>代码</strong></h1><h2 id="准备软件包"><a href="#准备软件包" class="headerlink" title="准备软件包"></a>准备软件包</h2><p>我们需要准备一些软件包：</p>
+<p>numpy：是用Python进行科学计算的基本软件包。<br>sklearn：为数据挖掘和数据分析提供的简单高效的工具。<br>matplotlib ：是一个用于在Python中绘制图表的库。<br>testCases：提供了一些测试示例来评估函数的正确性，参见下载的资料或者在底部查看它的代码。<br>planar_utils ：提供了在这个任务中使用的各种有用的功能，参见下载的资料或者在底部查看它的代码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> testCases <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> sklearn</span><br><span class="line"><span class="keyword">import</span> sklearn.datasets</span><br><span class="line"><span class="keyword">import</span> sklearn.linear_model</span><br><span class="line"><span class="keyword">from</span> planar_utils <span class="keyword">import</span> plot_decision_boundary, sigmoid, load_planar_dataset, load_extra_datasets</span><br><span class="line"></span><br><span class="line"><span class="comment">#%matplotlib inline #如果你使用用的是Jupyter Notebook的话请取消注释。</span></span><br><span class="line"></span><br><span class="line">np.random.seed(<span class="number">1</span>) <span class="comment">#设置一个固定的随机种子，以保证接下来的步骤中我们的结果是一致的。</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="加载和查看数据集"><a href="#加载和查看数据集" class="headerlink" title="加载和查看数据集"></a>加载和查看数据集</h2><p>首先，我们来看看我们将要使用的数据集， 下面的代码会将一个花的图案的2类数据集加载到变量X和Y中。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X, Y = load_planar_dataset()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_planar_dataset</span><span class="params">()</span>:</span></span><br><span class="line">    np.random.seed(<span class="number">1</span>)</span><br><span class="line">    m = <span class="number">400</span>  <span class="comment"># 样本数量</span></span><br><span class="line">    N = int(m / <span class="number">2</span>)  <span class="comment"># 每个类别的样本量</span></span><br><span class="line">    D = <span class="number">2</span>  <span class="comment"># 维度数</span></span><br><span class="line">    X = np.zeros((m, D))  <span class="comment"># 初始化X</span></span><br><span class="line">    Y = np.zeros((m, <span class="number">1</span>), dtype=<span class="string">'uint8'</span>)  <span class="comment"># 初始化Y</span></span><br><span class="line">    a = <span class="number">4</span>  <span class="comment"># 花儿的最大长度</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">2</span>):</span><br><span class="line">        ix = range(N * j, N * (j + <span class="number">1</span>))</span><br><span class="line">        t = np.linspace(j * <span class="number">3.12</span>, (j + <span class="number">1</span>) * <span class="number">3.12</span>, N) + np.random.randn(N) * <span class="number">0.2</span>  <span class="comment"># theta</span></span><br><span class="line">        r = a * np.sin(<span class="number">4</span> * t) + np.random.randn(N) * <span class="number">0.2</span>  <span class="comment"># radius</span></span><br><span class="line">        X[ix] = np.c_[r * np.sin(t), r * np.cos(t)]</span><br><span class="line">        Y[ix] = j</span><br><span class="line"></span><br><span class="line">    X = X.T</span><br><span class="line">    Y = Y.T</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> X, Y</span><br></pre></td></tr></table></figure>
+
+<p>把数据集加载完成了，然后使用matplotlib可视化数据集，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">plt.scatter(X[<span class="number">0</span>, :], X[<span class="number">1</span>, :], c=Y, s=<span class="number">40</span>, cmap=plt.cm.Spectral) <span class="comment">#绘制散点图</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 上一语句如出现问题，请使用下面的语句：</span></span><br><span class="line">plt.scatter(X[<span class="number">0</span>, :], X[<span class="number">1</span>, :], c=np.squeeze(Y), s=<span class="number">40</span>, cmap=plt.cm.Spectral) <span class="comment">#绘制散点图</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-17/%E8%8A%B1.png" alt=""></p>
+<p>数据看起来像一朵红色（y = 0）和一些蓝色（y = 1）的数据点的花朵的图案。 我们的目标是建立一个模型来适应这些数据。现在，我们已经有了以下的东西：</p>
+<p>X：一个numpy的矩阵，包含了这些数据点的数值<br>Y：一个numpy的向量，对应着的是X的标签【0 | 1】（红色:0 ， 蓝色 :1）<br>我们继续来仔细地看数据：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">shape_X = X.shape</span><br><span class="line">shape_Y = Y.shape</span><br><span class="line">m = Y.shape[<span class="number">1</span>]  <span class="comment"># 训练集里面的数量</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> (<span class="string">"X的维度为: "</span> + str(shape_X))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"Y的维度为: "</span> + str(shape_Y))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"数据集里面的数据有："</span> + str(m) + <span class="string">" 个"</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看简单的Logistic回归的分类效果"><a href="#查看简单的Logistic回归的分类效果" class="headerlink" title="查看简单的Logistic回归的分类效果"></a>查看简单的Logistic回归的分类效果</h2><p>  在构建完整的神经网络之前，先让我们看看逻辑回归在这个问题上的表现如何，我们可以使用sklearn的内置函数来做到这一点， 运行下面的代码来训练数据集上的逻辑回归分类器。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">clf = sklearn.linear_model.LogisticRegressionCV()<span class="comment">#逻辑回归（交叉验证来选择正则化系数C）</span></span><br><span class="line">clf.fit(X.T,Y.T)</span><br></pre></td></tr></table></figure>
+
+<p>这里会打印出以下的信息（不同的机器提示大同小异）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">D:\Anaconda3\envs\pytorch\lib\site-packages\sklearn\utils\validation.py:760: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples, ), for example using ravel().</span><br><span class="line">  y &#x3D; column_or_1d(y, warn&#x3D;True)</span><br></pre></td></tr></table></figure>
+
+<p>我们可以把逻辑回归分类器的分类绘制出来：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">plot_decision_boundary(<span class="keyword">lambda</span> x: clf.predict(x), np.squeeze(X), np.squeeze(Y)) <span class="comment">#绘制决策边界</span></span><br><span class="line">plt.title(<span class="string">"Logistic Regression"</span>) <span class="comment">#图标题</span></span><br><span class="line">LR_predictions  = clf.predict(X.T) <span class="comment">#预测结果</span></span><br><span class="line"><span class="keyword">print</span> (<span class="string">"逻辑回归的准确性： %d "</span> % float((np.dot(Y, LR_predictions) + </span><br><span class="line">		np.dot(<span class="number">1</span> - Y,<span class="number">1</span> - LR_predictions)) / float(Y.size) * <span class="number">100</span>) +</span><br><span class="line">       <span class="string">"% "</span> + <span class="string">"(正确标记的数据点所占的百分比)"</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">逻辑回归的准确性： 47 % (正确标记的数据点所占的百分比)</span><br></pre></td></tr></table></figure>
+
+<p><img src="" alt=""></p>
+<p>准确性只有47%的原因是数据集不是线性可分的，所以逻辑回归表现不佳，现在我们正式开始构建神经网络。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_decision_boundary</span><span class="params">(model, X, y)</span>:</span></span><br><span class="line">    <span class="comment"># Set min and max values and give it some padding</span></span><br><span class="line">    x_min, x_max = X[<span class="number">0</span>, :].min() - <span class="number">1</span>, X[<span class="number">0</span>, :].max() + <span class="number">1</span></span><br><span class="line">    y_min, y_max = X[<span class="number">1</span>, :].min() - <span class="number">1</span>, X[<span class="number">1</span>, :].max() + <span class="number">1</span></span><br><span class="line">    h = <span class="number">0.01</span></span><br><span class="line">    <span class="comment"># Generate a grid of points with distance h between them</span></span><br><span class="line">    xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))</span><br><span class="line">    <span class="comment"># Predict the function value for the whole grid</span></span><br><span class="line">    Z = model(np.c_[xx.ravel(), yy.ravel()])</span><br><span class="line">    Z = Z.reshape(xx.shape)</span><br><span class="line">    <span class="comment"># Plot the contour and training examples</span></span><br><span class="line">    plt.contourf(xx, yy, Z, cmap=plt.cm.Spectral)</span><br><span class="line">    plt.ylabel(<span class="string">'x2'</span>)</span><br><span class="line">    plt.xlabel(<span class="string">'x1'</span>)</span><br><span class="line">    plt.scatter(X[<span class="number">0</span>, :], X[<span class="number">1</span>, :], c=y, cmap=plt.cm.Spectral)</span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
+<h2 id="搭建神经网络"><a href="#搭建神经网络" class="headerlink" title="搭建神经网络"></a>搭建神经网络</h2><p>我们要搭建的神经网络模型如下图：</p>
+<p><img src="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-17/%E6%A8%A1%E5%9E%8B.png" alt=""></p>
+<p>公式模型<br>$$<br>z^{[1] (i)} =  W^{[1]} x^{(i)} + b^{[1] (i)}\tag{1}<br>$$</p>
+<p>$$<br>a^{[1] (i)} = \tanh(z^{[1] (i)})\tag{2}<br>$$</p>
+<p>$$<br>z^{[2] (i)} = W^{[2]} a^{[1] (i)} + b^{[2] (i)}\tag{3}<br>$$</p>
+<p>$$<br>\hat{y}^{(i)} = a^{[2] (i)} = \sigma(z^{ [2] (i)})\tag{4}<br>$$</p>
+<p>$$<br>y^{(i)}_{prediction} = \begin{cases} 1 &amp; \mbox{if } a^{<a href="i">2</a>} &gt; 0.5 \ 0 &amp; \mbox{otherwise } \end{cases}\tag{5}<br>$$</p>
+<p>给出所有示例的预测结果，可以按如下方式计算成本J：<br>$$<br>J = - \frac{1}{m} \sum\limits_{i = 0}^{m} \large\left(\small y^{(i)}\log\left(a^{[2] (i)}\right) + (1-y^{(i)})\log\left(1- a^{[2] (i)}\right)  \large  \right) \small \tag{6}<br>$$<br>构建神经网络的一般方法是：</p>
+<ol>
+<li>定义神经网络结构（输入单元的数量，隐藏单元的数量等）。</li>
+<li>初始化模型的参数</li>
+<li>循环：<ul>
+<li>实施前向传播</li>
+<li>计算损失</li>
+<li>实现向后传播</li>
+<li>更新参数（梯度下降）</li>
+</ul>
+</li>
+</ol>
+<p>我们要它们合并到一个nn_model() 函数中，当我们构建好了nn_model（）并学习了正确的参数，我们就可以预测新的数据。</p>
+<h3 id="定义神经网络结构"><a href="#定义神经网络结构" class="headerlink" title="定义神经网络结构"></a>定义神经网络结构</h3><p>在构建之前，我们要先把神经网络的结构给定义好：</p>
+<ul>
+<li>n_x: 输入层的数量</li>
+<li>n_h: 隐藏层的数量（这里设置为4）</li>
+<li>n_y: 输出层的数量</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">layer_sizes</span><span class="params">(X , Y)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    参数：</span></span><br><span class="line"><span class="string">     X - 输入数据集,维度为（输入的数量，训练/测试的数量）</span></span><br><span class="line"><span class="string">     Y - 标签，维度为（输出的数量，训练/测试数量）</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    返回：</span></span><br><span class="line"><span class="string">     n_x - 输入层的数量</span></span><br><span class="line"><span class="string">     n_h - 隐藏层的数量</span></span><br><span class="line"><span class="string">     n_y - 输出层的数量</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    n_x = X.shape[<span class="number">0</span>] <span class="comment">#输入层</span></span><br><span class="line">    n_h = <span class="number">4</span> <span class="comment">#，隐藏层，硬编码为4</span></span><br><span class="line">    n_y = Y.shape[<span class="number">0</span>] <span class="comment">#输出层</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> (n_x,n_h,n_y)</span><br></pre></td></tr></table></figure>
+
+<p>测试一下:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#测试layer_sizes</span></span><br><span class="line">print(<span class="string">"=========================测试layer_sizes========================="</span>)</span><br><span class="line">X_asses , Y_asses = layer_sizes_test_case()</span><br><span class="line">(n_x,n_h,n_y) =  layer_sizes(X_asses,Y_asses)</span><br><span class="line">print(<span class="string">"输入层的节点数量为: n_x = "</span> + str(n_x))</span><br><span class="line">print(<span class="string">"隐藏层的节点数量为: n_h = "</span> + str(n_h))</span><br><span class="line">print(<span class="string">"输出层的节点数量为: n_y = "</span> + str(n_y))</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">layer_sizes_test_case</span><span class="params">()</span>:</span></span><br><span class="line">    np.random.seed(<span class="number">1</span>)</span><br><span class="line">    X_assess = np.random.randn(<span class="number">5</span>, <span class="number">3</span>)</span><br><span class="line">    Y_assess = np.random.randn(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">    <span class="keyword">return</span> X_assess, Y_assess</span><br></pre></td></tr></table></figure>
+
+<p>运行结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;测试layer_sizes&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">输入层的节点数量为: n_x &#x3D; 5</span><br><span class="line">隐藏层的节点数量为: n_h &#x3D; 4</span><br><span class="line">输出层的节点数量为: n_y &#x3D; 2</span><br></pre></td></tr></table></figure>
+
+<h3 id="初始化模型的参数"><a href="#初始化模型的参数" class="headerlink" title="初始化模型的参数"></a>初始化模型的参数</h3><p>在这里，我们要实现函数initialize_parameters()。我们要确保我们的参数大小合适，如果需要的话，请参考上面的神经网络图。<br>我们将会用随机值初始化权重矩阵。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">np.random.randn(a，b)* <span class="number">0.01</span>来随机初始化一个维度为(a，b)的矩阵。</span><br></pre></td></tr></table></figure>
+
+<p>将偏向量初始化为零。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">np.zeros((a，b))用零初始化矩阵（a，b）。</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">initialize_parameters</span><span class="params">( n_x , n_h ,n_y)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    参数：</span></span><br><span class="line"><span class="string">        n_x - 输入层节点的数量</span></span><br><span class="line"><span class="string">        n_h - 隐藏层节点的数量</span></span><br><span class="line"><span class="string">        n_y - 输出层节点的数量</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    返回：</span></span><br><span class="line"><span class="string">        parameters - 包含参数的字典：</span></span><br><span class="line"><span class="string">            W1 - 权重矩阵,维度为（n_h，n_x）</span></span><br><span class="line"><span class="string">            b1 - 偏向量，维度为（n_h，1）</span></span><br><span class="line"><span class="string">            W2 - 权重矩阵，维度为（n_y，n_h）</span></span><br><span class="line"><span class="string">            b2 - 偏向量，维度为（n_y，1）</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    np.random.seed(<span class="number">2</span>) <span class="comment">#指定一个随机种子，以便你的输出与我们的一样。</span></span><br><span class="line">    W1 = np.random.randn(n_h,n_x) * <span class="number">0.01</span></span><br><span class="line">    b1 = np.zeros(shape=(n_h, <span class="number">1</span>))</span><br><span class="line">    W2 = np.random.randn(n_y,n_h) * <span class="number">0.01</span></span><br><span class="line">    b2 = np.zeros(shape=(n_y, <span class="number">1</span>))</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#使用断言确保我的数据格式是正确的</span></span><br><span class="line">    <span class="keyword">assert</span>(W1.shape == ( n_h , n_x ))</span><br><span class="line">    <span class="keyword">assert</span>(b1.shape == ( n_h , <span class="number">1</span> ))</span><br><span class="line">    <span class="keyword">assert</span>(W2.shape == ( n_y , n_h ))</span><br><span class="line">    <span class="keyword">assert</span>(b2.shape == ( n_y , <span class="number">1</span> ))</span><br><span class="line">    </span><br><span class="line">    parameters = &#123;<span class="string">"W1"</span> : W1,</span><br><span class="line">	              <span class="string">"b1"</span> : b1,</span><br><span class="line">	              <span class="string">"W2"</span> : W2,</span><br><span class="line">	              <span class="string">"b2"</span> : b2 &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> parameters</span><br></pre></td></tr></table></figure>
+
+<p>测试一下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#测试initialize_parameters</span></span><br><span class="line">print(<span class="string">"=========================测试initialize_parameters========================="</span>)    </span><br><span class="line">n_x , n_h , n_y = initialize_parameters_test_case()</span><br><span class="line">parameters = initialize_parameters(n_x , n_h , n_y)</span><br><span class="line">print(<span class="string">"W1 = "</span> + str(parameters[<span class="string">"W1"</span>]))</span><br><span class="line">print(<span class="string">"b1 = "</span> + str(parameters[<span class="string">"b1"</span>]))</span><br><span class="line">print(<span class="string">"W2 = "</span> + str(parameters[<span class="string">"W2"</span>]))</span><br><span class="line">print(<span class="string">"b2 = "</span> + str(parameters[<span class="string">"b2"</span>]))</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;测试initialize_parameters&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">W1 &#x3D; [[-0.00416758 -0.00056267]</span><br><span class="line"> [-0.02136196  0.01640271]</span><br><span class="line"> [-0.01793436 -0.00841747]</span><br><span class="line"> [ 0.00502881 -0.01245288]]</span><br><span class="line">b1 &#x3D; [[0.]</span><br><span class="line"> [0.]</span><br><span class="line"> [0.]</span><br><span class="line"> [0.]]</span><br><span class="line">W2 &#x3D; [[-0.01057952 -0.00909008  0.00551454  0.02292208]]</span><br><span class="line">b2 &#x3D; [[0.]]</span><br></pre></td></tr></table></figure>
+
+<h3 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h3><h4 id="前向传播"><a href="#前向传播" class="headerlink" title="前向传播"></a>前向传播</h4><p>我们现在要实现前向传播函数forward_propagation()。我们可以使用sigmoid()函数，也可以使用np.tanh()函数。<br>步骤如下：</p>
+<ul>
+<li><p>使用字典类型的parameters（它是initialize_parameters() 的输出）检索每个参数。</p>
+</li>
+<li><p>实现向前传播, 计算 $Z^{[1]}, A^{[1]}, Z^{[2]}$和 $A^{[2]}$（ 训练集里面所有例子的预测向量）。</p>
+</li>
+<li><p>反向传播所需的值存储在“cache”中，cache将作为反向传播函数的输入。</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">forward_propagation</span><span class="params">( X , parameters )</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    参数：</span></span><br><span class="line"><span class="string">         X - 维度为（n_x，m）的输入数据。</span></span><br><span class="line"><span class="string">         parameters - 初始化函数（initialize_parameters）的输出</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    返回：</span></span><br><span class="line"><span class="string">         A2 - 使用sigmoid()函数计算的第二次激活后的数值</span></span><br><span class="line"><span class="string">         cache - 包含“Z1”，“A1”，“Z2”和“A2”的字典类型变量</span></span><br><span class="line"><span class="string">     """</span></span><br><span class="line">    W1 = parameters[<span class="string">"W1"</span>]</span><br><span class="line">    b1 = parameters[<span class="string">"b1"</span>]</span><br><span class="line">    W2 = parameters[<span class="string">"W2"</span>]</span><br><span class="line">    b2 = parameters[<span class="string">"b2"</span>]</span><br><span class="line">    <span class="comment">#前向传播计算A2</span></span><br><span class="line">    Z1 = np.dot(W1 , X) + b1</span><br><span class="line">    A1 = np.tanh(Z1)</span><br><span class="line">    Z2 = np.dot(W2 , A1) + b2</span><br><span class="line">    A2 = sigmoid(Z2)</span><br><span class="line">    <span class="comment">#使用断言确保我的数据格式是正确的</span></span><br><span class="line">    <span class="keyword">assert</span>(A2.shape == (<span class="number">1</span>,X.shape[<span class="number">1</span>]))</span><br><span class="line">    cache = &#123;<span class="string">"Z1"</span>: Z1,</span><br><span class="line">             <span class="string">"A1"</span>: A1,</span><br><span class="line">             <span class="string">"Z2"</span>: Z2,</span><br><span class="line">             <span class="string">"A2"</span>: A2&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> (A2, cache)</span><br></pre></td></tr></table></figure>
+
+<p>测试：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#测试forward_propagation</span></span><br><span class="line">print(<span class="string">"=========================测试forward_propagation========================="</span>) </span><br><span class="line">X_assess, parameters = forward_propagation_test_case()</span><br><span class="line">A2, cache = forward_propagation(X_assess, parameters)</span><br><span class="line">print(np.mean(cache[<span class="string">"Z1"</span>]), np.mean(cache[<span class="string">"A1"</span>]), np.mean(cache[<span class="string">"Z2"</span>]), np.mean(cache[<span class="string">"A2"</span>]))</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;测试forward_propagation&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">-0.0004997557777419902 -0.000496963353231779 0.00043818745095914653 0.500109546852431</span><br></pre></td></tr></table></figure>
+
+<p>现在我们已经计算了$A^{[2]},a^{<a href="i">2</a>}$包含了训练集里每个数值，现在我们就可以构建成本函数了。</p>
+<h4 id="计算损失"><a href="#计算损失" class="headerlink" title="计算损失"></a>计算损失</h4><p>计算成本的公式如下：<br>$$<br>J = - \frac{1}{m} \sum\limits_{i = 0}^{m} \large{(} \small y^{(i)}\log\left(a^{[2] (i)}\right) + (1-y^{(i)})\log\left(1- a^{[2] (i)}\right) \large{)} \small\tag{7}<br>$$<br>有很多的方法都可以计算交叉熵损失，比如下面的这个公式，我们在python中可以这么实现</p>
+<p>$-\sum \limits_ {i = 0} ^ {m} y ^ {（i）} \ log（a ^ {[2]（i）}）$：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">logprobs = np.multiply（np.log（A2），Y）</span><br><span class="line">cost =-np.sum（logprobs）＃无需使用<span class="keyword">for</span>循环！</span><br></pre></td></tr></table></figure>
+
+<p>可以使用“ np.multiply（）”然后使用“ np.sum（）”，也可以直接使用“ np.dot（）”）。</p>
+<p>现在我们正式开始构建计算成本的函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compute_cost</span><span class="params">(A2,Y,parameters)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    计算方程（6）中给出的交叉熵成本，</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    参数：</span></span><br><span class="line"><span class="string">         A2 - 使用sigmoid()函数计算的第二次激活后的数值</span></span><br><span class="line"><span class="string">         Y - "True"标签向量,维度为（1，数量）</span></span><br><span class="line"><span class="string">         parameters - 一个包含W1，B1，W2和B2的字典类型的变量</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    返回：</span></span><br><span class="line"><span class="string">         成本 - 交叉熵成本给出方程（7）</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    </span><br><span class="line">    m = Y.shape[<span class="number">1</span>]</span><br><span class="line">    W1 = parameters[<span class="string">"W1"</span>]</span><br><span class="line">    W2 = parameters[<span class="string">"W2"</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#计算成本</span></span><br><span class="line">    logprobs  = np.multiply(np.log(A2), Y) + np.multiply((<span class="number">1</span> - Y), np.log(<span class="number">1</span> - A2))</span><br><span class="line">    cost = - np.sum(logprobs) / m</span><br><span class="line">    cost = float(np.squeeze(cost))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">assert</span>(isinstance(cost,float))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> cost</span><br></pre></td></tr></table></figure>
+
+<p>测试一下我们的成本函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#测试compute_cost</span></span><br><span class="line">print(<span class="string">"=========================测试compute_cost========================="</span>) </span><br><span class="line">A2 , Y_assess , parameters = compute_cost_test_case()</span><br><span class="line">print(<span class="string">"cost = "</span> + str(compute_cost(A2,Y_assess,parameters)))</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">=========================测试compute_cost=========================</span><br><span class="line">cost = <span class="number">0.6929198937761266</span></span><br></pre></td></tr></table></figure>
+
+<p>附：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compute_cost_test_case</span><span class="params">()</span>:</span></span><br><span class="line">    np.random.seed(<span class="number">1</span>)</span><br><span class="line">    Y_assess = np.random.randn(<span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line">    parameters = &#123;<span class="string">'W1'</span>: np.array([[<span class="number">-0.00416758</span>, <span class="number">-0.00056267</span>],</span><br><span class="line">        [<span class="number">-0.02136196</span>,  <span class="number">0.01640271</span>],</span><br><span class="line">        [<span class="number">-0.01793436</span>, <span class="number">-0.00841747</span>],</span><br><span class="line">        [ <span class="number">0.00502881</span>, <span class="number">-0.01245288</span>]]),</span><br><span class="line">     <span class="string">'W2'</span>: np.array([[<span class="number">-0.01057952</span>, <span class="number">-0.00909008</span>,  <span class="number">0.00551454</span>,  <span class="number">0.02292208</span>]]),</span><br><span class="line">     <span class="string">'b1'</span>: np.array([[ <span class="number">0.</span>],</span><br><span class="line">        [ <span class="number">0.</span>],</span><br><span class="line">        [ <span class="number">0.</span>],</span><br><span class="line">        [ <span class="number">0.</span>]]),</span><br><span class="line">     <span class="string">'b2'</span>: np.array([[ <span class="number">0.</span>]])&#125;</span><br><span class="line"></span><br><span class="line">    a2 = (np.array([[ <span class="number">0.5002307</span> ,  <span class="number">0.49985831</span>,  <span class="number">0.50023963</span>]]))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> a2, Y_assess, parameters</span><br></pre></td></tr></table></figure>
+
+<p>使用正向传播期间计算的cache，现在可以利用它实现反向传播。</p>
+<p>现在我们要开始实现函数backward_propagation（）。</p>
+<h4 id="向后传播"><a href="#向后传播" class="headerlink" title="向后传播"></a>向后传播</h4><p>  说明：反向传播通常是深度学习中最难（数学意义）部分，为了帮助你，这里有反向传播讲座的幻灯片， 由于我们正在构建向量化实现，因此我们将需要使用这下面的六个方程：</p>
+<p><img src="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-17/grad_summary.png" alt=""></p>
+<p>-要计算dZ1，您需要计算$g^{[1]’}(Z^{[1]})$。 由于$g ^ {[1]}(..)$是tanh激活函数，因此如果$a =g^{[1]}(z)$，则$g^{[1]’}（z）= 1- a ^ 2$。 所以你可以计算$g ^{ [[1]’ }(Z ^{[1]})$使用<code>（1- np.power（A1，2））</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">backward_propagation</span><span class="params">(parameters,cache,X,Y)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    使用上述说明搭建反向传播函数。</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    参数：</span></span><br><span class="line"><span class="string">     parameters - 包含我们的参数的一个字典类型的变量。</span></span><br><span class="line"><span class="string">     cache - 包含“Z1”，“A1”，“Z2”和“A2”的字典类型的变量。</span></span><br><span class="line"><span class="string">     X - 输入数据，维度为（2，数量）</span></span><br><span class="line"><span class="string">     Y - “True”标签，维度为（1，数量）</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    返回：</span></span><br><span class="line"><span class="string">     grads - 包含W和b的导数一个字典类型的变量。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    m = X.shape[<span class="number">1</span>]</span><br><span class="line">    </span><br><span class="line">    W1 = parameters[<span class="string">"W1"</span>]</span><br><span class="line">    W2 = parameters[<span class="string">"W2"</span>]</span><br><span class="line">    </span><br><span class="line">    A1 = cache[<span class="string">"A1"</span>]</span><br><span class="line">    A2 = cache[<span class="string">"A2"</span>]</span><br><span class="line">    </span><br><span class="line">    dZ2= A2 - Y</span><br><span class="line">    dW2 = (<span class="number">1</span> / m) * np.dot(dZ2, A1.T)</span><br><span class="line">    db2 = (<span class="number">1</span> / m) * np.sum(dZ2, axis=<span class="number">1</span>, keepdims=<span class="literal">True</span>)</span><br><span class="line">    dZ1 = np.multiply(np.dot(W2.T, dZ2), <span class="number">1</span> - np.power(A1, <span class="number">2</span>))</span><br><span class="line">    dW1 = (<span class="number">1</span> / m) * np.dot(dZ1, X.T)</span><br><span class="line">    db1 = (<span class="number">1</span> / m) * np.sum(dZ1, axis=<span class="number">1</span>, keepdims=<span class="literal">True</span>)</span><br><span class="line">    grads = &#123;<span class="string">"dW1"</span>: dW1,</span><br><span class="line">             <span class="string">"db1"</span>: db1,</span><br><span class="line">             <span class="string">"dW2"</span>: dW2,</span><br><span class="line">             <span class="string">"db2"</span>: db2 &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> grads</span><br></pre></td></tr></table></figure>
+
+<p>测试一下反向传播函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#测试backward_propagation</span></span><br><span class="line">print(<span class="string">"=========================测试backward_propagation========================="</span>)</span><br><span class="line">parameters, cache, X_assess, Y_assess = backward_propagation_test_case()</span><br><span class="line"></span><br><span class="line">grads = backward_propagation(parameters, cache, X_assess, Y_assess)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"dW1 = "</span>+ str(grads[<span class="string">"dW1"</span>]))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"db1 = "</span>+ str(grads[<span class="string">"db1"</span>]))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"dW2 = "</span>+ str(grads[<span class="string">"dW2"</span>]))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"db2 = "</span>+ str(grads[<span class="string">"db2"</span>]))</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;测试backward_propagation&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">dW1 &#x3D; [[ 0.01018708 -0.00708701]</span><br><span class="line"> [ 0.00873447 -0.0060768 ]</span><br><span class="line"> [-0.00530847  0.00369379]</span><br><span class="line"> [-0.02206365  0.01535126]]</span><br><span class="line">db1 &#x3D; [[-0.00069728]</span><br><span class="line"> [-0.00060606]</span><br><span class="line"> [ 0.000364  ]</span><br><span class="line"> [ 0.00151207]]</span><br><span class="line">dW2 &#x3D; [[ 0.00363613  0.03153604  0.01162914 -0.01318316]]</span><br><span class="line">db2 &#x3D; [[0.06589489]]</span><br></pre></td></tr></table></figure>
+
+<p>反向传播完成了，我们开始对参数进行更新</p>
+<h4 id="更新参数"><a href="#更新参数" class="headerlink" title="更新参数"></a>更新参数</h4><p>我们需要使用(dW1, db1, dW2, db2)来更新(W1, b1, W2, b2)。<br><strong>问题</strong>：实施更新规则。 使用梯度下降。 您必须使用（dW1，db1，dW2，db2）进行更新（W1，b1，W2，b2）。</p>
+<p><strong>一般梯度下降规则</strong>：$\theta =\theta-\alpha\frac{\partial J} {\partial\theta}$其中$\alpha$是学习率，而$\theta$代表一个参数。</p>
+<p><strong>插图</strong>：具有良好的学习速率（收敛）和较差的学习速率（发散）的梯度下降算法。 图片由亚当·哈雷（Adam Harley）提供。</p>
+<p><img src="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-17/sgd.gif" alt="good"></p>
+<p><img src="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-17/sgd_bad.gif" alt=""></p>
+<p>上面两个图分别代表了具有良好学习速率（收敛）和不良学习速率（发散）的梯度下降算法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_parameters</span><span class="params">(parameters,grads,learning_rate=<span class="number">1.2</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    使用上面给出的梯度下降更新规则更新参数</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    参数：</span></span><br><span class="line"><span class="string">     parameters - 包含参数的字典类型的变量。</span></span><br><span class="line"><span class="string">     grads - 包含导数值的字典类型的变量。</span></span><br><span class="line"><span class="string">     learning_rate - 学习速率</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    返回：</span></span><br><span class="line"><span class="string">     parameters - 包含更新参数的字典类型的变量。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    W1,W2 = parameters[<span class="string">"W1"</span>],parameters[<span class="string">"W2"</span>]</span><br><span class="line">    b1,b2 = parameters[<span class="string">"b1"</span>],parameters[<span class="string">"b2"</span>]</span><br><span class="line">    </span><br><span class="line">    dW1,dW2 = grads[<span class="string">"dW1"</span>],grads[<span class="string">"dW2"</span>]</span><br><span class="line">    db1,db2 = grads[<span class="string">"db1"</span>],grads[<span class="string">"db2"</span>]</span><br><span class="line">    </span><br><span class="line">    W1 = W1 - learning_rate * dW1</span><br><span class="line">    b1 = b1 - learning_rate * db1</span><br><span class="line">    W2 = W2 - learning_rate * dW2</span><br><span class="line">    b2 = b2 - learning_rate * db2</span><br><span class="line">    </span><br><span class="line">    parameters = &#123;<span class="string">"W1"</span>: W1,</span><br><span class="line">                  <span class="string">"b1"</span>: b1,</span><br><span class="line">                  <span class="string">"W2"</span>: W2,</span><br><span class="line">                  <span class="string">"b2"</span>: b2&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> parameters</span><br></pre></td></tr></table></figure>
+
+<p>测试:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#测试update_parameters</span></span><br><span class="line">print(<span class="string">"=========================测试update_parameters========================="</span>)</span><br><span class="line">parameters, grads = update_parameters_test_case()</span><br><span class="line">parameters = update_parameters(parameters, grads)</span><br><span class="line"></span><br><span class="line">print(<span class="string">"W1 = "</span> + str(parameters[<span class="string">"W1"</span>]))</span><br><span class="line">print(<span class="string">"b1 = "</span> + str(parameters[<span class="string">"b1"</span>]))</span><br><span class="line">print(<span class="string">"W2 = "</span> + str(parameters[<span class="string">"W2"</span>]))</span><br><span class="line">print(<span class="string">"b2 = "</span> + str(parameters[<span class="string">"b2"</span>]))</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;测试update_parameters&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">W1 &#x3D; [[-0.00643025  0.01936718]</span><br><span class="line"> [-0.02410458  0.03978052]</span><br><span class="line"> [-0.01653973 -0.02096177]</span><br><span class="line"> [ 0.01046864 -0.05990141]]</span><br><span class="line">b1 &#x3D; [[-1.02420756e-06]</span><br><span class="line"> [ 1.27373948e-05]</span><br><span class="line"> [ 8.32996807e-07]</span><br><span class="line"> [-3.20136836e-06]]</span><br><span class="line">W2 &#x3D; [[-0.01041081 -0.04463285  0.01758031  0.04747113]]</span><br><span class="line">b2 &#x3D; [[0.00010457]]</span><br></pre></td></tr></table></figure>
+
+<h3 id="整合"><a href="#整合" class="headerlink" title="整合"></a>整合</h3><p>我们现在把上面的东西整合到nn_model()中，神经网络模型必须以正确的顺序使用先前的功能。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">nn_model</span><span class="params">(X,Y,n_h,num_iterations,print_cost=False)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    参数：</span></span><br><span class="line"><span class="string">        X - 数据集,维度为（2，示例数）</span></span><br><span class="line"><span class="string">        Y - 标签，维度为（1，示例数）</span></span><br><span class="line"><span class="string">        n_h - 隐藏层的数量</span></span><br><span class="line"><span class="string">        num_iterations - 梯度下降循环中的迭代次数</span></span><br><span class="line"><span class="string">        print_cost - 如果为True，则每1000次迭代打印一次成本数值</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    返回：</span></span><br><span class="line"><span class="string">        parameters - 模型学习的参数，它们可以用来进行预测。</span></span><br><span class="line"><span class="string">     """</span></span><br><span class="line">     </span><br><span class="line">    np.random.seed(<span class="number">3</span>) <span class="comment">#指定随机种子</span></span><br><span class="line">    n_x = layer_sizes(X, Y)[<span class="number">0</span>]</span><br><span class="line">    n_y = layer_sizes(X, Y)[<span class="number">2</span>]</span><br><span class="line">    </span><br><span class="line">    parameters = initialize_parameters(n_x,n_h,n_y)</span><br><span class="line">    W1 = parameters[<span class="string">"W1"</span>]</span><br><span class="line">    b1 = parameters[<span class="string">"b1"</span>]</span><br><span class="line">    W2 = parameters[<span class="string">"W2"</span>]</span><br><span class="line">    b2 = parameters[<span class="string">"b2"</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(num_iterations):</span><br><span class="line">        A2 , cache = forward_propagation(X,parameters)</span><br><span class="line">        cost = compute_cost(A2,Y,parameters)</span><br><span class="line">        grads = backward_propagation(parameters,cache,X,Y)</span><br><span class="line">        parameters = update_parameters(parameters,grads,learning_rate = <span class="number">0.5</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> print_cost:</span><br><span class="line">            <span class="keyword">if</span> i%<span class="number">1000</span> == <span class="number">0</span>:</span><br><span class="line">                print(<span class="string">"第 "</span>,i,<span class="string">" 次循环，成本为："</span>+str(cost))</span><br><span class="line">    <span class="keyword">return</span> parameters</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#测试nn_model</span></span><br><span class="line">print(<span class="string">"=========================测试nn_model========================="</span>)</span><br><span class="line">X_assess, Y_assess = nn_model_test_case()</span><br><span class="line"></span><br><span class="line">parameters = nn_model(X_assess, Y_assess, <span class="number">4</span>, num_iterations=<span class="number">10000</span>, print_cost=<span class="literal">False</span>)</span><br><span class="line">print(<span class="string">"W1 = "</span> + str(parameters[<span class="string">"W1"</span>]))</span><br><span class="line">print(<span class="string">"b1 = "</span> + str(parameters[<span class="string">"b1"</span>]))</span><br><span class="line">print(<span class="string">"W2 = "</span> + str(parameters[<span class="string">"W2"</span>]))</span><br><span class="line">print(<span class="string">"b2 = "</span> + str(parameters[<span class="string">"b2"</span>]))</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">=========================测试nn_model=========================</span><br><span class="line">W1 = [[<span class="number">-4.18494482</span>  <span class="number">5.33220319</span>]</span><br><span class="line"> [<span class="number">-7.52989354</span>  <span class="number">1.24306197</span>]</span><br><span class="line"> [<span class="number">-4.19295428</span>  <span class="number">5.32631786</span>]</span><br><span class="line"> [ <span class="number">7.52983748</span> <span class="number">-1.24309404</span>]]</span><br><span class="line">b1 = [[ <span class="number">2.32926815</span>]</span><br><span class="line"> [ <span class="number">3.7945905</span> ]</span><br><span class="line"> [ <span class="number">2.33002544</span>]</span><br><span class="line"> [<span class="number">-3.79468791</span>]]</span><br><span class="line">W2 = [[<span class="number">-6033.83672179</span> <span class="number">-6008.12981272</span> <span class="number">-6033.10095329</span>  <span class="number">6008.06636901</span>]]</span><br><span class="line">b2 = [[<span class="number">-52.66607704</span>]]</span><br></pre></td></tr></table></figure>
+
+<p>参数更新完了,我们就可以来进行预测了。</p>
+<h3 id="预测"><a href="#预测" class="headerlink" title="预测"></a>预测</h3><p><strong>问题</strong>：使用您的模型通过构建prepare（）进行预测。使用正向传播来预测结果。</p>
+<p><strong>提醒</strong><br>$$<br>y_{prediction} = \mathbb 1 \textfalse = \begin{cases}<br>      1 &amp; \text{if}\ activation &gt; 0.5 \<br>      0 &amp; \text{otherwise}<br>    \end{cases}<br>$$</p>
+<p>例如，如果您想基于阈值将矩阵X的条目设置为0和1，则可以执行以下操作：<code>X_new =（X&gt; threshold）</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(parameters,X)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    使用学习的参数，为X中的每个示例预测一个类</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    参数：</span></span><br><span class="line"><span class="string">		parameters - 包含参数的字典类型的变量。</span></span><br><span class="line"><span class="string">	    X - 输入数据（n_x，m）</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    返回</span></span><br><span class="line"><span class="string">		predictions - 我们模型预测的向量（红色：0 /蓝色：1）</span></span><br><span class="line"><span class="string">     </span></span><br><span class="line"><span class="string">     """</span></span><br><span class="line">    A2 , cache = forward_propagation(X,parameters)</span><br><span class="line">    predictions = np.round(A2)<span class="comment">#四舍五入</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> predictions</span><br></pre></td></tr></table></figure>
+
+<p>test:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#测试predict</span></span><br><span class="line">print(<span class="string">"=========================测试predict========================="</span>)</span><br><span class="line"></span><br><span class="line">parameters, X_assess = predict_test_case()</span><br><span class="line"></span><br><span class="line">predictions = predict(parameters, X_assess)</span><br><span class="line">print(<span class="string">"预测的平均值 = "</span> + str(np.mean(predictions)))</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;测试predict&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">预测的平均值 &#x3D; 0.6666666666666666</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="正式运行"><a href="#正式运行" class="headerlink" title="正式运行"></a>正式运行</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">parameters = nn_model(X, Y, n_h = <span class="number">4</span>, num_iterations=<span class="number">10000</span>, print_cost=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#绘制边界</span></span><br><span class="line">plot_decision_boundary(<span class="keyword">lambda</span> x: predict(parameters, x.T), np.squeeze(X), np.squeeze(Y))</span><br><span class="line">plt.title(<span class="string">"Decision Boundary for hidden layer size "</span> + str(<span class="number">4</span>))</span><br><span class="line"></span><br><span class="line">predictions = predict(parameters, X)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">'准确率: %d'</span> % float((np.dot(Y, predictions.T) + np.dot(<span class="number">1</span> - Y, <span class="number">1</span> - predictions.T)) / float(Y.size) * <span class="number">100</span>) + <span class="string">'%'</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">第  0  次循环，成本为：0.6930480201239823</span><br><span class="line">第  1000  次循环，成本为：0.3098018601352803</span><br><span class="line">第  2000  次循环，成本为：0.2924326333792646</span><br><span class="line">第  3000  次循环，成本为：0.2833492852647412</span><br><span class="line">第  4000  次循环，成本为：0.27678077562979253</span><br><span class="line">第  5000  次循环，成本为：0.26347155088593144</span><br><span class="line">第  6000  次循环，成本为：0.24204413129940763</span><br><span class="line">第  7000  次循环，成本为：0.23552486626608762</span><br><span class="line">第  8000  次循环，成本为：0.23140964509854278</span><br><span class="line">第  9000  次循环，成本为：0.22846408048352365</span><br><span class="line">准确率: 90%</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://raw.github.com/pxlsdz/MarkDown-images/master/2020-1-17/%E8%8A%B13.png" alt=""></p>
+<hr>
+<h2 id="更改隐藏层节点数量"><a href="#更改隐藏层节点数量" class="headerlink" title="更改隐藏层节点数量"></a>更改隐藏层节点数量</h2><p>我们上面的实验把隐藏层定为4个节点，现在我们更改隐藏层里面的节点数量，看一看节点数量是否会对结果造成影响。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">plt.figure(figsize=(<span class="number">16</span>, <span class="number">32</span>))</span><br><span class="line">hidden_layer_sizes = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">20</span>, <span class="number">50</span>] <span class="comment">#隐藏层数量</span></span><br><span class="line"><span class="keyword">for</span> i, n_h <span class="keyword">in</span> enumerate(hidden_layer_sizes):</span><br><span class="line">    plt.subplot(<span class="number">5</span>, <span class="number">2</span>, i + <span class="number">1</span>)</span><br><span class="line">    plt.title(<span class="string">'Hidden Layer of size %d'</span> % n_h)</span><br><span class="line">    parameters = nn_model(X, Y, n_h, num_iterations=<span class="number">5000</span>)</span><br><span class="line">    plot_decision_boundary(<span class="keyword">lambda</span> x: predict(parameters, x.T), np.squeeze(X),np.squeeze(Y))</span><br><span class="line">    predictions = predict(parameters, X)</span><br><span class="line">    accuracy = float((np.dot(Y, predictions.T) + np.dot(<span class="number">1</span> - Y, <span class="number">1</span> - predictions.T)) / float(Y.size) * <span class="number">100</span>)</span><br><span class="line">    <span class="keyword">print</span> (<span class="string">"隐藏层的节点数量： &#123;&#125;  ，准确率: &#123;&#125; %"</span>.format(n_h, accuracy))</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">隐藏层的节点数量： 1  ，准确率: 67.25 %</span><br><span class="line">隐藏层的节点数量： 2  ，准确率: 66.5 %</span><br><span class="line">隐藏层的节点数量： 3  ，准确率: 89.25 %</span><br><span class="line">隐藏层的节点数量： 4  ，准确率: 90.0 %</span><br><span class="line">隐藏层的节点数量： 5  ，准确率: 89.75 %</span><br><span class="line">隐藏层的节点数量： 20  ，准确率: 90.0 %</span><br><span class="line">隐藏层的节点数量： 50  ，准确率: 89.75 %</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-17/%E5%9B%9B%E4%B8%AA.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-17/%E4%B8%89%E4%B8%AA.png" alt=""></p>
+<p>较大的模型（具有更多隐藏单元）能够更好地适应训练集，直到最终的最大模型过度拟合数据。<br>最好的隐藏层大小似乎在n_h = 5附近。实际上，这里的值似乎很适合数据，而且不会引起过度拟合。<br>我们还将在后面学习有关正则化的知识，它允许我们使用非常大的模型（如n_h = 50），而不会出现太多过度拟合。</p>
+<h2 id="可选-探索"><a href="#可选-探索" class="headerlink" title="[可选]探索"></a>[可选]探索</h2><ul>
+<li>当改变sigmoid激活或ReLU激活的tanh激活时会发生什么？</li>
+<li>改变learning_rate的数值会发生什么</li>
+<li>如果我们改变数据集呢？</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 数据集</span></span><br><span class="line">noisy_circles, noisy_moons, blobs, gaussian_quantiles, no_structure = load_extra_datasets()</span><br><span class="line"></span><br><span class="line">datasets = &#123;<span class="string">"noisy_circles"</span>: noisy_circles,</span><br><span class="line">            <span class="string">"noisy_moons"</span>: noisy_moons,</span><br><span class="line">            <span class="string">"blobs"</span>: blobs,</span><br><span class="line">            <span class="string">"gaussian_quantiles"</span>: gaussian_quantiles&#125;</span><br><span class="line"></span><br><span class="line">dataset = <span class="string">"noisy_moons"</span></span><br><span class="line"></span><br><span class="line">X, Y = datasets[dataset]</span><br><span class="line">X, Y = X.T, Y.reshape(<span class="number">1</span>, Y.shape[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> dataset == <span class="string">"blobs"</span>:</span><br><span class="line">    Y = Y % <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#plt.scatter(X[0, :], X[1, :], c=Y, s=40, cmap=plt.cm.Spectral)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#上一语句如出现问题请使用下面的语句：</span></span><br><span class="line">plt.scatter(X[<span class="number">0</span>, :], X[<span class="number">1</span>, :], c=np.squeeze(Y), s=<span class="number">40</span>, cmap=plt.cm.Spectral)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-17/end.png" alt=""></p>
+<h1 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h1><h2 id="主代码"><a href="#主代码" class="headerlink" title="主代码"></a>主代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">本文博客地址：https://blog.csdn.net/u013733326/article/details/79702148</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">@author: Oscar</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> testCases <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> sklearn</span><br><span class="line"><span class="keyword">import</span> sklearn.datasets</span><br><span class="line"><span class="keyword">import</span> sklearn.linear_model</span><br><span class="line"><span class="keyword">from</span> planar_utils <span class="keyword">import</span> plot_decision_boundary, sigmoid, load_planar_dataset, load_extra_datasets</span><br><span class="line"></span><br><span class="line"><span class="comment">#%matplotlib inline #如果你使用用的是Jupyter Notebook的话请取消注释。</span></span><br><span class="line"></span><br><span class="line">np.random.seed(<span class="number">1</span>) <span class="comment">#设置一个固定的随机种子，以保证接下来的步骤中我们的结果是一致的。</span></span><br><span class="line"></span><br><span class="line">X, Y = load_planar_dataset()</span><br><span class="line"><span class="comment">#plt.scatter(X[0, :], X[1, :], c=Y, s=40, cmap=plt.cm.Spectral) #绘制散点图</span></span><br><span class="line">shape_X = X.shape</span><br><span class="line">shape_Y = Y.shape</span><br><span class="line">m = Y.shape[<span class="number">1</span>]  <span class="comment"># 训练集里面的数量</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> (<span class="string">"X的维度为: "</span> + str(shape_X))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"Y的维度为: "</span> + str(shape_Y))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"数据集里面的数据有："</span> + str(m) + <span class="string">" 个"</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">layer_sizes</span><span class="params">(X , Y)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    参数：</span></span><br><span class="line"><span class="string">     X - 输入数据集,维度为（输入的数量，训练/测试的数量）</span></span><br><span class="line"><span class="string">     Y - 标签，维度为（输出的数量，训练/测试数量）</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    返回：</span></span><br><span class="line"><span class="string">     n_x - 输入层的数量</span></span><br><span class="line"><span class="string">     n_h - 隐藏层的数量</span></span><br><span class="line"><span class="string">     n_y - 输出层的数量</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    n_x = X.shape[<span class="number">0</span>] <span class="comment">#输入层</span></span><br><span class="line">    n_h = <span class="number">4</span> <span class="comment">#，隐藏层，硬编码为4</span></span><br><span class="line">    n_y = Y.shape[<span class="number">0</span>] <span class="comment">#输出层</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (n_x,n_h,n_y)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">initialize_parameters</span><span class="params">( n_x , n_h ,n_y)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    参数：</span></span><br><span class="line"><span class="string">        n_x - 输入节点的数量</span></span><br><span class="line"><span class="string">        n_h - 隐藏层节点的数量</span></span><br><span class="line"><span class="string">        n_y - 输出层节点的数量</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    返回：</span></span><br><span class="line"><span class="string">        parameters - 包含参数的字典：</span></span><br><span class="line"><span class="string">            W1 - 权重矩阵,维度为（n_h，n_x）</span></span><br><span class="line"><span class="string">            b1 - 偏向量，维度为（n_h，1）</span></span><br><span class="line"><span class="string">            W2 - 权重矩阵，维度为（n_y，n_h）</span></span><br><span class="line"><span class="string">            b2 - 偏向量，维度为（n_y，1）</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    np.random.seed(<span class="number">2</span>) <span class="comment">#指定一个随机种子，以便你的输出与我们的一样。</span></span><br><span class="line">    W1 = np.random.randn(n_h,n_x) * <span class="number">0.01</span></span><br><span class="line">    b1 = np.zeros(shape=(n_h, <span class="number">1</span>))</span><br><span class="line">    W2 = np.random.randn(n_y,n_h) * <span class="number">0.01</span></span><br><span class="line">    b2 = np.zeros(shape=(n_y, <span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment">#使用断言确保我的数据格式是正确的</span></span><br><span class="line">    <span class="keyword">assert</span>(W1.shape == ( n_h , n_x ))</span><br><span class="line">    <span class="keyword">assert</span>(b1.shape == ( n_h , <span class="number">1</span> ))</span><br><span class="line">    <span class="keyword">assert</span>(W2.shape == ( n_y , n_h ))</span><br><span class="line">    <span class="keyword">assert</span>(b2.shape == ( n_y , <span class="number">1</span> ))</span><br><span class="line"></span><br><span class="line">    parameters = &#123;<span class="string">"W1"</span> : W1,</span><br><span class="line">                  <span class="string">"b1"</span> : b1,</span><br><span class="line">                  <span class="string">"W2"</span> : W2,</span><br><span class="line">                  <span class="string">"b2"</span> : b2 &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> parameters</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">forward_propagation</span><span class="params">( X , parameters )</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    参数：</span></span><br><span class="line"><span class="string">         X - 维度为（n_x，m）的输入数据。</span></span><br><span class="line"><span class="string">         parameters - 初始化函数（initialize_parameters）的输出</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    返回：</span></span><br><span class="line"><span class="string">         A2 - 使用sigmoid()函数计算的第二次激活后的数值</span></span><br><span class="line"><span class="string">         cache - 包含“Z1”，“A1”，“Z2”和“A2”的字典类型变量</span></span><br><span class="line"><span class="string">     """</span></span><br><span class="line">    W1 = parameters[<span class="string">"W1"</span>]</span><br><span class="line">    b1 = parameters[<span class="string">"b1"</span>]</span><br><span class="line">    W2 = parameters[<span class="string">"W2"</span>]</span><br><span class="line">    b2 = parameters[<span class="string">"b2"</span>]</span><br><span class="line">    <span class="comment">#前向传播计算A2</span></span><br><span class="line">    Z1 = np.dot(W1 , X) + b1</span><br><span class="line">    A1 = np.tanh(Z1)</span><br><span class="line">    Z2 = np.dot(W2 , A1) + b2</span><br><span class="line">    A2 = sigmoid(Z2)</span><br><span class="line">    <span class="comment">#使用断言确保我的数据格式是正确的</span></span><br><span class="line">    <span class="keyword">assert</span>(A2.shape == (<span class="number">1</span>,X.shape[<span class="number">1</span>]))</span><br><span class="line">    cache = &#123;<span class="string">"Z1"</span>: Z1,</span><br><span class="line">             <span class="string">"A1"</span>: A1,</span><br><span class="line">             <span class="string">"Z2"</span>: Z2,</span><br><span class="line">             <span class="string">"A2"</span>: A2&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (A2, cache)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compute_cost</span><span class="params">(A2,Y,parameters)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    计算方程（6）中给出的交叉熵成本，</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    参数：</span></span><br><span class="line"><span class="string">         A2 - 使用sigmoid()函数计算的第二次激活后的数值</span></span><br><span class="line"><span class="string">         Y - "True"标签向量,维度为（1，数量）</span></span><br><span class="line"><span class="string">         parameters - 一个包含W1，B1，W2和B2的字典类型的变量</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    返回：</span></span><br><span class="line"><span class="string">         成本 - 交叉熵成本给出方程（13）</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    m = Y.shape[<span class="number">1</span>]</span><br><span class="line">    W1 = parameters[<span class="string">"W1"</span>]</span><br><span class="line">    W2 = parameters[<span class="string">"W2"</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment">#计算成本</span></span><br><span class="line">    logprobs = logprobs = np.multiply(np.log(A2), Y) + np.multiply((<span class="number">1</span> - Y), np.log(<span class="number">1</span> - A2))</span><br><span class="line">    cost = - np.sum(logprobs) / m</span><br><span class="line">    cost = float(np.squeeze(cost))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">assert</span>(isinstance(cost,float))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> cost</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">backward_propagation</span><span class="params">(parameters,cache,X,Y)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    使用上述说明搭建反向传播函数。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    参数：</span></span><br><span class="line"><span class="string">     parameters - 包含我们的参数的一个字典类型的变量。</span></span><br><span class="line"><span class="string">     cache - 包含“Z1”，“A1”，“Z2”和“A2”的字典类型的变量。</span></span><br><span class="line"><span class="string">     X - 输入数据，维度为（2，数量）</span></span><br><span class="line"><span class="string">     Y - “True”标签，维度为（1，数量）</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    返回：</span></span><br><span class="line"><span class="string">     grads - 包含W和b的导数一个字典类型的变量。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    m = X.shape[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">    W1 = parameters[<span class="string">"W1"</span>]</span><br><span class="line">    W2 = parameters[<span class="string">"W2"</span>]</span><br><span class="line"></span><br><span class="line">    A1 = cache[<span class="string">"A1"</span>]</span><br><span class="line">    A2 = cache[<span class="string">"A2"</span>]</span><br><span class="line"></span><br><span class="line">    dZ2= A2 - Y</span><br><span class="line">    dW2 = (<span class="number">1</span> / m) * np.dot(dZ2, A1.T)</span><br><span class="line">    db2 = (<span class="number">1</span> / m) * np.sum(dZ2, axis=<span class="number">1</span>, keepdims=<span class="literal">True</span>)</span><br><span class="line">    dZ1 = np.multiply(np.dot(W2.T, dZ2), <span class="number">1</span> - np.power(A1, <span class="number">2</span>))</span><br><span class="line">    dW1 = (<span class="number">1</span> / m) * np.dot(dZ1, X.T)</span><br><span class="line">    db1 = (<span class="number">1</span> / m) * np.sum(dZ1, axis=<span class="number">1</span>, keepdims=<span class="literal">True</span>)</span><br><span class="line">    grads = &#123;<span class="string">"dW1"</span>: dW1,</span><br><span class="line">             <span class="string">"db1"</span>: db1,</span><br><span class="line">             <span class="string">"dW2"</span>: dW2,</span><br><span class="line">             <span class="string">"db2"</span>: db2 &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> grads</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_parameters</span><span class="params">(parameters,grads,learning_rate=<span class="number">1.2</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    使用上面给出的梯度下降更新规则更新参数</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    参数：</span></span><br><span class="line"><span class="string">     parameters - 包含参数的字典类型的变量。</span></span><br><span class="line"><span class="string">     grads - 包含导数值的字典类型的变量。</span></span><br><span class="line"><span class="string">     learning_rate - 学习速率</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    返回：</span></span><br><span class="line"><span class="string">     parameters - 包含更新参数的字典类型的变量。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    W1,W2 = parameters[<span class="string">"W1"</span>],parameters[<span class="string">"W2"</span>]</span><br><span class="line">    b1,b2 = parameters[<span class="string">"b1"</span>],parameters[<span class="string">"b2"</span>]</span><br><span class="line"></span><br><span class="line">    dW1,dW2 = grads[<span class="string">"dW1"</span>],grads[<span class="string">"dW2"</span>]</span><br><span class="line">    db1,db2 = grads[<span class="string">"db1"</span>],grads[<span class="string">"db2"</span>]</span><br><span class="line"></span><br><span class="line">    W1 = W1 - learning_rate * dW1</span><br><span class="line">    b1 = b1 - learning_rate * db1</span><br><span class="line">    W2 = W2 - learning_rate * dW2</span><br><span class="line">    b2 = b2 - learning_rate * db2</span><br><span class="line"></span><br><span class="line">    parameters = &#123;<span class="string">"W1"</span>: W1,</span><br><span class="line">                  <span class="string">"b1"</span>: b1,</span><br><span class="line">                  <span class="string">"W2"</span>: W2,</span><br><span class="line">                  <span class="string">"b2"</span>: b2&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> parameters</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">nn_model</span><span class="params">(X,Y,n_h,num_iterations,print_cost=False)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    参数：</span></span><br><span class="line"><span class="string">        X - 数据集,维度为（2，示例数）</span></span><br><span class="line"><span class="string">        Y - 标签，维度为（1，示例数）</span></span><br><span class="line"><span class="string">        n_h - 隐藏层的数量</span></span><br><span class="line"><span class="string">        num_iterations - 梯度下降循环中的迭代次数</span></span><br><span class="line"><span class="string">        print_cost - 如果为True，则每1000次迭代打印一次成本数值</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    返回：</span></span><br><span class="line"><span class="string">        parameters - 模型学习的参数，它们可以用来进行预测。</span></span><br><span class="line"><span class="string">     """</span></span><br><span class="line"></span><br><span class="line">    np.random.seed(<span class="number">3</span>) <span class="comment">#指定随机种子</span></span><br><span class="line">    n_x = layer_sizes(X, Y)[<span class="number">0</span>]</span><br><span class="line">    n_y = layer_sizes(X, Y)[<span class="number">2</span>]</span><br><span class="line"></span><br><span class="line">    parameters = initialize_parameters(n_x,n_h,n_y)</span><br><span class="line">    W1 = parameters[<span class="string">"W1"</span>]</span><br><span class="line">    b1 = parameters[<span class="string">"b1"</span>]</span><br><span class="line">    W2 = parameters[<span class="string">"W2"</span>]</span><br><span class="line">    b2 = parameters[<span class="string">"b2"</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(num_iterations):</span><br><span class="line">        A2 , cache = forward_propagation(X,parameters)</span><br><span class="line">        cost = compute_cost(A2,Y,parameters)</span><br><span class="line">        grads = backward_propagation(parameters,cache,X,Y)</span><br><span class="line">        parameters = update_parameters(parameters,grads,learning_rate = <span class="number">0.5</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> print_cost:</span><br><span class="line">            <span class="keyword">if</span> i%<span class="number">1000</span> == <span class="number">0</span>:</span><br><span class="line">                print(<span class="string">"第 "</span>,i,<span class="string">" 次循环，成本为："</span>+str(cost))</span><br><span class="line">    <span class="keyword">return</span> parameters</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(parameters,X)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    使用学习的参数，为X中的每个示例预测一个类</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    参数：</span></span><br><span class="line"><span class="string">        parameters - 包含参数的字典类型的变量。</span></span><br><span class="line"><span class="string">        X - 输入数据（n_x，m）</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    返回</span></span><br><span class="line"><span class="string">        predictions - 我们模型预测的向量（红色：0 /蓝色：1）</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">     """</span></span><br><span class="line">    A2 , cache = forward_propagation(X,parameters)</span><br><span class="line">    predictions = np.round(A2)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> predictions</span><br><span class="line"></span><br><span class="line">parameters = nn_model(X, Y, n_h = <span class="number">4</span>, num_iterations=<span class="number">10000</span>, print_cost=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#绘制边界</span></span><br><span class="line">plot_decision_boundary(<span class="keyword">lambda</span> x: predict(parameters, x.T), X, Y)</span><br><span class="line">plt.title(<span class="string">"Decision Boundary for hidden layer size "</span> + str(<span class="number">4</span>))</span><br><span class="line"></span><br><span class="line">predictions = predict(parameters, X)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">'准确率: %d'</span> % float((np.dot(Y, predictions.T) + np.dot(<span class="number">1</span> - Y, <span class="number">1</span> - predictions.T)) / float(Y.size) * <span class="number">100</span>) + <span class="string">'%'</span>)</span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">plt.figure(figsize=(16, 32))</span></span><br><span class="line"><span class="string">hidden_layer_sizes = [1, 2, 3, 4, 5, 20, 50] #隐藏层数量</span></span><br><span class="line"><span class="string">for i, n_h in enumerate(hidden_layer_sizes):</span></span><br><span class="line"><span class="string">    plt.subplot(5, 2, i + 1)</span></span><br><span class="line"><span class="string">    plt.title('Hidden Layer of size %d' % n_h)</span></span><br><span class="line"><span class="string">    parameters = nn_model(X, Y, n_h, num_iterations=5000)</span></span><br><span class="line"><span class="string">    plot_decision_boundary(lambda x: predict(parameters, x.T), X, Y)</span></span><br><span class="line"><span class="string">    predictions = predict(parameters, X)</span></span><br><span class="line"><span class="string">    accuracy = float((np.dot(Y, predictions.T) + np.dot(1 - Y, 1 - predictions.T)) / float(Y.size) * 100)</span></span><br><span class="line"><span class="string">    print ("隐藏层的节点数量： &#123;&#125;  ，准确率: &#123;&#125; %".format(n_h, accuracy))</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="testCases-py"><a href="#testCases-py" class="headerlink" title="testCases.py"></a>testCases.py</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#-*- coding: UTF-8 -*-</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string"># WANGZHE12</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">layer_sizes_test_case</span><span class="params">()</span>:</span></span><br><span class="line">    np.random.seed(<span class="number">1</span>)</span><br><span class="line">    X_assess = np.random.randn(<span class="number">5</span>, <span class="number">3</span>)</span><br><span class="line">    Y_assess = np.random.randn(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">    <span class="keyword">return</span> X_assess, Y_assess</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">initialize_parameters_test_case</span><span class="params">()</span>:</span></span><br><span class="line">    n_x, n_h, n_y = <span class="number">2</span>, <span class="number">4</span>, <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> n_x, n_h, n_y</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">forward_propagation_test_case</span><span class="params">()</span>:</span></span><br><span class="line">    np.random.seed(<span class="number">1</span>)</span><br><span class="line">    X_assess = np.random.randn(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">    parameters = &#123;<span class="string">'W1'</span>: np.array([[<span class="number">-0.00416758</span>, <span class="number">-0.00056267</span>],</span><br><span class="line">        [<span class="number">-0.02136196</span>,  <span class="number">0.01640271</span>],</span><br><span class="line">        [<span class="number">-0.01793436</span>, <span class="number">-0.00841747</span>],</span><br><span class="line">        [ <span class="number">0.00502881</span>, <span class="number">-0.01245288</span>]]),</span><br><span class="line">     <span class="string">'W2'</span>: np.array([[<span class="number">-0.01057952</span>, <span class="number">-0.00909008</span>,  <span class="number">0.00551454</span>,  <span class="number">0.02292208</span>]]),</span><br><span class="line">     <span class="string">'b1'</span>: np.array([[ <span class="number">0.</span>],</span><br><span class="line">        [ <span class="number">0.</span>],</span><br><span class="line">        [ <span class="number">0.</span>],</span><br><span class="line">        [ <span class="number">0.</span>]]),</span><br><span class="line">     <span class="string">'b2'</span>: np.array([[ <span class="number">0.</span>]])&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> X_assess, parameters</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compute_cost_test_case</span><span class="params">()</span>:</span></span><br><span class="line">    np.random.seed(<span class="number">1</span>)</span><br><span class="line">    Y_assess = np.random.randn(<span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line">    parameters = &#123;<span class="string">'W1'</span>: np.array([[<span class="number">-0.00416758</span>, <span class="number">-0.00056267</span>],</span><br><span class="line">        [<span class="number">-0.02136196</span>,  <span class="number">0.01640271</span>],</span><br><span class="line">        [<span class="number">-0.01793436</span>, <span class="number">-0.00841747</span>],</span><br><span class="line">        [ <span class="number">0.00502881</span>, <span class="number">-0.01245288</span>]]),</span><br><span class="line">     <span class="string">'W2'</span>: np.array([[<span class="number">-0.01057952</span>, <span class="number">-0.00909008</span>,  <span class="number">0.00551454</span>,  <span class="number">0.02292208</span>]]),</span><br><span class="line">     <span class="string">'b1'</span>: np.array([[ <span class="number">0.</span>],</span><br><span class="line">        [ <span class="number">0.</span>],</span><br><span class="line">        [ <span class="number">0.</span>],</span><br><span class="line">        [ <span class="number">0.</span>]]),</span><br><span class="line">     <span class="string">'b2'</span>: np.array([[ <span class="number">0.</span>]])&#125;</span><br><span class="line"></span><br><span class="line">    a2 = (np.array([[ <span class="number">0.5002307</span> ,  <span class="number">0.49985831</span>,  <span class="number">0.50023963</span>]]))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> a2, Y_assess, parameters</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">backward_propagation_test_case</span><span class="params">()</span>:</span></span><br><span class="line">    np.random.seed(<span class="number">1</span>)</span><br><span class="line">    X_assess = np.random.randn(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">    Y_assess = np.random.randn(<span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line">    parameters = &#123;<span class="string">'W1'</span>: np.array([[<span class="number">-0.00416758</span>, <span class="number">-0.00056267</span>],</span><br><span class="line">        [<span class="number">-0.02136196</span>,  <span class="number">0.01640271</span>],</span><br><span class="line">        [<span class="number">-0.01793436</span>, <span class="number">-0.00841747</span>],</span><br><span class="line">        [ <span class="number">0.00502881</span>, <span class="number">-0.01245288</span>]]),</span><br><span class="line">     <span class="string">'W2'</span>: np.array([[<span class="number">-0.01057952</span>, <span class="number">-0.00909008</span>,  <span class="number">0.00551454</span>,  <span class="number">0.02292208</span>]]),</span><br><span class="line">     <span class="string">'b1'</span>: np.array([[ <span class="number">0.</span>],</span><br><span class="line">        [ <span class="number">0.</span>],</span><br><span class="line">        [ <span class="number">0.</span>],</span><br><span class="line">        [ <span class="number">0.</span>]]),</span><br><span class="line">     <span class="string">'b2'</span>: np.array([[ <span class="number">0.</span>]])&#125;</span><br><span class="line"></span><br><span class="line">    cache = &#123;<span class="string">'A1'</span>: np.array([[<span class="number">-0.00616578</span>,  <span class="number">0.0020626</span> ,  <span class="number">0.00349619</span>],</span><br><span class="line">         [<span class="number">-0.05225116</span>,  <span class="number">0.02725659</span>, <span class="number">-0.02646251</span>],</span><br><span class="line">         [<span class="number">-0.02009721</span>,  <span class="number">0.0036869</span> ,  <span class="number">0.02883756</span>],</span><br><span class="line">         [ <span class="number">0.02152675</span>, <span class="number">-0.01385234</span>,  <span class="number">0.02599885</span>]]),</span><br><span class="line">  <span class="string">'A2'</span>: np.array([[ <span class="number">0.5002307</span> ,  <span class="number">0.49985831</span>,  <span class="number">0.50023963</span>]]),</span><br><span class="line">  <span class="string">'Z1'</span>: np.array([[<span class="number">-0.00616586</span>,  <span class="number">0.0020626</span> ,  <span class="number">0.0034962</span> ],</span><br><span class="line">         [<span class="number">-0.05229879</span>,  <span class="number">0.02726335</span>, <span class="number">-0.02646869</span>],</span><br><span class="line">         [<span class="number">-0.02009991</span>,  <span class="number">0.00368692</span>,  <span class="number">0.02884556</span>],</span><br><span class="line">         [ <span class="number">0.02153007</span>, <span class="number">-0.01385322</span>,  <span class="number">0.02600471</span>]]),</span><br><span class="line">  <span class="string">'Z2'</span>: np.array([[ <span class="number">0.00092281</span>, <span class="number">-0.00056678</span>,  <span class="number">0.00095853</span>]])&#125;</span><br><span class="line">    <span class="keyword">return</span> parameters, cache, X_assess, Y_assess</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_parameters_test_case</span><span class="params">()</span>:</span></span><br><span class="line">    parameters = &#123;<span class="string">'W1'</span>: np.array([[<span class="number">-0.00615039</span>,  <span class="number">0.0169021</span> ],</span><br><span class="line">        [<span class="number">-0.02311792</span>,  <span class="number">0.03137121</span>],</span><br><span class="line">        [<span class="number">-0.0169217</span> , <span class="number">-0.01752545</span>],</span><br><span class="line">        [ <span class="number">0.00935436</span>, <span class="number">-0.05018221</span>]]),</span><br><span class="line"> <span class="string">'W2'</span>: np.array([[<span class="number">-0.0104319</span> , <span class="number">-0.04019007</span>,  <span class="number">0.01607211</span>,  <span class="number">0.04440255</span>]]),</span><br><span class="line"> <span class="string">'b1'</span>: np.array([[ <span class="number">-8.97523455e-07</span>],</span><br><span class="line">        [  <span class="number">8.15562092e-06</span>],</span><br><span class="line">        [  <span class="number">6.04810633e-07</span>],</span><br><span class="line">        [ <span class="number">-2.54560700e-06</span>]]),</span><br><span class="line"> <span class="string">'b2'</span>: np.array([[  <span class="number">9.14954378e-05</span>]])&#125;</span><br><span class="line"></span><br><span class="line">    grads = &#123;<span class="string">'dW1'</span>: np.array([[ <span class="number">0.00023322</span>, <span class="number">-0.00205423</span>],</span><br><span class="line">        [ <span class="number">0.00082222</span>, <span class="number">-0.00700776</span>],</span><br><span class="line">        [<span class="number">-0.00031831</span>,  <span class="number">0.0028636</span> ],</span><br><span class="line">        [<span class="number">-0.00092857</span>,  <span class="number">0.00809933</span>]]),</span><br><span class="line"> <span class="string">'dW2'</span>: np.array([[ <span class="number">-1.75740039e-05</span>,   <span class="number">3.70231337e-03</span>,  <span class="number">-1.25683095e-03</span>,</span><br><span class="line">          <span class="number">-2.55715317e-03</span>]]),</span><br><span class="line"> <span class="string">'db1'</span>: np.array([[  <span class="number">1.05570087e-07</span>],</span><br><span class="line">        [ <span class="number">-3.81814487e-06</span>],</span><br><span class="line">        [ <span class="number">-1.90155145e-07</span>],</span><br><span class="line">        [  <span class="number">5.46467802e-07</span>]]),</span><br><span class="line"> <span class="string">'db2'</span>: np.array([[ <span class="number">-1.08923140e-05</span>]])&#125;</span><br><span class="line">    <span class="keyword">return</span> parameters, grads</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">nn_model_test_case</span><span class="params">()</span>:</span></span><br><span class="line">    np.random.seed(<span class="number">1</span>)</span><br><span class="line">    X_assess = np.random.randn(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">    Y_assess = np.random.randn(<span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line">    <span class="keyword">return</span> X_assess, Y_assess</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">predict_test_case</span><span class="params">()</span>:</span></span><br><span class="line">    np.random.seed(<span class="number">1</span>)</span><br><span class="line">    X_assess = np.random.randn(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">    parameters = &#123;<span class="string">'W1'</span>: np.array([[<span class="number">-0.00615039</span>,  <span class="number">0.0169021</span> ],</span><br><span class="line">        [<span class="number">-0.02311792</span>,  <span class="number">0.03137121</span>],</span><br><span class="line">        [<span class="number">-0.0169217</span> , <span class="number">-0.01752545</span>],</span><br><span class="line">        [ <span class="number">0.00935436</span>, <span class="number">-0.05018221</span>]]),</span><br><span class="line">     <span class="string">'W2'</span>: np.array([[<span class="number">-0.0104319</span> , <span class="number">-0.04019007</span>,  <span class="number">0.01607211</span>,  <span class="number">0.04440255</span>]]),</span><br><span class="line">     <span class="string">'b1'</span>: np.array([[ <span class="number">-8.97523455e-07</span>],</span><br><span class="line">        [  <span class="number">8.15562092e-06</span>],</span><br><span class="line">        [  <span class="number">6.04810633e-07</span>],</span><br><span class="line">        [ <span class="number">-2.54560700e-06</span>]]),</span><br><span class="line">     <span class="string">'b2'</span>: np.array([[  <span class="number">9.14954378e-05</span>]])&#125;</span><br><span class="line">    <span class="keyword">return</span> parameters, X_assess</span><br></pre></td></tr></table></figure>
+
+<h2 id="planar-utils-py"><a href="#planar-utils-py" class="headerlink" title="planar_utils.py"></a>planar_utils.py</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> sklearn</span><br><span class="line"><span class="keyword">import</span> sklearn.datasets</span><br><span class="line"><span class="keyword">import</span> sklearn.linear_model</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_decision_boundary</span><span class="params">(model, X, y)</span>:</span></span><br><span class="line">    <span class="comment"># Set min and max values and give it some padding</span></span><br><span class="line">    x_min, x_max = X[<span class="number">0</span>, :].min() - <span class="number">1</span>, X[<span class="number">0</span>, :].max() + <span class="number">1</span></span><br><span class="line">    y_min, y_max = X[<span class="number">1</span>, :].min() - <span class="number">1</span>, X[<span class="number">1</span>, :].max() + <span class="number">1</span></span><br><span class="line">    h = <span class="number">0.01</span></span><br><span class="line">    <span class="comment"># Generate a grid of points with distance h between them</span></span><br><span class="line">    xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))</span><br><span class="line">    <span class="comment"># Predict the function value for the whole grid</span></span><br><span class="line">    Z = model(np.c_[xx.ravel(), yy.ravel()])</span><br><span class="line">    Z = Z.reshape(xx.shape)</span><br><span class="line">    <span class="comment"># Plot the contour and training examples</span></span><br><span class="line">    plt.contourf(xx, yy, Z, cmap=plt.cm.Spectral)</span><br><span class="line">    plt.ylabel(<span class="string">'x2'</span>)</span><br><span class="line">    plt.xlabel(<span class="string">'x1'</span>)</span><br><span class="line">    plt.scatter(X[<span class="number">0</span>, :], X[<span class="number">1</span>, :], c=y, cmap=plt.cm.Spectral)</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sigmoid</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Compute the sigmoid of x</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Arguments:</span></span><br><span class="line"><span class="string">    x -- A scalar or numpy array of any size.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Return:</span></span><br><span class="line"><span class="string">    s -- sigmoid(x)</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    s = <span class="number">1</span>/(<span class="number">1</span>+np.exp(-x))</span><br><span class="line">    <span class="keyword">return</span> s</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_planar_dataset</span><span class="params">()</span>:</span></span><br><span class="line">    np.random.seed(<span class="number">1</span>)</span><br><span class="line">    m = <span class="number">400</span> <span class="comment"># number of examples</span></span><br><span class="line">    N = int(m/<span class="number">2</span>) <span class="comment"># number of points per class</span></span><br><span class="line">    D = <span class="number">2</span> <span class="comment"># dimensionality</span></span><br><span class="line">    X = np.zeros((m,D)) <span class="comment"># data matrix where each row is a single example</span></span><br><span class="line">    Y = np.zeros((m,<span class="number">1</span>), dtype=<span class="string">'uint8'</span>) <span class="comment"># labels vector (0 for red, 1 for blue)</span></span><br><span class="line">    a = <span class="number">4</span> <span class="comment"># maximum ray of the flower</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">2</span>):</span><br><span class="line">        ix = range(N*j,N*(j+<span class="number">1</span>))</span><br><span class="line">        t = np.linspace(j*<span class="number">3.12</span>,(j+<span class="number">1</span>)*<span class="number">3.12</span>,N) + np.random.randn(N)*<span class="number">0.2</span> <span class="comment"># theta</span></span><br><span class="line">        r = a*np.sin(<span class="number">4</span>*t) + np.random.randn(N)*<span class="number">0.2</span> <span class="comment"># radius</span></span><br><span class="line">        X[ix] = np.c_[r*np.sin(t), r*np.cos(t)]</span><br><span class="line">        Y[ix] = j</span><br><span class="line">        </span><br><span class="line">    X = X.T</span><br><span class="line">    Y = Y.T</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> X, Y</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_extra_datasets</span><span class="params">()</span>:</span>  </span><br><span class="line">    N = <span class="number">200</span></span><br><span class="line">    noisy_circles = sklearn.datasets.make_circles(n_samples=N, factor=<span class="number">.5</span>, noise=<span class="number">.3</span>)</span><br><span class="line">    noisy_moons = sklearn.datasets.make_moons(n_samples=N, noise=<span class="number">.2</span>)</span><br><span class="line">    blobs = sklearn.datasets.make_blobs(n_samples=N, random_state=<span class="number">5</span>, n_features=<span class="number">2</span>, centers=<span class="number">6</span>)</span><br><span class="line">    gaussian_quantiles = sklearn.datasets.make_gaussian_quantiles(mean=<span class="literal">None</span>, cov=<span class="number">0.5</span>, n_samples=N, n_features=<span class="number">2</span>, n_classes=<span class="number">2</span>, shuffle=<span class="literal">True</span>, random_state=<span class="literal">None</span>)</span><br><span class="line">    no_structure = np.random.rand(N, <span class="number">2</span>), np.random.rand(N, <span class="number">2</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> noisy_circles, noisy_moons, blobs, gaussian_quantiles, no_structure</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+	
+    <div style="text-align:center;color: #ccc;font-size:14px;">
+------------- 本文结束 <i class="fa fa-heart-o"></i> 感谢您的阅读-------------
+</div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>sdz
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2020/01/17/%E5%90%B4%E6%81%A9%E8%BE%BE%E8%AF%BE%E5%90%8E%E7%BC%96%E7%A8%8B%E4%BD%9C%E4%B8%9A-Course-1-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E7%AC%AC%E4%B8%89%E5%91%A8%E4%BD%9C%E4%B8%9A-%E5%B8%A6%E6%9C%89%E4%B8%80%E4%B8%AA%E9%9A%90%E8%97%8F%E5%B1%82%E7%9A%84%E5%B9%B3%E9%9D%A2%E6%95%B0%E6%8D%AE%E5%88%86%E7%B1%BB/" title="吴恩达课后编程作业 Course 1 神经网络和深度学习 - 第三周作业 -  带有一个隐藏层的平面数据分类">http://yoursite.com/2020/01/17/吴恩达课后编程作业-Course-1-神经网络和深度学习-第三周作业-带有一个隐藏层的平面数据分类/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" rel="tag"><i class="fa fa-tag"></i> 神经网络</a>
+              <a href="/tags/%E6%B5%85%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" rel="tag"><i class="fa fa-tag"></i> 浅层神经网络</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/01/15/Python%E5%9F%BA%E7%A1%80%E4%B8%8ENumpy-%E5%90%B4%E6%81%A9%E8%BE%BE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="prev" title="Python基础与Numpy 吴恩达深度学习">
+      <i class="fa fa-chevron-left"></i> Python基础与Numpy 吴恩达深度学习
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/01/18/%E7%BE%8E%E8%B5%9B2019A%E8%AE%BA%E6%96%87%E5%88%86%E6%9E%90/" rel="next" title="美赛2019A论文分析">
+      美赛2019A论文分析 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#任务"><span class="nav-number">1.</span> <span class="nav-text">任务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码"><span class="nav-number">2.</span> <span class="nav-text">代码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#准备软件包"><span class="nav-number">2.1.</span> <span class="nav-text">准备软件包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#加载和查看数据集"><span class="nav-number">2.2.</span> <span class="nav-text">加载和查看数据集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看简单的Logistic回归的分类效果"><span class="nav-number">2.3.</span> <span class="nav-text">查看简单的Logistic回归的分类效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建神经网络"><span class="nav-number">2.4.</span> <span class="nav-text">搭建神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义神经网络结构"><span class="nav-number">2.4.1.</span> <span class="nav-text">定义神经网络结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化模型的参数"><span class="nav-number">2.4.2.</span> <span class="nav-text">初始化模型的参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#循环"><span class="nav-number">2.4.3.</span> <span class="nav-text">循环</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#前向传播"><span class="nav-number">2.4.3.1.</span> <span class="nav-text">前向传播</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#计算损失"><span class="nav-number">2.4.3.2.</span> <span class="nav-text">计算损失</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#向后传播"><span class="nav-number">2.4.3.3.</span> <span class="nav-text">向后传播</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更新参数"><span class="nav-number">2.4.3.4.</span> <span class="nav-text">更新参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#整合"><span class="nav-number">2.4.4.</span> <span class="nav-text">整合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#预测"><span class="nav-number">2.4.5.</span> <span class="nav-text">预测</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正式运行"><span class="nav-number">2.5.</span> <span class="nav-text">正式运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更改隐藏层节点数量"><span class="nav-number">2.6.</span> <span class="nav-text">更改隐藏层节点数量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可选-探索"><span class="nav-number">2.7.</span> <span class="nav-text">[可选]探索</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#完整代码"><span class="nav-number">3.</span> <span class="nav-text">完整代码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#主代码"><span class="nav-number">3.1.</span> <span class="nav-text">主代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#testCases-py"><span class="nav-number">3.2.</span> <span class="nav-text">testCases.py</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#planar-utils-py"><span class="nav-number">3.3.</span> <span class="nav-text">planar_utils.py</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="sdz"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">sdz</p>
+  <div class="site-description" itemprop="description">个人博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/pxlsdz" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;pxlsdz" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/sdz20172133" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;sdz20172133" rel="noopener" target="_blank"><i class="fa fa-fw fa-codiepie"></i>CSDN</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sdz</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">264k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:01</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='170' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'pAM5gCGYUGBwBF62VmECeV0o-gzGzoHsz',
+      appKey     : 'myehhFCNOsN4ClPFSLov1xKd',
+      placeholder: "欢迎畅所欲言",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : ,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+  <!-- 页面点击小红心 -->
+
+      <script type="text/javascript" src="/js/clicklove.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="排队论简介">
+<meta property="og:type" content="article">
+<meta property="og:title" content="排队论">
+<meta property="og:url" content="http://yoursite.com/2020/01/29/%E6%8E%92%E9%98%9F%E8%AE%BA/index.html">
+<meta property="og:site_name" content="pxlsdz的博客">
+<meta property="og:description" content="排队论简介">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-29/1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-29/2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-29/3.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-29/4.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-29/5.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-29/6.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-29/7.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-29/8.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-29/9.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-29/10.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-29/11.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-29/12.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-29/13.png">
+<meta property="article:published_time" content="2020-01-29T11:42:55.000Z">
+<meta property="article:modified_time" content="2020-01-30T14:45:45.170Z">
+<meta property="article:author" content="sdz">
+<meta property="article:tag" content="MATLAB">
+<meta property="article:tag" content="排队论">
+<meta property="article:tag" content="运筹学">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-29/1.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/01/29/%E6%8E%92%E9%98%9F%E8%AE%BA/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>排队论 | pxlsdz的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">pxlsdz的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">分享，笔记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">32</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">17</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">52</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+  </div>
+</div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/pxlsdz" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/29/%E6%8E%92%E9%98%9F%E8%AE%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="sdz">
+      <meta itemprop="description" content="个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pxlsdz的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          排队论
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-01-29 19:42:55" itemprop="dateCreated datePublished" datetime="2020-01-29T19:42:55+08:00">2020-01-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-30 22:45:45" itemprop="dateModified" datetime="2020-01-30T22:45:45+08:00">2020-01-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/" itemprop="url" rel="index"><span itemprop="name">数学建模</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/01/29/%E6%8E%92%E9%98%9F%E8%AE%BA/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/01/29/%E6%8E%92%E9%98%9F%E8%AE%BA/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="排队论简介"><a href="#排队论简介" class="headerlink" title="排队论简介"></a>排队论简介</h1><a id="more"></a>
+
+<h2 id="历史"><a href="#历史" class="headerlink" title="历史"></a>历史</h2><ul>
+<li>排队论又称随机服务系统，是研究系统随机聚散现象和随机 服务系统工作过程的数学理论和方法，是运筹学的一个分支。 </li>
+<li>排队论的基本思想是 1909 年丹麦数学家 A.K. 埃尔朗在解 决自动电话设计问题时开始形成的，当时称为话务理论。 </li>
+<li>现实生活中如排队买票、病人排队就诊、轮船进港、高速路 上汽车排队通过收费站、机器等待修理等都属于排队论问题。</li>
+</ul>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><ol>
+<li>通过对服务对象到来及服务时间的统计研究</li>
+<li>得出这些数量指标（等待时间、排队长度、忙期长短（决定<strong>服务台数量</strong>）等）的 统计规律，</li>
+<li>然后根据这些规律来改进服务系统的结构或重新组织被服务 对象</li>
+<li>使得服务系统既能满足服务对象的需要，又能使机构的费用 最经济或某些指标最优。</li>
+</ol>
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><ul>
+<li>CUMCM 2009B 的眼科病床的合理安排问题</li>
+<li>MCM 2005B 收费站最佳配置问题 </li>
+<li>ICM 2017D 机场安检问题</li>
+</ul>
+<h1 id="模型与模拟"><a href="#模型与模拟" class="headerlink" title="模型与模拟"></a>模型与模拟</h1><h2 id="排队论基本构成与指标"><a href="#排队论基本构成与指标" class="headerlink" title="排队论基本构成与指标"></a>排队论基本构成与指标</h2><h3 id="排队论的基本构成"><a href="#排队论的基本构成" class="headerlink" title="排队论的基本构成"></a>排队论的基本构成</h3><ul>
+<li>输入过程：描述顾客按照怎样的规律到达排队系统。顾客总 体（有限/无限）、到达的类型（单个/成批）、到达时间间隔。 </li>
+<li>排队规则：指顾客按怎样的规定次序接受服务。常见的有等 待制、损失制、混合制、闭合制。 </li>
+<li>服务机构：服务台的数量; 服务时间服从的分布</li>
+</ul>
+<h3 id="排队系统的数量指标"><a href="#排队系统的数量指标" class="headerlink" title="排队系统的数量指标"></a>排队系统的数量指标</h3><ul>
+<li>队长：系统中的平均顾客数（包括正在接受服务的顾客）。 </li>
+<li>等待队长：系统中处于等待的顾客的数量。 </li>
+<li>等待时间：等待时间包括顾客的平均逗留时间。 </li>
+<li>忙期：连续保持服务的时长。</li>
+</ul>
+<h2 id="数学表示"><a href="#数学表示" class="headerlink" title="数学表示"></a>数学表示</h2><h3 id="排队论中的符号表示"><a href="#排队论中的符号表示" class="headerlink" title="排队论中的符号表示"></a>排队论中的符号表示</h3><p>$$<br>{A/B/C/n}<br>$$</p>
+<p>A 输入过程，B 服务时间，C 服务台数，n 系统容量。 </p>
+<h2 id="排队论表示实例-M-M-S-∞"><a href="#排队论表示实例-M-M-S-∞" class="headerlink" title="排队论表示实例　M/M/S/∞"></a>排队论表示实例　M/M/S/∞</h2><ul>
+<li>输入过程是 Poisson 流 （顾客到达的时间服从泊松分布，到达的时间间隔便服从负指数分布）</li>
+<li>服务时间服从负指数分布 </li>
+<li>系统有 S 个服务台平行服务 </li>
+<li>系统容量为无穷大的等待制排队系统</li>
+</ul>
+<h3 id="等待制模型-M-M-S-∞-S-1"><a href="#等待制模型-M-M-S-∞-S-1" class="headerlink" title="等待制模型 M/M/S/∞ S=1"></a>等待制模型 M/M/S/∞ S=1</h3><p><img src="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-29/1.png" alt=""></p>
+<p><strong>单位时间内到达的人数为λ</strong>,所以[0,t] 时间内到达的顾客平均数为 λt</p>
+<p>*<em>µ代表单位时间服务人的个数 *</em><br>判断模型是否稳定，一般用比较λ和µ的大小（下图的系统服务强度）</p>
+<hr>
+<p><img src="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-29/2.png" alt=""></p>
+<p>$(1-\rho)\sum_{n=0}^{\infty}n\rho^{n}$,当$\rho$&lt;1时候级数收敛</p>
+<p>平均等待队长比平均队长少一人，因为一人在接受服务。</p>
+<p><img src="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-29/3.png" alt=""></p>
+<p>平均等待时间=逗留的时间-服务的时间</p>
+<p>Little公式是根据前面推导出来。</p>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p><img src="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-29/4.png" alt=""></p>
+<p>λ/µ=8/9&lt;1,系统是稳定的。</p>
+<p>平均等待7.1个人</p>
+<h3 id="等待制模型-M-M-S-∞-S-gt-1-服务台数量-gt-1"><a href="#等待制模型-M-M-S-∞-S-gt-1-服务台数量-gt-1" class="headerlink" title="等待制模型 M/M/S/∞ S&gt;1(服务台数量&gt;1)"></a>等待制模型 M/M/S/∞ S&gt;1(服务台数量&gt;1)</h3><p><img src="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-29/5.png" alt=""></p>
+<p>k=[0:s-1]</p>
+<p><img src="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-29/6.png" alt=""></p>
+<h3 id="实例-1"><a href="#实例-1" class="headerlink" title="实例"></a>实例</h3><p>案例 </p>
+<ul>
+<li>来访人员按照 Poisson 流到达，到达速率为 µ = 20 人/小时。 </li>
+<li>接待人员的服务速率间服 λ = 9 人/小时的负指数分布。 </li>
+<li>为使来访问者等待不超过半小时，最少应配置几名接待员？</li>
+</ul>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">lambda = <span class="number">20</span>; mu = <span class="number">9</span>; s = <span class="number">3</span>;</span><br><span class="line">rho = lambda/(s*mu); <span class="comment">%服务强度</span></span><br><span class="line">k=(<span class="number">0</span>:s<span class="number">-1</span>);</span><br><span class="line">p0 = <span class="number">1.</span>/( sum((s*rho).^k./<span class="built_in">factorial</span>(k)) + ... </span><br><span class="line">     (s*rho)^s/(<span class="built_in">factorial</span>(s)*(<span class="number">1</span>-rho)) ); <span class="comment">%服务台空闲的概率</span></span><br><span class="line">Ls = s*rho + (s*rho)^s*rho/(<span class="built_in">factorial</span>(s)*(<span class="number">1</span>-rho)^<span class="number">2</span>)*p0; <span class="comment">%平均长度</span></span><br><span class="line">Ws = Ls/lambda; <span class="comment">%平均逗留时间</span></span><br><span class="line">Wq = Ws - <span class="number">1</span>/mu<span class="comment">%平均等待时间</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="其他模型"><a href="#其他模型" class="headerlink" title="其他模型"></a>其他模型</h2><p><img src="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-29/7.png" alt=""></p>
+<p>混合制：</p>
+<p>系统容量K为队长，理发店的的凳子数（等待凳子和服务凳子）</p>
+<p>闭合制：</p>
+<p>工厂的工人，使用的机器。</p>
+<h3 id="单服务台"><a href="#单服务台" class="headerlink" title="单服务台"></a>单服务台</h3><p>做模拟：</p>
+<p>开始服务, 到达, 离开时刻和服务, 等待时长的关系</p>
+<ul>
+<li>服务时刻(i) = max{到达时刻(i),离开时刻(i−1)} </li>
+<li>离开时刻(i) = 服务时刻(i) + 服务时长(i) </li>
+<li>等待时长(i) = 离开时刻(i)−到达时刻(i)</li>
+</ul>
+<h3 id="多服务台"><a href="#多服务台" class="headerlink" title="多服务台"></a>多服务台</h3><p>开始服务, 到达, 离开时刻和服务, 等待时长的关系 </p>
+<ul>
+<li>服务时刻(i) = max{到达时刻(i),min{服务台空闲时刻}} （假设所有顾客目的尽早的接受服务）</li>
+<li>所使用服务台(i) = k, 其中 k 使服务台空闲时刻(k) = min </li>
+<li>离开时刻(i) = 服务时刻(i) + 服务时长(i) </li>
+<li>服务台空闲时刻(k) = 离开时刻(i)</li>
+<li>等待时长(i) = 离开时刻(i)−到达时刻(i)（包括服务时间）</li>
+</ul>
+<h3 id="自动取款机问题"><a href="#自动取款机问题" class="headerlink" title="自动取款机问题"></a>自动取款机问题</h3><p>问题 </p>
+<ul>
+<li>银行计划安置取款机, A 机价格和平均服务率都是 B 机的 2 倍. 应购置 1 台 A 机还是 2 台 B 机? </li>
+<li>顾客平均每分钟到达 1 位，A 型机的平均服务时间为 0.9, B 型机为 1.8 分钟, 顾客到达间隔和服务时间都服从指数分布.</li>
+</ul>
+<h4 id="单服务台-1"><a href="#单服务台-1" class="headerlink" title="单服务台"></a>单服务台</h4><p>属于M/M/1/∞ 模型</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">n = <span class="number">100000</span>; <span class="comment">% 模拟顾客总数 </span></span><br><span class="line">mu = <span class="number">1</span>; muA = <span class="number">0.9</span>; <span class="comment">% 到达率和服务率 </span></span><br><span class="line">tarr = cumsum(exprnd(mu,<span class="number">1</span>,n));<span class="comment">% 到达时刻 ，exprnd生成指数分布（到达的时间间隔）</span></span><br><span class="line">tsrv = exprnd(muA,<span class="number">1</span>,n); <span class="comment">% 服务时长 </span></span><br><span class="line">tsta = <span class="built_in">zeros</span>(<span class="number">1</span>,n); <span class="comment">% 初始化服务时刻 </span></span><br><span class="line">tlea = <span class="built_in">zeros</span>(<span class="number">1</span>,n);<span class="comment">% 初始化离开时刻 </span></span><br><span class="line">twat = <span class="built_in">zeros</span>(<span class="number">1</span>,n); <span class="comment">% 初始化等待时长 </span></span><br><span class="line">tsta(<span class="number">1</span>) = tarr(<span class="number">1</span>);<span class="comment">% 首位顾客服务时刻=到达时刻 </span></span><br><span class="line">tlea(<span class="number">1</span>) = tsta(<span class="number">1</span>) + tsrv(<span class="number">1</span>); <span class="comment">% 首位顾客离开时刻 </span></span><br><span class="line">twtime(<span class="number">1</span>) = tlea(<span class="number">1</span>) - tarr(<span class="number">1</span>); <span class="comment">% 首位顾客等待时长=0 </span></span><br><span class="line"><span class="comment">% 上面初始化第一个顾客</span></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">2</span>:n</span><br><span class="line">     <span class="comment">% 服务时刻 = max&#123;到达时刻, 上一个顾客离开时刻&#125; </span></span><br><span class="line">    tsta(<span class="built_in">i</span>) = <span class="built_in">max</span>(tarr(<span class="built_in">i</span>),tlea(<span class="built_in">i</span><span class="number">-1</span>));</span><br><span class="line">    tlea(<span class="built_in">i</span>) = tsta(<span class="built_in">i</span>) + tsrv(<span class="built_in">i</span>);<span class="comment">% 离开时刻=服务时刻+服务时长 </span></span><br><span class="line">    twat(<span class="built_in">i</span>) = tlea(<span class="built_in">i</span>) - tarr(<span class="built_in">i</span>);;<span class="comment">% 等待时长=离开时刻-到达时刻 </span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">hist(twat)</span><br><span class="line">sum(twat)/n</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="两服务台-多个服务台"><a href="#两服务台-多个服务台" class="headerlink" title="两服务台(多个服务台)"></a>两服务台(多个服务台)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">n &#x3D; 100000;  % 模拟顾客总数 </span><br><span class="line">mu &#x3D; 1; muB &#x3D; 1.8; % 到达率和服务率 </span><br><span class="line">tarr &#x3D; cumsum(exprnd(mu,1,n)); % 到达时刻 </span><br><span class="line">tsrv &#x3D; exprnd(muB,1,n);% 服务时长 </span><br><span class="line">tsta &#x3D; zeros(1,n);% 初始化服务&#x2F;离开时刻 </span><br><span class="line">tlea &#x3D; zeros(1,n); % 初始化等待时长 </span><br><span class="line">twat &#x3D; zeros(1,n);% 初始化服务台结束服务时刻 </span><br><span class="line">last &#x3D; [0 0];%几个服务台几个0</span><br><span class="line">for i &#x3D; 2:n</span><br><span class="line">    [minemp, k] &#x3D; min(last); % 找出最快结束服务的服务台时刻 </span><br><span class="line">    tsta(i) &#x3D; max(tarr(i),minemp);% 服务时刻 </span><br><span class="line">    tlea(i) &#x3D; tsta(i) + tsrv(i); % 离开时刻</span><br><span class="line">    last(k) &#x3D; tlea(i); % 服务台结束服务时刻 </span><br><span class="line">    twat(i) &#x3D; tlea(i) - tarr(i);% 等待时长 </span><br><span class="line">end</span><br><span class="line">hist(twat)</span><br><span class="line">sum(twat)&#x2F;n</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-29/8.png" alt=""></p>
+<h1 id="真题"><a href="#真题" class="headerlink" title="真题"></a>真题</h1><h2 id="2013HIMCM-B-银行服务问题"><a href="#2013HIMCM-B-银行服务问题" class="headerlink" title="2013HIMCM-B: 银行服务问题"></a>2013HIMCM-B: 银行服务问题</h2><p><img src="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-29/9.png" alt=""></p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p><strong>如何生成序列来满足题意概率分布呢？</strong></p>
+<p>举一个例子，由时间间隔 t = [0 1 2] 和概率 p = [0.2 0.3 0.5] 得到各到顾客达时间间隔 。</p>
+<ol>
+<li><p>先把概率p倒过来求前缀和<br>$$<br>p′ = cumsum([0.5,0.3,0.2]) = [0.5,0.8,1.0]<br>$$</p>
+</li>
+<li><p>我们生成随机数x，则x&lt;=0.5的概率为0.5，0.5&lt;x&lt;=0.8的概率为0.3，0.8&lt;x&lt;=1.0的概率为0.2<br>$$<br>R = rand(1,5) = [0.1,0.9,0.2,0.4,0.8];<br>$$</p>
+</li>
+<li><p>替换随机序列的数</p>
+<p>把随机序列R&lt;0.5的数换成2……</p>
+</li>
+</ol>
+<p>$$<br>R(R &lt; 0.5) = 2, R(R &lt; 0.8) = 1, R(p &lt; 1.0) = 0<br>$$</p>
+<p>由到达时间间隔得到各顾客到达时刻<br>$$<br>间隔 = [0,1,3,2] ⇒ 时刻 = cumsum(间隔) = [0,1,4,6]<br>$$</p>
+<p>开始服务, 到达, 离开时刻和服务, 等待时间的关系: </p>
+<ul>
+<li><p>开始服务的时刻(i) = max{到达时刻(i),离开时刻 (i-1)} </p>
+</li>
+<li><p>离开时刻(i) = 开始服务的时刻(i) + 服务时间(i) </p>
+</li>
+<li><p>等待时间(i) = 离开时刻(i)−到达时刻(i)−服务时间(i)（不是逗留时刻</p>
+</li>
+</ul>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">%计算 Tarrival到达时刻, Tservice服务时间</span></span><br><span class="line">n = <span class="number">150</span>; </span><br><span class="line">ta = [<span class="number">5</span> <span class="number">4</span> <span class="number">3</span> <span class="number">2</span> <span class="number">1</span> <span class="number">0</span>]; </span><br><span class="line">pa = [<span class="number">0.05</span> <span class="number">0.25</span> <span class="number">0.35</span> <span class="number">0.10</span> <span class="number">0.15</span> <span class="number">0.10</span>]; </span><br><span class="line">ts = [ <span class="number">4</span> <span class="number">3</span> <span class="number">2</span> <span class="number">1</span> ]; </span><br><span class="line">ps = [ <span class="number">0.15</span> <span class="number">0.40</span> <span class="number">0.20</span> <span class="number">0.25</span> ]; </span><br><span class="line">pacum = cumsum(pa);<span class="comment">%递增</span></span><br><span class="line">pscum = cumsum(ps); </span><br><span class="line">Tarrival = <span class="built_in">rand</span>(<span class="number">1</span>,n); </span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:<span class="built_in">length</span>(pa) </span><br><span class="line">    Tarrival(Tarrival&lt;pacum(<span class="built_in">i</span>)) = ta(<span class="built_in">i</span>); </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">Tarrival = cumsum(Tarrival);<span class="comment">%累加才得到到达时刻 </span></span><br><span class="line">Tservice = <span class="built_in">rand</span>(<span class="number">1</span>,n); </span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:<span class="built_in">length</span>(ps) </span><br><span class="line">    Tservice(Tservice&lt;pscum(<span class="built_in">i</span>)) = ts(<span class="built_in">i</span>); </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Tstart = <span class="built_in">zeros</span>(<span class="number">1</span>,n); <span class="comment">%开始服务的时刻</span></span><br><span class="line">Tleave = <span class="built_in">zeros</span>(<span class="number">1</span>,n); <span class="comment">%离开的时刻</span></span><br><span class="line">Twait = <span class="built_in">zeros</span>(<span class="number">1</span>,n);  <span class="comment">%等待的时长</span></span><br><span class="line">line = <span class="built_in">zeros</span>(<span class="number">1</span>,n);   <span class="comment">%队长</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%初始化第一位顾客</span></span><br><span class="line">Tstart(<span class="number">1</span>) = Tarrival(<span class="number">1</span>); </span><br><span class="line">Tleave(<span class="number">1</span>) = Tstart(<span class="number">1</span>) + Tservice(<span class="number">1</span>); </span><br><span class="line">Twait(<span class="number">1</span>) = Tleave(<span class="number">1</span>) - Tarrival(<span class="number">1</span>) - Tservice(<span class="number">1</span>); </span><br><span class="line">line(<span class="number">1</span>) = <span class="number">0</span>; </span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">2</span>:n </span><br><span class="line">    Tstart(<span class="built_in">i</span>) = <span class="built_in">max</span>(Tleave(<span class="built_in">i</span><span class="number">-1</span>), Tarrival(<span class="built_in">i</span>)); </span><br><span class="line">    Tleave(<span class="built_in">i</span>) = Tstart(<span class="built_in">i</span>) + Tservice(<span class="built_in">i</span>); </span><br><span class="line">    Twait(<span class="built_in">i</span>) = Tleave(<span class="built_in">i</span>) - Tarrival(<span class="built_in">i</span>) - Tservice(<span class="built_in">i</span>); </span><br><span class="line">    </span><br><span class="line">    <span class="comment">%队长的计算，一直找到前面的人离开了</span></span><br><span class="line">    k = <span class="built_in">i</span><span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">while</span> ( k&gt;<span class="number">0</span> )&amp;&amp;( Tarrival(<span class="built_in">i</span>)&lt;Tleave(k) )  </span><br><span class="line">        line(<span class="built_in">i</span>) = line(<span class="built_in">i</span>) + <span class="number">1</span>; </span><br><span class="line">        k = k - <span class="number">1</span>; </span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">subplot(<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>)</span><br><span class="line">hist(Twait)</span><br><span class="line">line</span><br><span class="line">subplot(<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>)</span><br><span class="line">hist(line)</span><br></pre></td></tr></table></figure>
+
+<p>因为随机数，所以可以多算几次，取平均值。</p>
+<p><img src="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-29/10.png" alt=""></p>
+<h2 id="ICM2017-D-优化机场安检口旅客通行"><a href="#ICM2017-D-优化机场安检口旅客通行" class="headerlink" title="ICM2017-D: 优化机场安检口旅客通行"></a>ICM2017-D: 优化机场安检口旅客通行</h2><p><img src="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-29/11.png" alt=""></p>
+<p>问题 </p>
+<ul>
+<li><p>建立一个或多个模型，研究旅客通过安检口的流量，确定瓶 颈，明确判断当前流程问题区域位置。 </p>
+</li>
+<li><p>设计两个或更多对现有系统德潜在改进，提高旅客通信，减 少等待时间。模拟这些变化展示改进如何影响流程。</p>
+</li>
+</ul>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p><img src="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-29/12.png" alt=""></p>
+<p>排队系统: µr = 10, µb = 13, µ1 = 12, µ2 = 9, µ3 = 16</p>
+<h3 id="多服务并联"><a href="#多服务并联" class="headerlink" title="多服务并联"></a>多服务并联</h3><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[tlea, twat, qlen]</span> = <span class="title">mms</span><span class="params">(tarr, type, mus)</span></span></span><br><span class="line"><span class="comment">% MMS Stochastic simulation for M/M/c queue</span></span><br><span class="line"><span class="comment">%</span></span><br><span class="line"><span class="comment">% [tlea, twat, qlen] = mms(tarr, type, mus)</span></span><br><span class="line"><span class="comment">%     tarr ：每一个顾客到达的时间</span></span><br><span class="line"><span class="comment">%     type ：客户类型参数</span></span><br><span class="line"><span class="comment">%     mus  ：服务台的服务速度</span></span><br><span class="line"><span class="comment">%     tlea ：服务台的离开时间</span></span><br><span class="line"><span class="comment">%     twat ：服务台的等待时间</span></span><br><span class="line"><span class="comment">%     qlen ：客户的队列长度（排队的长度） </span></span><br><span class="line"></span><br><span class="line">narr = <span class="built_in">length</span>(tarr);        <span class="comment">% 客户的个数</span></span><br><span class="line">nsvr = <span class="built_in">length</span>(mus);         <span class="comment">% 服务台的数量</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% last time at which a customer left a particular server</span></span><br><span class="line">last = <span class="built_in">zeros</span>(nsvr,<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">[tsta, tlea, twat, qlen] = deal(<span class="built_in">zeros</span>(narr,<span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">rndm = <span class="built_in">zeros</span>(nsvr,narr);    <span class="comment">% rndm(k,i) = 第i个客户的服务时间</span></span><br><span class="line"><span class="keyword">for</span> k = <span class="number">1</span>:nsvr; </span><br><span class="line">    rndm(k,:) = exprnd(mus(k)*<span class="built_in">type</span>); <span class="comment">%生成服从指数分布的随机数</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:narr</span><br><span class="line">    <span class="comment">% find booth service was/will be emptied soonest and record</span></span><br><span class="line">    [minemp, ksvr(<span class="built_in">i</span>)] = <span class="built_in">min</span>(last); </span><br><span class="line">    </span><br><span class="line">    <span class="comment">% start time = max&#123;arrival time, minemp&#125;</span></span><br><span class="line">    tsta(<span class="built_in">i</span>) = <span class="built_in">max</span>(tarr(<span class="built_in">i</span>), minemp); </span><br><span class="line">    </span><br><span class="line">    <span class="comment">% severe time = exponential random number with mean parameter mu</span></span><br><span class="line">    tsvr(<span class="built_in">i</span>) = rndm(ksvr(<span class="built_in">i</span>),<span class="built_in">i</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">% leaving time = start time + service time</span></span><br><span class="line">    tlea(<span class="built_in">i</span>) = tsta(<span class="built_in">i</span>) + tsvr(<span class="built_in">i</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">% last time of k-th server = leaving time of i-th customer </span></span><br><span class="line">    last(ksvr(<span class="built_in">i</span>)) = tlea(<span class="built_in">i</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">% waiting time = leaving time - arrival time</span></span><br><span class="line">    twat(<span class="built_in">i</span>) = tlea(<span class="built_in">i</span>) - tarr(<span class="built_in">i</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">% queue length for i customer</span></span><br><span class="line">    <span class="built_in">j</span> = <span class="built_in">i</span> - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> <span class="built_in">j</span>&gt;<span class="number">0</span> &amp;&amp; tarr(<span class="built_in">i</span>)&lt;tlea(<span class="built_in">j</span>)</span><br><span class="line">        <span class="keyword">if</span> ksvr(<span class="built_in">j</span>)==ksvr(<span class="built_in">i</span>); qlen(<span class="built_in">i</span>) = qlen(<span class="built_in">i</span>) + <span class="number">1</span>; <span class="keyword">end</span></span><br><span class="line">        <span class="built_in">j</span> = <span class="built_in">j</span> - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>分别求出A区域两个队列（红色和绿色队列）的离开的时刻，作为下一阶段服务台到达的时刻。</p>
+<p>具体使用看下面主程序。</p>
+<h3 id="串并混合系统"><a href="#串并混合系统" class="headerlink" title="串并混合系统"></a>串并混合系统</h3><p>µr = 10, µb = 13, µ1 = 12, µ2 = 9, µ3 = 16</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">n1 = <span class="number">2</span>;  n2 = <span class="number">3</span>; n3 = <span class="number">3</span>;<span class="comment">% ni表示第i个服务台的数量</span></span><br><span class="line">mu1 = <span class="number">12</span>; mu2 = <span class="number">9</span>; mu3 = <span class="number">16</span>;<span class="comment">% 服务台的到达率</span></span><br><span class="line">muR = <span class="number">10</span>; muB = <span class="number">13</span>;<span class="comment">% 蓝色与红色服务台的服务率</span></span><br><span class="line"></span><br><span class="line">nR = <span class="built_in">ceil</span>(<span class="number">24</span>*<span class="number">3600</span>/muR); nB = <span class="built_in">ceil</span>(<span class="number">24</span>*<span class="number">3600</span>/muB);<span class="comment">% 服务的人数</span></span><br><span class="line">tArrR = cumsum(exprnd(muR,nR,<span class="number">1</span>));</span><br><span class="line">tArrB = cumsum(exprnd(muB,nB,<span class="number">1</span>)); <span class="comment">%到达时刻</span></span><br><span class="line">tArr = [tArrR; tArrB];</span><br><span class="line"><span class="built_in">type</span> = [<span class="number">0.8</span>*<span class="built_in">ones</span>(nR,<span class="number">1</span>); <span class="number">1.2</span>*<span class="built_in">ones</span>(nB,<span class="number">1</span>)];<span class="comment">%区分两种服务的时长</span></span><br><span class="line"><span class="comment">%A区域</span></span><br><span class="line">[tLeaR, tWatR, qLenR] = mms(tArrR, <span class="built_in">ones</span>(nR,<span class="number">1</span>), mu1*<span class="built_in">ones</span>(n1,<span class="number">1</span>));</span><br><span class="line">[tLeaB, tWatB, qLenB] = mms(tArrB, <span class="built_in">ones</span>(nB,<span class="number">1</span>), mu2*<span class="built_in">ones</span>(n2,<span class="number">1</span>));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[tArrG, order] = <span class="built_in">sort</span>([tLeaR; tLeaB]);<span class="comment">%输出为离开A区域的时间，排序进入下一区域</span></span><br><span class="line"><span class="comment">%order数组为排序后的数组在原始数组的位置，保存原来的顺序</span></span><br><span class="line"><span class="comment">%下一区域</span></span><br><span class="line">[tLeaG, tWatG, qLenG] = mms(tArrG, <span class="built_in">type</span>(order), mu3*<span class="built_in">ones</span>(n3,<span class="number">1</span>));</span><br><span class="line">tLeaG(order) = tLeaG;</span><br><span class="line">tWatG(order) = tWatG;</span><br><span class="line">qLenG(order) = qLenG;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">figure</span>(<span class="string">'position'</span>,[<span class="number">50</span>,<span class="number">50</span>,<span class="number">1200</span>,<span class="number">600</span>])</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">1</span>); hist(qLenR); ylabel(<span class="string">'Frequency'</span>); </span><br><span class="line">xlabel(<span class="string">'length of the waiting line'</span>); title(<span class="string">'Red'</span>)</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>); hist(tWatR); ylabel(<span class="string">'Frequency'</span>); </span><br><span class="line">xlabel(<span class="string">'waiting time'</span>); title(<span class="string">'Red'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">2</span>); hist(qLenB); ylabel(<span class="string">'Frequency'</span>);</span><br><span class="line">xlabel(<span class="string">'length of the waiting line'</span>); title(<span class="string">'Blue'</span>)</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>); hist(tWatB); ylabel(<span class="string">'Frequency'</span>); </span><br><span class="line">xlabel(<span class="string">'waiting time'</span>); title(<span class="string">'Blue'</span>)</span><br><span class="line"></span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>); hist(qLenG); ylabel(<span class="string">'Frequency'</span>);</span><br><span class="line">xlabel(<span class="string">'length of the waiting line'</span>); title(<span class="string">'Green'</span>)</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">6</span>); hist(tWatG); ylabel(<span class="string">'Frequency'</span>); </span><br><span class="line">xlabel(<span class="string">'waiting time'</span>); title(<span class="string">'Green'</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-29/13.png" alt=""></p>
+
+    </div>
+
+    
+    
+    
+	
+    <div style="text-align:center;color: #ccc;font-size:14px;">
+------------- 本文结束 <i class="fa fa-heart-o"></i> 感谢您的阅读-------------
+</div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>sdz
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2020/01/29/%E6%8E%92%E9%98%9F%E8%AE%BA/" title="排队论">http://yoursite.com/2020/01/29/排队论/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/MATLAB/" rel="tag"><i class="fa fa-tag"></i> MATLAB</a>
+              <a href="/tags/%E6%8E%92%E9%98%9F%E8%AE%BA/" rel="tag"><i class="fa fa-tag"></i> 排队论</a>
+              <a href="/tags/%E8%BF%90%E7%AD%B9%E5%AD%A6/" rel="tag"><i class="fa fa-tag"></i> 运筹学</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/01/28/%E9%A2%84%E6%B5%8B%E4%B8%8E%E8%AF%84%E4%BB%B7/" rel="prev" title="预测与评价">
+      <i class="fa fa-chevron-left"></i> 预测与评价
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/01/30/%E7%BE%8E%E8%B5%9B2017D%E8%AE%BA%E6%96%87%E5%88%86%E6%9E%90-%E5%87%8F%E5%B0%91%E6%9C%BA%E5%9C%BA%E5%AE%89%E5%85%A8%E7%AD%89%E5%BE%85%E6%97%B6%E9%97%B4/" rel="next" title="2017D美赛论文解析(减少机场安全等待时间)">
+      2017D美赛论文解析(减少机场安全等待时间) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#排队论简介"><span class="nav-number">1.</span> <span class="nav-text">排队论简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#历史"><span class="nav-number">1.1.</span> <span class="nav-text">历史</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">1.2.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应用"><span class="nav-number">1.3.</span> <span class="nav-text">应用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模型与模拟"><span class="nav-number">2.</span> <span class="nav-text">模型与模拟</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#排队论基本构成与指标"><span class="nav-number">2.1.</span> <span class="nav-text">排队论基本构成与指标</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#排队论的基本构成"><span class="nav-number">2.1.1.</span> <span class="nav-text">排队论的基本构成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#排队系统的数量指标"><span class="nav-number">2.1.2.</span> <span class="nav-text">排队系统的数量指标</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数学表示"><span class="nav-number">2.2.</span> <span class="nav-text">数学表示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#排队论中的符号表示"><span class="nav-number">2.2.1.</span> <span class="nav-text">排队论中的符号表示</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#排队论表示实例-M-M-S-∞"><span class="nav-number">2.3.</span> <span class="nav-text">排队论表示实例　M&#x2F;M&#x2F;S&#x2F;∞</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#等待制模型-M-M-S-∞-S-1"><span class="nav-number">2.3.1.</span> <span class="nav-text">等待制模型 M&#x2F;M&#x2F;S&#x2F;∞ S&#x3D;1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例"><span class="nav-number">2.3.2.</span> <span class="nav-text">实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#等待制模型-M-M-S-∞-S-gt-1-服务台数量-gt-1"><span class="nav-number">2.3.3.</span> <span class="nav-text">等待制模型 M&#x2F;M&#x2F;S&#x2F;∞ S&gt;1(服务台数量&gt;1)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例-1"><span class="nav-number">2.3.4.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他模型"><span class="nav-number">2.4.</span> <span class="nav-text">其他模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#单服务台"><span class="nav-number">2.4.1.</span> <span class="nav-text">单服务台</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多服务台"><span class="nav-number">2.4.2.</span> <span class="nav-text">多服务台</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动取款机问题"><span class="nav-number">2.4.3.</span> <span class="nav-text">自动取款机问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#单服务台-1"><span class="nav-number">2.4.3.1.</span> <span class="nav-text">单服务台</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#两服务台-多个服务台"><span class="nav-number">2.4.3.2.</span> <span class="nav-text">两服务台(多个服务台)</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#真题"><span class="nav-number">3.</span> <span class="nav-text">真题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2013HIMCM-B-银行服务问题"><span class="nav-number">3.1.</span> <span class="nav-text">2013HIMCM-B: 银行服务问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分析"><span class="nav-number">3.1.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">3.1.2.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ICM2017-D-优化机场安检口旅客通行"><span class="nav-number">3.2.</span> <span class="nav-text">ICM2017-D: 优化机场安检口旅客通行</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#"><span class="nav-number">3.2.1.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多服务并联"><span class="nav-number">3.2.2.</span> <span class="nav-text">多服务并联</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#串并混合系统"><span class="nav-number">3.2.3.</span> <span class="nav-text">串并混合系统</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="sdz"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">sdz</p>
+  <div class="site-description" itemprop="description">个人博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/pxlsdz" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;pxlsdz" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/sdz20172133" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;sdz20172133" rel="noopener" target="_blank"><i class="fa fa-fw fa-codiepie"></i>CSDN</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sdz</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">264k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:01</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='170' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'pAM5gCGYUGBwBF62VmECeV0o-gzGzoHsz',
+      appKey     : 'myehhFCNOsN4ClPFSLov1xKd',
+      placeholder: "欢迎畅所欲言",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : ,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+  <!-- 页面点击小红心 -->
+
+      <script type="text/javascript" src="/js/clicklove.js"></script>
+
+</body>
+</html>

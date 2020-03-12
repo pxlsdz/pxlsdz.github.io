@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="定义">
+<meta property="og:type" content="article">
+<meta property="og:title" content="拟合算法">
+<meta property="og:url" content="http://yoursite.com/2020/02/21/%E6%8B%9F%E5%90%88/index.html">
+<meta property="og:site_name" content="pxlsdz的博客">
+<meta property="og:description" content="定义">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200221213942289-26608675.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200222205702214-2066682947.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200222205937627-99122113.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200222210041030-1619619400.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200222220120102-1161061232.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200222221708863-748528977.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200222224538953-1564351990.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200222223619840-531838033.png">
+<meta property="article:published_time" content="2020-02-21T11:27:07.000Z">
+<meta property="article:modified_time" content="2020-03-03T00:14:54.024Z">
+<meta property="article:author" content="sdz">
+<meta property="article:tag" content="MATLAB">
+<meta property="article:tag" content="拟合">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200221213942289-26608675.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/02/21/%E6%8B%9F%E5%90%88/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>拟合算法 | pxlsdz的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">pxlsdz的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">分享，笔记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">32</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">17</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">52</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+  </div>
+</div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/pxlsdz" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/21/%E6%8B%9F%E5%90%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="sdz">
+      <meta itemprop="description" content="个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pxlsdz的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          拟合算法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-21 19:27:07" itemprop="dateCreated datePublished" datetime="2020-02-21T19:27:07+08:00">2020-02-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-03 08:14:54" itemprop="dateModified" datetime="2020-03-03T08:14:54+08:00">2020-03-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/" itemprop="url" rel="index"><span itemprop="name">数学建模</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/02/21/%E6%8B%9F%E5%90%88/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/02/21/%E6%8B%9F%E5%90%88/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><a id="more"></a>
+
+<p>​       与插值问题不同，在拟合问题中不需要曲线一定经过给定的点。拟合问题的目标是寻求一个函数（曲线），使得该曲线在某种准则下与所有的数据点最为接近，即曲线拟合的最好（最小化损失函数）。</p>
+<h1 id="插值和拟合的区别"><a href="#插值和拟合的区别" class="headerlink" title="插值和拟合的区别"></a>插值和拟合的区别</h1><p>​      插值：样本数n&lt;30</p>
+<p>​      拟合：样本数n&gt;=30(大样本)</p>
+<p>插值算法中，得到的多项式f(x)要经过所有样本点。但是如果样本点太多，那<br>么这个多项式次数过高，会造成龙格现象。<br>尽管我们可以选择分段的方法避免这种现象，但是更多时候我们更倾向于得到<br>一个确定的曲线，尽管这条曲线不能经过每一个样本点，但只要保证误差足够小即<br>可，这就是拟合的思想。 (拟合的结果是得到一个确定的曲线)  </p>
+<h1 id="评价拟合效果"><a href="#评价拟合效果" class="headerlink" title="评价拟合效果"></a>评价拟合效果</h1><p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200221213942289-26608675.png" alt=""></p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">y_hat= k*x+b; <span class="comment">% y 的拟合值 </span></span><br><span class="line">SSR = sum((y_hat-<span class="built_in">mean</span>(y)).^<span class="number">2</span>)  <span class="comment">% 回归平方和 </span></span><br><span class="line">SSE = sum((y_hat-y).^<span class="number">2</span>)     <span class="comment">% 误差平方和 </span></span><br><span class="line">SST = sum((y-<span class="built_in">mean</span>(y)).^<span class="number">2</span>) <span class="comment">% 总体平方和 </span></span><br><span class="line">SST-SSE-SSR R_2 = SSR / SST</span><br><span class="line"><span class="comment">%注： mean() 是求均值的函数</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="强大的曲线拟合工具箱"><a href="#强大的曲线拟合工具箱" class="headerlink" title="强大的曲线拟合工具箱"></a>强大的曲线拟合工具箱</h1><h2 id="模拟数据代码"><a href="#模拟数据代码" class="headerlink" title="模拟数据代码"></a>模拟数据代码</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">% （1）randi : 产生均匀分布的随机整数（i = int）  </span></span><br><span class="line"><span class="comment">%产生一个1至10之间的随机整数矩阵，大小为2x5；</span></span><br><span class="line">s1 = randi(<span class="number">10</span>,<span class="number">2</span>,<span class="number">5</span>)</span><br><span class="line"><span class="comment">%产生一个-5至5之间的随机整数矩阵，大小为1x10；</span></span><br><span class="line">s2 = randi([<span class="number">-5</span>,<span class="number">5</span>],<span class="number">1</span>,<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">%  （2） rand: 产生0至1之间均匀分布的随机数</span></span><br><span class="line"><span class="comment">%，产生一个0至1之间的随机矩阵大小为1x5；</span></span><br><span class="line">s3 = <span class="built_in">rand</span>(<span class="number">1</span>,<span class="number">5</span>)</span><br><span class="line"><span class="comment">%产生一个a至b之间的随机矩阵，大小为1x5；  % a + (b-a) * rand(1,5); 如：a,b = 2,5</span></span><br><span class="line">s4= <span class="number">2</span> + (<span class="number">5</span><span class="number">-2</span>) * <span class="built_in">rand</span>(<span class="number">1</span>,<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">% （3）normrnd:产生正态分布的随机数</span></span><br><span class="line"><span class="comment">%产生一个均值为0，标准差（方差开根号）为2的正态分布的随机矩阵，大小为3x4；</span></span><br><span class="line">s5 = normrnd(<span class="number">0</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">% （4）roundn—任意位置四舍五入</span></span><br><span class="line"><span class="comment">% 0个位 1十位  2百位 -1小数点后一位  </span></span><br><span class="line">a = <span class="number">3.1415</span></span><br><span class="line">roundn(a,<span class="number">-2</span>)    <span class="comment">% ans   =  3.1400</span></span><br><span class="line">roundn(a,<span class="number">2</span>)      <span class="comment">% ans   =  0</span></span><br><span class="line">a =<span class="number">31415</span></span><br><span class="line">roundn(a,<span class="number">2</span>)   <span class="comment">% ans  = 31400</span></span><br><span class="line">roundn(<span class="number">5.5</span>,<span class="number">0</span>)  <span class="comment">%6</span></span><br><span class="line">roundn(<span class="number">5.5</span>,<span class="number">1</span>) <span class="comment">%10</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="模拟数据进行演示"><a href="#模拟数据进行演示" class="headerlink" title="模拟数据进行演示"></a>模拟数据进行演示</h2><p>$$<br>y_{i}=3e^{0.5x_{i}}-5+e_{i}<br>$$</p>
+<p>xi是[0，10]上的均匀分布，$e^{i}$是标准正态分布的扰动项</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">clear;clc </span><br><span class="line">x = <span class="built_in">rand</span>(<span class="number">30</span>,<span class="number">1</span>) * <span class="number">10</span>;  <span class="comment">% x是0-10之间均匀分布的随机向量（30个样本）</span></span><br><span class="line">y = <span class="number">3</span> * <span class="built_in">exp</span>(<span class="number">0.5</span>*x) <span class="number">-5</span> + normrnd(<span class="number">0</span>,<span class="number">1</span>,<span class="number">30</span>,<span class="number">1</span>);</span><br><span class="line">cftool</span><br></pre></td></tr></table></figure>
+
+<h1 id="优秀论文中的cftool运用"><a href="#优秀论文中的cftool运用" class="headerlink" title="优秀论文中的cftool运用"></a>优秀论文中的cftool运用</h1><p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200222205702214-2066682947.png" alt=""></p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200222205937627-99122113.png" alt=""></p>
+<h1 id="cftool的‘骚’操作"><a href="#cftool的‘骚’操作" class="headerlink" title="cftool的‘骚’操作"></a>cftool的‘骚’操作</h1><p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200222210041030-1619619400.png" alt="# "></p>
+<h1 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>根据data2中的中国人口数据，确定你认为最合适 的拟合函数，并说明原因。</p>
+<h2 id="模型的建立"><a href="#模型的建立" class="headerlink" title="模型的建立"></a>模型的建立</h2><h3 id="拟合算法简介"><a href="#拟合算法简介" class="headerlink" title="拟合算法简介"></a>拟合算法简介</h3><p>拟合指的是已知一系列的点，通过调整某些函数的待定系数使该函数与已知点集的差别最小。如果待定函数是线性，就叫线性拟合，否则称为作非线性拟合。若表达式也可以是分段函数，这种情况下称作样条拟合。</p>
+<h3 id="确定拟合函数"><a href="#确定拟合函数" class="headerlink" title="确定拟合函数"></a>确定拟合函数</h3><p>第一步：作出人口数量的散点图，结果如下图所示：</p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200222220120102-1161061232.png" alt=""></p>
+<p>由图可知，人口数量曲线有明显的直线特征，故其函数表达式大致为y=kx+b。</p>
+<h3 id="运用最小二乘法"><a href="#运用最小二乘法" class="headerlink" title="运用最小二乘法"></a>运用最小二乘法</h3><p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200222221708863-748528977.png" alt=""></p>
+<h2 id="模型的求解"><a href="#模型的求解" class="headerlink" title="模型的求解"></a>模型的求解</h2><h3 id="MATLAB-求解最小二乘"><a href="#MATLAB-求解最小二乘" class="headerlink" title="MATLAB 求解最小二乘"></a>MATLAB 求解最小二乘</h3><p>利用MATLAB软件我们求得$k=702.4485,b=-1.2782×106$，拟合的结果如下图所示：</p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200222224538953-1564351990.png" alt=""></p>
+<h3 id="利用cftool工具箱"><a href="#利用cftool工具箱" class="headerlink" title="利用cftool工具箱"></a>利用cftool工具箱</h3><p>​      cftool是一款强大的由线拟合工具，且使用起来方便快捷，为了保正拟合结果的准确性，我们利用cftool工具箱选取了一些常见的拟合函数，并进行对比分析，结果如下表所示：</p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200222223619840-531838033.png" alt=""></p>
+<p>​       SSE越接近于0，说明误差越小即拟合的效果越好；对于线性模型，R2越接近于1，说明误差平方接近于0，拟的效果越好。但同时我们要考虑到<strong>函数的形式越简单越好</strong>，综合以上拟合结果，我们最终认为一次polynomial函数的拟合最为合适。</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">%% 导入数据</span></span><br><span class="line">[~, ~, raw] = xlsread(<span class="string">'G:\数学建模学习材料\参考资料\清风数学建模\第1-14讲和番外篇的课件和代码(1月16日修订版本)\第1-14讲和番外篇课件和代码\第4讲.拟合\代码和例题数据\data2.xlsx'</span>,<span class="string">'Sheet1'</span>,<span class="string">'A2:B11'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">%% 创建输出变量</span></span><br><span class="line">data = <span class="built_in">reshape</span>([raw&#123;:&#125;],<span class="built_in">size</span>(raw));</span><br><span class="line"></span><br><span class="line"><span class="comment">%% 创建表</span></span><br><span class="line">data2 = <span class="built_in">table</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">%% 将导入的数组分配给列变量名称</span></span><br><span class="line">x = data(:,<span class="number">1</span>);</span><br><span class="line">y = data(:,<span class="number">2</span>);</span><br><span class="line">cftool</span><br><span class="line"></span><br><span class="line"><span class="comment">%% 画图与建模</span></span><br><span class="line"><span class="built_in">plot</span>(x,y,<span class="string">'o'</span>)</span><br><span class="line">xlabel(<span class="string">'年份'</span>)</span><br><span class="line">ylabel(<span class="string">'人口(万)'</span>)</span><br><span class="line">n = <span class="built_in">size</span>(x,<span class="number">1</span>);</span><br><span class="line">k = (n*sum(x.*y)-sum(x)*sum(y))/(n*sum(x.*x)-sum(x)*sum(x))</span><br><span class="line">b = (sum(x.*x)*sum(y)-sum(x)*sum(x.*y))/(n*sum(x.*x)-sum(x)*sum(x))</span><br><span class="line"><span class="built_in">hold</span> on <span class="comment">% 继续在之前的图形上来画图形</span></span><br><span class="line">grid on <span class="comment">% 显示网格线</span></span><br><span class="line">f=@(x) k*x+b;</span><br><span class="line">fplot(f,[<span class="built_in">min</span>(x)<span class="number">-1</span>,<span class="built_in">max</span>(x)+<span class="number">1</span>])</span><br><span class="line"><span class="built_in">legend</span>(<span class="string">'样本数据'</span>,<span class="string">'拟合函数'</span>,<span class="string">'location'</span>,<span class="string">'SouthEast'</span>)</span><br><span class="line"></span><br><span class="line">y_hat = k*x+b; <span class="comment">% y的拟合值</span></span><br><span class="line">SSR = sum((y_hat-<span class="built_in">mean</span>(y)).^<span class="number">2</span>)  <span class="comment">% 回归平方和</span></span><br><span class="line">SSE = sum((y_hat-y).^<span class="number">2</span>) <span class="comment">% 误差平方和</span></span><br><span class="line">SST = sum((y-<span class="built_in">mean</span>(y)).^<span class="number">2</span>) <span class="comment">% 总体平方和</span></span><br><span class="line">SST-SSE-SSR   <span class="comment">% 5.6843e-14  =   5.6843*10^-14   matlab浮点数计算的一个误差</span></span><br><span class="line">R_2 = SSR / SST</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[fitresult, gof] = createFit(x, y)</span><br><span class="line"></span><br><span class="line"><span class="comment">%% 清除临时变量</span></span><br><span class="line">clearvars data raw;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+	
+    <div style="text-align:center;color: #ccc;font-size:14px;">
+------------- 本文结束 <i class="fa fa-heart-o"></i> 感谢您的阅读-------------
+</div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>sdz
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2020/02/21/%E6%8B%9F%E5%90%88/" title="拟合算法">http://yoursite.com/2020/02/21/拟合/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/MATLAB/" rel="tag"><i class="fa fa-tag"></i> MATLAB</a>
+              <a href="/tags/%E6%8B%9F%E5%90%88/" rel="tag"><i class="fa fa-tag"></i> 拟合</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/02/10/%E6%8F%92%E5%80%BC%E7%AE%97%E6%B3%95/" rel="prev" title="插值算法">
+      <i class="fa fa-chevron-left"></i> 插值算法
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/02/24/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E8%8B%B1%E8%AF%AD--%E6%A6%82%E8%BF%B0/" rel="next" title="计算机专业英语--概述">
+      计算机专业英语--概述 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#插值和拟合的区别"><span class="nav-number">2.</span> <span class="nav-text">插值和拟合的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#评价拟合效果"><span class="nav-number">3.</span> <span class="nav-text">评价拟合效果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#强大的曲线拟合工具箱"><span class="nav-number">4.</span> <span class="nav-text">强大的曲线拟合工具箱</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#模拟数据代码"><span class="nav-number">4.1.</span> <span class="nav-text">模拟数据代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模拟数据进行演示"><span class="nav-number">4.2.</span> <span class="nav-text">模拟数据进行演示</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#优秀论文中的cftool运用"><span class="nav-number">5.</span> <span class="nav-text">优秀论文中的cftool运用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cftool的‘骚’操作"><span class="nav-number">6.</span> <span class="nav-text">cftool的‘骚’操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#作业"><span class="nav-number">7.</span> <span class="nav-text">作业</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目"><span class="nav-number">7.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型的建立"><span class="nav-number">7.2.</span> <span class="nav-text">模型的建立</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#拟合算法简介"><span class="nav-number">7.2.1.</span> <span class="nav-text">拟合算法简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#确定拟合函数"><span class="nav-number">7.2.2.</span> <span class="nav-text">确定拟合函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运用最小二乘法"><span class="nav-number">7.2.3.</span> <span class="nav-text">运用最小二乘法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型的求解"><span class="nav-number">7.3.</span> <span class="nav-text">模型的求解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MATLAB-求解最小二乘"><span class="nav-number">7.3.1.</span> <span class="nav-text">MATLAB 求解最小二乘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#利用cftool工具箱"><span class="nav-number">7.3.2.</span> <span class="nav-text">利用cftool工具箱</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">7.4.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="sdz"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">sdz</p>
+  <div class="site-description" itemprop="description">个人博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/pxlsdz" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;pxlsdz" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/sdz20172133" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;sdz20172133" rel="noopener" target="_blank"><i class="fa fa-fw fa-codiepie"></i>CSDN</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sdz</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">264k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:01</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='170' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'pAM5gCGYUGBwBF62VmECeV0o-gzGzoHsz',
+      appKey     : 'myehhFCNOsN4ClPFSLov1xKd',
+      placeholder: "欢迎畅所欲言",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : ,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+  <!-- 页面点击小红心 -->
+
+      <script type="text/javascript" src="/js/clicklove.js"></script>
+
+</body>
+</html>

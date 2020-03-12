@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="任务搭建一个能够【识别猫】 的简单的神经网络。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="吴恩达课后编程作业 Course 1 神经网络和深度学习 - 第二周作业 - 具有神经网络思维的Logistic回归">
+<meta property="og:url" content="http://yoursite.com/2020/01/14/%E5%90%B4%E6%81%A9%E8%BE%BE%E8%AF%BE%E5%90%8E%E7%BC%96%E7%A8%8B%E4%BD%9C%E4%B8%9A-Course-1-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E7%AC%AC%E4%BA%8C%E5%91%A8%E4%BD%9C%E4%B8%9A-%E5%85%B7%E6%9C%89%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%80%9D%E7%BB%B4%E7%9A%84Logistic%E5%9B%9E%E5%BD%92/index.html">
+<meta property="og:site_name" content="pxlsdz的博客">
+<meta property="og:description" content="任务搭建一个能够【识别猫】 的简单的神经网络。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-16/download.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/LogReg_kiank.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-16/%E6%8A%98%E7%BA%BF%E5%9B%BE.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-16/%E5%A4%9A%E6%8A%98%E7%BA%BF%E5%9B%BE.png">
+<meta property="article:published_time" content="2020-01-14T14:08:07.000Z">
+<meta property="article:modified_time" content="2020-01-17T09:54:47.133Z">
+<meta property="article:author" content="sdz">
+<meta property="article:tag" content="神经网络">
+<meta property="article:tag" content="Logistic回归">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-16/download.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/01/14/%E5%90%B4%E6%81%A9%E8%BE%BE%E8%AF%BE%E5%90%8E%E7%BC%96%E7%A8%8B%E4%BD%9C%E4%B8%9A-Course-1-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E7%AC%AC%E4%BA%8C%E5%91%A8%E4%BD%9C%E4%B8%9A-%E5%85%B7%E6%9C%89%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%80%9D%E7%BB%B4%E7%9A%84Logistic%E5%9B%9E%E5%BD%92/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>吴恩达课后编程作业 Course 1 神经网络和深度学习 - 第二周作业 - 具有神经网络思维的Logistic回归 | pxlsdz的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">pxlsdz的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">分享，笔记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">32</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">17</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">52</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+  </div>
+</div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/pxlsdz" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/14/%E5%90%B4%E6%81%A9%E8%BE%BE%E8%AF%BE%E5%90%8E%E7%BC%96%E7%A8%8B%E4%BD%9C%E4%B8%9A-Course-1-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E7%AC%AC%E4%BA%8C%E5%91%A8%E4%BD%9C%E4%B8%9A-%E5%85%B7%E6%9C%89%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%80%9D%E7%BB%B4%E7%9A%84Logistic%E5%9B%9E%E5%BD%92/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="sdz">
+      <meta itemprop="description" content="个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pxlsdz的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          吴恩达课后编程作业 Course 1 神经网络和深度学习 - 第二周作业 - 具有神经网络思维的Logistic回归
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-01-14 22:08:07" itemprop="dateCreated datePublished" datetime="2020-01-14T22:08:07+08:00">2020-01-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-17 17:54:47" itemprop="dateModified" datetime="2020-01-17T17:54:47+08:00">2020-01-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/01/14/%E5%90%B4%E6%81%A9%E8%BE%BE%E8%AF%BE%E5%90%8E%E7%BC%96%E7%A8%8B%E4%BD%9C%E4%B8%9A-Course-1-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E7%AC%AC%E4%BA%8C%E5%91%A8%E4%BD%9C%E4%B8%9A-%E5%85%B7%E6%9C%89%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%80%9D%E7%BB%B4%E7%9A%84Logistic%E5%9B%9E%E5%BD%92/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/01/14/%E5%90%B4%E6%81%A9%E8%BE%BE%E8%AF%BE%E5%90%8E%E7%BC%96%E7%A8%8B%E4%BD%9C%E4%B8%9A-Course-1-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E7%AC%AC%E4%BA%8C%E5%91%A8%E4%BD%9C%E4%B8%9A-%E5%85%B7%E6%9C%89%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%80%9D%E7%BB%B4%E7%9A%84Logistic%E5%9B%9E%E5%BD%92/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>19k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>18 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="任务"><a href="#任务" class="headerlink" title="任务"></a><strong>任务</strong></h2><p>搭建一个能够<strong>【识别猫】</strong> 的简单的神经网络。</p>
+<a id="more"></a>
+
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a><strong>代码</strong></h2><p>在开始之前，我们有需要引入的库：</p>
+<ul>
+<li>numpy ：是用Python进行科学计算的基本软件包。</li>
+</ul>
+<ul>
+<li>h5py：是与H5文件中存储的数据集进行交互的常用软件包。</li>
+</ul>
+<ul>
+<li><p>matplotlib：是一个著名的库，用于在Python中绘制图表。</p>
+</li>
+<li><p>lr_utils ：在本文的资料包里，一个加载资料包里面的数据的简单功能的库。</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> h5py</span><br><span class="line"><span class="keyword">from</span> lr_utils <span class="keyword">import</span> load_dataset</span><br></pre></td></tr></table></figure>
+
+
+
+<p><code>lr_utils.py</code>代码如下，自行打开它查看：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> h5py</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_dataset</span><span class="params">()</span>:</span></span><br><span class="line">    train_dataset = h5py.File(<span class="string">'datasets/train_catvnoncat.h5'</span>, <span class="string">"r"</span>)</span><br><span class="line">    train_set_x_orig = np.array(train_dataset[<span class="string">"train_set_x"</span>][:]) <span class="comment"># your train set features</span></span><br><span class="line">    train_set_y_orig = np.array(train_dataset[<span class="string">"train_set_y"</span>][:]) <span class="comment"># your train set labels</span></span><br><span class="line"></span><br><span class="line">    test_dataset = h5py.File(<span class="string">'datasets/test_catvnoncat.h5'</span>, <span class="string">"r"</span>)</span><br><span class="line">    test_set_x_orig = np.array(test_dataset[<span class="string">"test_set_x"</span>][:]) <span class="comment"># your test set features</span></span><br><span class="line">    test_set_y_orig = np.array(test_dataset[<span class="string">"test_set_y"</span>][:]) <span class="comment"># your test set labels</span></span><br><span class="line"></span><br><span class="line">    classes = np.array(test_dataset[<span class="string">"list_classes"</span>][:]) <span class="comment"># the list of classes</span></span><br><span class="line">    </span><br><span class="line">    train_set_y_orig = train_set_y_orig.reshape((<span class="number">1</span>, train_set_y_orig.shape[<span class="number">0</span>]))</span><br><span class="line">    test_set_y_orig = test_set_y_orig.reshape((<span class="number">1</span>, test_set_y_orig.shape[<span class="number">0</span>]))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> train_set_x_orig, train_set_y_orig, test_set_x_orig, test_set_y_orig, classes</span><br></pre></td></tr></table></figure>
+
+<p>解释以下上面的load_dataset() 返回的值的含义：</p>
+<ul>
+<li>train_set_x_orig ：保存的是训练集里面的图像数据（本训练集有209张64x64的图像）。</li>
+<li>train_set_y_orig ：保存的是训练集的图像对应的分类值（【0 | 1】，0表示不是猫，1表示是猫）。</li>
+<li>test_set_x_orig ：保存的是测试集里面的图像数据（本训练集有50张64x64的图像）。</li>
+<li>test_set_y_orig ： 保存的是测试集的图像对应的分类值（【0 | 1】，0表示不是猫，1表示是猫）。</li>
+<li>classes ： 保存的是以bytes类型保存的两个字符串数据，数据为：[b’non-cat’    b’cat’]。</li>
+</ul>
+<hr>
+<p>现在我们就要把这些数据加载到主程序里面：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train_set_x_orig , train_set_y , test_set_x_orig , test_set_y , classes = load_dataset()</span><br></pre></td></tr></table></figure>
+
+<p>查看</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">index = <span class="number">26</span></span><br><span class="line">plt.imshow(train_set_x_orig[index])</span><br><span class="line">print(<span class="string">"train_set_y"</span>+str(train_set_y))<span class="comment">#训练集标签</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>图片</p>
+<p><img src="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-16/download.png" alt=""></p>
+<p><em>注释：squeeze的用法</em></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#np.squeeze的用法</span></span><br><span class="line">x = np.array([[[<span class="number">0</span>], [<span class="number">1</span>], [<span class="number">2</span>]]])</span><br><span class="line">print(x)</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">x=</span></span><br><span class="line"><span class="string">[[[0]</span></span><br><span class="line"><span class="string">  [1]</span></span><br><span class="line"><span class="string">  [2]]]</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line">print(x.shape)  <span class="comment"># (1, 3, 1)</span></span><br><span class="line">x1 = np.squeeze(x)  <span class="comment"># 从数组的形状中删除单维条目，即把shape中为1的维度去掉</span></span><br><span class="line">print(x1)  <span class="comment"># [0 1 2]</span></span><br><span class="line">print(x1.shape)  <span class="comment"># (3,)</span></span><br></pre></td></tr></table></figure>
+
+<p>训练集里面的数据来看一下加载了一些什么东西</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#打印出当前的训练标签值</span></span><br><span class="line"><span class="comment">#使用np.squeeze的目的是压缩维度，</span></span><br><span class="line"><span class="comment">#【未压缩】train_set_y[:,index]的值为[1] ,</span></span><br><span class="line"><span class="comment">#【压缩后】np.squeeze(train_set_y[:,index])的值为1</span></span><br><span class="line"><span class="comment">#print("【使用np.squeeze：" + str(np.squeeze(train_set_y[:,index])) + "，不使用np.squeeze： " + str(train_set_y[:,index]) + "】")</span></span><br><span class="line"><span class="comment">#只有压缩后的值才能进行解码操作</span></span><br><span class="line">print(<span class="string">"y="</span> + str(train_set_y[:,index]) + <span class="string">", it's a "</span> + classes[np.squeeze(train_set_y[:,index])].decode(<span class="string">"utf-8"</span>) + <span class="string">"' picture"</span>)</span><br><span class="line"><span class="comment"># X[:,1] 就是取所有行的第1个数据</span></span><br><span class="line"><span class="comment">#X[1,:]即取第一维中下标为1的元素的所有值</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>打印出的结果是：<strong>y=[1], it’s a cat’ picture</strong>，</p>
+<p>加载的图像数据集具体情况,对以下参数做出解释：</p>
+<ul>
+<li>m_train ：训练集里图片的数量。</li>
+<li>m_test ：测试集里图片的数量。</li>
+<li>num_px ： 训练、测试集里面的图片的宽度和高度（均为64x64）。</li>
+</ul>
+<p>train_set_x_orig 是一个维度为(m_train，num_px，num_px，3）的数组。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">m_train = train_set_y.shape[<span class="number">1</span>] <span class="comment">#训练集里图片的数量。</span></span><br><span class="line">m_test = test_set_y.shape[<span class="number">1</span>] <span class="comment">#测试集里图片的数量。</span></span><br><span class="line">num_px = train_set_x_orig.shape[<span class="number">1</span>] <span class="comment">#训练、测试集里面的图片的宽度和高度（均为64x64）。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#现在看一看我们加载的东西的具体情况</span></span><br><span class="line"><span class="keyword">print</span> (<span class="string">"训练集的数量: m_train = "</span> + str(m_train))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"测试集的数量 : m_test = "</span> + str(m_test))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"每张图片的宽/高 : num_px = "</span> + str(num_px))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"每张图片的大小 : ("</span> + str(num_px) + <span class="string">", "</span> + str(num_px) + <span class="string">", 3)"</span>)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"训练集_图片的维数 : "</span> + str(train_set_x_orig.shape))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"训练集_标签的维数 : "</span> + str(train_set_y.shape))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"测试集_图片的维数: "</span> + str(test_set_x_orig.shape))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"测试集_标签的维数: "</span> + str(test_set_y.shape))</span><br></pre></td></tr></table></figure>
+
+<p>运行结果</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">训练集的数量: m_train = <span class="number">209</span></span><br><span class="line">测试集的数量 : m_test = <span class="number">50</span></span><br><span class="line">每张图片的宽/高 : num_px = <span class="number">64</span></span><br><span class="line">每张图片的大小 : (<span class="number">64</span>, <span class="number">64</span>, <span class="number">3</span>)</span><br><span class="line">训练集_图片的维数 : (<span class="number">209</span>, <span class="number">64</span>, <span class="number">64</span>, <span class="number">3</span>)</span><br><span class="line">训练集_标签的维数 : (<span class="number">1</span>, <span class="number">209</span>)</span><br><span class="line">测试集_图片的维数: (<span class="number">50</span>, <span class="number">64</span>, <span class="number">64</span>, <span class="number">3</span>)</span><br><span class="line">测试集_标签的维数: (<span class="number">1</span>, <span class="number">50</span>)</span><br></pre></td></tr></table></figure>
+
+<p>为了方便，我们要把维度为（64，64，3）的numpy数组重新构造为（64 x 64 x 3，1）的数组，要乘以3的原因是每张图片是由64x64像素构成的，而每个像素点由（R，G，B）三原色构成的，所以要乘以3。在此之后，我们的训练和测试数据集是一个numpy数组，【每列代表一个平坦的图像】 ，应该有m_train和m_test列。</p>
+<p>想将形状（a，b，c，d）的矩阵X平铺成形状（b * c * d，a）的矩阵X_flatten时，可以使用以下代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#X_flatten = X.reshape(X.shape [0]，-1).T ＃X.T是X的转置</span></span><br><span class="line"><span class="comment">#将训练集的维度降低并转置。</span></span><br><span class="line">train_set_x_flatten  = train_set_x_orig.reshape(train_set_x_orig.shape[<span class="number">0</span>],<span class="number">-1</span>).T</span><br><span class="line"><span class="comment">#将测试集的维度降低并转置。</span></span><br><span class="line">test_set_x_flatten = test_set_x_orig.reshape(test_set_x_orig.shape[<span class="number">0</span>], <span class="number">-1</span>).T</span><br></pre></td></tr></table></figure>
+
+<p>把数组变为209行的矩阵（因为训练集里有209张图片），-1告诉程序自己算多少列，最后程序算出来时12288列，最后用一个T表示转置，这就变成了12288行，209列。测试集亦如此。</p>
+<p>降维之后的结果</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> (<span class="string">"训练集降维最后的维度： "</span> + str(train_set_x_flatten.shape))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"训练集_标签的维数 : "</span> + str(train_set_y.shape))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"测试集降维之后的维度: "</span> + str(test_set_x_flatten.shape))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"测试集_标签的维数 : "</span> + str(test_set_y.shape))</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">训练集降维最后的维度： (<span class="number">12288</span>, <span class="number">209</span>)</span><br><span class="line">训练集_标签的维数 : (<span class="number">1</span>, <span class="number">209</span>)</span><br><span class="line">测试集降维之后的维度: (<span class="number">12288</span>, <span class="number">50</span>)</span><br><span class="line">测试集_标签的维数 : (<span class="number">1</span>, <span class="number">50</span>)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>为了表示彩色图像，必须为每个像素指定红色，绿色和蓝色通道（RGB），因此像素值实际上是从0到255范围内的三个数字的向量。机器学习中一个常见的预处理步骤是对数据集进行居中和标准化，这意味着可以减去每个示例中整个numpy数组的平均值，然后将每个示例除以整个numpy数组的标准偏差。但对于图片数据集，它更简单，更方便，几乎可以将数据集的每一行除以255（像素通道的最大值），因为在RGB中不存在比255大的数据，所以我们可以放心的除以255，让标准化的数据位于[0,1]之间，现在标准化我们的数据集：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">train_set_x = train_set_x_flatten / <span class="number">255</span></span><br><span class="line">test_set_x = test_set_x_flatten / <span class="number">255</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>模型图解：</p>
+<p><img src="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/LogReg_kiank.png" alt=""></p>
+<hr>
+<p>加载的数据弄完了，我们现在开始构建神经网络</p>
+<p>数学公式：<br>$$<br>z^{(i)} = W^Tx^{(i)} + b\tag{1}<br>$$</p>
+<p>$$<br>\hat{y}^{(i)} = a^{(i)} = sigmoid(z^{(i)})\tag{2}<br>$$</p>
+<p>$$<br>\mathcal{L}(a^{(i)},y^{(i)}) = -y^{(i)}log(a^{(i)})-(1-y^{(i)})log(1-a^{(i)})\tag{3}<br>$$</p>
+<p>通过对所有训练样例求和来计算成本:<br>$$<br>J = \frac{1}{m} \sum_{i=1}^mL(a^{(i)},y^{(i)})\tag{4}<br>$$<br>建立神经网络的主要步骤是：</p>
+<ol>
+<li><p>定义模型结构（例如输入特征的数量）</p>
+</li>
+<li><p>初始化模型的参数</p>
+</li>
+<li><p>循环：</p>
+<p>3.1 计算当前损失（正向传播）</p>
+<p>3.2 计算当前梯度（反向传播）</p>
+<p>3.3 更新参数（梯度下降）</p>
+</li>
+</ol>
+<p>现在构建<code>sigmoid()</code>，需要使用 <code>sigmoid（w ^ T x + b）</code> 计算来做出预测。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sigmoid</span><span class="params">(z)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    参数：</span></span><br><span class="line"><span class="string">        z  - 任何大小的标量或numpy数组。</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    返回：</span></span><br><span class="line"><span class="string">        s  -  sigmoid（z）</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    s = <span class="number">1</span> / (<span class="number">1</span> + np.exp(-z))</span><br><span class="line">    <span class="keyword">return</span> s</span><br></pre></td></tr></table></figure>
+
+<p>测试</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#测试sigmoid()</span></span><br><span class="line">print(<span class="string">"====================测试sigmoid===================="</span>)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"sigmoid(0) = "</span> + str(sigmoid(<span class="number">0</span>)))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"sigmoid(9.2) = "</span> + str(sigmoid(<span class="number">9.2</span>)))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"sigmoid([0, 2]) = "</span> + str(sigmoid(np.array([<span class="number">0</span>,<span class="number">2</span>]))))</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;测试sigmoid&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">sigmoid(0) &#x3D; 0.5</span><br><span class="line">sigmoid(9.2) &#x3D; 0.9998989708060922</span><br><span class="line">sigmoid([0, 2]) &#x3D; [ 0.5         0.88079708]</span><br></pre></td></tr></table></figure>
+
+<p>既然sigmoid测试好了，我们现在就可以初始化我们需要的参数w和b了。</p>
+<p>​        </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">initialize_with_zeros</span><span class="params">(dim)</span>:</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">        此函数为w创建一个维度为（dim，1）的0向量，并将b初始化为0。</span></span><br><span class="line"><span class="string">    参数：</span></span><br><span class="line"><span class="string">        dim  - 我们想要的w矢量的大小（或者这种情况下的参数数量）</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    返回：</span></span><br><span class="line"><span class="string">        w  - 维度为（dim，1）的初始化向量。</span></span><br><span class="line"><span class="string">        b  - 初始化的标量（对应于偏差）</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line">w = np.zeros(shape = (dim,<span class="number">1</span>))</span><br><span class="line">b = <span class="number">0</span></span><br><span class="line"><span class="comment">#使用断言来确保我要的数据是正确的</span></span><br><span class="line"><span class="keyword">assert</span>(w.shape == (dim, <span class="number">1</span>)) <span class="comment">#w的维度是(dim,1)</span></span><br><span class="line"><span class="keyword">assert</span>(isinstance(b, float) <span class="keyword">or</span> isinstance(b, int)) <span class="comment">#b的类型是float或者是int</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> (w , b)</span><br></pre></td></tr></table></figure>
+<p>初始化参数的函数已经构建好了，现在就可以执行“前向”和“后向”传播步骤来学习参数。</p>
+<p>我们现在要实现一个计算成本函数及其渐变的函数propagate（）。</p>
+<p>看一下求导过程：</p>
+<p>假设样本只有两个特征${x}<em>{1}$和${x}</em>{2}$，为了计算$z$，我们需要输入参数${w}<em>{1}$、${w}</em>{2}$ 和$b$，除此之外还有特征值${x}<em>{1}$和${x}</em>{2}$。因此$z$的计算公式为：<br>$z={w}<em>{1}{x}</em>{1}+{w}<em>{2}{x}</em>{2}+b$<br>回想一下逻辑回归的公式定义如下：<br>$\hat{y}=a=\sigma (z)$<br>其中$z={w}^{T}x+b$<br>$\sigma \left( z \right)=\frac{1}{1+{e}^{-z}}$<br>损失函数：<br>$\hat{y}^{(i)} = a^{(i)} = sigmoid(z^{(i)})$</p>
+<p>代价函数：</p>
+<p>$ \mathcal{L}(a^{(i)}, y^{(i)}) =  - y^{(i)}  \log(a^{(i)}) - (1-y^{(i)} )  \log(1-a^{(i)})$</p>
+<p>假设现在只考虑单个样本的情况，单个样本的代价函数定义如下：<br>$L(a,y)=-(y\log (a)+(1-y)\log (1-a))$<br>其中$a$是逻辑回归的输出，$y$是样本的标签值。</p>
+<p>通过微积分得到：<br>$\frac{dL(a,y)}{da}=-y/a+(1-y)/(1-a)$<br>因为$\frac{dL(a,y)}{dz}=\frac{dL}{dz}=(\frac{dL}{da})\cdot (\frac{da}{dz})$，<br>并且$\frac{da}{dz}=a\cdot (1-a)$，<br>而 $\frac{dL}{da}=(-\frac{y}{a}+\frac{(1-y)}{(1-a)})$，因此将这两项相乘，得到：</p>
+<p>$ \frac{dL}{dz} = \left( \frac{dL}{da} \right) \cdot \left(\frac{da}{dz} \right) = ( - \frac{y}{a} + \frac{(1 - y)}{(1 - a)})\cdot a(1 - a) = a - y$</p>
+<p>因此</p>
+<p>$d{w}= \frac{dL}{dz}\frac{dz}{dw}=\frac{1}{m} \sum\limits_{i}^{m} x^{(i)}({a}^{(i)}-{y}^{(i)})$ </p>
+<p>或者：$\frac{\partial J}{\partial w} = \frac{1}{m}X(A-Y)^T$</p>
+<p>$db=dz=\frac{1}{m}\sum \limits_{i=1}^{m}(a^{(i)}-y^{(i)})$</p>
+<p>目标是通过最小化成本函数 J来学习 w和b 。对于参数 $\theta$，更新规则是 $ \theta = \theta - \alpha \text{ } d\theta$，其中 α 是学习率。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">propagate</span><span class="params">(w, b, X, Y)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    实现前向和后向传播的成本函数及其梯度。</span></span><br><span class="line"><span class="string">    参数：</span></span><br><span class="line"><span class="string">        w  - 权重，大小不等的数组（num_px * num_px * 3，1）</span></span><br><span class="line"><span class="string">        b  - 偏差，一个标量</span></span><br><span class="line"><span class="string">        X  - 矩阵类型为（num_px * num_px * 3，训练数量）</span></span><br><span class="line"><span class="string">        Y  - 真正的“标签”矢量（如果非猫则为0，如果是猫则为1），矩阵维度为(1,训练数据数量)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    返回：</span></span><br><span class="line"><span class="string">        cost- 逻辑回归的负对数似然成本</span></span><br><span class="line"><span class="string">        dw  - 相对于w的损失梯度，因此与w相同的形状</span></span><br><span class="line"><span class="string">        db  - 相对于b的损失梯度，因此与b的形状相同</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    m = X.shape[<span class="number">1</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#正向传播</span></span><br><span class="line">    A = sigmoid(np.dot(w.T,X) + b) <span class="comment">#计算激活值，请参考公式2。</span></span><br><span class="line">    cost = (- <span class="number">1</span> / m) * np.sum(Y * np.log(A) + (<span class="number">1</span> - Y) * (np.log(<span class="number">1</span> - A))) <span class="comment">#计算成本，请参考公式3和4。</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">#反向传播</span></span><br><span class="line">    dw = (<span class="number">1</span> / m) * np.dot(X, (A - Y).T) <span class="comment">#请参考视频中的偏导公式。</span></span><br><span class="line">    db = (<span class="number">1</span> / m) * np.sum(A - Y) <span class="comment">#请参考视频中的偏导公式。</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#使用断言确保我的数据是正确的</span></span><br><span class="line">    <span class="keyword">assert</span>(dw.shape == w.shape)</span><br><span class="line">    <span class="keyword">assert</span>(db.dtype == float)</span><br><span class="line">    cost = np.squeeze(cost)</span><br><span class="line">    <span class="keyword">assert</span>(cost.shape == ())</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#创建一个字典，把dw和db保存起来。</span></span><br><span class="line">    grads = &#123;</span><br><span class="line">                <span class="string">"dw"</span>: dw,</span><br><span class="line">                <span class="string">"db"</span>: db</span><br><span class="line">             &#125;</span><br><span class="line">    <span class="keyword">return</span> (grads , cost)</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#测试一下propagate</span></span><br><span class="line">print(<span class="string">"====================测试propagate===================="</span>)</span><br><span class="line"><span class="comment">#初始化一些参数</span></span><br><span class="line">w, b, X, Y = np.array([[<span class="number">1</span>], [<span class="number">2</span>]]), <span class="number">2</span>, np.array([[<span class="number">1</span>,<span class="number">2</span>], [<span class="number">3</span>,<span class="number">4</span>]]), np.array([[<span class="number">1</span>, <span class="number">0</span>]])</span><br><span class="line">grads, cost = propagate(w, b, X, Y)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"dw = "</span> + str(grads[<span class="string">"dw"</span>]))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"db = "</span> + str(grads[<span class="string">"db"</span>]))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"cost = "</span> + str(cost))</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;测试propagate&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">dw &#x3D; [[0.99993216]</span><br><span class="line"> [1.99980262]]</span><br><span class="line">db &#x3D; 0.49993523062470574</span><br><span class="line">cost &#x3D; 6.000064773192205</span><br></pre></td></tr></table></figure>
+
+<p>使用渐变下降更新参数。</p>
+<p>目标是通过最小化成本函数 J 来学习 w和b 。对于参数 θ，更新规则是 $ \theta = \theta - \alpha \text{ } d\theta$，其中 α 是学习率。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">optimize</span><span class="params">(w , b , X , Y , num_iterations , learning_rate , print_cost = False)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    此函数通过运行梯度下降算法来优化w和b</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    参数：</span></span><br><span class="line"><span class="string">        w  - 权重，大小不等的数组（num_px * num_px * 3，1）</span></span><br><span class="line"><span class="string">        b  - 偏差，一个标量</span></span><br><span class="line"><span class="string">        X  - 维度为（num_px * num_px * 3，训练数据的数量）的数组。</span></span><br><span class="line"><span class="string">        Y  - 真正的“标签”矢量（如果非猫则为0，如果是猫则为1），矩阵维度为(1,训练数据的数量)</span></span><br><span class="line"><span class="string">        num_iterations  - 优化循环的迭代次数</span></span><br><span class="line"><span class="string">        learning_rate  - 梯度下降更新规则的学习率</span></span><br><span class="line"><span class="string">        print_cost  - 每100步打印一次损失值</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    返回：</span></span><br><span class="line"><span class="string">        params  - 包含权重w和偏差b的字典</span></span><br><span class="line"><span class="string">        grads  - 包含权重和偏差相对于成本函数的梯度的字典</span></span><br><span class="line"><span class="string">        成本 - 优化期间计算的所有成本列表，将用于绘制学习曲线。</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    提示：</span></span><br><span class="line"><span class="string">    我们需要写下两个步骤并遍历它们：</span></span><br><span class="line"><span class="string">        1）计算当前参数的成本和梯度，使用propagate（）。</span></span><br><span class="line"><span class="string">        2）使用w和b的梯度下降法则更新参数。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    </span><br><span class="line">    costs = []</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(num_iterations):</span><br><span class="line">        </span><br><span class="line">        grads, cost = propagate(w, b, X, Y)</span><br><span class="line">        </span><br><span class="line">        dw = grads[<span class="string">"dw"</span>]</span><br><span class="line">        db = grads[<span class="string">"db"</span>]</span><br><span class="line">        </span><br><span class="line">        w = w - learning_rate * dw</span><br><span class="line">        b = b - learning_rate * db</span><br><span class="line">        </span><br><span class="line">        <span class="comment">#记录成本</span></span><br><span class="line">        <span class="keyword">if</span> i % <span class="number">100</span> == <span class="number">0</span>:</span><br><span class="line">            costs.append(cost)</span><br><span class="line">        <span class="comment">#打印成本数据</span></span><br><span class="line">        <span class="keyword">if</span> (print_cost) <span class="keyword">and</span> (i % <span class="number">100</span> == <span class="number">0</span>):</span><br><span class="line">            print(<span class="string">"迭代的次数: %i ， 误差值： %f"</span> % (i,cost))</span><br><span class="line">        </span><br><span class="line">    params  = &#123;</span><br><span class="line">                <span class="string">"w"</span> : w,</span><br><span class="line">                <span class="string">"b"</span> : b &#125;</span><br><span class="line">    grads = &#123;</span><br><span class="line">            <span class="string">"dw"</span>: dw,</span><br><span class="line">            <span class="string">"db"</span>: db &#125; </span><br><span class="line">    <span class="keyword">return</span> (params , grads , costs)</span><br></pre></td></tr></table></figure>
+
+<p>测试一下优化函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#测试optimize</span></span><br><span class="line">print(<span class="string">"====================测试optimize===================="</span>)</span><br><span class="line">w, b, X, Y = np.array([[<span class="number">1</span>], [<span class="number">2</span>]]), <span class="number">2</span>, np.array([[<span class="number">1</span>,<span class="number">2</span>], [<span class="number">3</span>,<span class="number">4</span>]]), np.array([[<span class="number">1</span>, <span class="number">0</span>]])</span><br><span class="line">params , grads , costs = optimize(w , b , X , Y , num_iterations=<span class="number">100</span> , learning_rate = <span class="number">0.009</span> , print_cost = <span class="literal">False</span>)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"w = "</span> + str(params[<span class="string">"w"</span>]))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"b = "</span> + str(params[<span class="string">"b"</span>]))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"dw = "</span> + str(grads[<span class="string">"dw"</span>]))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"db = "</span> + str(grads[<span class="string">"db"</span>]))</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;测试optimize&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">w &#x3D; [[0.99100061]</span><br><span class="line"> [1.98200178]]</span><br><span class="line">b &#x3D; 1.9955005829243777</span><br><span class="line">dw &#x3D; [[0.99993216]</span><br><span class="line"> [1.99980262]]</span><br><span class="line">db &#x3D; 0.49993523062470574</span><br></pre></td></tr></table></figure>
+
+<p>optimize函数会输出已学习的w和b的值，我们可以使用w和b来预测数据集X的标签。</p>
+<p>现在我们要实现预测函数predict（）。计算预测有两个步骤：</p>
+<p>1.计算$ \ hat {Y} = A = \ sigma（w ^ T X + b）$</p>
+<p>2.将a的项转换为0（如果激活&lt;= 0.5）或1（如果激活&gt; 0.5），将预测存储在向量“ Y_prediction”中。 如果愿意，可以在for循环中使用if / else语句（尽管也可以向量化）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(w , b , X )</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    使用学习逻辑回归参数logistic （w，b）预测标签是0还是1，</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    参数：</span></span><br><span class="line"><span class="string">        w  - 权重，大小不等的数组（num_px * num_px * 3，1）</span></span><br><span class="line"><span class="string">        b  - 偏差，一个标量</span></span><br><span class="line"><span class="string">        X  - 维度为（num_px * num_px * 3，训练数据的数量）的数据</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    返回：</span></span><br><span class="line"><span class="string">        Y_prediction  - 包含X中所有图片的所有预测【0 | 1】的一个numpy数组（向量）</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    </span><br><span class="line">    m  = X.shape[<span class="number">1</span>] <span class="comment">#图片的数量</span></span><br><span class="line">    Y_prediction = np.zeros((<span class="number">1</span>,m)) </span><br><span class="line">    w = w.reshape(X.shape[<span class="number">0</span>],<span class="number">1</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#计预测猫在图片中出现的概率</span></span><br><span class="line">    A = sigmoid(np.dot(w.T , X) + b)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(A.shape[<span class="number">1</span>]):</span><br><span class="line">        <span class="comment">#将概率a [0，i]转换为实际预测p [0，i]</span></span><br><span class="line">        Y_prediction[<span class="number">0</span>,i] = <span class="number">1</span> <span class="keyword">if</span> A[<span class="number">0</span>,i] &gt; <span class="number">0.5</span> <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line">    <span class="comment">#使用断言</span></span><br><span class="line">    <span class="keyword">assert</span>(Y_prediction.shape == (<span class="number">1</span>,m))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> Y_prediction</span><br></pre></td></tr></table></figure>
+
+<p>测试一下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#测试predict</span></span><br><span class="line">print(<span class="string">"====================测试predict===================="</span>)</span><br><span class="line">w, b, X, Y = np.array([[<span class="number">1</span>], [<span class="number">2</span>]]), <span class="number">2</span>, np.array([[<span class="number">1</span>,<span class="number">2</span>], [<span class="number">3</span>,<span class="number">4</span>]]), np.array([[<span class="number">1</span>, <span class="number">0</span>]])</span><br><span class="line">print(<span class="string">"predictions = "</span> + str(predict(w, b, X)))</span><br></pre></td></tr></table></figure>
+
+<p>就目前而言，我们基本上把所有的东西都做完了，把函数统统整合到一个model()函数中，届时只需要调用一个model()就基本上完成所有的事了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">model</span><span class="params">(X_train , Y_train , X_test , Y_test , num_iterations = <span class="number">2000</span> , learning_rate = <span class="number">0.5</span> , print_cost = False)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    通过调用之前实现的函数来构建逻辑回归模型</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    参数：</span></span><br><span class="line"><span class="string">        X_train  - numpy的数组,维度为（num_px * num_px * 3，m_train）的训练集</span></span><br><span class="line"><span class="string">        Y_train  - numpy的数组,维度为（1，m_train）（矢量）的训练标签集</span></span><br><span class="line"><span class="string">        X_test   - numpy的数组,维度为（num_px * num_px * 3，m_test）的测试集</span></span><br><span class="line"><span class="string">        Y_test   - numpy的数组,维度为（1，m_test）的（向量）的测试标签集</span></span><br><span class="line"><span class="string">        num_iterations  - 表示用于优化参数的迭代次数的超参数</span></span><br><span class="line"><span class="string">        learning_rate  - 表示optimize（）更新规则中使用的学习速率的超参数</span></span><br><span class="line"><span class="string">        print_cost  - 设置为true以每100次迭代打印成本</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    返回：</span></span><br><span class="line"><span class="string">        d  - 包含有关模型信息的字典。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    w , b = initialize_with_zeros(X_train.shape[<span class="number">0</span>])</span><br><span class="line">    </span><br><span class="line">    parameters , grads , costs = optimize(w , b , X_train , Y_train,num_iterations , learning_rate , print_cost)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#从字典“参数”中检索参数w和b</span></span><br><span class="line">    w , b = parameters[<span class="string">"w"</span>] , parameters[<span class="string">"b"</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#预测测试/训练集的例子</span></span><br><span class="line">    Y_prediction_test = predict(w , b, X_test)</span><br><span class="line">    Y_prediction_train = predict(w , b, X_train)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#打印训练后的准确性</span></span><br><span class="line">    print(<span class="string">"训练集准确性："</span>  , format(<span class="number">100</span> - np.mean(np.abs(Y_prediction_train - Y_train)) * <span class="number">100</span>) ,<span class="string">"%"</span>)</span><br><span class="line">    print(<span class="string">"测试集准确性："</span>  , format(<span class="number">100</span> - np.mean(np.abs(Y_prediction_test - Y_test)) * <span class="number">100</span>) ,<span class="string">"%"</span>)</span><br><span class="line">    <span class="comment">#mean()函数功能：求取均值</span></span><br><span class="line">    d = &#123;</span><br><span class="line">            <span class="string">"costs"</span> : costs,</span><br><span class="line">            <span class="string">"Y_prediction_test"</span> : Y_prediction_test,</span><br><span class="line">            <span class="string">"Y_prediciton_train"</span> : Y_prediction_train,</span><br><span class="line">            <span class="string">"w"</span> : w,</span><br><span class="line">            <span class="string">"b"</span> : b,</span><br><span class="line">            <span class="string">"learning_rate"</span> : learning_rate,</span><br><span class="line">            <span class="string">"num_iterations"</span> : num_iterations &#125;</span><br><span class="line">    <span class="keyword">return</span> d</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">"====================测试model===================="</span>)     </span><br><span class="line"><span class="comment">#这里加载的是真实的数据，请参见上面的代码部分。</span></span><br><span class="line">d = model(train_set_x, train_set_y, test_set_x, test_set_y, num_iterations = <span class="number">2000</span>, learning_rate = <span class="number">0.005</span>, print_cost = <span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;测试model&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">迭代的次数: 0 ， 误差值： 0.693147</span><br><span class="line">迭代的次数: 100 ， 误差值： 0.584508</span><br><span class="line">迭代的次数: 200 ， 误差值： 0.466949</span><br><span class="line">迭代的次数: 300 ， 误差值： 0.376007</span><br><span class="line">迭代的次数: 400 ， 误差值： 0.331463</span><br><span class="line">迭代的次数: 500 ， 误差值： 0.303273</span><br><span class="line">迭代的次数: 600 ， 误差值： 0.279880</span><br><span class="line">迭代的次数: 700 ， 误差值： 0.260042</span><br><span class="line">迭代的次数: 800 ， 误差值： 0.242941</span><br><span class="line">迭代的次数: 900 ， 误差值： 0.228004</span><br><span class="line">迭代的次数: 1000 ， 误差值： 0.214820</span><br><span class="line">迭代的次数: 1100 ， 误差值： 0.203078</span><br><span class="line">迭代的次数: 1200 ， 误差值： 0.192544</span><br><span class="line">迭代的次数: 1300 ， 误差值： 0.183033</span><br><span class="line">迭代的次数: 1400 ， 误差值： 0.174399</span><br><span class="line">迭代的次数: 1500 ， 误差值： 0.166521</span><br><span class="line">迭代的次数: 1600 ， 误差值： 0.159305</span><br><span class="line">迭代的次数: 1700 ， 误差值： 0.152667</span><br><span class="line">迭代的次数: 1800 ， 误差值： 0.146542</span><br><span class="line">迭代的次数: 1900 ， 误差值： 0.140872</span><br><span class="line">训练集准确性： 99.04306220095694 %</span><br><span class="line">测试集准确性： 70.0 %</span><br></pre></td></tr></table></figure>
+
+<p>我们更改一下学习率和迭代次数，有可能会发现训练集的准确性可能会提高，但是测试集准确性会下降，这是由于过拟合造成的，但是我们并不需要担心，我们以后会使用更好的算法来解决这些问题的。</p>
+<hr>
+<p>到目前为止程序算是完成了，但是可以在后面加一点东西，比如画点图什么的。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#绘制图</span></span><br><span class="line">costs = np.squeeze(d[<span class="string">'costs'</span>])</span><br><span class="line">plt.plot(costs)</span><br><span class="line">plt.ylabel(<span class="string">'cost'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'iterations (per hundreds)'</span>)</span><br><span class="line">plt.title(<span class="string">"Learning rate ="</span> + str(d[<span class="string">"learning_rate"</span>]))</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p>跑一波出来的效果图是这样的，可以看到成本下降，它显示参数正在被学习：</p>
+<p><img src="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-16/%E6%8A%98%E7%BA%BF%E5%9B%BE.png" alt=""></p>
+<p>让我们进一步分析一下，并研究学习率alpha的可能选择。为了让渐变下降起作用，我们必须明智地选择学习速率。学习率α决定了我们更新参数的速度。如果学习率过高，我们可能会“超过”最优值。同样，如果它太小，我们将需要太多迭代才能收敛到最佳值。这就是为什么使用良好调整的学习率至关重要的原因。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">learning_rates = [<span class="number">0.01</span>, <span class="number">0.001</span>, <span class="number">0.0001</span>]</span><br><span class="line">models = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> learning_rates:</span><br><span class="line">    <span class="keyword">print</span> (<span class="string">"learning rate is: "</span> + str(i))</span><br><span class="line">    models[str(i)] = model(train_set_x, train_set_y, test_set_x, test_set_y, num_iterations = <span class="number">1500</span>, learning_rate = i, print_cost = <span class="literal">False</span>)</span><br><span class="line">    <span class="keyword">print</span> (<span class="string">'\n'</span> + <span class="string">"-------------------------------------------------------"</span> + <span class="string">'\n'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> learning_rates:</span><br><span class="line">    plt.plot(np.squeeze(models[str(i)][<span class="string">"costs"</span>]), label= str(models[str(i)][<span class="string">"learning_rate"</span>]))</span><br><span class="line"></span><br><span class="line">plt.ylabel(<span class="string">'cost'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'iterations'</span>)</span><br><span class="line"></span><br><span class="line">legend = plt.legend(loc=<span class="string">'upper center'</span>, shadow=<span class="literal">True</span>)<span class="comment">#loc用于控制图例的位置</span></span><br><span class="line">frame = legend.get_frame()</span><br><span class="line">frame.set_facecolor(<span class="string">'0.90'</span>)<span class="comment">#置图例legend背景颜色</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">learning rate is: 0.01</span><br><span class="line">训练集准确性： 99.52153110047847 %</span><br><span class="line">测试集准确性： 68.0 %</span><br><span class="line"></span><br><span class="line">-------------------------------------------------------</span><br><span class="line"></span><br><span class="line">learning rate is: 0.001</span><br><span class="line">训练集准确性： 88.99521531100478 %</span><br><span class="line">测试集准确性： 64.0 %</span><br><span class="line"></span><br><span class="line">-------------------------------------------------------</span><br><span class="line"></span><br><span class="line">learning rate is: 0.0001</span><br><span class="line">训练集准确性： 68.42105263157895 %</span><br><span class="line">测试集准确性： 36.0 %</span><br><span class="line"></span><br><span class="line">-------------------------------------------------------</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><img src="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-16/%E5%A4%9A%E6%8A%98%E7%BA%BF%E5%9B%BE.png" alt=""></p>
+<hr>
+<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a><strong>完整代码</strong></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> h5py</span><br><span class="line"><span class="keyword">from</span> lr_utils <span class="keyword">import</span> load_dataset</span><br><span class="line"></span><br><span class="line">train_set_x_orig , train_set_y , test_set_x_orig , test_set_y , classes = load_dataset()</span><br><span class="line"></span><br><span class="line">m_train = train_set_y.shape[<span class="number">1</span>] <span class="comment">#训练集里图片的数量。</span></span><br><span class="line">m_test = test_set_y.shape[<span class="number">1</span>] <span class="comment">#测试集里图片的数量。</span></span><br><span class="line">num_px = train_set_x_orig.shape[<span class="number">1</span>] <span class="comment">#训练、测试集里面的图片的宽度和高度（均为64x64）。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#现在看一看我们加载的东西的具体情况</span></span><br><span class="line"><span class="keyword">print</span> (<span class="string">"训练集的数量: m_train = "</span> + str(m_train))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"测试集的数量 : m_test = "</span> + str(m_test))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"每张图片的宽/高 : num_px = "</span> + str(num_px))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"每张图片的大小 : ("</span> + str(num_px) + <span class="string">", "</span> + str(num_px) + <span class="string">", 3)"</span>)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"训练集_图片的维数 : "</span> + str(train_set_x_orig.shape))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"训练集_标签的维数 : "</span> + str(train_set_y.shape))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"测试集_图片的维数: "</span> + str(test_set_x_orig.shape))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"测试集_标签的维数: "</span> + str(test_set_y.shape))</span><br><span class="line"></span><br><span class="line"><span class="comment">#将训练集的维度降低并转置。</span></span><br><span class="line">train_set_x_flatten  = train_set_x_orig.reshape(train_set_x_orig.shape[<span class="number">0</span>],<span class="number">-1</span>).T</span><br><span class="line"><span class="comment">#将测试集的维度降低并转置。</span></span><br><span class="line">test_set_x_flatten = test_set_x_orig.reshape(test_set_x_orig.shape[<span class="number">0</span>], <span class="number">-1</span>).T</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> (<span class="string">"训练集降维最后的维度： "</span> + str(train_set_x_flatten.shape))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"训练集_标签的维数 : "</span> + str(train_set_y.shape))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"测试集降维之后的维度: "</span> + str(test_set_x_flatten.shape))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"测试集_标签的维数 : "</span> + str(test_set_y.shape))</span><br><span class="line"></span><br><span class="line">train_set_x = train_set_x_flatten / <span class="number">255</span></span><br><span class="line">test_set_x = test_set_x_flatten / <span class="number">255</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sigmoid</span><span class="params">(z)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    参数：</span></span><br><span class="line"><span class="string">        z  - 任何大小的标量或numpy数组。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    返回：</span></span><br><span class="line"><span class="string">        s  -  sigmoid（z）</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    s = <span class="number">1</span> / (<span class="number">1</span> + np.exp(-z))</span><br><span class="line">    <span class="keyword">return</span> s</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">initialize_with_zeros</span><span class="params">(dim)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">        此函数为w创建一个维度为（dim，1）的0向量，并将b初始化为0。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        参数：</span></span><br><span class="line"><span class="string">            dim  - 我们想要的w矢量的大小（或者这种情况下的参数数量）</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        返回：</span></span><br><span class="line"><span class="string">            w  - 维度为（dim，1）的初始化向量。</span></span><br><span class="line"><span class="string">            b  - 初始化的标量（对应于偏差）</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    w = np.zeros(shape = (dim,<span class="number">1</span>))</span><br><span class="line">    b = <span class="number">0</span></span><br><span class="line">    <span class="comment">#使用断言来确保我要的数据是正确的</span></span><br><span class="line">    <span class="keyword">assert</span>(w.shape == (dim, <span class="number">1</span>)) <span class="comment">#w的维度是(dim,1)</span></span><br><span class="line">    <span class="keyword">assert</span>(isinstance(b, float) <span class="keyword">or</span> isinstance(b, int)) <span class="comment">#b的类型是float或者是int</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (w , b)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">propagate</span><span class="params">(w, b, X, Y)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    实现前向和后向传播的成本函数及其梯度。</span></span><br><span class="line"><span class="string">    参数：</span></span><br><span class="line"><span class="string">        w  - 权重，大小不等的数组（num_px * num_px * 3，1）</span></span><br><span class="line"><span class="string">        b  - 偏差，一个标量</span></span><br><span class="line"><span class="string">        X  - 矩阵类型为（num_px * num_px * 3，训练数量）</span></span><br><span class="line"><span class="string">        Y  - 真正的“标签”矢量（如果非猫则为0，如果是猫则为1），矩阵维度为(1,训练数据数量)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    返回：</span></span><br><span class="line"><span class="string">        cost- 逻辑回归的负对数似然成本</span></span><br><span class="line"><span class="string">        dw  - 相对于w的损失梯度，因此与w相同的形状</span></span><br><span class="line"><span class="string">        db  - 相对于b的损失梯度，因此与b的形状相同</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    m = X.shape[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment">#正向传播</span></span><br><span class="line">    A = sigmoid(np.dot(w.T,X) + b) <span class="comment">#计算激活值，请参考公式2。</span></span><br><span class="line">    cost = (- <span class="number">1</span> / m) * np.sum(Y * np.log(A) + (<span class="number">1</span> - Y) * (np.log(<span class="number">1</span> - A))) <span class="comment">#计算成本，请参考公式3和4。</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#反向传播</span></span><br><span class="line">    dw = (<span class="number">1</span> / m) * np.dot(X, (A - Y).T) <span class="comment">#请参考视频中的偏导公式。</span></span><br><span class="line">    db = (<span class="number">1</span> / m) * np.sum(A - Y) <span class="comment">#请参考视频中的偏导公式。</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#使用断言确保我的数据是正确的</span></span><br><span class="line">    <span class="keyword">assert</span>(dw.shape == w.shape)</span><br><span class="line">    <span class="keyword">assert</span>(db.dtype == float)</span><br><span class="line">    cost = np.squeeze(cost)</span><br><span class="line">    <span class="keyword">assert</span>(cost.shape == ())</span><br><span class="line"></span><br><span class="line">    <span class="comment">#创建一个字典，把dw和db保存起来。</span></span><br><span class="line">    grads = &#123;</span><br><span class="line">                <span class="string">"dw"</span>: dw,</span><br><span class="line">                <span class="string">"db"</span>: db</span><br><span class="line">             &#125;</span><br><span class="line">    <span class="keyword">return</span> (grads , cost)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">optimize</span><span class="params">(w , b , X , Y , num_iterations , learning_rate , print_cost = False)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    此函数通过运行梯度下降算法来优化w和b</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    参数：</span></span><br><span class="line"><span class="string">        w  - 权重，大小不等的数组（num_px * num_px * 3，1）</span></span><br><span class="line"><span class="string">        b  - 偏差，一个标量</span></span><br><span class="line"><span class="string">        X  - 维度为（num_px * num_px * 3，训练数据的数量）的数组。</span></span><br><span class="line"><span class="string">        Y  - 真正的“标签”矢量（如果非猫则为0，如果是猫则为1），矩阵维度为(1,训练数据的数量)</span></span><br><span class="line"><span class="string">        num_iterations  - 优化循环的迭代次数</span></span><br><span class="line"><span class="string">        learning_rate  - 梯度下降更新规则的学习率</span></span><br><span class="line"><span class="string">        print_cost  - 每100步打印一次损失值</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    返回：</span></span><br><span class="line"><span class="string">        params  - 包含权重w和偏差b的字典</span></span><br><span class="line"><span class="string">        grads  - 包含权重和偏差相对于成本函数的梯度的字典</span></span><br><span class="line"><span class="string">        成本 - 优化期间计算的所有成本列表，将用于绘制学习曲线。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    提示：</span></span><br><span class="line"><span class="string">    我们需要写下两个步骤并遍历它们：</span></span><br><span class="line"><span class="string">        1）计算当前参数的成本和梯度，使用propagate（）。</span></span><br><span class="line"><span class="string">        2）使用w和b的梯度下降法则更新参数。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    costs = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(num_iterations):</span><br><span class="line"></span><br><span class="line">        grads, cost = propagate(w, b, X, Y)</span><br><span class="line"></span><br><span class="line">        dw = grads[<span class="string">"dw"</span>]</span><br><span class="line">        db = grads[<span class="string">"db"</span>]</span><br><span class="line"></span><br><span class="line">        w = w - learning_rate * dw</span><br><span class="line">        b = b - learning_rate * db</span><br><span class="line"></span><br><span class="line">        <span class="comment">#记录成本</span></span><br><span class="line">        <span class="keyword">if</span> i % <span class="number">100</span> == <span class="number">0</span>:</span><br><span class="line">            costs.append(cost)</span><br><span class="line">        <span class="comment">#打印成本数据</span></span><br><span class="line">        <span class="keyword">if</span> (print_cost) <span class="keyword">and</span> (i % <span class="number">100</span> == <span class="number">0</span>):</span><br><span class="line">            print(<span class="string">"迭代的次数: %i ， 误差值： %f"</span> % (i,cost))</span><br><span class="line"></span><br><span class="line">    params  = &#123;</span><br><span class="line">                <span class="string">"w"</span> : w,</span><br><span class="line">                <span class="string">"b"</span> : b &#125;</span><br><span class="line">    grads = &#123;</span><br><span class="line">            <span class="string">"dw"</span>: dw,</span><br><span class="line">            <span class="string">"db"</span>: db &#125; </span><br><span class="line">    <span class="keyword">return</span> (params , grads , costs)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(w , b , X )</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    使用学习逻辑回归参数logistic （w，b）预测标签是0还是1，</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    参数：</span></span><br><span class="line"><span class="string">        w  - 权重，大小不等的数组（num_px * num_px * 3，1）</span></span><br><span class="line"><span class="string">        b  - 偏差，一个标量</span></span><br><span class="line"><span class="string">        X  - 维度为（num_px * num_px * 3，训练数据的数量）的数据</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    返回：</span></span><br><span class="line"><span class="string">        Y_prediction  - 包含X中所有图片的所有预测【0 | 1】的一个numpy数组（向量）</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    m  = X.shape[<span class="number">1</span>] <span class="comment">#图片的数量</span></span><br><span class="line">    Y_prediction = np.zeros((<span class="number">1</span>,m)) </span><br><span class="line">    w = w.reshape(X.shape[<span class="number">0</span>],<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">#计预测猫在图片中出现的概率</span></span><br><span class="line">    A = sigmoid(np.dot(w.T , X) + b)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(A.shape[<span class="number">1</span>]):</span><br><span class="line">        <span class="comment">#将概率a [0，i]转换为实际预测p [0，i]</span></span><br><span class="line">        Y_prediction[<span class="number">0</span>,i] = <span class="number">1</span> <span class="keyword">if</span> A[<span class="number">0</span>,i] &gt; <span class="number">0.5</span> <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line">    <span class="comment">#使用断言</span></span><br><span class="line">    <span class="keyword">assert</span>(Y_prediction.shape == (<span class="number">1</span>,m))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> Y_prediction</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">model</span><span class="params">(X_train , Y_train , X_test , Y_test , num_iterations = <span class="number">2000</span> , learning_rate = <span class="number">0.5</span> , print_cost = False)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    通过调用之前实现的函数来构建逻辑回归模型</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    参数：</span></span><br><span class="line"><span class="string">        X_train  - numpy的数组,维度为（num_px * num_px * 3，m_train）的训练集</span></span><br><span class="line"><span class="string">        Y_train  - numpy的数组,维度为（1，m_train）（矢量）的训练标签集</span></span><br><span class="line"><span class="string">        X_test   - numpy的数组,维度为（num_px * num_px * 3，m_test）的测试集</span></span><br><span class="line"><span class="string">        Y_test   - numpy的数组,维度为（1，m_test）的（向量）的测试标签集</span></span><br><span class="line"><span class="string">        num_iterations  - 表示用于优化参数的迭代次数的超参数</span></span><br><span class="line"><span class="string">        learning_rate  - 表示optimize（）更新规则中使用的学习速率的超参数</span></span><br><span class="line"><span class="string">        print_cost  - 设置为true以每100次迭代打印成本</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    返回：</span></span><br><span class="line"><span class="string">        d  - 包含有关模型信息的字典。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    w , b = initialize_with_zeros(X_train.shape[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">    parameters , grads , costs = optimize(w , b , X_train , Y_train,num_iterations , learning_rate , print_cost)</span><br><span class="line"></span><br><span class="line">    <span class="comment">#从字典“参数”中检索参数w和b</span></span><br><span class="line">    w , b = parameters[<span class="string">"w"</span>] , parameters[<span class="string">"b"</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment">#预测测试/训练集的例子</span></span><br><span class="line">    Y_prediction_test = predict(w , b, X_test)</span><br><span class="line">    Y_prediction_train = predict(w , b, X_train)</span><br><span class="line"></span><br><span class="line">    <span class="comment">#打印训练后的准确性</span></span><br><span class="line">    print(<span class="string">"训练集准确性："</span>  , format(<span class="number">100</span> - np.mean(np.abs(Y_prediction_train - Y_train)) * <span class="number">100</span>) ,<span class="string">"%"</span>)</span><br><span class="line">    print(<span class="string">"测试集准确性："</span>  , format(<span class="number">100</span> - np.mean(np.abs(Y_prediction_test - Y_test)) * <span class="number">100</span>) ,<span class="string">"%"</span>)</span><br><span class="line"></span><br><span class="line">    d = &#123;</span><br><span class="line">            <span class="string">"costs"</span> : costs,</span><br><span class="line">            <span class="string">"Y_prediction_test"</span> : Y_prediction_test,</span><br><span class="line">            <span class="string">"Y_prediciton_train"</span> : Y_prediction_train,</span><br><span class="line">            <span class="string">"w"</span> : w,</span><br><span class="line">            <span class="string">"b"</span> : b,</span><br><span class="line">            <span class="string">"learning_rate"</span> : learning_rate,</span><br><span class="line">            <span class="string">"num_iterations"</span> : num_iterations &#125;</span><br><span class="line">    <span class="keyword">return</span> d</span><br><span class="line"></span><br><span class="line">d = model(train_set_x, train_set_y, test_set_x, test_set_y, num_iterations = <span class="number">2000</span>, learning_rate = <span class="number">0.005</span>, print_cost = <span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#绘制图</span></span><br><span class="line">costs = np.squeeze(d[<span class="string">'costs'</span>])</span><br><span class="line">plt.plot(costs)</span><br><span class="line">plt.ylabel(<span class="string">'cost'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'iterations (per hundreds)'</span>)</span><br><span class="line">plt.title(<span class="string">"Learning rate ="</span> + str(d[<span class="string">"learning_rate"</span>]))</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+	
+    <div style="text-align:center;color: #ccc;font-size:14px;">
+------------- 本文结束 <i class="fa fa-heart-o"></i> 感谢您的阅读-------------
+</div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>sdz
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2020/01/14/%E5%90%B4%E6%81%A9%E8%BE%BE%E8%AF%BE%E5%90%8E%E7%BC%96%E7%A8%8B%E4%BD%9C%E4%B8%9A-Course-1-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E7%AC%AC%E4%BA%8C%E5%91%A8%E4%BD%9C%E4%B8%9A-%E5%85%B7%E6%9C%89%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%80%9D%E7%BB%B4%E7%9A%84Logistic%E5%9B%9E%E5%BD%92/" title="吴恩达课后编程作业 Course 1 神经网络和深度学习 - 第二周作业 - 具有神经网络思维的Logistic回归">http://yoursite.com/2020/01/14/吴恩达课后编程作业-Course-1-神经网络和深度学习-第二周作业-具有神经网络思维的Logistic回归/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" rel="tag"><i class="fa fa-tag"></i> 神经网络</a>
+              <a href="/tags/Logistic%E5%9B%9E%E5%BD%92/" rel="tag"><i class="fa fa-tag"></i> Logistic回归</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/01/10/%E8%8B%B1%E8%AF%AD%E5%8F%A5%E5%AD%90%E6%94%B6%E8%97%8F/" rel="prev" title="英语句子收藏">
+      <i class="fa fa-chevron-left"></i> 英语句子收藏
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/01/14/MFC-QQ%E5%AE%9E%E7%8E%B0/" rel="next" title="MFC-QQ">
+      MFC-QQ <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#任务"><span class="nav-number">1.</span> <span class="nav-text">任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">2.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整代码"><span class="nav-number">3.</span> <span class="nav-text">完整代码</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="sdz"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">sdz</p>
+  <div class="site-description" itemprop="description">个人博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/pxlsdz" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;pxlsdz" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/sdz20172133" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;sdz20172133" rel="noopener" target="_blank"><i class="fa fa-fw fa-codiepie"></i>CSDN</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sdz</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">264k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:01</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='170' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'pAM5gCGYUGBwBF62VmECeV0o-gzGzoHsz',
+      appKey     : 'myehhFCNOsN4ClPFSLov1xKd',
+      placeholder: "欢迎畅所欲言",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : ,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+  <!-- 页面点击小红心 -->
+
+      <script type="text/javascript" src="/js/clicklove.js"></script>
+
+</body>
+</html>

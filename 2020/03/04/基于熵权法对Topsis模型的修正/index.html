@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="引例">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于熵权法对Topsis模型的修正">
+<meta property="og:url" content="http://yoursite.com/2020/03/04/%E5%9F%BA%E4%BA%8E%E7%86%B5%E6%9D%83%E6%B3%95%E5%AF%B9Topsis%E6%A8%A1%E5%9E%8B%E7%9A%84%E4%BF%AE%E6%AD%A3/index.html">
+<meta property="og:site_name" content="pxlsdz的博客">
+<meta property="og:description" content="引例">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200304195221.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200304222729.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200304222819.png">
+<meta property="article:published_time" content="2020-03-04T11:34:23.000Z">
+<meta property="article:modified_time" content="2020-03-12T12:07:55.594Z">
+<meta property="article:author" content="sdz">
+<meta property="article:tag" content="MATLAB">
+<meta property="article:tag" content="评价模型">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200304195221.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/03/04/%E5%9F%BA%E4%BA%8E%E7%86%B5%E6%9D%83%E6%B3%95%E5%AF%B9Topsis%E6%A8%A1%E5%9E%8B%E7%9A%84%E4%BF%AE%E6%AD%A3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>基于熵权法对Topsis模型的修正 | pxlsdz的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">pxlsdz的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">分享，笔记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">32</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">17</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">52</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+  </div>
+</div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/pxlsdz" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/04/%E5%9F%BA%E4%BA%8E%E7%86%B5%E6%9D%83%E6%B3%95%E5%AF%B9Topsis%E6%A8%A1%E5%9E%8B%E7%9A%84%E4%BF%AE%E6%AD%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="sdz">
+      <meta itemprop="description" content="个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pxlsdz的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          基于熵权法对Topsis模型的修正
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-04 19:34:23" itemprop="dateCreated datePublished" datetime="2020-03-04T19:34:23+08:00">2020-03-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-12 20:07:55" itemprop="dateModified" datetime="2020-03-12T20:07:55+08:00">2020-03-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/" itemprop="url" rel="index"><span itemprop="name">数学建模</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/03/04/%E5%9F%BA%E4%BA%8E%E7%86%B5%E6%9D%83%E6%B3%95%E5%AF%B9Topsis%E6%A8%A1%E5%9E%8B%E7%9A%84%E4%BF%AE%E6%AD%A3/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/04/%E5%9F%BA%E4%BA%8E%E7%86%B5%E6%9D%83%E6%B3%95%E5%AF%B9Topsis%E6%A8%A1%E5%9E%8B%E7%9A%84%E4%BF%AE%E6%AD%A3/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="引例"><a href="#引例" class="headerlink" title="引例"></a>引例</h1><a id="more"></a>
+
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200304195221.png" alt=""></p>
+<p>在先前的博客中，Topsis确定指标权值用的是层次分析法。</p>
+<p>层次分析法最大的缺点判断矩阵的确定依赖于专家，如果专家的判断存在主观性的话，会对结果产生很大的影响。（<strong>主观性太强</strong>）  </p>
+<h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p><strong>熵权法是一种客观赋权方法</strong><br>        依据的原理： 指标的变异程度越⼩，所反映的信息量也越少，其对应的权值也应该越低。（客观 = 数据本身就可以告诉我们权重）<br>      （一种极端的例子：对于所有的样本而言，这个指标都是相同的数值，<br>那么我们可认为这个指标的权值为0，即这个指标对于我们的评价起不到任何帮助）。</p>
+<h2 id="如何度量信息量的大小"><a href="#如何度量信息量的大小" class="headerlink" title="如何度量信息量的大小"></a>如何度量信息量的大小</h2><ul>
+<li>越有可能发生的事情，信息量越少；</li>
+<li>越不可能发生的事情，信息量就越多。</li>
+</ul>
+<p>怎么衡量事情发生的可能性大小？<strong>概率</strong>  </p>
+<h1 id="信息熵的定义"><a href="#信息熵的定义" class="headerlink" title="信息熵的定义"></a>信息熵的定义</h1><p>假设x表示事件X可能发生的某种情况，p（x）表示这种情况发生的概率。</p>
+<p>我们可以定义：I（x）= -ln（p（x）），因为0≤p（x）≤1，所以I（x）≥0。</p>
+<p>如果事件X可能发生的情况分别为：$x_{1},x_{2},…,x_{n}$</p>
+<p>那么我们可以定义事件X的信息熵为：<br>$$<br>H ( X ) = \sum _ { i = 1 } ^ { n } \left[ p \left( x _ { i } \right) I \left( x _ { i } \right) \right] = - \sum _ { i = 1 } ^ { n } \left[ p \left( x _ { i } \right) \ln \left( p \left( x _ { i } \right) \right) \right]<br>$$<br>从上面的公式可以看出，信息熵的本质就是对信息量的期望值。<br>可以证明的是：</p>
+<p>当$p \left( x _ { 1 } \right) = p \left( x _ { 2 } \right) = \cdots = p \left( x _ { n } \right) = \frac { 1 } { n }$时，H(x)取最大值，此时H（x)=ln n</p>
+<p><strong>信息熵越大，信息量是越小</strong>  </p>
+<h1 id="熵权法的计算步骤"><a href="#熵权法的计算步骤" class="headerlink" title="熵权法的计算步骤"></a>熵权法的计算步骤</h1><ol>
+<li><p>判断输入的矩阵中是否存在负数，如果有则要重新标准化到非负区间<br>（后面计算概率时需要保证每一个元素为非负数）  </p>
+<p>假设有n个要评价的对象，m个评价指标（已经正向化了）构成的正向化矩阵如下：<br>$$<br>A=\begin{bmatrix}a_{11}&amp; a_{12}&amp; \cdots  &amp; a_{1n}\a_{21}&amp; a_{22}&amp; \cdots  &amp; a_{2n}\\vdots &amp; \vdots &amp; \ddots &amp; \vdots \a_{m1}&amp; a_{m2}&amp; \cdots  &amp; a_{mn}\end{bmatrix}<br>$$<br>那么，对其标准化的矩阵记为Z，Z中的每一个元素：<br>$$<br>z_{ij}=a_{ij}/ \sqrt{\sum_{i=1}^{n}a_{ij}^{2} }<br>$$<br>判断Z矩阵中是否存在着负数，如果存在的话，需要对A使用另一种标准化方法对矩阵X进行一次标准化得到之矩阵，其标准化的公式为：<br>$$<br>\tilde{z}<em>{i j}=\frac{x</em>{i j}-\min \left{x_{1 j}, x_{2 j}, \cdots, x_{n j}\right}}{\max \left{x_{1 j}, x_{2 j}, \cdots, x_{n j}\right}-\min \left{x_{1 j}, x_{2 j}, \cdots, x_{n j}\right}}<br>$$</p>
+</li>
+</ol>
+<ol start="2">
+<li>计算第j项指标下第i个样本所占的比重，并将其看作相对熵计算中用到的概率  </li>
+</ol>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200304222729.png" alt=""></p>
+<ol start="3">
+<li><p>计算每个指标的信息熵，并计算信息效用值，并归一化得到每个指标的熵权  </p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200304222819.png" alt=""></p>
+</li>
+</ol>
+<h1 id="熵权法背后的原理"><a href="#熵权法背后的原理" class="headerlink" title="熵权法背后的原理"></a>熵权法背后的原理</h1><p>熵权法是一种客观赋权方法<br>依据的原理： 指标的变异程度越⼩，所反映的信息量也越少，其对应<br>的权值也应该越低。（客观 = 数据本身就可以告诉我们权重）  </p>
+<p>我们可以用指标的标准差来衡量样本的变异程度，指标的标准差越大，其信息熵越小 。</p>
+<p>下图是蒙特卡洛的结果<br>随机生成一组有30个样本且位于区间[0,1]上的数据，计算其信息熵和标准差；将上述步骤重复100次，我们能够得到100组信息熵和标准差的取值，将其绘制成散点图。可以发现，两个指标之间有很明显的负相关关系。</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">%% 蒙特卡洛模拟：指标的标准差和信息熵成反比</span></span><br><span class="line">n = <span class="number">30</span>;  <span class="comment">% 样本个数</span></span><br><span class="line">N = <span class="number">100</span>; <span class="comment">% 试验的次数</span></span><br><span class="line">result = <span class="built_in">zeros</span>(N,<span class="number">2</span>);  <span class="comment">% 初始化用来保存信息熵和标准差的矩阵，横坐标表示信息熵，纵坐标表示标准差</span></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:N</span><br><span class="line">    x = <span class="built_in">rand</span>(n,<span class="number">1</span>);  <span class="comment">% 随机生成n个位于区间[0,1]上面的样本 (随机数生成是视频第四讲的内容)</span></span><br><span class="line">    p = x / sum(x);</span><br><span class="line">    e = -sum(p .* mylog(p)) / <span class="built_in">log</span>(n); <span class="comment">% 计算信息熵</span></span><br><span class="line">    sd = std(x);  <span class="comment">% 计算标准差(描述性统计是视频第五讲的内容)</span></span><br><span class="line">    result(<span class="built_in">i</span>,<span class="number">1</span>) = e;</span><br><span class="line">    result(<span class="built_in">i</span>,<span class="number">2</span>) = sd;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">plot</span>(result(:,<span class="number">1</span>),result(:,<span class="number">2</span>),<span class="string">'o'</span>)   <span class="comment">%(画图是视频第三讲的内容)</span></span><br><span class="line">xlabel(<span class="string">'信息熵'</span>)</span><br><span class="line">ylabel(<span class="string">'标准差'</span>)</span><br><span class="line">[r,p] = corrcoef(result(:,<span class="number">1</span>),result(:,<span class="number">2</span>)) <span class="comment">% 计算相关系数和对应的p值(相关系数是视频第五讲的内容)</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="TOPSIS代码完整实现"><a href="#TOPSIS代码完整实现" class="headerlink" title="TOPSIS代码完整实现"></a>TOPSIS代码完整实现</h1><h2 id="topsis-m"><a href="#topsis-m" class="headerlink" title="topsis.m"></a>topsis.m</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">%%  第一步：把数据复制到工作区，并将这个矩阵命名为X</span></span><br><span class="line"><span class="comment">% （1）在工作区右键，点击新建（Ctrl+N)，输入变量名称为X</span></span><br><span class="line"><span class="comment">% （2）在Excel中复制数据，再回到Excel中右键，点击粘贴Excel数据（Ctrl+Shift+V）</span></span><br><span class="line"><span class="comment">% （3）关掉这个窗口，点击X变量，右键另存为，保存为mat文件（下次就不用复制粘贴了，只需使用load命令即可加载数据）</span></span><br><span class="line"><span class="comment">% （4）注意，代码和数据要放在同一个目录下哦。</span></span><br><span class="line">clear;clc</span><br><span class="line">load data_water_quality.mat</span><br><span class="line"></span><br><span class="line"><span class="comment">%%  第二步：判断是否需要正向化</span></span><br><span class="line">[n,m] = <span class="built_in">size</span>(X);</span><br><span class="line"><span class="built_in">disp</span>([<span class="string">'共有'</span> num2str(n) <span class="string">'个评价对象, '</span> num2str(m) <span class="string">'个评价指标'</span>]) </span><br><span class="line">Judge = input([<span class="string">'这'</span> num2str(m) <span class="string">'个指标是否需要经过正向化处理，需要请输入1 ，不需要输入0：  '</span>]);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> Judge == <span class="number">1</span></span><br><span class="line">    Position = input(<span class="string">'请输入需要正向化处理的指标所在的列，例如第2、3、6三列需要处理，那么你需要输入[2,3,6]： '</span>); <span class="comment">%[2,3,4]</span></span><br><span class="line">    <span class="built_in">disp</span>(<span class="string">'请输入需要处理的这些列的指标类型（1：极小型， 2：中间型， 3：区间型） '</span>)</span><br><span class="line">    Type = input(<span class="string">'例如：第2列是极小型，第3列是区间型，第6列是中间型，就输入[1,3,2]：  '</span>); <span class="comment">%[2,1,3]</span></span><br><span class="line">    <span class="comment">% 注意，Position和Type是两个同维度的行向量</span></span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span> : <span class="built_in">size</span>(Position,<span class="number">2</span>)  <span class="comment">%这里需要对这些列分别处理，因此我们需要知道一共要处理的次数，即循环的次数</span></span><br><span class="line">        X(:,Position(<span class="built_in">i</span>)) = Positivization(X(:,Position(<span class="built_in">i</span>)),Type(<span class="built_in">i</span>),Position(<span class="built_in">i</span>));</span><br><span class="line">    <span class="comment">% Positivization是我们自己定义的函数，其作用是进行正向化，其一共接收三个参数</span></span><br><span class="line">    <span class="comment">% 第一个参数是要正向化处理的那一列向量 X(:,Position(i))   回顾上一讲的知识，X(:,n)表示取第n列的全部元素</span></span><br><span class="line">    <span class="comment">% 第二个参数是对应的这一列的指标类型（1：极小型， 2：中间型， 3：区间型）</span></span><br><span class="line">    <span class="comment">% 第三个参数是告诉函数我们正在处理的是原始矩阵中的哪一列</span></span><br><span class="line">    <span class="comment">% 该函数有一个返回值，它返回正向化之后的指标，我们可以将其直接赋值给我们原始要处理的那一列向量</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="built_in">disp</span>(<span class="string">'正向化后的矩阵 X =  '</span>)</span><br><span class="line">    <span class="built_in">disp</span>(X)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="comment">%% 作业：在这里增加是否需要算加权</span></span><br><span class="line"><span class="comment">% 补充一个基础知识：m*n维的矩阵A 点乘 n维行向量B，等于这个A的每一行都点乘B</span></span><br><span class="line"><span class="comment">% （注意：2017以及之后版本的Matlab才支持，老版本Matlab会报错）</span></span><br><span class="line"><span class="comment">% % 假如原始数据为：</span></span><br><span class="line"><span class="comment">%   A=[1, 2, 3;</span></span><br><span class="line"><span class="comment">%        2, 4, 6] </span></span><br><span class="line"><span class="comment">% % 权重矩阵为：</span></span><br><span class="line"><span class="comment">%   B=[ 0.2, 0.5 ,0.3 ] </span></span><br><span class="line"><span class="comment">% % 加权后为：</span></span><br><span class="line"><span class="comment">%   C=A .* B</span></span><br><span class="line"><span class="comment">%     0.2000    1.0000    0.9000</span></span><br><span class="line"><span class="comment">%     0.4000    2.0000    1.8000</span></span><br><span class="line"><span class="comment">% 类似的，还有矩阵和向量的点除， 大家可以自己试试计算A ./ B</span></span><br><span class="line"><span class="comment">% 注意，矩阵和向量没有 .- 和 .+ 哦 ，大家可以试试，如果计算A.+B 和 A.-B会报什么错误。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%% 这里补充一个小插曲</span></span><br><span class="line"><span class="comment">% % 在上一讲层次分析法的代码中，我们可以优化以下的语句：</span></span><br><span class="line"><span class="comment">% % Sum_A = sum(A);</span></span><br><span class="line"><span class="comment">% % SUM_A = repmat(Sum_A,n,1);</span></span><br><span class="line"><span class="comment">% % Stand_A = A ./ SUM_A;</span></span><br><span class="line"><span class="comment">% % 事实上，我们把第三行换成：Stand_A = A ./ Sum_A; 也是可以的哦 </span></span><br><span class="line"><span class="comment">% % (再次强调，新版本的Matlab才能运行哦)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%% 第三步：对正向化后的矩阵进行标准化</span></span><br><span class="line">Z = X ./ <span class="built_in">repmat</span>(sum(X.*X) .^ <span class="number">0.5</span>, n, <span class="number">1</span>);</span><br><span class="line"><span class="built_in">disp</span>(<span class="string">'标准化矩阵 Z = '</span>)</span><br><span class="line"><span class="built_in">disp</span>(Z)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">%% 让用户判断是否需要增加权重</span></span><br><span class="line"><span class="built_in">disp</span>(<span class="string">"请输入是否需要增加权重向量，需要输入1，不需要输入0"</span>)</span><br><span class="line">Judge = input(<span class="string">'请输入是否需要增加权重： '</span>);</span><br><span class="line"><span class="keyword">if</span> Judge == <span class="number">1</span></span><br><span class="line">    Judge = input(<span class="string">'使用熵权法确定权重请输入1，否则输入0： '</span>);</span><br><span class="line">    <span class="keyword">if</span> Judge == <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> sum(sum(Z&lt;<span class="number">0</span>)) &gt;<span class="number">0</span>   <span class="comment">% 如果之前标准化后的Z矩阵中存在负数，则重新对X进行标准化</span></span><br><span class="line">            <span class="built_in">disp</span>(<span class="string">'原来标准化得到的Z矩阵中存在负数，所以需要对X重新标准化'</span>)</span><br><span class="line">            <span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:n</span><br><span class="line">                <span class="keyword">for</span> <span class="built_in">j</span> = <span class="number">1</span>:m</span><br><span class="line">                    Z(<span class="built_in">i</span>,<span class="built_in">j</span>) = [X(<span class="built_in">i</span>,<span class="built_in">j</span>) - <span class="built_in">min</span>(X(:,<span class="built_in">j</span>))] / [<span class="built_in">max</span>(X(:,<span class="built_in">j</span>)) - <span class="built_in">min</span>(X(:,<span class="built_in">j</span>))];</span><br><span class="line">                <span class="keyword">end</span></span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            <span class="built_in">disp</span>(<span class="string">'X重新进行标准化得到的标准化矩阵Z为:  '</span>)</span><br><span class="line">            <span class="built_in">disp</span>(Z)</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        weight = Entropy_Method(Z);</span><br><span class="line">        <span class="built_in">disp</span>(<span class="string">'熵权法确定的权重为：'</span>)</span><br><span class="line">        <span class="built_in">disp</span>(weight)</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">disp</span>([<span class="string">'如果你有3个指标，你就需要输入3个权重，例如它们分别为0.25,0.25,0.5, 则你需要输入[0.25,0.25,0.5]'</span>]);</span><br><span class="line">        weight = input([<span class="string">'你需要输入'</span> num2str(m) <span class="string">'个权数。'</span> <span class="string">'请以行向量的形式输入这'</span> num2str(m) <span class="string">'个权重: '</span>]);</span><br><span class="line">        OK = <span class="number">0</span>;  <span class="comment">% 用来判断用户的输入格式是否正确</span></span><br><span class="line">        <span class="keyword">while</span> OK == <span class="number">0</span> </span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">abs</span>(sum(weight) <span class="number">-1</span>)&lt;<span class="number">0.000001</span> &amp;&amp; <span class="built_in">size</span>(weight,<span class="number">1</span>) == <span class="number">1</span> &amp;&amp; <span class="built_in">size</span>(weight,<span class="number">2</span>) == m  <span class="comment">% 注意，Matlab中浮点数的比较要小心</span></span><br><span class="line">                OK =<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                weight = input(<span class="string">'你输入的有误，请重新输入权重行向量: '</span>);</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    weight = <span class="built_in">ones</span>(<span class="number">1</span>,m) ./ m ; <span class="comment">%如果不需要加权重就默认权重都相同，即都为1/m</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">%% 第四步：计算与最大值的距离和最小值的距离，并算出得分</span></span><br><span class="line">D_P = sum([(Z - <span class="built_in">repmat</span>(<span class="built_in">max</span>(Z),n,<span class="number">1</span>)) .^ <span class="number">2</span> ] .* <span class="built_in">repmat</span>(weight,n,<span class="number">1</span>) ,<span class="number">2</span>) .^ <span class="number">0.5</span>;   <span class="comment">% D+ 与最大值的距离向量</span></span><br><span class="line">D_N = sum([(Z - <span class="built_in">repmat</span>(<span class="built_in">min</span>(Z),n,<span class="number">1</span>)) .^ <span class="number">2</span> ] .* <span class="built_in">repmat</span>(weight,n,<span class="number">1</span>) ,<span class="number">2</span>) .^ <span class="number">0.5</span>;   <span class="comment">% D- 与最小值的距离向量</span></span><br><span class="line">S = D_N ./ (D_P+D_N);    <span class="comment">% 未归一化的得分</span></span><br><span class="line"><span class="built_in">disp</span>(<span class="string">'最后的得分为：'</span>)</span><br><span class="line">stand_S = S / sum(S)</span><br><span class="line">[sorted_S,index] = <span class="built_in">sort</span>(stand_S ,<span class="string">'descend'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">% A = magic(5)  % 幻方矩阵</span></span><br><span class="line"><span class="comment">% M = magic(n)返回由1到n^2的整数构成并且总行数和总列数相等的n×n矩阵。阶次n必须为大于或等于3的标量。</span></span><br><span class="line"><span class="comment">% sort(A)若A是向量不管是列还是行向量，默认都是对A进行升序排列。sort(A)是默认的升序，而sort(A,'descend')是降序排序。</span></span><br><span class="line"><span class="comment">% sort(A)若A是矩阵，默认对A的各列进行升序排列</span></span><br><span class="line"><span class="comment">% sort(A,dim)</span></span><br><span class="line"><span class="comment">% dim=1时等效sort(A)</span></span><br><span class="line"><span class="comment">% dim=2时表示对A中的各行元素升序排列</span></span><br><span class="line"><span class="comment">% A = [2,1,3,8]</span></span><br><span class="line"><span class="comment">% Matlab中给一维向量排序是使用sort函数：sort（A），排序是按升序进行的，其中A为待排序的向量；</span></span><br><span class="line"><span class="comment">% 若欲保留排列前的索引，则可用 [sA,index] = sort(A,'descend') ，排序后，sA是排序好的向量，index是向量sA中对A的索引。</span></span><br><span class="line"><span class="comment">% sA  =  8     3     2     1</span></span><br><span class="line"><span class="comment">% index =  4     3     1     2</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Inter2Max-m"><a href="#Inter2Max-m" class="headerlink" title="Inter2Max.m"></a>Inter2Max.m</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[posit_x]</span> = <span class="title">Inter2Max</span><span class="params">(x,a,b)</span></span></span><br><span class="line">    r_x = <span class="built_in">size</span>(x,<span class="number">1</span>);  <span class="comment">% row of x </span></span><br><span class="line">    M = <span class="built_in">max</span>([a-<span class="built_in">min</span>(x),<span class="built_in">max</span>(x)-b]);</span><br><span class="line">    posit_x = <span class="built_in">zeros</span>(r_x,<span class="number">1</span>);   <span class="comment">%zeros函数用法: zeros(3)  zeros(3,1)  ones(3)</span></span><br><span class="line">    <span class="comment">% 初始化posit_x全为0  初始化的目的是节省处理时间</span></span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>: r_x</span><br><span class="line">        <span class="keyword">if</span> x(<span class="built_in">i</span>) &lt; a</span><br><span class="line">           posit_x(<span class="built_in">i</span>) = <span class="number">1</span>-(a-x(<span class="built_in">i</span>))/M;</span><br><span class="line">        <span class="keyword">elseif</span> x(<span class="built_in">i</span>) &gt; b</span><br><span class="line">           posit_x(<span class="built_in">i</span>) = <span class="number">1</span>-(x(<span class="built_in">i</span>)-b)/M;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">           posit_x(<span class="built_in">i</span>) = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Mid2Max-m"><a href="#Mid2Max-m" class="headerlink" title="Mid2Max.m"></a>Mid2Max.m</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[posit_x]</span> = <span class="title">Mid2Max</span><span class="params">(x,best)</span></span></span><br><span class="line">    M = <span class="built_in">max</span>(<span class="built_in">abs</span>(x-best));</span><br><span class="line">    posit_x = <span class="number">1</span> - <span class="built_in">abs</span>(x-best) / M;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Min2Max-m"><a href="#Min2Max-m" class="headerlink" title="Min2Max.m"></a>Min2Max.m</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[posit_x]</span> = <span class="title">Min2Max</span><span class="params">(x)</span></span></span><br><span class="line">    posit_x = <span class="built_in">max</span>(x) - x;</span><br><span class="line">     <span class="comment">%posit_x = 1 ./ x;    %如果x全部都大于0，也可以这样正向化</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Positivization-m"><a href="#Positivization-m" class="headerlink" title="Positivization.m"></a>Positivization.m</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">% function [输出变量] = 函数名称(输入变量）  </span></span><br><span class="line"><span class="comment">% 函数的中间部分都是函数体</span></span><br><span class="line"><span class="comment">% 函数的最后要用end结尾</span></span><br><span class="line"><span class="comment">% 输出变量和输入变量可以有多个，用逗号隔开</span></span><br><span class="line"><span class="comment">% function [a,b,c]=test(d,e,f)</span></span><br><span class="line"><span class="comment">%     a=d+e;</span></span><br><span class="line"><span class="comment">%     b=e+f;</span></span><br><span class="line"><span class="comment">%     c=f+d;</span></span><br><span class="line"><span class="comment">% end</span></span><br><span class="line"><span class="comment">% 自定义的函数要单独放在一个m文件中，不可以直接放在主函数里面（和其他大多数语言不同）</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[posit_x]</span> = <span class="title">Positivization</span><span class="params">(x,type,i)</span></span></span><br><span class="line"><span class="comment">% 输入变量有三个：</span></span><br><span class="line"><span class="comment">% x：需要正向化处理的指标对应的原始列向量</span></span><br><span class="line"><span class="comment">% type： 指标的类型（1：极小型， 2：中间型， 3：区间型）</span></span><br><span class="line"><span class="comment">% i: 正在处理的是原始矩阵中的哪一列</span></span><br><span class="line"><span class="comment">% 输出变量posit_x表示：正向化后的列向量</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">type</span> == <span class="number">1</span>  <span class="comment">%极小型</span></span><br><span class="line">        <span class="built_in">disp</span>([<span class="string">'第'</span> num2str(<span class="built_in">i</span>) <span class="string">'列是极小型，正在正向化'</span>] )</span><br><span class="line">        posit_x = Min2Max(x);  <span class="comment">%调用Min2Max函数来正向化</span></span><br><span class="line">        <span class="built_in">disp</span>([<span class="string">'第'</span> num2str(<span class="built_in">i</span>) <span class="string">'列极小型正向化处理完成'</span>] )</span><br><span class="line">        <span class="built_in">disp</span>(<span class="string">'~~~~~~~~~~~~~~~~~~~~分界线~~~~~~~~~~~~~~~~~~~~'</span>)</span><br><span class="line">    <span class="keyword">elseif</span> <span class="built_in">type</span> == <span class="number">2</span>  <span class="comment">%中间型</span></span><br><span class="line">        <span class="built_in">disp</span>([<span class="string">'第'</span> num2str(<span class="built_in">i</span>) <span class="string">'列是中间型'</span>] )</span><br><span class="line">        best = input(<span class="string">'请输入最佳的那一个值： '</span>);</span><br><span class="line">        posit_x = Mid2Max(x,best);</span><br><span class="line">        <span class="built_in">disp</span>([<span class="string">'第'</span> num2str(<span class="built_in">i</span>) <span class="string">'列中间型正向化处理完成'</span>] )</span><br><span class="line">        <span class="built_in">disp</span>(<span class="string">'~~~~~~~~~~~~~~~~~~~~分界线~~~~~~~~~~~~~~~~~~~~'</span>)</span><br><span class="line">    <span class="keyword">elseif</span> <span class="built_in">type</span> == <span class="number">3</span>  <span class="comment">%区间型</span></span><br><span class="line">        <span class="built_in">disp</span>([<span class="string">'第'</span> num2str(<span class="built_in">i</span>) <span class="string">'列是区间型'</span>] )</span><br><span class="line">        a = input(<span class="string">'请输入区间的下界： '</span>);</span><br><span class="line">        b = input(<span class="string">'请输入区间的上界： '</span>); </span><br><span class="line">        posit_x = Inter2Max(x,a,b);</span><br><span class="line">        <span class="built_in">disp</span>([<span class="string">'第'</span> num2str(<span class="built_in">i</span>) <span class="string">'列区间型正向化处理完成'</span>] )</span><br><span class="line">        <span class="built_in">disp</span>(<span class="string">'~~~~~~~~~~~~~~~~~~~~分界线~~~~~~~~~~~~~~~~~~~~'</span>)</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">disp</span>(<span class="string">'没有这种类型的指标，请检查Type向量中是否有除了1、2、3之外的其他值'</span>)</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="mylog-m"><a href="#mylog-m" class="headerlink" title="mylog.m"></a>mylog.m</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">% 重新定义一个mylog函数，当输入的p中元素为0时，返回0</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[lnp]</span> =  <span class="title">mylog</span><span class="params">(p)</span></span></span><br><span class="line">n = <span class="built_in">length</span>(p);   <span class="comment">% 向量的长度</span></span><br><span class="line">lnp = <span class="built_in">zeros</span>(n,<span class="number">1</span>);   <span class="comment">% 初始化最后的结果</span></span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:n   <span class="comment">% 开始循环</span></span><br><span class="line">        <span class="keyword">if</span> p(<span class="built_in">i</span>) == <span class="number">0</span>   <span class="comment">% 如果第i个元素为0</span></span><br><span class="line">            lnp(<span class="built_in">i</span>) = <span class="number">0</span>;  <span class="comment">% 那么返回的第i个结果也为0</span></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            lnp(<span class="built_in">i</span>) = <span class="built_in">log</span>(p(<span class="built_in">i</span>));  </span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Entropy-Method-m"><a href="#Entropy-Method-m" class="headerlink" title="Entropy_Method.m"></a>Entropy_Method.m</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[W]</span> = <span class="title">Entropy_Method</span><span class="params">(Z)</span></span></span><br><span class="line"><span class="comment">% 计算有n个样本，m个指标的样本所对应的的熵权</span></span><br><span class="line"><span class="comment">% 输入</span></span><br><span class="line"><span class="comment">% Z ： n*m的矩阵（要经过正向化和标准化处理，且元素中不存在负数）</span></span><br><span class="line"><span class="comment">% 输出</span></span><br><span class="line"><span class="comment">% W：熵权，m*1的行向量</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%% 计算熵权</span></span><br><span class="line">    [n,m] = <span class="built_in">size</span>(Z);</span><br><span class="line">    D = <span class="built_in">zeros</span>(<span class="number">1</span>,m);  <span class="comment">% 初始化保存信息效用值的行向量</span></span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:m</span><br><span class="line">        x = Z(:,<span class="built_in">i</span>);  <span class="comment">% 取出第i列的指标</span></span><br><span class="line">        p = x / sum(x);</span><br><span class="line">        <span class="comment">% 注意，p有可能为0，此时计算ln(p)*p时，Matlab会返回NaN，所以这里我们自己定义一个函数</span></span><br><span class="line">        e = -sum(p .* mylog(p)) / <span class="built_in">log</span>(n); <span class="comment">% 计算信息熵</span></span><br><span class="line">        D(<span class="built_in">i</span>) = <span class="number">1</span>- e; <span class="comment">% 计算信息效用值</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    W = D ./ sum(D);  <span class="comment">% 将信息效用值归一化，得到权重    </span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+	
+    <div style="text-align:center;color: #ccc;font-size:14px;">
+------------- 本文结束 <i class="fa fa-heart-o"></i> 感谢您的阅读-------------
+</div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>sdz
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2020/03/04/%E5%9F%BA%E4%BA%8E%E7%86%B5%E6%9D%83%E6%B3%95%E5%AF%B9Topsis%E6%A8%A1%E5%9E%8B%E7%9A%84%E4%BF%AE%E6%AD%A3/" title="基于熵权法对Topsis模型的修正">http://yoursite.com/2020/03/04/基于熵权法对Topsis模型的修正/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/MATLAB/" rel="tag"><i class="fa fa-tag"></i> MATLAB</a>
+              <a href="/tags/%E8%AF%84%E4%BB%B7%E6%A8%A1%E5%9E%8B/" rel="tag"><i class="fa fa-tag"></i> 评价模型</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/04/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E8%8B%B1%E8%AF%AD--MEMORY%20SYSTEMS/" rel="prev" title="计算机专业英语--MEMORY SYSTEMS">
+      <i class="fa fa-chevron-left"></i> 计算机专业英语--MEMORY SYSTEMS
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/09/%E8%BD%AF%E4%BB%B6%E8%BF%87%E7%A8%8B%E2%80%94%E2%80%94%E7%BB%93%E6%9E%84%E5%8C%96%E5%88%86%E6%9E%90/" rel="next" title="软件过程——结构化分析">
+      软件过程——结构化分析 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#引例"><span class="nav-number">1.</span> <span class="nav-text">引例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#定义"><span class="nav-number">2.</span> <span class="nav-text">定义</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何度量信息量的大小"><span class="nav-number">2.1.</span> <span class="nav-text">如何度量信息量的大小</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#信息熵的定义"><span class="nav-number">3.</span> <span class="nav-text">信息熵的定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#熵权法的计算步骤"><span class="nav-number">4.</span> <span class="nav-text">熵权法的计算步骤</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#熵权法背后的原理"><span class="nav-number">5.</span> <span class="nav-text">熵权法背后的原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TOPSIS代码完整实现"><span class="nav-number">6.</span> <span class="nav-text">TOPSIS代码完整实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#topsis-m"><span class="nav-number">6.1.</span> <span class="nav-text">topsis.m</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Inter2Max-m"><span class="nav-number">6.2.</span> <span class="nav-text">Inter2Max.m</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mid2Max-m"><span class="nav-number">6.3.</span> <span class="nav-text">Mid2Max.m</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Min2Max-m"><span class="nav-number">6.4.</span> <span class="nav-text">Min2Max.m</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Positivization-m"><span class="nav-number">6.5.</span> <span class="nav-text">Positivization.m</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mylog-m"><span class="nav-number">6.6.</span> <span class="nav-text">mylog.m</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Entropy-Method-m"><span class="nav-number">6.7.</span> <span class="nav-text">Entropy_Method.m</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="sdz"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">sdz</p>
+  <div class="site-description" itemprop="description">个人博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/pxlsdz" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;pxlsdz" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/sdz20172133" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;sdz20172133" rel="noopener" target="_blank"><i class="fa fa-fw fa-codiepie"></i>CSDN</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sdz</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">264k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:01</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='170' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'pAM5gCGYUGBwBF62VmECeV0o-gzGzoHsz',
+      appKey     : 'myehhFCNOsN4ClPFSLov1xKd',
+      placeholder: "欢迎畅所欲言",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : ,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+  <!-- 页面点击小红心 -->
+
+      <script type="text/javascript" src="/js/clicklove.js"></script>
+
+</body>
+</html>

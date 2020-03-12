@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1 简单练习输出一个5*5的单位矩阵">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线性回归">
+<meta property="og:url" content="http://yoursite.com/2020/01/27/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/index.html">
+<meta property="og:site_name" content="pxlsdz的博客">
+<meta property="og:description" content="1 简单练习输出一个5*5的单位矩阵">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-27/1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-27/2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-27/3.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-27/4.png">
+<meta property="og:image" content="https://images2018.cnblogs.com/blog/1342883/201803/1342883-20180309144200582-1981235826.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-27/5.png">
+<meta property="article:published_time" content="2020-01-27T03:42:46.000Z">
+<meta property="article:modified_time" content="2020-01-28T01:42:29.698Z">
+<meta property="article:author" content="sdz">
+<meta property="article:tag" content="MATLAB">
+<meta property="article:tag" content="线性回归">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-27/1.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/01/27/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>线性回归 | pxlsdz的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">pxlsdz的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">分享，笔记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">32</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">17</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">52</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+  </div>
+</div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/pxlsdz" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/27/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="sdz">
+      <meta itemprop="description" content="个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pxlsdz的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          线性回归
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-01-27 11:42:46" itemprop="dateCreated datePublished" datetime="2020-01-27T11:42:46+08:00">2020-01-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-28 09:42:29" itemprop="dateModified" datetime="2020-01-28T09:42:29+08:00">2020-01-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/" itemprop="url" rel="index"><span itemprop="name">数学建模</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/01/27/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/01/27/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>15k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>13 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="1-简单练习"><a href="#1-简单练习" class="headerlink" title="1 简单练习"></a>1 简单练习</h1><p>输出一个5*5的单位矩阵</p>
+<a id="more"></a>
+
+
+
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A = <span class="built_in">eye</span>(<span class="number">5</span>);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ans &#x3D;</span><br><span class="line"></span><br><span class="line">     1     0     0     0     0</span><br><span class="line">     0     1     0     0     0</span><br><span class="line">     0     0     1     0     0</span><br><span class="line">     0     0     0     1     0</span><br><span class="line">     0     0     0     0     1</span><br></pre></td></tr></table></figure>
+
+<h1 id="2-单变量的线性回归"><a href="#2-单变量的线性回归" class="headerlink" title="2 单变量的线性回归"></a>2 单变量的线性回归</h1><p>整个2的部分需要根据城市人口数量，预测开小吃店的利润 数据在ex1data1.txt里，第一列是城市人口数量，第二列是该城市小吃店利润。</p>
+<h2 id="2-1-Plotting-the-Data"><a href="#2-1-Plotting-the-Data" class="headerlink" title="2.1 Plotting the Data"></a>2.1 Plotting the Data</h2><p>读入数据，然后展示数据</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">fprintf(<span class="string">'Plotting Data ...\n'</span>)</span><br><span class="line">data = load(<span class="string">'ex1data1.txt'</span>);</span><br><span class="line">x= data(:, <span class="number">1</span>); </span><br><span class="line">y =data(:, <span class="number">2</span>);</span><br><span class="line">m = <span class="built_in">length</span>(y); <span class="comment">% number of training examples</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">plot</span>(x, y, <span class="string">'rx'</span>, <span class="string">'MarkerSize'</span>, <span class="number">10</span>); <span class="comment">% Plot the data </span></span><br><span class="line"><span class="comment">%绘制图形：rx代表图形中标记的点为红色的x，数字10表示标记的大小。</span></span><br><span class="line">ylabel(<span class="string">'Profit in $10,000s'</span>); <span class="comment">% Set the y−axis label </span></span><br><span class="line">xlabel(<span class="string">'Population of City in 10,000s'</span>); <span class="comment">% Set the x−axis label </span></span><br><span class="line"></span><br><span class="line">fprintf(<span class="string">'Program paused. Press enter to continue.\n'</span>);</span><br><span class="line">pause;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-27/1.png" alt=""></p>
+<h2 id="2-2-梯度下降"><a href="#2-2-梯度下降" class="headerlink" title="2.2 梯度下降"></a>2.2 梯度下降</h2><p>这个部分你需要在现有数据集上，训练线性回归的参数θ</p>
+<h3 id="2-2-1-约定公式"><a href="#2-2-1-约定公式" class="headerlink" title="2.2.1 约定公式"></a>2.2.1 约定公式</h3><p>线性回归的目的是最小化成本函数<br>$$<br>\begin{aligned}<br>J(\theta) &amp;=\frac{1}{2 m} \sum_{i=1}^{m}\left(h_{\theta}\left(x^{(i)}\right)-y^{(i)}\right)^{2}<br>\end{aligned}<br>$$<br>假设$h_{\theta}(x)$由线性模型给出<br>$$<br>\begin{aligned}<br>h_{\theta}(x) &amp;=\theta^{T} X=\theta_{0}+\theta_{1} x_{1}<br>\end{aligned}<br>$$<br>梯度下降更新来最小化成本$J{(\theta)}$:<br>$$<br>\begin{aligned}<br>\theta_{j}:=\theta_{j} &amp;-\alpha \frac{1}{m} \sum_{i=1}^{m}\left(h_{\theta}\left(x^{(i)}\right)-y^{(i)}\right) x_{j}^{(i)}<br>\end{aligned}<br>$$<br>实现代码：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">J</span> = <span class="title">computeCost</span><span class="params">(X, y, theta)</span></span></span><br><span class="line"><span class="comment">%COMPUTECOST Compute cost for linear regression</span></span><br><span class="line"><span class="comment">%   J = COMPUTECOST(X, y, theta) computes the cost of using theta as the</span></span><br><span class="line"><span class="comment">%   parameter for linear regression to fit the data points in X and y</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% Initialize some useful values</span></span><br><span class="line">m = <span class="built_in">length</span>(y); <span class="comment">% number of training examples</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% You need to return the following variables correctly </span></span><br><span class="line">J = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">% ====================== YOUR CODE HERE ======================</span></span><br><span class="line"><span class="comment">% Instructions: Compute the cost of a particular choice of theta</span></span><br><span class="line"><span class="comment">%               You should set J to the cost.</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%计算代价函数</span></span><br><span class="line">J=sum((X*theta-y).^<span class="number">2</span>)/(<span class="number">2</span>*m);</span><br><span class="line"></span><br><span class="line"><span class="comment">% =========================================================================</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-2实现"><a href="#2-2-2实现" class="headerlink" title="2.2.2实现"></a>2.2.2实现</h3><p>数据前面已经读取完毕，我们要为加入一列x，用于更新$\theta_{0}$，然后我们将$θ$初始化为0，学习率初始化为0.01，迭代次数为1500次</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">X = [<span class="built_in">ones</span>(m, <span class="number">1</span>), data(:,<span class="number">1</span>)]; <span class="comment">% Add a column of ones to x</span></span><br><span class="line">theta = <span class="built_in">zeros</span>(<span class="number">2</span>, <span class="number">1</span>); <span class="comment">% initialize fitting parameters</span></span><br><span class="line">iterations = <span class="number">1500</span>;</span><br><span class="line">alpha = <span class="number">0.01</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-2-3计算J-θ"><a href="#2-2-3计算J-θ" class="headerlink" title="2.2.3计算J(θ)"></a>2.2.3计算J(θ)</h3><p>答案应该是32.07</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">J =</span><br><span class="line"></span><br><span class="line">   <span class="number">32.0727</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-4-梯度下降"><a href="#2-2-4-梯度下降" class="headerlink" title="2.2.4 梯度下降"></a>2.2.4 梯度下降</h3><p>记住J(θ)的变量是θ，而不是X和y，意思是说，我们变化θ的值来使J(θ)变化，而不是变化X和y的值。 一个检查梯度下降是不是在正常运作的方式，是打印出每一步J(θ)的值，看他是不是一直都在减小，并且最后收敛至一个稳定的值。 θ最后的结果会用来预测小吃店在35000及70000人城市规模的利润。</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[theta, J_history]</span> = <span class="title">gradientDescent</span><span class="params">(X, y, theta, alpha, num_iters)</span></span></span><br><span class="line"><span class="comment">%GRADIENTDESCENT Performs gradient descent to learn theta</span></span><br><span class="line"><span class="comment">%   theta = GRADIENTDESCENT(X, y, theta, alpha, num_iters) updates theta by </span></span><br><span class="line"><span class="comment">%   taking num_iters gradient steps with learning rate alpha</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% Initialize some useful values</span></span><br><span class="line">m = <span class="built_in">length</span>(y); <span class="comment">% number of training examples</span></span><br><span class="line">J_history = <span class="built_in">zeros</span>(num_iters, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> iter = <span class="number">1</span>:num_iters</span><br><span class="line"></span><br><span class="line">    <span class="comment">% ====================== YOUR CODE HERE ======================</span></span><br><span class="line">    <span class="comment">% Instructions: Perform a single gradient step on the parameter vector</span></span><br><span class="line">    <span class="comment">%               theta. </span></span><br><span class="line">    <span class="comment">%</span></span><br><span class="line">    <span class="comment">% Hint: While debugging, it can be useful to print out the values</span></span><br><span class="line">    <span class="comment">%       of the cost function (computeCost) and gradient here.</span></span><br><span class="line">    <span class="comment">%</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    x=X(:,<span class="number">2</span>);</span><br><span class="line">    theta0=theta(<span class="number">1</span>);</span><br><span class="line">    theta1=theta(<span class="number">2</span>);</span><br><span class="line">    </span><br><span class="line">    theta0=theta0-alpha/m*sum(X*theta-y);</span><br><span class="line">    theta1=theta1-alpha/m*sum((X*theta-y).*x);</span><br><span class="line">    </span><br><span class="line">    theta=[theta0;theta1];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">% ============================================================</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">% Save the cost J in every iteration    </span></span><br><span class="line">    J_history(iter) = computeCost(X, y, theta);</span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>现在让我们运行梯度下降算法来将我们的参数θ适合于训练集。</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">theta = gradientDescent(X, y, theta, alpha, iterations);</span><br></pre></td></tr></table></figure>
+
+
+
+<p>原始数据以及拟合的直线</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">% Plot the linear fit</span></span><br><span class="line"><span class="built_in">hold</span> on; <span class="comment">% keep previous plot visible</span></span><br><span class="line"><span class="built_in">plot</span>(X(:,<span class="number">2</span>), X*theta, <span class="string">'-'</span>)</span><br><span class="line"><span class="built_in">legend</span>(<span class="string">'Training data'</span>, <span class="string">'Linear regression'</span>)</span><br><span class="line"><span class="built_in">hold</span> off <span class="comment">% don't overlay any more plots on this figure</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-27/2.png" alt=""></p>
+<p>预测35000和70000城市规模的小吃摊利润</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">% Predict values for population sizes of 35,000 and 70,000</span></span><br><span class="line">predict1 = [<span class="number">1</span>, <span class="number">3.5</span>] *theta;</span><br><span class="line">fprintf(<span class="string">'For population = 35,000, we predict a profit of %f\n'</span>,...</span><br><span class="line">    predict1*<span class="number">10000</span>);</span><br><span class="line">predict2 = [<span class="number">1</span>, <span class="number">7</span>] * theta;</span><br><span class="line">fprintf(<span class="string">'For population = 70,000, we predict a profit of %f\n'</span>,...</span><br><span class="line">    predict2*<span class="number">10000</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-4-可视化J-θ"><a href="#2-4-可视化J-θ" class="headerlink" title="2.4 可视化J(θ)"></a>2.4 可视化J(θ)</h2><p>此步可以便于你理解J(<em>θ</em>)以及梯度下降。 三维图显示了<em>θ</em>0和<em>θ</em>1与J(<em>θ</em>)的对应关系，J(<em>θ</em>)是一个碗状的图形，并且有全局最小值。这个最小值就是<em>θ</em>0和<em>θ</em>1的最优解。梯度下降的每一步都会更接近这个最小值。</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">fprintf(<span class="string">'Visualizing J(theta_0, theta_1) ...\n'</span>)</span><br><span class="line"><span class="comment">% Grid over which we will calculate J</span></span><br><span class="line">theta0_vals = <span class="built_in">linspace</span>(<span class="number">-10</span>, <span class="number">10</span>, <span class="number">100</span>);</span><br><span class="line">theta1_vals = <span class="built_in">linspace</span>(<span class="number">-1</span>, <span class="number">4</span>, <span class="number">100</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">% initialize J_vals to a matrix of 0's</span></span><br><span class="line">J_vals = <span class="built_in">zeros</span>(<span class="built_in">length</span>(theta0_vals), <span class="built_in">length</span>(theta1_vals));</span><br><span class="line"></span><br><span class="line"><span class="comment">% Fill out J_vals</span></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:<span class="built_in">length</span>(theta0_vals)</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">j</span> = <span class="number">1</span>:<span class="built_in">length</span>(theta1_vals)</span><br><span class="line">	  t = [theta0_vals(<span class="built_in">i</span>); theta1_vals(<span class="built_in">j</span>)];</span><br><span class="line">	  J_vals(<span class="built_in">i</span>,<span class="built_in">j</span>) = computeCost(X, y, t);</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">J_vals = J_vals';</span><br><span class="line"><span class="comment">% Surface plot</span></span><br><span class="line"><span class="built_in">figure</span>;</span><br><span class="line">surf(theta0_vals, theta1_vals, J_vals)<span class="comment">%曲面图</span></span><br><span class="line">xlabel(<span class="string">'\theta_0'</span>); </span><br><span class="line">ylabel(<span class="string">'\theta_1'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">% Contour plot</span></span><br><span class="line"><span class="built_in">figure</span>;</span><br><span class="line"><span class="comment">% Plot J_vals as 15 contours spaced logarithmically between 0.01 and 100</span></span><br><span class="line">contour(theta0_vals, theta1_vals, J_vals, <span class="built_in">logspace</span>(<span class="number">-2</span>, <span class="number">3</span>, <span class="number">20</span>))<span class="comment">%矩阵的等高线图</span></span><br><span class="line"><span class="comment">%（logspace函数和linspace函数类似，此处作用生成将区间[10-2,103]等分20份的1*20矩阵）</span></span><br><span class="line">xlabel(<span class="string">'\theta_0'</span>);</span><br><span class="line">ylabel(<span class="string">'\theta_1'</span>);</span><br><span class="line"><span class="built_in">hold</span> on;</span><br><span class="line"><span class="built_in">plot</span>(theta(<span class="number">1</span>), theta(<span class="number">2</span>), <span class="string">'rx'</span>, <span class="string">'MarkerSize'</span>, <span class="number">10</span>, <span class="string">'LineWidth'</span>, <span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>结果如下：</p>
+<ul>
+<li><p>从图中可看出代价函数值<strong><em>J\</em>(θ)</strong>有全局最优解（最低点）</p>
+</li>
+<li><p>可以看出我们求出的最优参数θ所对应的代价值，正好位于等高线图最低的位置</p>
+<p><img src="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-27/3.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-27/4.png" alt=""></p>
+<h2 id="2-5完整代码"><a href="#2-5完整代码" class="headerlink" title="2.5完整代码"></a>2.5完整代码</h2><h3 id="2-5-1-主代码"><a href="#2-5-1-主代码" class="headerlink" title="2.5.1 主代码"></a>2.5.1 主代码</h3><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line">A = <span class="built_in">eye</span>(<span class="number">5</span>);</span><br><span class="line">  </span><br><span class="line">  fprintf(<span class="string">'Plotting Data ...\n'</span>)</span><br><span class="line">  data = load(<span class="string">'ex1data1.txt'</span>);</span><br><span class="line">  x= data(:, <span class="number">1</span>); <span class="comment">% 表示data矩阵的第一列所有行， 并且取转置</span></span><br><span class="line">  y =data(:, <span class="number">2</span>);</span><br><span class="line">  m = <span class="built_in">length</span>(y); <span class="comment">% number of training examples</span></span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  <span class="built_in">plot</span>(x, y, <span class="string">'rx'</span>, <span class="string">'MarkerSize'</span>, <span class="number">10</span>); <span class="comment">% Plot the data </span></span><br><span class="line">  <span class="comment">%绘制图形：rx代表图形中标记的点为红色的x，数字10表示标记的大小。</span></span><br><span class="line">  ylabel(<span class="string">'Profit in $10,000s'</span>); <span class="comment">% Set the y−axis label </span></span><br><span class="line">  xlabel(<span class="string">'Population of City in 10,000s'</span>); <span class="comment">% Set the x−axis label </span></span><br><span class="line">  </span><br><span class="line">  fprintf(<span class="string">'Program paused. Press enter to continue.\n'</span>);</span><br><span class="line">  pause;</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  X = [<span class="built_in">ones</span>(m, <span class="number">1</span>), data(:,<span class="number">1</span>)]; <span class="comment">% Add a column of ones to x</span></span><br><span class="line">  theta = <span class="built_in">zeros</span>(<span class="number">2</span>, <span class="number">1</span>); <span class="comment">% initialize fitting parameters</span></span><br><span class="line">  iterations = <span class="number">1500</span>;</span><br><span class="line">  alpha = <span class="number">0.01</span>;</span><br><span class="line">  </span><br><span class="line">  fprintf(<span class="string">'\nTesting the cost function ...\n'</span>)</span><br><span class="line">  <span class="comment">% compute and display initial cost</span></span><br><span class="line">  J = computeCost(X, y, theta);</span><br><span class="line">  fprintf(<span class="string">'With theta = [0 ; 0]\nCost computed = %f\n'</span>, J);</span><br><span class="line">  fprintf(<span class="string">'Expected cost value (approx) 32.07\n'</span>);</span><br><span class="line">  </span><br><span class="line">  fprintf(<span class="string">'Program paused. Press enter to continue.\n'</span>);</span><br><span class="line">  pause;</span><br><span class="line">  </span><br><span class="line">  fprintf(<span class="string">'\nRunning Gradient Descent ...\n'</span>)</span><br><span class="line">  <span class="comment">% run gradient descent</span></span><br><span class="line">  theta = gradientDescent(X, y, theta, alpha, iterations);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">% print theta to screen</span></span><br><span class="line">  fprintf(<span class="string">'Theta found by gradient descent:\n'</span>);</span><br><span class="line">  fprintf(<span class="string">'%f\n'</span>, theta);</span><br><span class="line">  fprintf(<span class="string">'Expected theta values (approx)\n'</span>);</span><br><span class="line">  fprintf(<span class="string">' -3.6303\n  1.1664\n\n'</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">% Plot the linear fit</span></span><br><span class="line">  <span class="built_in">hold</span> on; <span class="comment">% keep previous plot visible</span></span><br><span class="line">  <span class="built_in">plot</span>(X(:,<span class="number">2</span>), X*theta, <span class="string">'-'</span>)</span><br><span class="line">  <span class="built_in">legend</span>(<span class="string">'Training data'</span>, <span class="string">'Linear regression'</span>)</span><br><span class="line">  <span class="built_in">hold</span> off <span class="comment">% don't overlay any more plots on this figure</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment">% Predict values for population sizes of 35,000 and 70,000</span></span><br><span class="line">  predict1 = [<span class="number">1</span>, <span class="number">3.5</span>] *theta;</span><br><span class="line">  fprintf(<span class="string">'For population = 35,000, we predict a profit of %f\n'</span>,...</span><br><span class="line">      predict1*<span class="number">10000</span>);</span><br><span class="line">  predict2 = [<span class="number">1</span>, <span class="number">7</span>] * theta;</span><br><span class="line">  fprintf(<span class="string">'For population = 70,000, we predict a profit of %f\n'</span>,...</span><br><span class="line">      predict2*<span class="number">10000</span>);</span><br><span class="line">  </span><br><span class="line">  fprintf(<span class="string">'Program paused. Press enter to continue.\n'</span>);</span><br><span class="line">  pause;</span><br><span class="line">  </span><br><span class="line">  fprintf(<span class="string">'Visualizing J(theta_0, theta_1) ...\n'</span>)</span><br><span class="line">  <span class="comment">% Grid over which we will calculate J</span></span><br><span class="line">  theta0_vals = <span class="built_in">linspace</span>(<span class="number">-10</span>, <span class="number">10</span>, <span class="number">100</span>);</span><br><span class="line">  theta1_vals = <span class="built_in">linspace</span>(<span class="number">-1</span>, <span class="number">4</span>, <span class="number">100</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">% initialize J_vals to a matrix of 0's</span></span><br><span class="line">  J_vals = <span class="built_in">zeros</span>(<span class="built_in">length</span>(theta0_vals), <span class="built_in">length</span>(theta1_vals));</span><br><span class="line">  </span><br><span class="line">  <span class="comment">% Fill out J_vals</span></span><br><span class="line">  <span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:<span class="built_in">length</span>(theta0_vals)</span><br><span class="line">      <span class="keyword">for</span> <span class="built_in">j</span> = <span class="number">1</span>:<span class="built_in">length</span>(theta1_vals)</span><br><span class="line">  	  t = [theta0_vals(<span class="built_in">i</span>); theta1_vals(<span class="built_in">j</span>)];</span><br><span class="line">  	  J_vals(<span class="built_in">i</span>,<span class="built_in">j</span>) = computeCost(X, y, t);</span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line">  </span><br><span class="line">  J_vals = J_vals';</span><br><span class="line">  <span class="comment">% Surface plot</span></span><br><span class="line">  <span class="built_in">figure</span>;</span><br><span class="line">  surf(theta0_vals, theta1_vals, J_vals)<span class="comment">%曲面图</span></span><br><span class="line">  xlabel(<span class="string">'\theta_0'</span>); </span><br><span class="line">  ylabel(<span class="string">'\theta_1'</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">% Contour plot</span></span><br><span class="line">  <span class="built_in">figure</span>;</span><br><span class="line">  <span class="comment">% Plot J_vals as 15 contours spaced logarithmically between 0.01 and 100</span></span><br><span class="line">  contour(theta0_vals, theta1_vals, J_vals, <span class="built_in">logspace</span>(<span class="number">-2</span>, <span class="number">3</span>, <span class="number">20</span>))<span class="comment">%矩阵的等高线图</span></span><br><span class="line">  <span class="comment">%（logspace函数和linspace函数类似，此处作用生成将区间[10-2,103]等分20份的1*20矩阵）</span></span><br><span class="line">  xlabel(<span class="string">'\theta_0'</span>);</span><br><span class="line">  ylabel(<span class="string">'\theta_1'</span>);</span><br><span class="line">  <span class="built_in">hold</span> on;</span><br><span class="line">  <span class="built_in">plot</span>(theta(<span class="number">1</span>), theta(<span class="number">2</span>), <span class="string">'rx'</span>, <span class="string">'MarkerSize'</span>, <span class="number">10</span>, <span class="string">'LineWidth'</span>, <span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h3 id="2-5-2-求梯度代码"><a href="#2-5-2-求梯度代码" class="headerlink" title="2.5.2 求梯度代码"></a>2.5.2 求梯度代码</h3><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[theta, J_history]</span> = <span class="title">gradientDescent</span><span class="params">(X, y, theta, alpha, num_iters)</span></span></span><br><span class="line"><span class="comment">%GRADIENTDESCENT Performs gradient descent to learn theta</span></span><br><span class="line"><span class="comment">%   theta = GRADIENTDESCENT(X, y, theta, alpha, num_iters) updates theta by </span></span><br><span class="line"><span class="comment">%   taking num_iters gradient steps with learning rate alpha</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% Initialize some useful values</span></span><br><span class="line">m = <span class="built_in">length</span>(y); <span class="comment">% number of training examples</span></span><br><span class="line">J_history = <span class="built_in">zeros</span>(num_iters, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> iter = <span class="number">1</span>:num_iters</span><br><span class="line"></span><br><span class="line">    <span class="comment">% ====================== YOUR CODE HERE ======================</span></span><br><span class="line">    <span class="comment">% Instructions: Perform a single gradient step on the parameter vector</span></span><br><span class="line">    <span class="comment">%               theta. </span></span><br><span class="line">    <span class="comment">%</span></span><br><span class="line">    <span class="comment">% Hint: While debugging, it can be useful to print out the values</span></span><br><span class="line">    <span class="comment">%       of the cost function (computeCost) and gradient here.</span></span><br><span class="line">    <span class="comment">%</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    x=X(:,<span class="number">2</span>);</span><br><span class="line">    theta0=theta(<span class="number">1</span>);</span><br><span class="line">    theta1=theta(<span class="number">2</span>);</span><br><span class="line">    </span><br><span class="line">    theta0=theta0-alpha/m*sum(X*theta-y);</span><br><span class="line">    theta1=theta1-alpha/m*sum((X*theta-y).*x);</span><br><span class="line">    </span><br><span class="line">    theta=[theta0;theta1];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">% ============================================================</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">% Save the cost J in every iteration    </span></span><br><span class="line">    J_history(iter) = computeCost(X, y, theta);</span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-5-3-计算代价函数"><a href="#2-5-3-计算代价函数" class="headerlink" title="2.5.3 计算代价函数"></a>2.5.3 计算代价函数</h3>  <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">J</span> = <span class="title">computeCost</span><span class="params">(X, y, theta)</span></span></span><br><span class="line"><span class="comment">%COMPUTECOST Compute cost for linear regression</span></span><br><span class="line"><span class="comment">%   J = COMPUTECOST(X, y, theta) computes the cost of using theta as the</span></span><br><span class="line"><span class="comment">%   parameter for linear regression to fit the data points in X and y</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% Initialize some useful values</span></span><br><span class="line">m = <span class="built_in">length</span>(y); <span class="comment">% number of training examples</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% You need to return the following variables correctly </span></span><br><span class="line">J = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">% ====================== YOUR CODE HERE ======================</span></span><br><span class="line"><span class="comment">% Instructions: Compute the cost of a particular choice of theta</span></span><br><span class="line"><span class="comment">%               You should set J to the cost.</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%计算代价函数</span></span><br><span class="line">J=sum((X*theta-y).^<span class="number">2</span>)/(<span class="number">2</span>*m);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">% =========================================================================</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="3-多变量线性回归"><a href="#3-多变量线性回归" class="headerlink" title="3 多变量线性回归"></a>3 多变量线性回归</h1><p>ex1data2.txt里的数据，第一列是房屋大小，第二列是卧室数量，第三列是房屋售价 根据已有数据，建立模型，预测房屋的售价</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">%%加载数据</span></span><br><span class="line">data = load(<span class="string">'ex1data2.txt'</span>);</span><br><span class="line">X=data(:,<span class="number">1</span>:<span class="number">2</span>)</span><br><span class="line">y=data(:,<span class="number">3</span>)</span><br><span class="line">m=<span class="built_in">length</span>(y)</span><br><span class="line"></span><br><span class="line"><span class="comment">% Print out some data points</span></span><br><span class="line">fprintf(<span class="string">'First 10 examples from the dataset: \n'</span>);</span><br><span class="line">fprintf(<span class="string">' x = [%.0f %.0f], y = %.0f \n'</span>, [X(<span class="number">1</span>:<span class="number">10</span>,:) y(<span class="number">1</span>:<span class="number">10</span>,:)]');</span><br><span class="line"></span><br><span class="line">fprintf(<span class="string">'Program paused. Press enter to continue.\n'</span>);</span><br><span class="line">pause;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="3-1-特征归一化"><a href="#3-1-特征归一化" class="headerlink" title="3.1 特征归一化"></a>3.1 特征归一化</h2><p>观察数据发现，size变量是bedrooms变量的1000倍大小,统一量级会让梯度下降收敛的更快。做法就是:<strong>将每类特征减去他的平均值后除以标准差</strong><br>$$<br>x_{n}=\frac{X_{n}-u_{n} }{s_{n} }<br>$$<br>$u_{n}$是平均值，$s_{n}$是标准差</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[X_norm, mu, sigma]</span> = <span class="title">featureNormalize</span><span class="params">(X)</span></span></span><br><span class="line"><span class="comment">%FEATURENORMALIZE Normalizes the features in X </span></span><br><span class="line"><span class="comment">%   FEATURENORMALIZE(X) returns a normalized version of X where</span></span><br><span class="line"><span class="comment">%   the mean value of each feature is 0 and the standard deviation</span></span><br><span class="line"><span class="comment">%   is 1. This is often a good preprocessing step to do when</span></span><br><span class="line"><span class="comment">%   working with learning algorithms.</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% You need to set these values correctly</span></span><br><span class="line">X_norm = X;</span><br><span class="line">mu = <span class="built_in">zeros</span>(<span class="number">1</span>, <span class="built_in">size</span>(X, <span class="number">2</span>));</span><br><span class="line">sigma = <span class="built_in">zeros</span>(<span class="number">1</span>, <span class="built_in">size</span>(X, <span class="number">2</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">% ====================== YOUR CODE HERE ======================</span></span><br><span class="line"><span class="comment">% Instructions: First, for each feature dimension, compute the mean</span></span><br><span class="line"><span class="comment">%               of the feature and subtract it from the dataset,</span></span><br><span class="line"><span class="comment">%               storing the mean value in mu. Next, compute the </span></span><br><span class="line"><span class="comment">%               standard deviation of each feature and divide</span></span><br><span class="line"><span class="comment">%               each feature by it's standard deviation, storing</span></span><br><span class="line"><span class="comment">%               the standard deviation in sigma. </span></span><br><span class="line"><span class="comment">%</span></span><br><span class="line"><span class="comment">%               Note that X is a matrix where each column is a </span></span><br><span class="line"><span class="comment">%               feature and each row is an example. You need </span></span><br><span class="line"><span class="comment">%               to perform the normalization separately for </span></span><br><span class="line"><span class="comment">%               each feature. </span></span><br><span class="line"><span class="comment">%</span></span><br><span class="line"><span class="comment">% Hint: You might find the 'mean' and 'std' functions useful.</span></span><br><span class="line"><span class="comment">%       </span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mu=<span class="built_in">mean</span>(X)</span><br><span class="line">sigma=std(X)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:<span class="built_in">size</span>(X,<span class="number">2</span>),</span><br><span class="line">    X_norm(:,<span class="built_in">i</span>) = (X(:,<span class="built_in">i</span>) - mu(<span class="built_in">i</span>)) / sigma(<span class="built_in">i</span>);</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">% ============================================================</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>主函数运行：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">% Scale features and set them to zero mean</span></span><br><span class="line">fprintf(<span class="string">'Normalizing Features ...\n'</span>);</span><br><span class="line"></span><br><span class="line">[X mu sigma] = featureNormalize(X);</span><br><span class="line"></span><br><span class="line"><span class="comment">% Add intercept term to X</span></span><br><span class="line">X = [<span class="built_in">ones</span>(m, <span class="number">1</span>) X];</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-2-代价函数和梯度下降"><a href="#3-2-代价函数和梯度下降" class="headerlink" title="3.2 代价函数和梯度下降"></a>3.2 代价函数和梯度下降</h2><p>代价函数：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">J</span> = <span class="title">computeCostMulti</span><span class="params">(X, y, theta)</span></span></span><br><span class="line"><span class="comment">%COMPUTECOSTMULTI Compute cost for linear regression with multiple variables</span></span><br><span class="line"><span class="comment">%   J = COMPUTECOSTMULTI(X, y, theta) computes the cost of using theta as the</span></span><br><span class="line"><span class="comment">%   parameter for linear regression to fit the data points in X and y</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% Initialize some useful values</span></span><br><span class="line">m = <span class="built_in">length</span>(y); <span class="comment">% number of training examples</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% You need to return the following variables correctly </span></span><br><span class="line">J = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">% ====================== YOUR CODE HERE ======================</span></span><br><span class="line"><span class="comment">% Instructions: Compute the cost of a particular choice of theta</span></span><br><span class="line"><span class="comment">%               You should set J to the cost.</span></span><br><span class="line"></span><br><span class="line">J = ((X * theta - y)' * (X * theta - y))/(<span class="number">2</span>*m);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">% =========================================================================</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>梯度下降：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[theta, J_history]</span> = <span class="title">gradientDescentMulti</span><span class="params">(X, y, theta, alpha, num_iters)</span></span></span><br><span class="line"><span class="comment">%GRADIENTDESCENTMULTI Performs gradient descent to learn theta</span></span><br><span class="line"><span class="comment">%   theta = GRADIENTDESCENTMULTI(x, y, theta, alpha, num_iters) updates theta by</span></span><br><span class="line"><span class="comment">%   taking num_iters gradient steps with learning rate alpha</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% Initialize some useful values</span></span><br><span class="line">m = <span class="built_in">length</span>(y); <span class="comment">% number of training examples</span></span><br><span class="line">J_history = <span class="built_in">zeros</span>(num_iters, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> iter = <span class="number">1</span>:num_iters</span><br><span class="line"></span><br><span class="line">    <span class="comment">% ====================== YOUR CODE HERE ======================</span></span><br><span class="line">    <span class="comment">% Instructions: Perform a single gradient step on the parameter vector</span></span><br><span class="line">    <span class="comment">%               theta. </span></span><br><span class="line">    <span class="comment">%</span></span><br><span class="line">    <span class="comment">% Hint: While debugging, it can be useful to print out the values</span></span><br><span class="line">    <span class="comment">%       of the cost function (computeCostMulti) and gradient here.</span></span><br><span class="line">    <span class="comment">%</span></span><br><span class="line">    </span><br><span class="line">    theta = theta - alpha / m * X' * (X * theta - y);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">% ============================================================</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">% Save the cost J in every iteration    </span></span><br><span class="line">    J_history(iter) = computeCostMulti(X, y, theta);</span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-3梯度下降的完整代码"><a href="#3-3梯度下降的完整代码" class="headerlink" title="3.3梯度下降的完整代码"></a>3.3梯度下降的完整代码</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">%%加载数据</span></span><br><span class="line">data = load(<span class="string">'ex1data2.txt'</span>);</span><br><span class="line">X=data(:,<span class="number">1</span>:<span class="number">2</span>)</span><br><span class="line">y=data(:,<span class="number">3</span>)</span><br><span class="line">m=<span class="built_in">length</span>(y)</span><br><span class="line"></span><br><span class="line"><span class="comment">% Print out some data points</span></span><br><span class="line">fprintf(<span class="string">'First 10 examples from the dataset: \n'</span>);</span><br><span class="line">fprintf(<span class="string">' x = [%.0f %.0f], y = %.0f \n'</span>, [X(<span class="number">1</span>:<span class="number">10</span>,:) y(<span class="number">1</span>:<span class="number">10</span>,:)]');</span><br><span class="line"></span><br><span class="line">fprintf(<span class="string">'Program paused. Press enter to continue.\n'</span>);</span><br><span class="line">pause;</span><br><span class="line"></span><br><span class="line"><span class="comment">% Scale features and set them to zero mean</span></span><br><span class="line">fprintf(<span class="string">'Normalizing Features ...\n'</span>);</span><br><span class="line"></span><br><span class="line">[X mu sigma] = featureNormalize(X);</span><br><span class="line"></span><br><span class="line"><span class="comment">% Add intercept term to X</span></span><br><span class="line">X = [<span class="built_in">ones</span>(m, <span class="number">1</span>) X];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">fprintf(<span class="string">'Running gradient descent ...\n'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">% Choose some alpha value</span></span><br><span class="line">alpha = <span class="number">0.01</span>;</span><br><span class="line">num_iters = <span class="number">400</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">% Init Theta and Run Gradient Descent </span></span><br><span class="line">theta = <span class="built_in">zeros</span>(<span class="number">3</span>, <span class="number">1</span>);</span><br><span class="line">[theta, J_history] = gradientDescentMulti(X, y, theta, alpha, num_iters);</span><br><span class="line"></span><br><span class="line"><span class="comment">% Plot the convergence graph</span></span><br><span class="line"><span class="built_in">figure</span>;</span><br><span class="line"><span class="built_in">plot</span>(<span class="number">1</span>:<span class="built_in">numel</span>(J_history), J_history, <span class="string">'-b'</span>, <span class="string">'LineWidth'</span>, <span class="number">2</span>);</span><br><span class="line">xlabel(<span class="string">'Number of iterations'</span>);</span><br><span class="line">ylabel(<span class="string">'Cost J'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">% Display gradient descent's result</span></span><br><span class="line">fprintf(<span class="string">'Theta computed from gradient descent: \n'</span>);</span><br><span class="line">fprintf(<span class="string">' %f \n'</span>, theta);</span><br><span class="line">fprintf(<span class="string">'\n'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">% Estimate the price of a 1650 sq-ft, 3 br house</span></span><br><span class="line"><span class="comment">% ====================== YOUR CODE HERE ======================</span></span><br><span class="line"><span class="comment">% Recall that the first column of X is all-ones. Thus, it does</span></span><br><span class="line"><span class="comment">% not need to be normalized.</span></span><br><span class="line">price = [<span class="number">1</span>,<span class="number">1650</span>,<span class="number">3</span>]*theta; <span class="comment">% You should change this</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% ============================================================</span></span><br><span class="line">fprintf([<span class="string">'Predicted price of a 1650 sq-ft, 3 br house '</span> ...</span><br><span class="line">         <span class="string">'(using gradient descent):\n $%f\n'</span>], price);</span><br><span class="line"></span><br><span class="line">fprintf(<span class="string">'Program paused. Press enter to continue.\n'</span>);</span><br><span class="line">pause;</span><br></pre></td></tr></table></figure>
+
+<p>图片（选择学习速率）</p>
+<p><img src="https://images2018.cnblogs.com/blog/1342883/201803/1342883-20180309144200582-1981235826.png" alt=""></p>
+<h2 id="3-4-正规方程"><a href="#3-4-正规方程" class="headerlink" title="3.4 正规方程"></a>3.4 正规方程</h2><p>正规方程是通过求解下面的方程来找出使得代价函数最小的参数的：$\frac{\partial}{\partial \theta_{j} }J(\theta_{j})=0$ 。 假设我们的训练集特征矩阵为 X（包含了<strong>x0=1</strong>）并且我们的训练集结果为向量 y，则利用正规方程解出向量$(X^{T}X)^{-1}X^{T}y$ 。 上标T代表矩阵转置，上标-1 代表矩阵的逆。设矩阵$A=X^{T}X$,则$A^{-1}=(X^{T}X)^{-1}$</p>
+<p><img src="https://raw.githubusercontent.com/pxlsdz/MarkDown-images/master/2020-1-27/5.png" alt=""></p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[theta]</span> = <span class="title">normalEqn</span><span class="params">(X, y)</span></span></span><br><span class="line"><span class="comment">%NORMALEQN Computes the closed-form solution to linear regression </span></span><br><span class="line"><span class="comment">%   NORMALEQN(X,y) computes the closed-form solution to linear </span></span><br><span class="line"><span class="comment">%   regression using the normal equations.</span></span><br><span class="line"></span><br><span class="line">theta = <span class="built_in">zeros</span>(<span class="built_in">size</span>(X, <span class="number">2</span>), <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">% ====================== YOUR CODE HERE ======================</span></span><br><span class="line"><span class="comment">% Instructions: Complete the code to compute the closed form solution</span></span><br><span class="line"><span class="comment">%               to linear regression and put the result in theta.</span></span><br><span class="line"><span class="comment">%</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% ---------------------- Sample Solution ----------------------</span></span><br><span class="line"></span><br><span class="line">theta = pinv(X' * X) * X' * y</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">% -------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">% ============================================================</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>主函数完整代码</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">%% ================ Part 3: Normal Equations ================</span></span><br><span class="line"></span><br><span class="line">fprintf(<span class="string">'Solving with normal equations...\n'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">% ====================== YOUR CODE HERE ======================</span></span><br><span class="line"><span class="comment">% Instructions: The following code computes the closed form </span></span><br><span class="line"><span class="comment">%               solution for linear regression using the normal</span></span><br><span class="line"><span class="comment">%               equations. You should complete the code in </span></span><br><span class="line"><span class="comment">%               normalEqn.m</span></span><br><span class="line"><span class="comment">%</span></span><br><span class="line"><span class="comment">%               After doing so, you should complete this code </span></span><br><span class="line"><span class="comment">%               to predict the price of a 1650 sq-ft, 3 br house.</span></span><br><span class="line"><span class="comment">%</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%% Load Data</span></span><br><span class="line">data = csvread(<span class="string">'ex1data2.txt'</span>);</span><br><span class="line">X = data(:, <span class="number">1</span>:<span class="number">2</span>);</span><br><span class="line">y = data(:, <span class="number">3</span>);</span><br><span class="line">m = <span class="built_in">length</span>(y);</span><br><span class="line"></span><br><span class="line"><span class="comment">% Add intercept term to X</span></span><br><span class="line">X = [<span class="built_in">ones</span>(m, <span class="number">1</span>) X];</span><br><span class="line"></span><br><span class="line"><span class="comment">% Calculate the parameters from the normal equation</span></span><br><span class="line">theta = normalEqn(X, y);</span><br><span class="line"></span><br><span class="line"><span class="comment">% Display normal equation's result</span></span><br><span class="line">fprintf(<span class="string">'Theta computed from the normal equations: \n'</span>);</span><br><span class="line">fprintf(<span class="string">' %f \n'</span>, theta);</span><br><span class="line">fprintf(<span class="string">'\n'</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">% Estimate the price of a 1650 sq-ft, 3 br house</span></span><br><span class="line"><span class="comment">% ====================== YOUR CODE HERE ======================</span></span><br><span class="line">price = [<span class="number">1</span>,<span class="number">1650</span>,<span class="number">3</span>]*theta; <span class="comment">% You should change this</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">% ============================================================</span></span><br><span class="line"></span><br><span class="line">fprintf([<span class="string">'Predicted price of a 1650 sq-ft, 3 br house '</span> ...</span><br><span class="line">         <span class="string">'(using normal equations):\n $%f\n'</span>], price);</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+	
+    <div style="text-align:center;color: #ccc;font-size:14px;">
+------------- 本文结束 <i class="fa fa-heart-o"></i> 感谢您的阅读-------------
+</div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>sdz
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2020/01/27/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/" title="线性回归">http://yoursite.com/2020/01/27/线性回归/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/MATLAB/" rel="tag"><i class="fa fa-tag"></i> MATLAB</a>
+              <a href="/tags/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/" rel="tag"><i class="fa fa-tag"></i> 线性回归</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/01/27/%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0/" rel="prev" title="相关系数">
+      <i class="fa fa-chevron-left"></i> 相关系数
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/01/28/%E9%A2%84%E6%B5%8B%E4%B8%8E%E8%AF%84%E4%BB%B7/" rel="next" title="预测与评价">
+      预测与评价 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-简单练习"><span class="nav-number">1.</span> <span class="nav-text">1 简单练习</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-单变量的线性回归"><span class="nav-number">2.</span> <span class="nav-text">2 单变量的线性回归</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-Plotting-the-Data"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Plotting the Data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-梯度下降"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 梯度下降</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-约定公式"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1 约定公式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2实现"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2.2实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-3计算J-θ"><span class="nav-number">2.2.3.</span> <span class="nav-text">2.2.3计算J(θ)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-4-梯度下降"><span class="nav-number">2.2.4.</span> <span class="nav-text">2.2.4 梯度下降</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-可视化J-θ"><span class="nav-number">2.3.</span> <span class="nav-text">2.4 可视化J(θ)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5完整代码"><span class="nav-number">2.4.</span> <span class="nav-text">2.5完整代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-1-主代码"><span class="nav-number">2.4.1.</span> <span class="nav-text">2.5.1 主代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-2-求梯度代码"><span class="nav-number">2.4.2.</span> <span class="nav-text">2.5.2 求梯度代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-3-计算代价函数"><span class="nav-number">2.4.3.</span> <span class="nav-text">2.5.3 计算代价函数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-多变量线性回归"><span class="nav-number">3.</span> <span class="nav-text">3 多变量线性回归</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-特征归一化"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 特征归一化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-代价函数和梯度下降"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 代价函数和梯度下降</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3梯度下降的完整代码"><span class="nav-number">3.3.</span> <span class="nav-text">3.3梯度下降的完整代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-正规方程"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 正规方程</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="sdz"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">sdz</p>
+  <div class="site-description" itemprop="description">个人博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/pxlsdz" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;pxlsdz" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/sdz20172133" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;sdz20172133" rel="noopener" target="_blank"><i class="fa fa-fw fa-codiepie"></i>CSDN</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sdz</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">264k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:01</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='170' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'pAM5gCGYUGBwBF62VmECeV0o-gzGzoHsz',
+      appKey     : 'myehhFCNOsN4ClPFSLov1xKd',
+      placeholder: "欢迎畅所欲言",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : ,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+  <!-- 页面点击小红心 -->
+
+      <script type="text/javascript" src="/js/clicklove.js"></script>
+
+</body>
+</html>

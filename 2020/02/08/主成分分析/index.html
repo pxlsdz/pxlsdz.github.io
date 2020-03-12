@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="学习视频：【强烈推荐】清风：数学建模算法、编程和写作培训的视频课程以及Matlab 老师讲得很详细，很受用！！！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="主成分分析">
+<meta property="og:url" content="http://yoursite.com/2020/02/08/%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="pxlsdz的博客">
+<meta property="og:description" content="学习视频：【强烈推荐】清风：数学建模算法、编程和写作培训的视频课程以及Matlab 老师讲得很详细，很受用！！！">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200206214239775-1550520758.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200206214637896-954877919.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200206214952550-1193343662.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200206215211851-2091278500.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200206215312315-946963875.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200206215422633-1595499626.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200207220353263-522051594.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200207220621167-832033612.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200207221334131-2004494665.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200207222711335-722850948.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200207222618265-65615481.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200209162615718-63087979.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200209162907162-1614401722.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200209165216427-236777757.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200209165401730-1688648428.png">
+<meta property="article:published_time" content="2020-02-08T13:10:04.000Z">
+<meta property="article:modified_time" content="2020-02-10T12:54:22.241Z">
+<meta property="article:author" content="sdz">
+<meta property="article:tag" content="MATLAB">
+<meta property="article:tag" content="降维">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200206214239775-1550520758.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/02/08/%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>主成分分析 | pxlsdz的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">pxlsdz的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">分享，笔记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">32</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">17</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">52</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+  </div>
+</div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/pxlsdz" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/08/%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="sdz">
+      <meta itemprop="description" content="个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pxlsdz的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          主成分分析
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-08 21:10:04" itemprop="dateCreated datePublished" datetime="2020-02-08T21:10:04+08:00">2020-02-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-02-10 20:54:22" itemprop="dateModified" datetime="2020-02-10T20:54:22+08:00">2020-02-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/" itemprop="url" rel="index"><span itemprop="name">数学建模</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/02/08/%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/02/08/%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>学习视频：<a href="https://www.bilibili.com/video/av20238704?from=search&seid=10609096604247370603" target="_blank" rel="noopener">【强烈推荐】清风：数学建模算法、编程和写作培训的视频课程以及Matlab</a></p>
+<p>老师讲得很详细，很受用！！！</p>
+<a id="more"></a>
+
+<h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p>  主成分分析(PrincipalComponentAnalysis,PCA)， 主成分分析是一种降维算法，它能将多个指标转换为少数几 个主成分，这些主成分是原始变量的线性组合，且彼此之间<strong>互不相关</strong>，其能反映出原始数据的大部分信息。一般来说， 当研究的问题涉及到多变量且变量之间存在很强的相关性时， 我们可考虑使用主成分分析的方法来对数据进行简化。</p>
+<p><font color=red>主成分分析是把原来多个变量划为少数几个综合指标的一种统计分析方法。 </font></p>
+<h1 id="降维"><a href="#降维" class="headerlink" title="降维"></a>降维</h1><p>降维是将高维度的数据（指标太多）保留下最重要的一些特征，去除噪声和不重要的特征，从而实现提升数据处理速度 的目的。 在实际的生产和应用中，降维在一定的信息损失范围内， 可以为我们节省大量的时间和成本。降维也成为应用非常广泛 的数据预处理方法。<br>降维具有如下一些优点：</p>
+<ol>
+<li>使得数据集更易使用； </li>
+<li>降低算法的计算开销； </li>
+<li>去除噪声； </li>
+<li>使得结果容易理解。</li>
+</ol>
+<h1 id="数学思想"><a href="#数学思想" class="headerlink" title="数学思想"></a>数学思想</h1><p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200206214239775-1550520758.png" alt=""></p>
+<p>每一行是一个样本，每一列是一个指标。</p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200206214637896-954877919.png" alt=""></p>
+<p>PCA详细的证明过程可看视频：<a href="https://www.bilibili.com/video/av32709936" target="_blank" rel="noopener">https://www.bilibili.com/video/av32709936</a> （证明过程需要一定的多元统计基础和较强的线性代数基础）</p>
+<h1 id="计算步骤"><a href="#计算步骤" class="headerlink" title="计算步骤"></a>计算步骤</h1><p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200206214952550-1193343662.png" alt=""></p>
+<p>标准化目的是消除量纲，归一化目的是便于解释</p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200206215211851-2091278500.png" alt=""></p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200206215312315-946963875.png" alt=""></p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200206215422633-1595499626.png" alt=""></p>
+<h1 id="实例分析"><a href="#实例分析" class="headerlink" title="实例分析"></a>实例分析</h1><h2 id="问题1"><a href="#问题1" class="headerlink" title="问题1"></a>问题1</h2><p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200207220353263-522051594.png" alt=""></p>
+<h2 id="计算关键变量"><a href="#计算关键变量" class="headerlink" title="计算关键变量"></a>计算关键变量</h2><p>经过计算，相关系数矩阵的特征值、相应的特征向量以及贡献率列于下表： </p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200207220621167-832033612.png" alt=""></p>
+<p>从表中可以看到前三个主成分的累计贡献率达85.9％&gt;80.0%，因此可以考虑 只取前面三个主成分，它们能够很好地概括原始变量。</p>
+<p>corrcoef函数计算相关系数矩阵。</p>
+<p>matlab球的特征值默认归一化。</p>
+<p>贡献率的计算是根据特征值/特征值总和计算而来。</p>
+<h2 id="写出主成分并简要分析"><a href="#写出主成分并简要分析" class="headerlink" title="写出主成分并简要分析"></a>写出主成分并简要分析</h2><p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200207221334131-2004494665.png" alt=""></p>
+<p>$X_{i}$均是标准化后的指标，$x_{i}$：身高、坐高、胸围、手臂长、肋围和腰围</p>
+<p>第一主成分$F_{1}$对所有（标准化）原始变量都有近似相等的正载荷，故称第一主成分为（身材）大小成分。<br>第二主成分$F_{2}$及在$X_{3}, X_{5}, X_{6}$。上有中等程度的正载荷，而在$X_{1}, X_{2}, X_{4}$上有中等程度的负载荷，称第二主成分为形状成分（或胖瘦成分）。<br>第三主成分$F_{3}$在$X_{2}$上有大的正载荷，在$X_{4}$上有大的负载荷，而在其余变量上的载荷都较小，可称第三主成分为臂长成分。<br>注：由于第三主成分的贡献率不高（7.65%）且实际意义也不太重要，因此我们也可以考虑只取前两个主成分进行分析。</p>
+<h2 id="主成分分析的说明"><a href="#主成分分析的说明" class="headerlink" title="主成分分析的说明"></a>主成分分析的说明</h2><p>​       在主成分分析中，我们首先应保证所提取的前几个主成分的累计贡 献率达到一个较高的水平，其次对这些被提取的主成分必须都能够给出 符合实际背景和意义的解释。 </p>
+<p><font color=red>主成分的解释其含义一般多少带有点模糊性，不像原始变量的含义 那么清楚、确切，这是变量降维过程中不得不付出的代价。</font></p>
+<p>因此，提取 的主成分个数m通常应明显小于原始变量个数p（除非p本身较小），否 则维数降低的“利”可能抵不过主成分含义不如原始变量清楚的“弊”。 如果原始变量之间具有较高的相关性，则前面少数几个主成分的累 计贡献率通常就能达到一个较高水平，也就是说，此时的累计贡献率通 常较易得到满足。</p>
+<p><font color=red> 主成分分析的困难之处主要在于要能够给出主成分的较好解释，所 提取的主成分中如有一个主成分解释不了，整个主成分分析也就失败了。</font></p>
+<p> 主成分分析是变量降维的一种重要、常用的方法，简单的说，该方法要应用得成功，一是靠原始变量的合理选取，二是靠“运气”。</p>
+<p>​                                                                                                                        ——参考教材：《应用多元统计分析》王学民</p>
+<h2 id="问题2"><a href="#问题2" class="headerlink" title="问题2"></a>问题2</h2><p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200207222711335-722850948.png" alt=""></p>
+<h2 id="计算关键变量-1"><a href="#计算关键变量-1" class="headerlink" title="计算关键变量"></a>计算关键变量</h2><p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200207222618265-65615481.png" alt=""></p>
+<p>由上表可知，前两个主成分的累计贡献率已高达93.7%，第一主成分 F1在所有变量上有几乎相等的正载荷，可称为在径赛项目上的强弱成分。 第二主成分F2在各个指标上的载荷基本上逐个递减，反映了速度与耐力成绩的对比。</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">clear;clc</span><br><span class="line"> load data1.mat   <span class="comment">% 主成分聚类</span></span><br><span class="line"><span class="comment">%  load data2.mat   % 主成分回归</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% 注意，这里可以对数据先进行描述性统计</span></span><br><span class="line"><span class="comment">% 描述性统计的内容见第5讲.相关系数</span></span><br><span class="line">[n,p] = <span class="built_in">size</span>(x);  <span class="comment">% n是样本个数，p是指标个数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%% 第一步：对数据x标准化为X</span></span><br><span class="line">X=zscore(x);   <span class="comment">% matlab内置的标准化函数（x-mean(x)）/std(x)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%% 第二步：计算样本协方差矩阵</span></span><br><span class="line">R = cov(X);</span><br><span class="line"></span><br><span class="line"><span class="comment">%% 注意：以上两步可合并为下面一步：直接计算样本相关系数矩阵</span></span><br><span class="line">R = corrcoef(x);</span><br><span class="line"><span class="built_in">disp</span>(<span class="string">'样本相关系数矩阵为：'</span>)</span><br><span class="line"><span class="built_in">disp</span>(R)</span><br><span class="line"></span><br><span class="line"><span class="comment">%% 第三步：计算R的特征值和特征向量</span></span><br><span class="line"><span class="comment">% 注意：R是半正定矩阵，所以其特征值不为负数</span></span><br><span class="line"><span class="comment">% R同时是对称矩阵，Matlab计算对称矩阵时，会将特征值按照从小到大排列哦</span></span><br><span class="line"><span class="comment">% eig函数的详解见第一讲层次分析法的视频</span></span><br><span class="line">[V,D] = eig(R);  <span class="comment">% V 特征向量矩阵  D 特征值构成的对角矩阵</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">%% 第四步：计算主成分贡献率和累计贡献率</span></span><br><span class="line">lambda = <span class="built_in">diag</span>(D);  <span class="comment">% diag函数用于得到一个矩阵的主对角线元素值(返回的是列向量)</span></span><br><span class="line">lambda = lambda(<span class="keyword">end</span>:<span class="number">-1</span>:<span class="number">1</span>);  <span class="comment">% 因为lambda向量是从小大到排序的，我们将其调个头</span></span><br><span class="line">contribution_rate = lambda / sum(lambda);  <span class="comment">% 计算贡献率</span></span><br><span class="line">cum_contribution_rate = cumsum(lambda)/ sum(lambda);   <span class="comment">% 计算累计贡献率  cumsum是求累加值的函数</span></span><br><span class="line"><span class="built_in">disp</span>(<span class="string">'特征值为：'</span>)</span><br><span class="line"><span class="built_in">disp</span>(lambda')  <span class="comment">% 转置为行向量，方便展示</span></span><br><span class="line"><span class="built_in">disp</span>(<span class="string">'贡献率为：'</span>)</span><br><span class="line"><span class="built_in">disp</span>(contribution_rate')</span><br><span class="line"><span class="built_in">disp</span>(<span class="string">'累计贡献率为：'</span>)</span><br><span class="line"><span class="built_in">disp</span>(cum_contribution_rate')</span><br><span class="line"><span class="built_in">disp</span>(<span class="string">'与特征值对应的特征向量矩阵为：'</span>)</span><br><span class="line"><span class="comment">% 注意：这里的特征向量要和特征值一一对应，之前特征值相当于颠倒过来了，因此特征向量的各列需要颠倒过来</span></span><br><span class="line"><span class="comment">%  rot90函数可以使一个矩阵逆时针旋转90度，然后再转置，就可以实现将矩阵的列颠倒的效果</span></span><br><span class="line">V=<span class="built_in">rot90</span>(V)';</span><br><span class="line"><span class="built_in">disp</span>(V)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">%% 计算我们所需要的主成分的值</span></span><br><span class="line">m =input(<span class="string">'请输入需要保存的主成分的个数:  '</span>);</span><br><span class="line">F = <span class="built_in">zeros</span>(n,m);  <span class="comment">%初始化保存主成分的矩阵（每一列是一个主成分）</span></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:m</span><br><span class="line">    ai = V(:,<span class="built_in">i</span>)';   <span class="comment">% 将第i个特征向量取出，并转置为行向量</span></span><br><span class="line">    Ai = <span class="built_in">repmat</span>(ai,n,<span class="number">1</span>);   <span class="comment">% 将这个行向量重复n次，构成一个n*p的矩阵</span></span><br><span class="line">    F(:, <span class="built_in">i</span>) = sum(Ai .* X, <span class="number">2</span>);  <span class="comment">% 注意，对标准化的数据求了权重后要计算每一行的和</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%% (1)主成分聚类 ： 将主成分指标所在的F矩阵复制到Excel表格，然后再用Spss进行聚类</span></span><br><span class="line"><span class="comment">% 在Excel第一行输入指标名称（F1,F2, ..., Fm）</span></span><br><span class="line"><span class="comment">% 双击Matlab工作区的F,进入变量编辑中，然后复制里面的数据到Excel表格</span></span><br><span class="line"><span class="comment">% 导出数据之后，我们后续的分析就可以在Spss中进行。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%%（2）主成分回归：将x使用主成分得到主成分指标，并将y标准化，接着导出到Excel，然后再使用Stata回归</span></span><br><span class="line"><span class="comment">% Y = zscore(y);  % 一定要将y进行标准化哦~</span></span><br><span class="line"><span class="comment">% 在Excel第一行输入指标名称（Y,F1, F2, ..., Fm）</span></span><br><span class="line"><span class="comment">% 分别双击Matlab工作区的Y和F,进入变量编辑中，然后复制里面的数据到Excel表格</span></span><br><span class="line"><span class="comment">% 导出数据之后，我们后续的分析就可以在Stata中进行。</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="对结果的解释"><a href="#对结果的解释" class="headerlink" title="对结果的解释"></a>对结果的解释</h3><p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200209162615718-63087979.png" alt=""></p>
+<p>​       从上表可以看出，前两个和前三个主成分的累计贡献率分别达到80.6%和 87.8%，第一主成分F1在所有变量(除在x2上的载荷稍偏小外)上都有近似相等的 正载荷，反映了综合消费性支出的水平，因此第一主成分可称为综合消费性支出成分。第二主成分F2在变量x2上有很高的正载荷，在变量x4上有中等的正载 荷，而在其余变量上有负载荷或很小的正载荷。可以认为这个主成分度量了受 地区气候影响的消费性支出(主要是衣着，其次是医疗保健)在所有消费性支出 中占的比重(也可理解为一种消费倾向)，第二主成分可称为消费倾向成分。第 三主成分很难给出明显的解释，因此我们只取前面两个主成分。</p>
+<h1 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h1><h2 id="主成分分析的滥用：主成分得分"><a href="#主成分分析的滥用：主成分得分" class="headerlink" title="主成分分析的滥用：主成分得分"></a>主成分分析的滥用：主成分得分</h2><p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200209162907162-1614401722.png" alt=""></p>
+<p>除了王老师说的几点原因之外，</p>
+<p>补充： </p>
+<p>（1）主成分是降维算法，你既然已经有数据了，为什么不把这些数据的信息 全部用上呢？主成分分析是会损失原始数据的信息的。 </p>
+<p>（2）指标可能有各种类型（极大、极小、区间等），主成分只有标准化的过 程，并没有正向化的过程。</p>
+<h2 id="主成分分析用于聚类"><a href="#主成分分析用于聚类" class="headerlink" title="主成分分析用于聚类"></a>主成分分析用于聚类</h2><p>计算出第一主成分和第二主成分的值，将其视为两个新的指标 （可以在图上直观的展示各样本的分布情况）。</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">%% 计算我们所需要的主成分的值</span></span><br><span class="line">m =input(<span class="string">'请输入需要保存的主成分的个数:  '</span>);</span><br><span class="line">F = <span class="built_in">zeros</span>(n,m);  <span class="comment">%初始化保存主成分的矩阵（每一列是一个主成分）</span></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:m</span><br><span class="line">    ai = V(:,<span class="built_in">i</span>)';   <span class="comment">% 将第i个特征向量取出，并转置为行向量</span></span><br><span class="line">    Ai = <span class="built_in">repmat</span>(ai,n,<span class="number">1</span>);   <span class="comment">% 将这个行向量重复n次，构成一个n*p的矩阵</span></span><br><span class="line">    F(:, <span class="built_in">i</span>) = sum(Ai .* X, <span class="number">2</span>);  <span class="comment">% 注意，对标准化的数据求了权重后要计算每一行的和</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%% (1)主成分聚类 ： 将主成分指标所在的F矩阵复制到Excel表格，然后再用Spss进行聚类</span></span><br><span class="line"><span class="comment">% 在Excel第一行输入指标名称（F1,F2, ..., Fm）</span></span><br><span class="line"><span class="comment">% 双击Matlab工作区的F,进入变量编辑中，然后复制里面的数据到Excel表格</span></span><br><span class="line"><span class="comment">% 导出数据之后，我们后续的分析就可以在Spss中进行。</span></span><br></pre></td></tr></table></figure>
+
+<p>将主成分指标所在的F矩阵复制到Excel表格，然后再用Spss进行聚类</p>
+<ul>
+<li><p>在Excel第一行输入指标名称（F1,F2, …, Fm）</p>
+</li>
+<li><p>双击Matlab工作区的F,进入变量编辑中，然后复制里面的数据到Excel表格</p>
+</li>
+<li><p>导出数据之后，我们后续的分析就可以在Spss中进行。</p>
+</li>
+</ul>
+<h4 id="结果比较"><a href="#结果比较" class="headerlink" title="结果比较"></a>结果比较</h4><p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200209165216427-236777757.png" alt=""></p>
+<p>聚类效果图</p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200209165401730-1688648428.png" alt=""></p>
+<p>​     主成分聚类最大的意义就是能帮我们可视化最后的聚类效果，毕竟， 使用主成分是会降低部分信息的。言外之意，只有在指标个数特别多，且指标之间存在很强的相关性时才用主成分聚类。否则会损失很多信息。</p>
+<h2 id="主成分回归"><a href="#主成分回归" class="headerlink" title="主成分回归"></a>主成分回归</h2><p>主成分回归可用来解决多重共线性的问题。</p>
+<p>等我弄完多重共线性问题再补。</p>
+
+    </div>
+
+    
+    
+    
+	
+    <div style="text-align:center;color: #ccc;font-size:14px;">
+------------- 本文结束 <i class="fa fa-heart-o"></i> 感谢您的阅读-------------
+</div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>sdz
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2020/02/08/%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/" title="主成分分析">http://yoursite.com/2020/02/08/主成分分析/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/MATLAB/" rel="tag"><i class="fa fa-tag"></i> MATLAB</a>
+              <a href="/tags/%E9%99%8D%E7%BB%B4/" rel="tag"><i class="fa fa-tag"></i> 降维</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/02/08/%E8%81%9A%E7%B1%BB%E6%A8%A1%E5%9E%8B/" rel="prev" title="聚类模型">
+      <i class="fa fa-chevron-left"></i> 聚类模型
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/02/10/%E6%8F%92%E5%80%BC%E7%AE%97%E6%B3%95/" rel="next" title="插值算法">
+      插值算法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#降维"><span class="nav-number">2.</span> <span class="nav-text">降维</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数学思想"><span class="nav-number">3.</span> <span class="nav-text">数学思想</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#计算步骤"><span class="nav-number">4.</span> <span class="nav-text">计算步骤</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实例分析"><span class="nav-number">5.</span> <span class="nav-text">实例分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题1"><span class="nav-number">5.1.</span> <span class="nav-text">问题1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计算关键变量"><span class="nav-number">5.2.</span> <span class="nav-text">计算关键变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写出主成分并简要分析"><span class="nav-number">5.3.</span> <span class="nav-text">写出主成分并简要分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主成分分析的说明"><span class="nav-number">5.4.</span> <span class="nav-text">主成分分析的说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题2"><span class="nav-number">5.5.</span> <span class="nav-text">问题2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计算关键变量-1"><span class="nav-number">5.6.</span> <span class="nav-text">计算关键变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">5.7.</span> <span class="nav-text">代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对结果的解释"><span class="nav-number">5.7.1.</span> <span class="nav-text">对结果的解释</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#应用"><span class="nav-number">6.</span> <span class="nav-text">应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#主成分分析的滥用：主成分得分"><span class="nav-number">6.1.</span> <span class="nav-text">主成分分析的滥用：主成分得分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主成分分析用于聚类"><span class="nav-number">6.2.</span> <span class="nav-text">主成分分析用于聚类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#结果比较"><span class="nav-number">6.2.0.1.</span> <span class="nav-text">结果比较</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主成分回归"><span class="nav-number">6.3.</span> <span class="nav-text">主成分回归</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="sdz"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">sdz</p>
+  <div class="site-description" itemprop="description">个人博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/pxlsdz" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;pxlsdz" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/sdz20172133" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;sdz20172133" rel="noopener" target="_blank"><i class="fa fa-fw fa-codiepie"></i>CSDN</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sdz</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">264k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:01</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='170' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'pAM5gCGYUGBwBF62VmECeV0o-gzGzoHsz',
+      appKey     : 'myehhFCNOsN4ClPFSLov1xKd',
+      placeholder: "欢迎畅所欲言",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : ,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+  <!-- 页面点击小红心 -->
+
+      <script type="text/javascript" src="/js/clicklove.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="“知识的表示”是传统人工智能学科的基石，一定要掌握  （1）常用的知识表示方法，每种知识表示方法的基本原理； （2）知识的特点&#x2F;特征， （3）一阶谓词逻辑表示法。  以上3个知识点是本节的重点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="人工智能——知识表示">
+<meta property="og:url" content="http://yoursite.com/2020/03/03/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E2%80%94%E2%80%94%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA/index.html">
+<meta property="og:site_name" content="pxlsdz的博客">
+<meta property="og:description" content="“知识的表示”是传统人工智能学科的基石，一定要掌握  （1）常用的知识表示方法，每种知识表示方法的基本原理； （2）知识的特点&#x2F;特征， （3）一阶谓词逻辑表示法。  以上3个知识点是本节的重点">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200303165609.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200303170621.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200303170744.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200303170944.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200303171944.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200303172101.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200305084115.png">
+<meta property="og:image" content="c:/Users/17861/AppData/Roaming/Typora/typora-user-images/image-20200305084145976.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200305155336.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200305220032.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200305220845.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200305220916.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200305222422.png">
+<meta property="article:published_time" content="2020-03-03T08:11:34.000Z">
+<meta property="article:modified_time" content="2020-03-05T14:27:57.369Z">
+<meta property="article:author" content="sdz">
+<meta property="article:tag" content="课程笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200303165609.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/03/03/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E2%80%94%E2%80%94%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>人工智能——知识表示 | pxlsdz的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">pxlsdz的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">分享，笔记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">32</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">17</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">52</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+  </div>
+</div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/pxlsdz" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/03/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E2%80%94%E2%80%94%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="sdz">
+      <meta itemprop="description" content="个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pxlsdz的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          人工智能——知识表示
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-03 16:11:34" itemprop="dateCreated datePublished" datetime="2020-03-03T16:11:34+08:00">2020-03-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-05 22:27:57" itemprop="dateModified" datetime="2020-03-05T22:27:57+08:00">2020-03-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" itemprop="url" rel="index"><span itemprop="name">人工智能</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/03/03/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E2%80%94%E2%80%94%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/03/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E2%80%94%E2%80%94%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>“知识的表示”是传统人工智能学科的基石，一定要掌握</p>
+<ul>
+<li>（1）常用的知识表示方法，每种知识表示方法的基本原理；</li>
+<li>（2）知识的特点/特征，</li>
+<li>（3）一阶谓词逻辑表示法。</li>
+</ul>
+<p>以上3个知识点是本节的重点</p>
+<a id="more"></a>
+
+<h1 id="知识与知识表示的概念"><a href="#知识与知识表示的概念" class="headerlink" title="知识与知识表示的概念"></a>知识与知识表示的概念</h1><p>知识：把有关信息<strong>关联</strong>在一起所形成的信息结构</p>
+<h2 id="知识的特性"><a href="#知识的特性" class="headerlink" title="知识的特性"></a>知识的特性</h2><ol>
+<li><p>相对正确性</p>
+<p>任何知识都是在<strong>一定的条件及环境</strong>下产生的，在这种条件及环境下才是正确的。</p>
+<p>1+1=10（二进制）</p>
+<p>1+1=2 （十进制）</p>
+</li>
+<li><p>不确定性</p>
+<p>“真”与“假”之间的中间状态,eg：可能感冒了。</p>
+</li>
+</ol>
+<p>   引起原因：</p>
+<p>   ①随机性引起的不确定性（可能感冒了）<br>   ②模糊性引起的不确定性（学习挺好，大方向是对的）<br>   ③经验引起的不确定性<br>   ④不完全性引起的不确定性</p>
+<ol start="3">
+<li><p>可表示性与可利用性</p>
+<p>知识的可表示性：知识可以用适当形式表示出来，如用语言、文字、图形、神经网络等。<br>知识的可利用性：知识可以被利用。</p>
+</li>
+</ol>
+<h2 id="知识分类"><a href="#知识分类" class="headerlink" title="知识分类"></a>知识分类</h2><ol>
+<li><p>按知识的作用范围</p>
+<ul>
+<li>常识性知识：通用性知识</li>
+<li>领域性知识：专业性的知识</li>
+</ul>
+</li>
+<li><p>按知识的作用及表示</p>
+<ul>
+<li><p>事实性知识：有关概念、事实、事物的属性及状态等。</p>
+</li>
+<li><p>过程性知识：有关系统状态变化、问题求解过程的操作、演算和行动的知识。</p>
+</li>
+<li><p>控制性知识（深层知识或元知识）：关于如何运用已有的知识进行问题求解的知识。</p>
+</li>
+</ul>
+<p>例子：<br>从北京到上海是乘飞机还是火车的问题表示如下：</p>
+<ul>
+<li><p>事实性知识：北京、上海、飞机、时间、费用</p>
+</li>
+<li><p>过程性知识：乘飞机、坐火车</p>
+</li>
+<li><p>控制性知识：乘坐飞机较快、较贵。坐火车较慢、较便宜</p>
+</li>
+</ul>
+</li>
+<li><p>按知识的结构及表现形式</p>
+<ul>
+<li>逻辑性知识：反映人类逻辑思维过程的知识</li>
+<li>形象性知识：通过事物的形象建立起来的知识</li>
+</ul>
+</li>
+<li><p>按知识的确定性</p>
+<ul>
+<li><p>确定性知识：可指出其真值为“真”或“假”的知识，是精确性的知识。</p>
+</li>
+<li><p>不确定性知识：具有不精确、不完全及模糊性等特性的知识。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="知识表示"><a href="#知识表示" class="headerlink" title="知识表示"></a>知识表示</h2><p>知识表示（Knowledge Representation）：将人类知识形式化或者模型化。</p>
+<p>知识表示是对知识的一种描述，或者说是一组约定，一种计算机可以接受的用于描述知识的数据结构。</p>
+<p>选择知识表示方法的原则：</p>
+<p>①充分表示领域知识<br>②有利于对知识的利用<br>③便于对知识的组织、维护与管理<br>④便于理解与实现</p>
+<h1 id="一阶谓词逻辑表示法"><a href="#一阶谓词逻辑表示法" class="headerlink" title="一阶谓词逻辑表示法"></a>一阶谓词逻辑表示法</h1><h2 id="命题"><a href="#命题" class="headerlink" title="命题"></a>命题</h2><p>一个非真即假的陈述句。</p>
+<p>一个命题可以在一种条件下为真，早另一种条件下为假。</p>
+<h2 id="谓词"><a href="#谓词" class="headerlink" title="谓词"></a>谓词</h2><p>谓词的一般形式：<br>$$<br>P(x_{1},x_{1},…,x_{n})<br>$$<br><strong>个体$x_{1},x_{1},…,x_{n}$</strong>:某个独立存在的事物或者某一个抽象的概念。</p>
+<p><strong>谓词名P</strong>：刻划个体的性质、状态或个体间的关系。</p>
+<ol>
+<li><p>个体是常量：一个或者一组指定的个体。</p>
+<p><strong>“老张是一个教师”</strong>：一元谓词Teacher（zhang）<br><strong>“5&gt;3”</strong>：二元谓词Greater（5，3）<br><strong>“Smith”</strong>:作为一个工程师为IBM工作”：<br>三元谓词Works（smith，IBM，engineer）</p>
+</li>
+<li><p>个体是变元（变量）：没有指定的一个或者一组个体。</p>
+<p>“x&lt;5”：Less（x,5）</p>
+</li>
+<li><p>个体是函数：一个个体到另一个个体的映射。<br>“小李的父亲是教师”：Teacher（father（（li））</p>
+</li>
+</ol>
+<ol start="4">
+<li>个体是谓词<br>“Smith作为一个工程师为IBM工作”：<br>二阶谓词Works（Engineer（smith），IBM）</li>
+</ol>
+<h2 id="谓词公式"><a href="#谓词公式" class="headerlink" title="谓词公式"></a>谓词公式</h2><h3 id="连接词（连词）"><a href="#连接词（连词）" class="headerlink" title="连接词（连词）"></a>连接词（连词）</h3><p>（1）┐： “否定”（Negation）或“非”。</p>
+<p>（2）V:     “析取”（Disjunction）“或”</p>
+<p>（3）∧:      “合取”（Conjunction）“与”</p>
+<p>（4）-&gt;：“蕴含”（Implication）或“条件”</p>
+<p>​        “如果刘华跑得最快，那么他取得冠军。”：<br>​         RUNS（LIUHUA，FASTER）→WINS（LIUHUA，CHAMPION）</p>
+<p>（5）<strong>⇔</strong>：“等价”（Equivalence）或“双条件”（Bicondition）。<br>        P<strong>⇔</strong>Q:“P当且仅当Q”。</p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200303165609.png" alt=""></p>
+<h3 id="量词"><a href="#量词" class="headerlink" title="量词"></a>量词</h3><ol>
+<li><p>全称量词（Universal quantifier）（∀x）：“对个体域中的所有（或任一个）个体x”。</p>
+<p>例子：“所有的机器人都是灰色的”<br>（∀x）[ROBOT（x）-&gt;COLOR（x，GRAY）]</p>
+</li>
+<li><p>存在量词（Existential quantifier）（∃x）：“在个体域中存在个体x”。</p>
+<p>例子：“1号房间有个物体”<br>（∃x）INROOM（x，r1）</p>
+</li>
+</ol>
+<p>全称量词和存在量词举例：</p>
+<ul>
+<li>(∀x)(∃y)F(x,y)表示对于个体域中的任何个体x都存在个体y，x与y是朋友。</li>
+<li>(∃x)(∀y)F(x,y)表示在个体域中存在个体x，与个体域中的任何个体y都是朋友。</li>
+<li>(∃x)(∃y)F(x,y)表示在个体域中存在个体x与个体y，x与y是朋友。</li>
+<li>(∀x)(∀y)F(x,y)表示对于个体域中的任何两个个体s和y，x与y都是朋友。</li>
+</ul>
+<p>全称量词和存在量词出现的次序将影响命题的意思例如：<br><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200303170621.png" alt=""></p>
+<h3 id="谓词公式-1"><a href="#谓词公式-1" class="headerlink" title="谓词公式"></a>谓词公式</h3><p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200303170744.png" alt=""></p>
+<h3 id="量词的辖域"><a href="#量词的辖域" class="headerlink" title="量词的辖域"></a>量词的辖域</h3><ul>
+<li>量词的辖域：位于量词后面的单个谓词或者用括弧括起来的谓词公式。</li>
+<li>约束变元与自由变元：辖域内与量词中同名的变元称为约束变元，不同名的变元称为自由变元。</li>
+</ul>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200303170944.png" alt=""></p>
+<h2 id="谓词公式的性质"><a href="#谓词公式的性质" class="headerlink" title="谓词公式的性质"></a>谓词公式的性质</h2><h3 id="谓词公式的解释"><a href="#谓词公式的解释" class="headerlink" title="谓词公式的解释"></a>谓词公式的解释</h3><p>谓词公式在个体域上的解释：个体域中的实体对谓词演算表达式的每个常量、变量、谓词和函数符号的指派。</p>
+<h3 id="谓词公式的永真性、可满足性、不可满足性"><a href="#谓词公式的永真性、可满足性、不可满足性" class="headerlink" title="谓词公式的永真性、可满足性、不可满足性"></a>谓词公式的永真性、可满足性、不可满足性</h3><ul>
+<li>定义2.3如果谓词公式P，对个体域D上的任何一个解释都取得真值T，则称P在D上是永真的；如果P在每个非空个体域上均永真，则称P永真。</li>
+<li>定义2.4如果谓词公式P，对个体域D上的任何一个解释都取得真值F，则称P在D上是永假的；如果P在每个非空个体域上均永假，则称P永假。</li>
+<li>定义2.5对于谓词公式P，如果至少存在一个解释使得P在此解释下的真值为T，则称P是可满足的，否则，则称P是不可满足的。</li>
+</ul>
+<h3 id="谓词公式的等价性"><a href="#谓词公式的等价性" class="headerlink" title="谓词公式的等价性"></a>谓词公式的等价性</h3><p>定义2.6 设P与Q是两个谓词公式，D是它们共同的个体域，若对D上的任何一个解释，P与Q都有相同的真值，则称公式P和Q在D上是等价的。如果D是任意个体域，则称P和Q是等价的，记作P<strong>⇔</strong>Q。</p>
+<p>（4）德.摩根律（De.Morgen）</p>
+<p>（8）连接词化规律（蕴含、等价等值式）</p>
+<p>（10）量词转换律面</p>
+<h3 id="谓词公式的永真蕴含"><a href="#谓词公式的永真蕴含" class="headerlink" title="谓词公式的永真蕴含"></a>谓词公式的永真蕴含</h3><p>定义2.7 对于谓词公式P与Q，如果P-&gt;Q永真，则称公式P永真蕴含Q，且称Q为P的逻辑结论，称P为Q的前提，记作P=&gt;Q。<br>（3）假言推理</p>
+<p>（4）拒取式推理</p>
+<p>（5）假言三段论</p>
+<p>谓词逻辑的其他推理规则：<br>①P规则：在推理的任何步骤上都可引入前提。</p>
+<p>②T规则：在推理过程中，如果前面步骤中有一个或多个公式永真蕴含公式S，则可把S引入惟理过程中。</p>
+<p>③CP规则：如果能从任意引入的命题R和前提集合中推出S来，则可从前提集合推出R-&gt;S来。</p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200303171944.png" alt=""></p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200303172101.png" alt=""></p>
+<h2 id="一阶谓词逻辑知识表示方法"><a href="#一阶谓词逻辑知识表示方法" class="headerlink" title="一阶谓词逻辑知识表示方法"></a>一阶谓词逻辑知识表示方法</h2><h2 id="一阶谓词逻辑表示法的特点"><a href="#一阶谓词逻辑表示法的特点" class="headerlink" title="一阶谓词逻辑表示法的特点"></a>一阶谓词逻辑表示法的特点</h2><h1 id="产生式表示法"><a href="#产生式表示法" class="headerlink" title="产生式表示法"></a>产生式表示法</h1><h2 id="产生式"><a href="#产生式" class="headerlink" title="产生式"></a>产生式</h2><p>​       产生式通常用于表示事实、规则以及它们的不确定性度量，适合于表示事实性知识和规则性知识。</p>
+<ol>
+<li><p>确定性规则知识的产生式表示</p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200305084115.png" alt=""></p>
+</li>
+<li><p>不确定性规则知识的产生式表示</p>
+<p><img src="C:/Users/17861/AppData/Roaming/Typora/typora-user-images/image-20200305084145976.png" alt="image-20200305084145976"></p>
+</li>
+<li><p>确定性事实性知识的产生式表示</p>
+<ul>
+<li><p>三元组表示：（对象，属性，值）</p>
+<p>​            或者：（关系，对象1，对象2）</p>
+</li>
+<li><p>例：老李年龄是40岁：（Li，Age，40）</p>
+<p>老李和老王是朋友：（Frind，Li，Wang）</p>
+</li>
+</ul>
+</li>
+<li><p>不确定性事实性知识的产生式表示</p>
+<ul>
+<li><p>四元组表示：（对象，属性，值，置信度）</p>
+<p>​          或者：（关系，对象1，对象2，置信度）</p>
+</li>
+<li><p>例：老李年龄很可能是40岁：（Li，Age，40，0.8）<br>老李和老王不大可能是朋友：（Frind，Li.Wang，0.1）</p>
+</li>
+</ul>
+</li>
+</ol>
+<p>产生式与谓词逻辑中的蕴含式的区别：</p>
+<ol>
+<li><p><strong>除逻辑蕴含外，产生式还包括各种操作、规则、变换、算子、函数等</strong>。例如，“如果炉温超过上限，则立即关闭风门”是一个产生式，但不是蕴涵式。</p>
+</li>
+<li><p><strong>蕴含式只能表示精确知识，而产生式不仅可以表示精确的知识，还可以表示不精确知识。</strong>蕴含式的匹配总要求是精确的。产生式匹配可以是精确的，也可以是不精确的，只要按某种算法求出的相似度落在预先指定的范围内就认为是可匹配的。</p>
+</li>
+</ol>
+<p>产生式它的形式描述及语义——用巴科斯范式BNF（Backus Normal Form）</p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200305155336.png" alt=""></p>
+<h2 id="产生式系统"><a href="#产生式系统" class="headerlink" title="产生式系统"></a>产生式系统</h2><p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200305220032.png" alt=""></p>
+<ol>
+<li><p>规则库<br>规则库：明于描述相应领域内知识的产生式集合。</p>
+</li>
+<li><p>综合数据库<br>综合数据库（事实库、上下文、黑板等）：一个用于存放问题求解过程中各种当前信息的数据结构。</p>
+</li>
+<li><p>控制系统<br>控制系统（推理机构）：由一组程序组成，负责整个产生式系统的运行，实现对问题的求解。</p>
+<p>控制系统要做以下几项工作：<br>1）从规则库中选择与综合数据库中的已知事实进行匹配。<br>2）匹配成功的规则可能不止一条，进行冲突消解。<br>3）执行某一规则时，如果其右部是一个或多个结论，则把这些结论加入到综合数据库中：如果其右部是一个或多个操作，则执行这些操作。<br>4）对于不确定性知识，在执行每一条规则时还要按一定的算法计算结论的不确定性。<br>5）检查综合数据库中是否包含了最终结论，决定是否停止系统的运行。</p>
+</li>
+</ol>
+<h2 id="产生式系统——动物识别系统"><a href="#产生式系统——动物识别系统" class="headerlink" title="产生式系统——动物识别系统"></a>产生式系统——动物识别系统</h2><p>例，动物识别系统：识别虎、金钱豹、斑马、长颈鹿、鸵鸟、企鹅、信天翁等七种动物的产生式系统。</p>
+<h2 id="规则库："><a href="#规则库：" class="headerlink" title="规则库："></a>规则库：</h2><p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200305220845.png" alt=""></p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200305220916.png" alt=""></p>
+<p>设已知初始事实存放在综合数据库中：<br>该动物身上有：暗斑点，长脖子，长腿，奶，蹄</p>
+<p>推理机构的工作过程：<br>（1）从规则库中取出r1，检查其前提是否可与综合数据库中的已知事实匹配。匹配失败则r1不能被用于推理。然后取r2进行同样的工作。匹配成功则r2被执行。</p>
+<p>综合数据库：<br>该动物身上有：暗斑点，长脖子，长腿，奶，蹄，哺乳动物</p>
+<p>推理机构的工作过程：<br>（2）分别用r3，r4，r5，r6综合数据库中的已知事实进行匹配，均不成功。r7匹配成功，执行了。<br>综合数据库：<br>该动物身上有：暗斑点，长脖子，长腿，奶，蹄，哺乳动物，有蹄类动物<br>（3）r1匹配成功，并推出“该动物是长颈鹿”。</p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200305222422.png" alt=""></p>
+<h2 id="产生式表示法的特点"><a href="#产生式表示法的特点" class="headerlink" title="产生式表示法的特点"></a>产生式表示法的特点</h2><ol>
+<li>产生式表示法的优点</li>
+</ol>
+<ul>
+<li>（1）自然性</li>
+<li>（2）模块性</li>
+<li>（3）有效性</li>
+<li>（4）清晰性</li>
+</ul>
+<ol start="2">
+<li>产生式表示法的缺点</li>
+</ol>
+<ul>
+<li>（1）效率不高</li>
+<li>（2）不能表达结构性知识</li>
+</ul>
+<ol start="3">
+<li>适合产生式表示的知识</li>
+</ol>
+<ul>
+<li>1）领域知识间关系不密切，不存在结构关系。</li>
+<li>2）经验性及不确定性的知识，且相关领域中对这些知识没有严格、统一的理论。</li>
+<li>3）领域问题的求解过程可被表示为一系列相对独立的操作，且每个操作可被表示为一条或多条产生式规则。</li>
+</ul>
+<h1 id="框架表示法"><a href="#框架表示法" class="headerlink" title="框架表示法"></a>框架表示法</h1><h1 id="语义网络表示法"><a href="#语义网络表示法" class="headerlink" title="语义网络表示法"></a>语义网络表示法</h1>
+    </div>
+
+    
+    
+    
+	
+    <div style="text-align:center;color: #ccc;font-size:14px;">
+------------- 本文结束 <i class="fa fa-heart-o"></i> 感谢您的阅读-------------
+</div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>sdz
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2020/03/03/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E2%80%94%E2%80%94%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA/" title="人工智能——知识表示">http://yoursite.com/2020/03/03/人工智能——知识表示/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" rel="tag"><i class="fa fa-tag"></i> 课程笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/03/linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94vim%E7%BC%96%E8%BE%91%E5%99%A8/" rel="prev" title="linux操作系统——vim编辑器">
+      <i class="fa fa-chevron-left"></i> linux操作系统——vim编辑器
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/04/%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95%E4%B8%8E%E5%88%86%E6%9E%90--%E7%BB%BC%E5%90%88%E5%B8%83%E7%BA%BF%E7%B3%BB%E7%BB%9F/" rel="next" title="网络测试与分析--综合布线系统">
+      网络测试与分析--综合布线系统 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#知识与知识表示的概念"><span class="nav-number">1.</span> <span class="nav-text">知识与知识表示的概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#知识的特性"><span class="nav-number">1.1.</span> <span class="nav-text">知识的特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#知识分类"><span class="nav-number">1.2.</span> <span class="nav-text">知识分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#知识表示"><span class="nav-number">1.3.</span> <span class="nav-text">知识表示</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一阶谓词逻辑表示法"><span class="nav-number">2.</span> <span class="nav-text">一阶谓词逻辑表示法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#命题"><span class="nav-number">2.1.</span> <span class="nav-text">命题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#谓词"><span class="nav-number">2.2.</span> <span class="nav-text">谓词</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#谓词公式"><span class="nav-number">2.3.</span> <span class="nav-text">谓词公式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#连接词（连词）"><span class="nav-number">2.3.1.</span> <span class="nav-text">连接词（连词）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#量词"><span class="nav-number">2.3.2.</span> <span class="nav-text">量词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#谓词公式-1"><span class="nav-number">2.3.3.</span> <span class="nav-text">谓词公式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#量词的辖域"><span class="nav-number">2.3.4.</span> <span class="nav-text">量词的辖域</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#谓词公式的性质"><span class="nav-number">2.4.</span> <span class="nav-text">谓词公式的性质</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#谓词公式的解释"><span class="nav-number">2.4.1.</span> <span class="nav-text">谓词公式的解释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#谓词公式的永真性、可满足性、不可满足性"><span class="nav-number">2.4.2.</span> <span class="nav-text">谓词公式的永真性、可满足性、不可满足性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#谓词公式的等价性"><span class="nav-number">2.4.3.</span> <span class="nav-text">谓词公式的等价性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#谓词公式的永真蕴含"><span class="nav-number">2.4.4.</span> <span class="nav-text">谓词公式的永真蕴含</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一阶谓词逻辑知识表示方法"><span class="nav-number">2.5.</span> <span class="nav-text">一阶谓词逻辑知识表示方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一阶谓词逻辑表示法的特点"><span class="nav-number">2.6.</span> <span class="nav-text">一阶谓词逻辑表示法的特点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#产生式表示法"><span class="nav-number">3.</span> <span class="nav-text">产生式表示法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#产生式"><span class="nav-number">3.1.</span> <span class="nav-text">产生式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#产生式系统"><span class="nav-number">3.2.</span> <span class="nav-text">产生式系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#产生式系统——动物识别系统"><span class="nav-number">3.3.</span> <span class="nav-text">产生式系统——动物识别系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#规则库："><span class="nav-number">3.4.</span> <span class="nav-text">规则库：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#产生式表示法的特点"><span class="nav-number">3.5.</span> <span class="nav-text">产生式表示法的特点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#框架表示法"><span class="nav-number">4.</span> <span class="nav-text">框架表示法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#语义网络表示法"><span class="nav-number">5.</span> <span class="nav-text">语义网络表示法</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="sdz"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">sdz</p>
+  <div class="site-description" itemprop="description">个人博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/pxlsdz" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;pxlsdz" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/sdz20172133" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;sdz20172133" rel="noopener" target="_blank"><i class="fa fa-fw fa-codiepie"></i>CSDN</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sdz</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">264k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:01</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='170' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'pAM5gCGYUGBwBF62VmECeV0o-gzGzoHsz',
+      appKey     : 'myehhFCNOsN4ClPFSLov1xKd',
+      placeholder: "欢迎畅所欲言",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : ,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+  <!-- 页面点击小红心 -->
+
+      <script type="text/javascript" src="/js/clicklove.js"></script>
+
+</body>
+</html>

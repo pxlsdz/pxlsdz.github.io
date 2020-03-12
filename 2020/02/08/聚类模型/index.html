@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="定义">
+<meta property="og:type" content="article">
+<meta property="og:title" content="聚类模型">
+<meta property="og:url" content="http://yoursite.com/2020/02/08/%E8%81%9A%E7%B1%BB%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:site_name" content="pxlsdz的博客">
+<meta property="og:description" content="定义">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200203205436849-1316240509.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200209170417275-267751449.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200209170547739-911717523.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200209190429663-34120259.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200209192404296-931850462.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210112852451-935713942.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210113204394-1831022087.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210113430960-1273589814.png">
+<meta property="og:image" content="c:%5CUsers%5C17861%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200210113511356.png">
+<meta property="og:image" content="c:%5CUsers%5C17861%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200210113711863.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210114601516-72749493.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210115127054-1986576250.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210115421789-1284003418.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210115916366-1372084416.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210120125176-1563715498.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210120327459-1809391374.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210121404108-1727397712.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210153312391-1367375799.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210153432263-2026649140.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210153849658-790959166.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210153555034-2130091459.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210153957395-449784315.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210154432903-1173598575.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210154952889-1302762691.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210120125176-1563715498.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210160229016-288145526.png">
+<meta property="article:published_time" content="2020-02-08T12:09:59.000Z">
+<meta property="article:modified_time" content="2020-03-03T00:13:47.959Z">
+<meta property="article:author" content="sdz">
+<meta property="article:tag" content="MATLAB">
+<meta property="article:tag" content="spss">
+<meta property="article:tag" content="K-means">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200203205436849-1316240509.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/02/08/%E8%81%9A%E7%B1%BB%E6%A8%A1%E5%9E%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>聚类模型 | pxlsdz的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">pxlsdz的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">分享，笔记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">32</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">17</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">52</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+  </div>
+</div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/pxlsdz" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/08/%E8%81%9A%E7%B1%BB%E6%A8%A1%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="sdz">
+      <meta itemprop="description" content="个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pxlsdz的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          聚类模型
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-08 20:09:59" itemprop="dateCreated datePublished" datetime="2020-02-08T20:09:59+08:00">2020-02-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-03 08:13:47" itemprop="dateModified" datetime="2020-03-03T08:13:47+08:00">2020-03-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/" itemprop="url" rel="index"><span itemprop="name">数学建模</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/02/08/%E8%81%9A%E7%B1%BB%E6%A8%A1%E5%9E%8B/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/02/08/%E8%81%9A%E7%B1%BB%E6%A8%A1%E5%9E%8B/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><a id="more"></a>
+
+<p>聚类就是将样本划分为由类似的对象组成的多个类的过程。聚类后，我们可以更加准确的在每个类中<strong>单独</strong>使用统计模型进行估计、分析或预测；也可以探究<strong>不同类</strong>之间的相关性和主要差异。  </p>
+<p><strong>聚类和分类的区别:分类是已知类别的，聚类未知。</strong></p>
+<h1 id="具体算法"><a href="#具体算法" class="headerlink" title="具体算法"></a>具体算法</h1><h2 id="K-means聚类算法"><a href="#K-means聚类算法" class="headerlink" title="K-means聚类算法"></a>K-means聚类算法</h2><h3 id="算法流程"><a href="#算法流程" class="headerlink" title="算法流程"></a>算法流程</h3><ol>
+<li><p>指定需要划分的簇[cù]的个数K值（<strong>类的个数</strong>）;</p>
+</li>
+<li><p>随机地选择K个数据对象作为初始的聚类中心<br>（不一定要是我们的样本点）;</p>
+</li>
+<li><p>计算其余的各个数据对象到这K个初始聚类中心的距离，把数据对象划归到距离它最近的那个中心所处在的簇类中;</p>
+</li>
+<li><p>调整新类并且重新计算出新类的中心;</p>
+</li>
+<li><p>五循环步骤3和4，看中心是否收敛（<strong>中心不变</strong>），如果收敛或达到迭代次数则停止循环;</p>
+</li>
+<li><p>结束。</p>
+</li>
+</ol>
+<p>   K‐均值聚类可视化的网站： <a href="https://www.naftaliharris.com/blog/v" target="_blank" rel="noopener">https://www.naftaliharris.com/blog/v</a>  （强烈推荐试一下）</p>
+<h3 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h3><p><strong>论文可以画，清晰明了！</strong></p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200203205436849-1316240509.png" alt=""></p>
+<h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><p>优点：<br>（1）算法简单、快速。<br>（2）对处理大数据集，该算法是相对高效率的。<br>缺点：<br>（1）要求用户必须事先给出要生成的簇的数目K。<br><font color=red><strong>（2）严重依赖与初始簇中心的选择，对初值敏感。</strong></font><br><font color=red>*<em>（3）对于孤立点数据敏感。  *</em></font></p>
+<p>*<em>K‐means++算法可解决2、 3两个缺点。  *</em></p>
+<h2 id="K-means-算法"><a href="#K-means-算法" class="headerlink" title="K-means++算法"></a>K-means++算法</h2><h3 id="与K‐means-算法的区别"><a href="#与K‐means-算法的区别" class="headerlink" title="与K‐means++算法的区别"></a>与K‐means++算法的区别</h3><p>k-means++算法选择初始聚类中心的基本原则是： <strong>初始的聚类中心之间的相互距离要尽可能的远。</strong></p>
+<p>算法描述如下：（<strong>只对K-means算法“初始化K个聚类中心” 这一步进行了优化</strong>）</p>
+<ul>
+<li>步骤一： 随机选取一个样本作为第一个聚类中心；</li>
+<li>步骤二： 计算每个样本与当前已有聚类中心的最短距离（即与最近一个聚类中心的距离），这个值越大，表示被选取作为聚类中心的概率较大；最后，用轮盘法（依据概率大小来进行抽选）选出下一个聚类中心；</li>
+<li>步骤三： 重复步骤二，直到选出K个聚类中心。选出初始点后，就继续使用标准的K-means算法了。  </li>
+</ul>
+<h3 id="Spss软件操作"><a href="#Spss软件操作" class="headerlink" title="Spss软件操作"></a>Spss软件操作</h3><p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200209170417275-267751449.png" alt=""></p>
+<h3 id="K-means算法的一些讨论"><a href="#K-means算法的一些讨论" class="headerlink" title="K-means算法的一些讨论"></a>K-means算法的一些讨论</h3><ol>
+<li><p>聚类的个数K值怎么定？<br>答：分几类主要取决于个人的经验与感觉，通常的做法是多尝试几个K值，看分成几类的结果更好解释(<strong>高消费与低消费，或者高消费、中消费与低消费</strong>），更符合分析目的等。</p>
+</li>
+<li><p>数据的量纲不一致怎么办？<br>答：如果数据的量纲不一样，那么算距离时就没有意义。例如：如果X1单位是米， X2单位是吨，用距离公式计算就会出现“米的平方”加上“吨的平方”再开平方，最后算出的东西没有数学意义，这就有问题了。</p>
+<p>具体做法：先减去均值再除以标准差<br>$$<br>z_{i}=\frac{x_{i}-\overline x}{\delta _{x}}<br>$$</p>
+</li>
+</ol>
+<p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200209170547739-911717523.png" alt=""></p>
+<h2 id="系统（层次）聚类-可以查看k值"><a href="#系统（层次）聚类-可以查看k值" class="headerlink" title="系统（层次）聚类   (可以查看k值)"></a>系统（层次）聚类   (可以查看k值)</h2><p>​        系统聚类的合并算法通过计算两类数据点间的距离，对最为接近的两类数据点进行组合，并反复迭代这一过程，直到将所有数据点合成一类，并生成聚类谱系图。</p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200209190429663-34120259.png" alt=""></p>
+<h3 id="算法流程-1"><a href="#算法流程-1" class="headerlink" title="算法流程"></a>算法流程</h3><p>系统（层次）聚类的算法流程： </p>
+<ul>
+<li>一、将每个对象看作一类，计算两两之间的最小距离； </li>
+<li>二、将距离最小的两个类合并成一个新类； </li>
+<li>三、重新计算新类与所有类之间的距离； </li>
+<li>四、重复二三两步，直到所有类最后合并成一类；</li>
+<li>五、结束。</li>
+</ul>
+<p>详细讲解参考：于晶贤‐辽宁石油化工大学‐聚类分析之系统聚类法.pdf</p>
+<h3 id="常用距离（样品i与样品j）"><a href="#常用距离（样品i与样品j）" class="headerlink" title="常用距离（样品i与样品j）"></a>常用距离（样品i与样品j）</h3><p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200209192404296-931850462.png" alt=""></p>
+<ul>
+<li>绝对值距离：网状结构的距离</li>
+<li>欧氏距离：一般就用欧式距离</li>
+<li>Minkowski距离：</li>
+<li>Chebyshev距离：</li>
+<li>马氏距离：多元正太分布 </li>
+</ul>
+<h3 id="常用“距离”-（指标i与指标j）"><a href="#常用“距离”-（指标i与指标j）" class="headerlink" title="常用“距离” （指标i与指标j）"></a>常用“距离” （指标i与指标j）</h3><p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210112852451-935713942.png" alt=""></p>
+<h3 id="类与类之间的常用距离"><a href="#类与类之间的常用距离" class="headerlink" title="类与类之间的常用距离"></a>类与类之间的常用距离</h3><p>1.由一个样品组成的类是最基本的类；如果每一类都由<br>个样品组成，那么样品间的距离就是类间距离。<br>2.如果某一类包含不止一个样品，那么就要确定类间距<br>离，类间距离是基于样品间距离定义的，大致有如下几种</p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210113204394-1831022087.png" alt=""></p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210113430960-1273589814.png" alt=""></p>
+<p><img src="C:%5CUsers%5C17861%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200210113511356.png" alt=""></p>
+<h3 id="算法流程图"><a href="#算法流程图" class="headerlink" title="算法流程图"></a>算法流程图</h3><p><img src="C:%5CUsers%5C17861%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200210113711863.png" alt=""></p>
+<h3 id="聚类分析需要注意的问题"><a href="#聚类分析需要注意的问题" class="headerlink" title="聚类分析需要注意的问题"></a>聚类分析需要注意的问题</h3><p>1.对于一个实际问题要根据分类的目的来选取指标，指标<br>选取的不同分类结果一般也不同。<br>2.样品间距离定义方式的不同，聚类结果一般也不同。<br>3.聚类方法的不同，聚类结果一般也不同（尤其是样品特别多的时候）。最好能通过各种方法找出其中的共性。<br>4.要注意指标的量纲，量纲差别太大会导致聚类结果不合<br>理。<br>5.聚类分析的结果可能不令人满意，因为我们所做的是一个数学的处理，对于结果我们要找到一个<font color=red>合理的解释</font>。  </p>
+<h3 id="Spss软件操作-1"><a href="#Spss软件操作-1" class="headerlink" title="Spss软件操作"></a>Spss软件操作</h3><p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210114601516-72749493.png" alt=""></p>
+<h3 id="谱系图"><a href="#谱系图" class="headerlink" title="谱系图"></a>谱系图</h3><p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210115127054-1986576250.png" alt=""></p>
+<p>画竖线可以看清分为多少类。</p>
+<h3 id="用图形估计聚类的数量"><a href="#用图形估计聚类的数量" class="headerlink" title="用图形估计聚类的数量"></a>用图形估计聚类的数量</h3><p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210115421789-1284003418.png" alt=""></p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210115916366-1372084416.png" alt=""></p>
+<p>根据图来进行解释：<br>(1)根据聚合系数折线图可知，当类别数为5时，折线的下降趋势趋缓，故可将类别数设定为5.<br>(2)从图中可以看出， K值从1到5时，畸变程度变化最大。超过5以后，畸变程度变化显著降低。因此肘部就是 K=5，故可将类别数设定为5.（当然，K=3也可以解释）  </p>
+<h3 id="确定K后保存聚类结果并画图"><a href="#确定K后保存聚类结果并画图" class="headerlink" title="确定K后保存聚类结果并画图"></a>确定K后保存聚类结果并画图</h3><p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210120125176-1563715498.png" alt=""></p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210120327459-1809391374.png" alt=""></p>
+<p>注意： 只要当指标个数为2或者3的时候才能画图，上面两个图纯粹是为了演示作图过程，实际上本例中指标个数有8个，是不可能做出这样的图的  </p>
+<h2 id="DBSCAN算法"><a href="#DBSCAN算法" class="headerlink" title="DBSCAN算法"></a>DBSCAN算法</h2><p>​            DBSCAN(Density-based spatial clustering of applications with noise)是Martin Ester, Hans-PeterKriegel等人于1996年提出的一种<strong>基于密度</strong>的聚类方法，聚类前不需要预先指定聚类的个数，生成的簇的个数不定（和数据有关）。该算法利用基于密度的聚类的概念，即要求聚类空间中的一定区域内所包含对象（点或其他空间对象）的数目不小于某一给定阈值。该方法能在具有噪声的空间数据库中发现任意形状的簇，可将密度足够大的相邻区域连接，能有效处理异常数据。  </p>
+<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>DBSCAN算法将数据点分为三类：<br>• 核心点：在半径Eps内含有不少于MinPts数目的点<br>• 边界点：在半径Eps内点的数量小于MinPts，但是落在核心点的邻域内<br>• 噪音点：既不是核心点也不是边界点的点  </p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210121404108-1727397712.png" alt=""></p>
+<p>​        在这幅图里，MinPts = 4，点 A 和其他红色点是核心点，因为它们的 ε-邻域（图中红色圆圈）里包含最少 4 个点（包括自己），由于它们之间相互相可达，它们形成了一个聚类。点 B 和点 C 不是核心点，但它们可由 A 经其他核心点可达，所以也和A属于同一个聚类。点 N 是局点，它既不是核心点，又不由其他点可达。  </p>
+<h3 id="可视化"><a href="#可视化" class="headerlink" title="可视化"></a>可视化</h3><p><a href="https://www.naftaliharris.com/blog/visualizing‐dbscan‐clustering/" target="_blank" rel="noopener">DBSCAN算法可视化  </a></p>
+<h3 id="Matlab代码"><a href="#Matlab代码" class="headerlink" title="Matlab代码"></a>Matlab代码</h3><p>Matlab官网推荐下载的代码：<br><a href="https://ww2.mathworks.cn/matlabcentral/fileexchange/52905‐dbscan‐clustering‐algorithm" target="_blank" rel="noopener">https://ww2.mathworks.cn/matlabcentral/fileexchange/52905‐dbscan‐clustering‐algorithm</a>  </p>
+<h3 id="优缺点-1"><a href="#优缺点-1" class="headerlink" title="优缺点"></a>优缺点</h3><p>优点：</p>
+<ol>
+<li>基于密度定义，能处理任意形状和大小的簇；</li>
+<li>可在聚类的同时发现异常点；</li>
+<li>与K-means比较起来，不需要输入要划分的聚类个数。</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li><p>对输入参数ε和Minpts敏感，确定参数困难；</p>
+</li>
+<li><p>由于DBSCAN算法中，变量ε和Minpts是全局唯一的,当聚类的密度不均匀时，聚类距离相差很大时，聚类质量差；</p>
+</li>
+<li><p>当数据量大时，计算密度单元的计算复杂度大。</p>
+</li>
+</ol>
+<p>我的建议：</p>
+<ol>
+<li>只有两个指标，且你做出散点图后发现数据表现得很“DBSCAN”，这时候你再用DNSCAN进行聚类。其他情况下，全部使用系统聚类吧。</li>
+<li>K‐means也可以用，不过用了的话你论文上可写的东西比较少。  </li>
+</ol>
+<h2 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h2><p>完成一篇论文作业，“各国森林、草原资源聚类.doc”，提示：指标共三个，量纲不同哦，论文中要交代清楚K的选择，当然你也可以画出你的聚类结果的三维图。  </p>
+<ol>
+<li><p>把作业表格复制到excel，用spss软件直接打开即可。</p>
+</li>
+<li><p>归一化变量</p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210153312391-1367375799.png" alt=""></p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210153432263-2026649140.png" alt=""></p>
+</li>
+<li><p>使用系统聚类和肘部法则确定聚类个数</p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210153849658-790959166.png" alt=""></p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210153555034-2130091459.png" alt=""></p>
+<p>在spss复制一下聚类系数</p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210153957395-449784315.png" alt=""></p>
+<p>复制到ECXCEL表里面去。</p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210154432903-1173598575.png" alt=""></p>
+<p>通过对图像的观察分析，可以得出当聚类中心个数为4时，其聚合系数变化较大，所以选取聚类中心个数K=4。</p>
+</li>
+<li><p>真正的开始系统聚类(kmeans也行)</p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210154952889-1302762691.png" alt=""></p>
+<p>5.做散点图</p>
+</li>
+</ol>
+<p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210120125176-1563715498.png" alt=""></p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1880713/202002/1880713-20200210160229016-288145526.png" alt=""></p>
+
+    </div>
+
+    
+    
+    
+	
+    <div style="text-align:center;color: #ccc;font-size:14px;">
+------------- 本文结束 <i class="fa fa-heart-o"></i> 感谢您的阅读-------------
+</div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>sdz
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2020/02/08/%E8%81%9A%E7%B1%BB%E6%A8%A1%E5%9E%8B/" title="聚类模型">http://yoursite.com/2020/02/08/聚类模型/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/MATLAB/" rel="tag"><i class="fa fa-tag"></i> MATLAB</a>
+              <a href="/tags/spss/" rel="tag"><i class="fa fa-tag"></i> spss</a>
+              <a href="/tags/K-means/" rel="tag"><i class="fa fa-tag"></i> K-means</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/02/08/python%E8%93%9D%E6%A1%A5%E6%9D%AF%E6%8A%80%E5%B7%A7/" rel="prev" title="python蓝桥杯技巧">
+      <i class="fa fa-chevron-left"></i> python蓝桥杯技巧
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/02/08/%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/" rel="next" title="主成分分析">
+      主成分分析 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#具体算法"><span class="nav-number">2.</span> <span class="nav-text">具体算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#K-means聚类算法"><span class="nav-number">2.1.</span> <span class="nav-text">K-means聚类算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#算法流程"><span class="nav-number">2.1.1.</span> <span class="nav-text">算法流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#流程图"><span class="nav-number">2.1.2.</span> <span class="nav-text">流程图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优缺点"><span class="nav-number">2.1.3.</span> <span class="nav-text">优缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#K-means-算法"><span class="nav-number">2.2.</span> <span class="nav-text">K-means++算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#与K‐means-算法的区别"><span class="nav-number">2.2.1.</span> <span class="nav-text">与K‐means++算法的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spss软件操作"><span class="nav-number">2.2.2.</span> <span class="nav-text">Spss软件操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#K-means算法的一些讨论"><span class="nav-number">2.2.3.</span> <span class="nav-text">K-means算法的一些讨论</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统（层次）聚类-可以查看k值"><span class="nav-number">2.3.</span> <span class="nav-text">系统（层次）聚类   (可以查看k值)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#算法流程-1"><span class="nav-number">2.3.1.</span> <span class="nav-text">算法流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用距离（样品i与样品j）"><span class="nav-number">2.3.2.</span> <span class="nav-text">常用距离（样品i与样品j）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用“距离”-（指标i与指标j）"><span class="nav-number">2.3.3.</span> <span class="nav-text">常用“距离” （指标i与指标j）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类与类之间的常用距离"><span class="nav-number">2.3.4.</span> <span class="nav-text">类与类之间的常用距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法流程图"><span class="nav-number">2.3.5.</span> <span class="nav-text">算法流程图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#聚类分析需要注意的问题"><span class="nav-number">2.3.6.</span> <span class="nav-text">聚类分析需要注意的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spss软件操作-1"><span class="nav-number">2.3.7.</span> <span class="nav-text">Spss软件操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#谱系图"><span class="nav-number">2.3.8.</span> <span class="nav-text">谱系图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用图形估计聚类的数量"><span class="nav-number">2.3.9.</span> <span class="nav-text">用图形估计聚类的数量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#确定K后保存聚类结果并画图"><span class="nav-number">2.3.10.</span> <span class="nav-text">确定K后保存聚类结果并画图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DBSCAN算法"><span class="nav-number">2.4.</span> <span class="nav-text">DBSCAN算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本概念"><span class="nav-number">2.4.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可视化"><span class="nav-number">2.4.2.</span> <span class="nav-text">可视化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Matlab代码"><span class="nav-number">2.4.3.</span> <span class="nav-text">Matlab代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优缺点-1"><span class="nav-number">2.4.4.</span> <span class="nav-text">优缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#作业"><span class="nav-number">2.5.</span> <span class="nav-text">作业</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="sdz"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">sdz</p>
+  <div class="site-description" itemprop="description">个人博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/pxlsdz" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;pxlsdz" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/sdz20172133" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;sdz20172133" rel="noopener" target="_blank"><i class="fa fa-fw fa-codiepie"></i>CSDN</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sdz</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">264k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:01</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='170' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'pAM5gCGYUGBwBF62VmECeV0o-gzGzoHsz',
+      appKey     : 'myehhFCNOsN4ClPFSLov1xKd',
+      placeholder: "欢迎畅所欲言",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : ,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+  <!-- 页面点击小红心 -->
+
+      <script type="text/javascript" src="/js/clicklove.js"></script>
+
+</body>
+</html>
