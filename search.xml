@@ -74,9 +74,9 @@
       
         <tags>
             
-            <tag> 评价模型 </tag>
-            
             <tag> MATLAB </tag>
+            
+            <tag> 评价模型 </tag>
             
         </tags>
       
@@ -248,11 +248,11 @@
     
     
     <entry>
-      <title>计算机专业英语--PROCESSOR</title>
-      <link href="/2020/03/02/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E8%8B%B1%E8%AF%AD--PROCESSOR%20/"/>
-      <url>/2020/03/02/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E8%8B%B1%E8%AF%AD--PROCESSOR%20/</url>
+      <title>计算机专业英语--OS</title>
+      <link href="/2020/03/02/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E8%8B%B1%E8%AF%AD--OS/"/>
+      <url>/2020/03/02/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E8%8B%B1%E8%AF%AD--OS/</url>
       
-        <content type="html"><![CDATA[<h1 id="Main-point"><a href="#Main-point" class="headerlink" title="Main point:"></a>Main point:</h1><ul><li>Instruction and Instruction set</li><li>Three units of CPU</li><li>Operation of CPU</li></ul><a id="more"></a><ol><li><p>处理器的概念</p><p>A processor is functional unit that interprets and carries out the instructions.</p></li><li><p>指令的概念</p><p>Instruction is a code in a program which defines and carries out an operation.</p></li></ol><ol start="3"><li><p>interprets  解释</p></li><li><p>encrypt 加密</p><p>decrypt 解密</p></li><li><p>instruction set  指令系统，指令集</p></li><li><p>processor        处理器</p></li><li><p>operation         操作、操作码</p></li><li><p>operand            操作数</p></li><li><p>register             寄存器</p></li><li><p>control unit        控制器，控制部件</p></li><li><p>decode            译码，解码</p><p>encode            编码</p></li><li><p>arithmetic and logic unit (ALU)  算术/逻辑部件</p></li><li><p>word size (word length)        字长</p></li><li><p>machine language             机器语言 </p></li><li><p>be referred to       称为</p></li><li><p>retrieve  检索；取指令</p></li><li><p>awesome  极好的；惊人的</p><p>awful       糟糕的   </p></li><li><p>precisely  恰好地</p><p>precision  精准</p></li><li><p>depict/show/illustrate/demonstrate/indicate/represent/specify/interprete</p><p>图示说明；表示</p></li><li><p>external  外部的</p><p>internal   内部的</p></li><li><p>supervis 监督</p></li><li><p>fetch     获取</p></li><li><p>keep track of 追踪；跟踪</p></li><li><p>tightly  紧密的</p><p>loosely 松散的</p></li></ol><h1 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h1><ol><li><p>Which two parts make up an instruction? Please describe their functions. </p><p>An instruction is made up of operations and operands. The former specifies the function to be performed by an instruction and the later represents the data to be operated by the instruction.                                                                                                                                                                                </p></li><li><p>What functions should be performed with Control Unit? </p><p>The control unit fetches instructions from memory and determines their types or decodes them. It then breaks each instruction into a series of simple small steps or actions. By doing this, it controls the step-by-step operation of the entire computer system.</p></li><li><p>List four operations belonging to arithmetic operations. What is logic operation?          </p><p>Arithmetic operations include adding, subtracting, multiplying, and dividing. Logic operations make a comparison and take action based on the results. </p></li><li><p>What items should be stored into registers?</p><p>A register is a storage location inside the processor. Registers in the control unit are used to keep track of the overall status of the program that is running. Control unit registers store information such as the current instruction, the location of the next instruction to be executed, and the operands of the instruction. In the ALU, registers store data items that are added, subtracted, multiplied, divided, and compared. Other registers store the results of arithmetic and logic operations.</p></li></ol><hr><ul><li><p>a.The part of an instruction that specifies the function that is to be performed.  </p><p>  <strong>operation</strong></p></li><li><p>b. The binary language in which a computer’s    instruction set is written.</p><p>  <strong>machine language</strong></p></li><li><p>c. A timer in a processor that releases precisely timed signals that provide a pulse for the processor’s work.</p><p>   <strong>clock</strong></p></li><li><p>d. A functional unit that interprets and carries out  instructions.</p><p>  <strong>processor</strong></p></li><li><p>e. A unique set of operations that comes with every processor.</p><p>  <strong>instruction set</strong></p></li><li><p>f. The part of an instruction that tells where data that are operated on are located </p><p>  <strong>Operand</strong></p></li><li><p>g. Million cycles per second.</p><p>  <strong>Megahertz</strong> </p></li><li><p>h. The function unit that is responsible for supervising  the operation of the entire computer system.</p><p>  <strong>Control unit</strong></p></li><li><p>i. A function unit that provides the computer with logical and computational capability. </p><p>  <strong>Arithmetic and logic unit</strong></p></li><li><p>j. The term used to describe the size of operand registers and buses.</p><p>  <strong>Word size</strong></p></li><li><p>k. A storage location inside the processor. </p><p>  <strong>register</strong></p></li></ul><hr><ul><li><p>(1) We usually call our computers :<strong>machines</strong></p></li><li><p>(2) An instruction set can sometimes be referred to as     :<strong>machine instructions</strong></p></li><li><p>(3) The binary language is called     :<strong>machine language</strong></p></li><li><p>(4) We don’t confuse the processor’s instruction set with  the instructions of *<em>High-level programming languages *</em>      </p></li><li><p>(5) An instruction consists of  :<strong>operations and operands</strong></p></li><li><p>(6) An operand that refers to data in the memory is called  an   *<em>address *</em></p></li><li><p>(7) A timer can give precisely timed   <strong>electical signals</strong>  </p></li><li><p>(8) A processor includes two functional units, they  are <strong>machine language</strong></p></li><li><p>(9) The ways by which the control unit works  are analogous to    *<em>a telephone switchboard with intelligence *</em> </p></li><li><p>(10) The control unit takes out the from memory *<em>instructions *</em></p></li></ul><p>​     </p>]]></content>
+        <content type="html"><![CDATA[<h1 id="关键单词"><a href="#关键单词" class="headerlink" title="关键单词"></a>关键单词</h1><a id="more"></a><ol><li><p><strong>job management</strong>               <strong>作业管理</strong></p></li><li><p><strong>resource management</strong>           <strong>资源管理</strong></p></li><li><p><strong>job queue</strong>                     <strong>作业队列</strong></p></li><li><p><strong>input/output control system(IOCS)</strong> <strong>输入输出控制系统</strong></p></li><li><p><strong>batch system</strong>                  <strong>批处理系统</strong></p></li><li><p><strong>time-shared operating system</strong>    <strong>分时操作系统</strong></p></li><li><p><strong>offline operation</strong>               <strong>脱机操作</strong></p></li><li><p><strong>real-time system</strong>               <strong>实时系统</strong> </p></li><li><p><strong>buffering</strong>           <strong>缓冲技术</strong></p></li><li><p><strong>spooling system</strong>     <strong>假脱机系统</strong></p></li><li><p><strong>multiprogramming</strong>   <strong>多道程序设计</strong></p></li><li><p>priviledged <em>instruction</em>  特权指令</p></li><li><p>assess 评价</p></li><li><p>resident 驻留</p></li><li><p>sequencing 排序</p></li><li><p>overlap（ping） 重叠</p></li><li><p>approve  同意</p><p>deny       拒绝</p></li></ol><h1 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h1><ol><li><p>What are two main purposes of developing operating system ? </p></li><li><p>Are operating systems normally related to their manufacturers and hardware?</p></li><li><p>List five functions of operating systems.</p></li><li><p>What does buffering mean ?</p></li><li><p>How multi-programs to be operated ?</p></li><li><p>List three basic types of operating systems.</p></li><li><p>What resources should be included in Resource management ?</p></li></ol><p>ans：</p><ol><li><p>The primary goal is to make the computer system convenient to use. The secondary goal is to use the computer hardware in an efficient manner.</p></li><li><p>Yes.</p></li><li><p>(1) Job management;          (2) Resource management; </p><p>(3) Control of I/O operations;   (4) Error recovery;</p><p>(5) Memory management. </p></li><li><p>Buffering means to overlap the input, output, and computation of a single job to improve system performance. It can increase the level of resources utilization and throughput capacity.</p></li><li><p>With multiprogramming, several jobs are kept in memory at one time; the CPU is switched back and forth between them in order to increase CPU utilization and to decrease the total real time needed to execute a job. </p></li><li><p>Batch system, time-shared operating system ,</p></li></ol>]]></content>
       
       
       <categories>
@@ -273,11 +273,11 @@
     
     
     <entry>
-      <title>计算机专业英语--OS</title>
-      <link href="/2020/03/02/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E8%8B%B1%E8%AF%AD--OS/"/>
-      <url>/2020/03/02/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E8%8B%B1%E8%AF%AD--OS/</url>
+      <title>计算机专业英语--PROCESSOR</title>
+      <link href="/2020/03/02/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E8%8B%B1%E8%AF%AD--PROCESSOR%20/"/>
+      <url>/2020/03/02/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E8%8B%B1%E8%AF%AD--PROCESSOR%20/</url>
       
-        <content type="html"><![CDATA[<h1 id="关键单词"><a href="#关键单词" class="headerlink" title="关键单词"></a>关键单词</h1><a id="more"></a><ol><li><p><strong>job management</strong>               <strong>作业管理</strong></p></li><li><p><strong>resource management</strong>           <strong>资源管理</strong></p></li><li><p><strong>job queue</strong>                     <strong>作业队列</strong></p></li><li><p><strong>input/output control system(IOCS)</strong> <strong>输入输出控制系统</strong></p></li><li><p><strong>batch system</strong>                  <strong>批处理系统</strong></p></li><li><p><strong>time-shared operating system</strong>    <strong>分时操作系统</strong></p></li><li><p><strong>offline operation</strong>               <strong>脱机操作</strong></p></li><li><p><strong>real-time system</strong>               <strong>实时系统</strong> </p></li><li><p><strong>buffering</strong>           <strong>缓冲技术</strong></p></li><li><p><strong>spooling system</strong>     <strong>假脱机系统</strong></p></li><li><p><strong>multiprogramming</strong>   <strong>多道程序设计</strong></p></li><li><p>priviledged <em>instruction</em>  特权指令</p></li><li><p>assess 评价</p></li><li><p>resident 驻留</p></li><li><p>sequencing 排序</p></li><li><p>overlap（ping） 重叠</p></li><li><p>approve  同意</p><p>deny       拒绝</p></li></ol><h1 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h1><ol><li><p>What are two main purposes of developing operating system ? </p></li><li><p>Are operating systems normally related to their manufacturers and hardware?</p></li><li><p>List five functions of operating systems.</p></li><li><p>What does buffering mean ?</p></li><li><p>How multi-programs to be operated ?</p></li><li><p>List three basic types of operating systems.</p></li><li><p>What resources should be included in Resource management ?</p></li></ol><p>ans：</p><ol><li><p>The primary goal is to make the computer system convenient to use. The secondary goal is to use the computer hardware in an efficient manner.</p></li><li><p>Yes.</p></li><li><p>(1) Job management;          (2) Resource management; </p><p>(3) Control of I/O operations;   (4) Error recovery;</p><p>(5) Memory management. </p></li><li><p>Buffering means to overlap the input, output, and computation of a single job to improve system performance. It can increase the level of resources utilization and throughput capacity.</p></li><li><p>With multiprogramming, several jobs are kept in memory at one time; the CPU is switched back and forth between them in order to increase CPU utilization and to decrease the total real time needed to execute a job. </p></li><li><p>Batch system, time-shared operating system ,</p></li></ol>]]></content>
+        <content type="html"><![CDATA[<h1 id="Main-point"><a href="#Main-point" class="headerlink" title="Main point:"></a>Main point:</h1><ul><li>Instruction and Instruction set</li><li>Three units of CPU</li><li>Operation of CPU</li></ul><a id="more"></a><ol><li><p>处理器的概念</p><p>A processor is functional unit that interprets and carries out the instructions.</p></li><li><p>指令的概念</p><p>Instruction is a code in a program which defines and carries out an operation.</p></li></ol><ol start="3"><li><p>interprets  解释</p></li><li><p>encrypt 加密</p><p>decrypt 解密</p></li><li><p>instruction set  指令系统，指令集</p></li><li><p>processor        处理器</p></li><li><p>operation         操作、操作码</p></li><li><p>operand            操作数</p></li><li><p>register             寄存器</p></li><li><p>control unit        控制器，控制部件</p></li><li><p>decode            译码，解码</p><p>encode            编码</p></li><li><p>arithmetic and logic unit (ALU)  算术/逻辑部件</p></li><li><p>word size (word length)        字长</p></li><li><p>machine language             机器语言 </p></li><li><p>be referred to       称为</p></li><li><p>retrieve  检索；取指令</p></li><li><p>awesome  极好的；惊人的</p><p>awful       糟糕的   </p></li><li><p>precisely  恰好地</p><p>precision  精准</p></li><li><p>depict/show/illustrate/demonstrate/indicate/represent/specify/interprete</p><p>图示说明；表示</p></li><li><p>external  外部的</p><p>internal   内部的</p></li><li><p>supervis 监督</p></li><li><p>fetch     获取</p></li><li><p>keep track of 追踪；跟踪</p></li><li><p>tightly  紧密的</p><p>loosely 松散的</p></li></ol><h1 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h1><ol><li><p>Which two parts make up an instruction? Please describe their functions. </p><p>An instruction is made up of operations and operands. The former specifies the function to be performed by an instruction and the later represents the data to be operated by the instruction.                                                                                                                                                                                </p></li><li><p>What functions should be performed with Control Unit? </p><p>The control unit fetches instructions from memory and determines their types or decodes them. It then breaks each instruction into a series of simple small steps or actions. By doing this, it controls the step-by-step operation of the entire computer system.</p></li><li><p>List four operations belonging to arithmetic operations. What is logic operation?          </p><p>Arithmetic operations include adding, subtracting, multiplying, and dividing. Logic operations make a comparison and take action based on the results. </p></li><li><p>What items should be stored into registers?</p><p>A register is a storage location inside the processor. Registers in the control unit are used to keep track of the overall status of the program that is running. Control unit registers store information such as the current instruction, the location of the next instruction to be executed, and the operands of the instruction. In the ALU, registers store data items that are added, subtracted, multiplied, divided, and compared. Other registers store the results of arithmetic and logic operations.</p></li></ol><hr><ul><li><p>a.The part of an instruction that specifies the function that is to be performed.  </p><p>  <strong>operation</strong></p></li><li><p>b. The binary language in which a computer’s    instruction set is written.</p><p>  <strong>machine language</strong></p></li><li><p>c. A timer in a processor that releases precisely timed signals that provide a pulse for the processor’s work.</p><p>   <strong>clock</strong></p></li><li><p>d. A functional unit that interprets and carries out  instructions.</p><p>  <strong>processor</strong></p></li><li><p>e. A unique set of operations that comes with every processor.</p><p>  <strong>instruction set</strong></p></li><li><p>f. The part of an instruction that tells where data that are operated on are located </p><p>  <strong>Operand</strong></p></li><li><p>g. Million cycles per second.</p><p>  <strong>Megahertz</strong> </p></li><li><p>h. The function unit that is responsible for supervising  the operation of the entire computer system.</p><p>  <strong>Control unit</strong></p></li><li><p>i. A function unit that provides the computer with logical and computational capability. </p><p>  <strong>Arithmetic and logic unit</strong></p></li><li><p>j. The term used to describe the size of operand registers and buses.</p><p>  <strong>Word size</strong></p></li><li><p>k. A storage location inside the processor. </p><p>  <strong>register</strong></p></li></ul><hr><ul><li><p>(1) We usually call our computers :<strong>machines</strong></p></li><li><p>(2) An instruction set can sometimes be referred to as     :<strong>machine instructions</strong></p></li><li><p>(3) The binary language is called     :<strong>machine language</strong></p></li><li><p>(4) We don’t confuse the processor’s instruction set with  the instructions of *<em>High-level programming languages *</em>      </p></li><li><p>(5) An instruction consists of  :<strong>operations and operands</strong></p></li><li><p>(6) An operand that refers to data in the memory is called  an   *<em>address *</em></p></li><li><p>(7) A timer can give precisely timed   <strong>electical signals</strong>  </p></li><li><p>(8) A processor includes two functional units, they  are <strong>machine language</strong></p></li><li><p>(9) The ways by which the control unit works  are analogous to    *<em>a telephone switchboard with intelligence *</em> </p></li><li><p>(10) The control unit takes out the from memory *<em>instructions *</em></p></li></ul><p>​     </p>]]></content>
       
       
       <categories>
@@ -404,31 +404,6 @@
     
     
     <entry>
-      <title>网络系统集成--路由器配置基础</title>
-      <link href="/2020/02/28/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90--%E8%B7%AF%E7%94%B1%E5%99%A8%E9%85%8D%E7%BD%AE%E5%9F%BA%E7%A1%80/"/>
-      <url>/2020/02/28/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90--%E8%B7%AF%E7%94%B1%E5%99%A8%E9%85%8D%E7%BD%AE%E5%9F%BA%E7%A1%80/</url>
-      
-        <content type="html"><![CDATA[<h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><a id="more"></a><p>​      路由器实质是一种<strong>特殊的计算机</strong>。它要求CPU和内存临时或永久存储数据，以便执行操作系统IOS（Internetwork Operating System）指令，例如系统初始化、路由功能和交换功能。</p><p>交换机：连接各个计算机，口多</p><p>路由器：连接外网与内网</p><h1 id="路由器的组成（重要）"><a href="#路由器的组成（重要）" class="headerlink" title="路由器的组成（重要）"></a>路由器的组成（重要）</h1><h2 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h2><p>执行操作系统IOS指令，例如系统初始化、路由功能和交换功能。</p><h2 id="RAM"><a href="#RAM" class="headerlink" title="RAM"></a>RAM</h2><p>提供各种应用程序和进程的临时存储，包括IOS、<strong>运行配置（running-config）文件</strong>、各种表格（如IP路由表和以太网ARP表）以及数据包缓冲区。</p><h2 id="ROM"><a href="#ROM" class="headerlink" title="ROM"></a>ROM</h2><p>提供启动说明、基本诊断软件和有限的IOS永久存储，以防止路由器无法加载功能完整的IOS。</p><h2 id="NVRAM"><a href="#NVRAM" class="headerlink" title="NVRAM"></a>NVRAM</h2><p> <strong>用作启动配置（startup-config）文件</strong>的永久性存储器。</p><h2 id="Flash"><a href="#Flash" class="headerlink" title="Flash"></a>Flash</h2><p> 提供IOS和其它系统文件的永久性存储（相当于硬盘）；当路由器启动时，会把IOS从闪存复制到RAM。</p><h1 id="路由器的常见端口和接口"><a href="#路由器的常见端口和接口" class="headerlink" title="路由器的常见端口和接口"></a>路由器的常见端口和接口</h1><h2 id="管理端口"><a href="#管理端口" class="headerlink" title="管理端口"></a>管理端口</h2><ol><li><p>控制台（Console）端口——使用低速串行或USB连接提供直接连接，这是一种<strong>带外管理</strong>访问思科设备的方法。</p></li><li><p>辅助（AUX）端口——用于通过拨号电话线和调制解调器远程访问路由器。</p></li></ol><p>   LAN接口——以太网接口——用于连接LAN设备（如计算机和交换机）上的电缆，还可用于路由器之间的带内路由|相互连接。</p><p>   WAN接口——串行接口——用于将路由器连接到外部网络（通常地理位置较远）。</p><p>带外管理：通过路由器专用配置线缆使PC机与路由器的Console端口直接相连。<br>带内管理：PC机通过网络与路由器（远程）互联</p><h1 id="路由器的启动过程"><a href="#路由器的启动过程" class="headerlink" title="路由器的启动过程"></a>路由器的启动过程</h1><p>启动过程包含以下四个主要阶段：</p><ol><li>执行ROM中的<strong>加电自检（POST）程序</strong>：路由器会对硬件进行诊断，包括CPU、RAM和NVRAM；</li><li>加载并执行bootstrap程序：查找IOS并将其加载到RAM中；</li><li>bootstrap程序定位并加载执行IOS映像：如果在Flash中未找到IOS映像，则路由器可使用TFTP服务器进行查找；如果仍未找到完整的IOS映像，则会从ROM中将精简版的IOS复制到RAM。这种精简版的IOS也可用于将完整的IOS加载到RAM；</li><li>bootstrap依次加载并执行保存于NVRAM或TFTP服务器中的启动配置文件：如果找不到该启动配置文件，则路由器进入-+-</li><li>设置（setup）模式。</li></ol>]]></content>
-      
-      
-      <categories>
-          
-          <category> 网络系统集成 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 课程笔记 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>网络系统集成--实验</title>
       <link href="/2020/02/28/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90--%E5%AE%9E%E9%AA%8C%E5%92%8C%E5%91%BD%E4%BB%A4/"/>
       <url>/2020/02/28/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90--%E5%AE%9E%E9%AA%8C%E5%92%8C%E5%91%BD%E4%BB%A4/</url>
@@ -448,6 +423,31 @@
             <tag> 课程笔记 </tag>
             
             <tag> 关键知识点 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>网络系统集成--路由器配置基础</title>
+      <link href="/2020/02/28/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90--%E8%B7%AF%E7%94%B1%E5%99%A8%E9%85%8D%E7%BD%AE%E5%9F%BA%E7%A1%80/"/>
+      <url>/2020/02/28/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90--%E8%B7%AF%E7%94%B1%E5%99%A8%E9%85%8D%E7%BD%AE%E5%9F%BA%E7%A1%80/</url>
+      
+        <content type="html"><![CDATA[<h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><a id="more"></a><p>​      路由器实质是一种<strong>特殊的计算机</strong>。它要求CPU和内存临时或永久存储数据，以便执行操作系统IOS（Internetwork Operating System）指令，例如系统初始化、路由功能和交换功能。</p><p>交换机：连接各个计算机，口多</p><p>路由器：连接外网与内网</p><h1 id="路由器的组成（重要）"><a href="#路由器的组成（重要）" class="headerlink" title="路由器的组成（重要）"></a>路由器的组成（重要）</h1><h2 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h2><p>执行操作系统IOS指令，例如系统初始化、路由功能和交换功能。</p><h2 id="RAM"><a href="#RAM" class="headerlink" title="RAM"></a>RAM</h2><p>提供各种应用程序和进程的临时存储，包括IOS、<strong>运行配置（running-config）文件</strong>、各种表格（如IP路由表和以太网ARP表）以及数据包缓冲区。</p><h2 id="ROM"><a href="#ROM" class="headerlink" title="ROM"></a>ROM</h2><p>提供启动说明、基本诊断软件和有限的IOS永久存储，以防止路由器无法加载功能完整的IOS。</p><h2 id="NVRAM"><a href="#NVRAM" class="headerlink" title="NVRAM"></a>NVRAM</h2><p> <strong>用作启动配置（startup-config）文件</strong>的永久性存储器。</p><h2 id="Flash"><a href="#Flash" class="headerlink" title="Flash"></a>Flash</h2><p> 提供IOS和其它系统文件的永久性存储（相当于硬盘）；当路由器启动时，会把IOS从闪存复制到RAM。</p><h1 id="路由器的常见端口和接口"><a href="#路由器的常见端口和接口" class="headerlink" title="路由器的常见端口和接口"></a>路由器的常见端口和接口</h1><h2 id="管理端口"><a href="#管理端口" class="headerlink" title="管理端口"></a>管理端口</h2><ol><li><p>控制台（Console）端口——使用低速串行或USB连接提供直接连接，这是一种<strong>带外管理</strong>访问思科设备的方法。</p></li><li><p>辅助（AUX）端口——用于通过拨号电话线和调制解调器远程访问路由器。</p></li></ol><p>   LAN接口——以太网接口——用于连接LAN设备（如计算机和交换机）上的电缆，还可用于路由器之间的带内路由|相互连接。</p><p>   WAN接口——串行接口——用于将路由器连接到外部网络（通常地理位置较远）。</p><p>带外管理：通过路由器专用配置线缆使PC机与路由器的Console端口直接相连。<br>带内管理：PC机通过网络与路由器（远程）互联</p><h1 id="路由器的启动过程"><a href="#路由器的启动过程" class="headerlink" title="路由器的启动过程"></a>路由器的启动过程</h1><p>启动过程包含以下四个主要阶段：</p><ol><li>执行ROM中的<strong>加电自检（POST）程序</strong>：路由器会对硬件进行诊断，包括CPU、RAM和NVRAM；</li><li>加载并执行bootstrap程序：查找IOS并将其加载到RAM中；</li><li>bootstrap程序定位并加载执行IOS映像：如果在Flash中未找到IOS映像，则路由器可使用TFTP服务器进行查找；如果仍未找到完整的IOS映像，则会从ROM中将精简版的IOS复制到RAM。这种精简版的IOS也可用于将完整的IOS加载到RAM；</li><li>bootstrap依次加载并执行保存于NVRAM或TFTP服务器中的启动配置文件：如果找不到该启动配置文件，则路由器进入-+-</li><li>设置（setup）模式。</li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> 网络系统集成 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 课程笔记 </tag>
             
         </tags>
       
@@ -759,9 +759,9 @@
       
         <tags>
             
-            <tag> 评价模型 </tag>
-            
             <tag> MATLAB </tag>
+            
+            <tag> 评价模型 </tag>
             
         </tags>
       
@@ -811,9 +811,9 @@
       
         <tags>
             
-            <tag> 评价模型 </tag>
-            
             <tag> MATLAB </tag>
+            
+            <tag> 评价模型 </tag>
             
         </tags>
       
