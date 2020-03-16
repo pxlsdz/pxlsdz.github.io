@@ -29,8 +29,13 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200311134707.png">
 <meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200311142701.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200315082511.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200315083150.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200315083208.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200315083313.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200315085339.png">
 <meta property="article:published_time" content="2020-03-09T03:49:08.000Z">
-<meta property="article:modified_time" content="2020-03-11T06:30:49.620Z">
+<meta property="article:modified_time" content="2020-03-15T00:56:43.739Z">
 <meta property="article:author" content="sdz">
 <meta property="article:tag" content="课程笔记">
 <meta name="twitter:card" content="summary">
@@ -135,7 +140,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">54</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">56</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -222,7 +227,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-11 14:30:49" itemprop="dateModified" datetime="2020-03-11T14:30:49+08:00">2020-03-11</time>
+                <time title="修改时间：2020-03-15 08:56:43" itemprop="dateModified" datetime="2020-03-15T08:56:43+08:00">2020-03-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -261,7 +266,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>701</span>
+              <span>1.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -310,9 +315,32 @@
 </li>
 </ul>
 <p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200311142701.png" alt=""></p>
-<h2 id="功能建模"><a href="#功能建模" class="headerlink" title="功能建模"></a>功能建模</h2><pre><code>功能建模的思想就是用抽象模型的概念，按照软件内部数据传递和变 换的关系，自顶向下逐层分解，直到找到满足功能要求的可实现的软件 为止。功能模型用数据流图来描述。 
+<h2 id="功能建模"><a href="#功能建模" class="headerlink" title="功能建模"></a>功能建模</h2><p>​       功能建模的思想就是用抽象模型的概念，按照软件内部<strong>数据传递和变换的关系</strong>，自顶向下逐层分解，直到找到满足功能要求的可实现的软件 为止。功能模型用数据流图来描述。 </p>
+<p>​       <strong>数据流图（简称DFD图）</strong>就是采用图形方式来表达系统的逻辑功能、 数据在系统内部的逻辑流向和逻辑变换过程，是结构化系统分析方法的 主要表达工具及用于表示软件模型的一种图示方法。 </p>
+<h2 id="数据流图中表示的符号"><a href="#数据流图中表示的符号" class="headerlink" title="数据流图中表示的符号"></a>数据流图中表示的符号</h2><p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200315082511.png" alt=""></p>
+<h2 id="订货系统实例"><a href="#订货系统实例" class="headerlink" title="订货系统实例"></a>订货系统实例</h2><p>功能模型数据流图——订货系统实例 </p>
+<p><strong>需求描述</strong>：</p>
+<ul>
+<li><p>假设一家工厂的采购部里的采购员每天需要订货系统产生一张订货报 表。报表按照零件编号排序，表中列出了所有需要再次订货的零件。 对于每个需要再次订货的零件应该列出下述信息：零件编号、零件名 称、价格、主要供应商、次要供应商。</p>
+</li>
+<li><p>零件入库或出库称作事务，仓库管理员通过仓库的终端把事务报告给 订货系统。当某种零件的库存少于库存量临界值时就应该再次订货了。 </p>
+</li>
+</ul>
+<p>请画出数据流图。 </p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200315083150.png" alt=""></p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200315083208.png" alt=""></p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200315083313.png" alt=""></p>
+<h2 id="工资计算系统"><a href="#工资计算系统" class="headerlink" title="工资计算系统"></a>工资计算系统</h2><p>习题 工资计算系统包含如下功能： </p>
+<p><strong>计算工资</strong>     </p>
+<p>根据人事部门给出的出勤表和业绩表计算奖金和缺勤扣 款，通过生成的奖金发放表及工资基本信息库的信息计算应 发工资，根据应发工资表计算所得税，根据后勤部门给出的 水电扣款及缺勤扣款表和所得税款计算出实发工资，最后生 成实发工资表和工资清单。</p>
+<p> <strong>打印工资清单</strong>    </p>
+<p>根据工资清单完成工资条的打印，给职工 </p>
+<p><strong>工资转存</strong>    </p>
+<p>根据实发工资表生成职工工资存款清单并将其发送到银行 请用数据流图描绘该系统。 </p>
+<p><strong>顶层数据流图</strong></p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200315085339.png" alt=""></p>
+<p><strong>功能级数据流图</strong></p>
 
- 数据流图（简称DFD图）就是采用图形方式来表达系统的逻辑功能、 数据在系统内部的逻辑流向和逻辑变换过程，是结构化系统分析方法的 主要表达工具及用于表示软件模型的一种图示方法。 </code></pre>
     </div>
 
     
@@ -356,8 +384,8 @@
       <i class="fa fa-chevron-left"></i> 基于熵权法对Topsis模型的修正
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/03/13/Codeforces-Round-627-Div-3-%E9%A2%98%E8%A7%A3/" rel="next" title="Codeforces Round #627 (Div. 3)题解">
-      Codeforces Round #627 (Div. 3)题解 <i class="fa fa-chevron-right"></i>
+    <a href="/2020/03/09/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E2%80%94%E2%80%94%E7%A1%AE%E5%AE%9A%E6%80%A7%E6%8E%A8%E7%90%86%E6%96%B9%E6%B3%95/" rel="next" title="人工智能——确定性推理方法">
+      人工智能——确定性推理方法 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -419,7 +447,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#结构化分析概述"><span class="nav-number">1.</span> <span class="nav-text">结构化分析概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结构化分析方法"><span class="nav-number">2.</span> <span class="nav-text">结构化分析方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#功能建模"><span class="nav-number">2.1.</span> <span class="nav-text">功能建模</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#结构化分析概述"><span class="nav-number">1.</span> <span class="nav-text">结构化分析概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结构化分析方法"><span class="nav-number">2.</span> <span class="nav-text">结构化分析方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#功能建模"><span class="nav-number">2.1.</span> <span class="nav-text">功能建模</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据流图中表示的符号"><span class="nav-number">2.2.</span> <span class="nav-text">数据流图中表示的符号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#订货系统实例"><span class="nav-number">2.3.</span> <span class="nav-text">订货系统实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工资计算系统"><span class="nav-number">2.4.</span> <span class="nav-text">工资计算系统</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -435,7 +463,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-count">56</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -498,13 +526,13 @@
       <i class="fa fa-area-chart"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">274k</span>
+    <span title="站点总字数">281k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">4:09</span>
+    <span title="站点阅读时长">4:16</span>
 </div>
 
         

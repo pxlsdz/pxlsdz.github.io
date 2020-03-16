@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://espresso.codeforces.com/9e670fa3eabfebd5ecdfa6085157f1f4ccfe494e.png">
 <meta property="og:image" content="https://espresso.codeforces.com/de84e2ea205b39d12a73b422b7f6b0229de451ba.png">
 <meta property="article:published_time" content="2020-03-13T06:12:39.000Z">
-<meta property="article:modified_time" content="2020-03-13T09:10:49.631Z">
+<meta property="article:modified_time" content="2020-03-13T16:39:53.090Z">
 <meta property="article:author" content="sdz">
 <meta property="article:tag" content="python">
 <meta property="article:tag" content="比赛">
@@ -137,7 +137,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">54</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">56</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -216,10 +216,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-03-13 14:12:39 / 修改时间：17:10:49" itemprop="dateCreated datePublished" datetime="2020-03-13T14:12:39+08:00">2020-03-13</time>
+              <time title="创建时间：2020-03-13 14:12:39" itemprop="dateCreated datePublished" datetime="2020-03-13T14:12:39+08:00">2020-03-13</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-14 00:39:53" itemprop="dateModified" datetime="2020-03-14T00:39:53+08:00">2020-03-14</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -261,14 +267,14 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>9.2k</span>
+              <span>12k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>8 分钟</span>
+              <span>11 分钟</span>
             </span>
 
         </div>
@@ -407,7 +413,7 @@
 <p>In the fifth test case of the example, the frog can only jump directly from 00 to n+1n+1.</p>
 <p>In the sixth test case of the example, the frog can choose d=1d=1 and jump 22 times to the right.</p>
 <h2 id="题意："><a href="#题意：" class="headerlink" title="题意："></a>题意：</h2><p>给一个长度为n里面有’L’ ‘R’ 的字符串，表示向左或者向右移动最大d长度, 在可以跳到终点n+1的情况下，问d最小是多长。</p>
-<h2 id="分析："><a href="#分析：" class="headerlink" title="分析："></a>分析：</h2><p>起点终点当作两个R，然后判断两个RR之间的最大距离即可。（证明咳咳）</p>
+<h2 id="分析："><a href="#分析：" class="headerlink" title="分析："></a>分析：</h2><p>因为我们根本不需要往左跳，左跳只会降低我们的位置，起点终点当作两个R，然后判断两个RR之间的最大距离即可。（证明咳咳）</p>
 <h2 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> defaultdict</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">IA = <span class="keyword">lambda</span>: map(int,input().split())</span><br><span class="line"></span><br><span class="line">T=int(input())</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,T):</span><br><span class="line"></span><br><span class="line">    n=input()</span><br><span class="line">    le=len(n)</span><br><span class="line">    l=int(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    pre=<span class="number">0</span></span><br><span class="line">    i=<span class="number">0</span></span><br><span class="line">    ans=<span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> it <span class="keyword">in</span> n:</span><br><span class="line">        i+=<span class="number">1</span> </span><br><span class="line">        <span class="keyword">if</span> it==<span class="string">'R'</span>:</span><br><span class="line">            ans=max(ans,i-pre)</span><br><span class="line">            pre=i</span><br><span class="line">          </span><br><span class="line">    ans=max(ans,le+<span class="number">1</span>-pre)</span><br><span class="line">    print(ans)</span><br><span class="line">    </span><br><span class="line"><span class="comment">#a = [int(0) for i in range(1,n+1)]</span></span><br></pre></td></tr></table></figure>
 
 <h1 id="D-Pair-of-Topics"><a href="#D-Pair-of-Topics" class="headerlink" title="D. Pair of Topics"></a>D. Pair of Topics</h1><p>2 seconds</p>
@@ -453,6 +459,43 @@
 </ol>
 <h2 id="代码：-1"><a href="#代码：-1" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> defaultdict</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">IA = <span class="keyword">lambda</span>: map(int,input().split())</span><br><span class="line"></span><br><span class="line">n=int(input())</span><br><span class="line"></span><br><span class="line">a=list(IA())</span><br><span class="line">b=list(IA())</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,n):</span><br><span class="line">    a[i]=a[i]-b[i]</span><br><span class="line"></span><br><span class="line">a=sorted(a)</span><br><span class="line">l=<span class="number">0</span></span><br><span class="line">r=n<span class="number">-1</span></span><br><span class="line">ans=<span class="number">0</span></span><br><span class="line"><span class="comment">#print(a)</span></span><br><span class="line"><span class="keyword">while</span> r&gt;l:</span><br><span class="line">    <span class="keyword">if</span> a[l]+a[r]&gt;<span class="number">0</span>:</span><br><span class="line">        ans+=r-l</span><br><span class="line">        r-=<span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:l+=<span class="number">1</span></span><br><span class="line">print(ans)</span><br><span class="line"><span class="comment">#a = [int(0) for i in range(1,n+1)]</span></span><br></pre></td></tr></table></figure>
 
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> defaultdict</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solve</span><span class="params">(x,pos)</span>:</span></span><br><span class="line">    l=<span class="number">0</span></span><br><span class="line">    r=pos</span><br><span class="line">    <span class="keyword">while</span> l&lt;r:</span><br><span class="line">        mid=(l+r)&gt;&gt;<span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> a[mid]+x&gt;<span class="number">0</span>:</span><br><span class="line">            r=mid</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            l=mid+<span class="number">1</span></span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> pos-l</span><br><span class="line"></span><br><span class="line">IA = <span class="keyword">lambda</span>: map(int,input().split())</span><br><span class="line"></span><br><span class="line">n=int(input())</span><br><span class="line"></span><br><span class="line">a=list(IA())</span><br><span class="line">b=list(IA())</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,n):</span><br><span class="line">    a[i]=a[i]-b[i]</span><br><span class="line"></span><br><span class="line">a=sorted(a)</span><br><span class="line">l=<span class="number">0</span></span><br><span class="line">r=n<span class="number">-1</span></span><br><span class="line">ans=<span class="number">0</span></span><br><span class="line"><span class="comment">#print(a)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,n):</span><br><span class="line">    ans+=solve(a[i],i)</span><br><span class="line">    </span><br><span class="line">print(ans)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#a = [int(0) for i in range(1,n+1)]</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="E-Sleeping-Schedule"><a href="#E-Sleeping-Schedule" class="headerlink" title="E. Sleeping Schedule"></a>E. Sleeping Schedule</h1><p>time limit per test</p>
+<p>2 seconds</p>
+<p>memory limit per test</p>
+<p>256 megabytes</p>
+<p>input</p>
+<p>standard input</p>
+<p>output</p>
+<p>standard output</p>
+<p>Vova had a pretty weird sleeping schedule. There are hh hours in a day. Vova will sleep exactly nn times. The ii-th time he will sleep exactly after aiai hours from the time he woke up. You can assume that Vova woke up exactly at the beginning of this story (the initial time is 00). Each time Vova sleeps <strong>exactly one day</strong> (in other words, hh hours).</p>
+<p>Vova thinks that the ii-th sleeping time is <strong>good</strong> if he starts to sleep between hours ll and rr inclusive.</p>
+<p>Vova can control himself and before the ii-th time can choose between two options: go to sleep after aiai hours or after ai−1ai−1 hours.</p>
+<p>Your task is to say the maximum number of <strong>good</strong> sleeping times Vova can obtain if he acts optimally.</p>
+<p>Input</p>
+<p>The first line of the input contains four integers n,h,ln,h,l and rr (1≤n≤2000,3≤h≤2000,0≤l≤r&lt;h1≤n≤2000,3≤h≤2000,0≤l≤r&lt;h) — the number of times Vova goes to sleep, the number of hours in a day and the segment of the <strong>good</strong> sleeping time.</p>
+<p>The second line of the input contains nn integers a1,a2,…,ana1,a2,…,an (1≤ai&lt;h1≤ai&lt;h), where aiai is the number of hours after which Vova goes to sleep the ii-th time.</p>
+<p>Output</p>
+<p>Print one integer — the maximum number of <strong>good</strong> sleeping times Vova can obtain if he acts optimally.</p>
+<p>Example</p>
+<p>input</p>
+<p>Copy</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">7 24 21 23</span><br><span class="line">16 17 14 20 20 11 22</span><br></pre></td></tr></table></figure>
+
+<p>output</p>
+<p>Copy</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3</span><br></pre></td></tr></table></figure>
+
+<p>Note</p>
+<p>The maximum number of <strong>good</strong> times in the example is 33.</p>
+<p>The story starts from t=0t=0. Then Vova goes to sleep after a1−1a1−1 hours, now the time is 1515. This time is not good. Then Vova goes to sleep after a2−1a2−1 hours, now the time is 15+16=715+16=7. This time is also not good. Then Vova goes to sleep after a3a3 hours, now the time is 7+14=217+14=21. This time is <strong>good</strong>. Then Vova goes to sleep after a4−1a4−1 hours, now the time is 21+19=1621+19=16. This time is not good. Then Vova goes to sleep after a5a5 hours, now the time is 16+20=1216+20=12. This time is not good. Then Vova goes to sleep after a6a6 hours, now the time is 12+11=2312+11=23. This time is <strong>good</strong>. Then Vova goes to sleep after a7a7 hours, now the time is 23+22=2123+22=21. This time is also <strong>good</strong>.</p>
+<h2 id="题意-2"><a href="#题意-2" class="headerlink" title="题意"></a>题意</h2><p>一天有h小时，主人公要睡n次觉，一次可以睡a[i]小时或者a[i]-1个小时，醒了马上就要睡下一觉直到睡完n次，如果睡觉起来的时候时间（如果时间大于一天就要对h取模）在l到r之间，那么这一觉就是good，加一分，问你睡完这n次，最多得多少分?</p>
+<h2 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h2><p>t挺简单的一个DP，当时忘记了二维还能取模，算错了空间复杂度，背包的思想完全能搞。</p>
+<h2 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> defaultdict</span><br><span class="line"></span><br><span class="line">IA = <span class="keyword">lambda</span>: map(int,input().split())</span><br><span class="line"></span><br><span class="line">n,h,l,r=IA()</span><br><span class="line">a=list(IA())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">judge</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> x&lt;=r <span class="keyword">and</span> x&gt;=l:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dp=[[int(<span class="number">-1</span>) <span class="keyword">for</span> _ <span class="keyword">in</span> range(h)] <span class="keyword">for</span> _ <span class="keyword">in</span> range(n+<span class="number">1</span>)]</span><br><span class="line"></span><br><span class="line">dp[<span class="number">0</span>][<span class="number">0</span>]=<span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,n):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>,h):</span><br><span class="line">        <span class="keyword">if</span> dp[i][j]&gt;=<span class="number">0</span>:</span><br><span class="line">            </span><br><span class="line">            dp[i+<span class="number">1</span>][(j+a[i])%h]=max(dp[i][j]+int(l&lt;=(j+a[i])%h&lt;=r),dp[i+<span class="number">1</span>][(j+a[i])%h])</span><br><span class="line">            dp[i+<span class="number">1</span>][(j+a[i]<span class="number">-1</span>)%h]=max(dp[i][j]+int(l&lt;=(j+a[i]<span class="number">-1</span>)%h&lt;=r),dp[i+<span class="number">1</span>][(j+a[i]<span class="number">-1</span>)%h])</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">ans=max(dp[<span class="number">-1</span>])</span><br><span class="line">print(ans)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#a = [int(0) for i in range(1,n+1)]</span></span><br></pre></td></tr></table></figure>
+
 
     </div>
 
@@ -494,10 +537,13 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/03/09/%E8%BD%AF%E4%BB%B6%E8%BF%87%E7%A8%8B%E2%80%94%E2%80%94%E7%BB%93%E6%9E%84%E5%8C%96%E5%88%86%E6%9E%90/" rel="prev" title="软件过程——结构化分析">
-      <i class="fa fa-chevron-left"></i> 软件过程——结构化分析
+    <a href="/2020/03/09/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E2%80%94%E2%80%94%E7%A1%AE%E5%AE%9A%E6%80%A7%E6%8E%A8%E7%90%86%E6%96%B9%E6%B3%95/" rel="prev" title="人工智能——确定性推理方法">
+      <i class="fa fa-chevron-left"></i> 人工智能——确定性推理方法
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/16/Panasonic-Programming-Contest-2020%E9%A2%98%E8%A7%A3/" rel="next" title="Panasonic Programming Contest 2020题解">
+      Panasonic Programming Contest 2020题解 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -558,7 +604,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-Yet-Another-Tetris-Problem"><span class="nav-number">1.</span> <span class="nav-text">A. Yet Another Tetris Problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题目"><span class="nav-number">2.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题意"><span class="nav-number">3.</span> <span class="nav-text">题意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析"><span class="nav-number">4.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">5.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#B-Yet-Another-Palindrome-Problem"><span class="nav-number"></span> <span class="nav-text">B. Yet Another Palindrome Problem</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题意-1"><span class="nav-number">1.</span> <span class="nav-text">题意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析-1"><span class="nav-number">2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码-1"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C-Frog-Jumps"><span class="nav-number"></span> <span class="nav-text">C. Frog Jumps</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题意："><span class="nav-number">1.</span> <span class="nav-text">题意：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析："><span class="nav-number">2.</span> <span class="nav-text">分析：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码："><span class="nav-number">3.</span> <span class="nav-text">代码：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#D-Pair-of-Topics"><span class="nav-number"></span> <span class="nav-text">D. Pair of Topics</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题意：-1"><span class="nav-number">1.</span> <span class="nav-text">题意：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析：-1"><span class="nav-number">2.</span> <span class="nav-text">分析：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码：-1"><span class="nav-number">3.</span> <span class="nav-text">代码：</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-Yet-Another-Tetris-Problem"><span class="nav-number">1.</span> <span class="nav-text">A. Yet Another Tetris Problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题目"><span class="nav-number">2.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题意"><span class="nav-number">3.</span> <span class="nav-text">题意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析"><span class="nav-number">4.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">5.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#B-Yet-Another-Palindrome-Problem"><span class="nav-number"></span> <span class="nav-text">B. Yet Another Palindrome Problem</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题意-1"><span class="nav-number">1.</span> <span class="nav-text">题意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析-1"><span class="nav-number">2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码-1"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C-Frog-Jumps"><span class="nav-number"></span> <span class="nav-text">C. Frog Jumps</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题意："><span class="nav-number">1.</span> <span class="nav-text">题意：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析："><span class="nav-number">2.</span> <span class="nav-text">分析：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码："><span class="nav-number">3.</span> <span class="nav-text">代码：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#D-Pair-of-Topics"><span class="nav-number"></span> <span class="nav-text">D. Pair of Topics</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题意：-1"><span class="nav-number">1.</span> <span class="nav-text">题意：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析：-1"><span class="nav-number">2.</span> <span class="nav-text">分析：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码：-1"><span class="nav-number">3.</span> <span class="nav-text">代码：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#E-Sleeping-Schedule"><span class="nav-number"></span> <span class="nav-text">E. Sleeping Schedule</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题意-2"><span class="nav-number">1.</span> <span class="nav-text">题意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析-2"><span class="nav-number">2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码-2"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -574,7 +620,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-count">56</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -637,13 +683,13 @@
       <i class="fa fa-area-chart"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">274k</span>
+    <span title="站点总字数">281k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">4:09</span>
+    <span title="站点阅读时长">4:16</span>
 </div>
 
         
