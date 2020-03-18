@@ -17,13 +17,13 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"pxlsdz.github.io","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"pxlsdz.gitee.io","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="本次打的极差，我哭了！！！">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Codeforces Round #615 (Div. 3) 题解">
-<meta property="og:url" content="https://pxlsdz.github.io/2020/01/23/Codeforces-Round-615-Div-3-%E9%A2%98%E8%A7%A3/index.html">
+<meta property="og:url" content="https://pxlsdz.gitee.io/2020/01/23/Codeforces-Round-615-Div-3-%E9%A2%98%E8%A7%A3/index.html">
 <meta property="og:site_name" content="pxlsdz的博客">
 <meta property="og:description" content="本次打的极差，我哭了！！！">
 <meta property="og:locale" content="zh_CN">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://espresso.codeforces.com/8ba8beb3d4798d0c00f093234601e29f45df5fd2.png">
 
-<link rel="canonical" href="https://pxlsdz.github.io/2020/01/23/Codeforces-Round-615-Div-3-%E9%A2%98%E8%A7%A3/">
+<link rel="canonical" href="https://pxlsdz.gitee.io/2020/01/23/Codeforces-Round-615-Div-3-%E9%A2%98%E8%A7%A3/">
 
 
 <script id="page-configurations">
@@ -136,7 +136,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">56</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">57</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -193,7 +193,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://pxlsdz.github.io/2020/01/23/Codeforces-Round-615-Div-3-%E9%A2%98%E8%A7%A3/">
+    <link itemprop="mainEntityOfPage" href="https://pxlsdz.gitee.io/2020/01/23/Codeforces-Round-615-Div-3-%E9%A2%98%E8%A7%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -287,7 +287,6 @@
       
         <p>本次打的极差，我哭了！！！</p>
 <a id="more"></a>
-
 <hr>
 <h1 id="A-Collecting-Coins"><a href="#A-Collecting-Coins" class="headerlink" title="A - Collecting Coins"></a><strong>A - Collecting Coins</strong></h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>A. Collecting Coins</p>
 <p>time limit per test</p>
@@ -312,17 +311,12 @@
 <p>input</p>
 <p>Copy</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">5</span><br><span class="line">5 3 2 8</span><br><span class="line">100 101 102 105</span><br><span class="line">3 2 1 100000000</span><br><span class="line">10 20 15 14</span><br><span class="line">101 101 101 3</span><br></pre></td></tr></table></figure>
-
 <p>output</p>
 <p>Copy</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">YES</span><br><span class="line">YES</span><br><span class="line">NO</span><br><span class="line">NO</span><br><span class="line">YES</span><br></pre></td></tr></table></figure>
-
 <h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a><strong>题意</strong></h2><p>给你四个数a，b，c，d，n.问你是否能将n拆成三个数A,B,C，使得A+a=B+b=C+c。</p>
 <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a><strong>思路</strong></h2><p>先计算三个数的差值的绝对值abs,如果abs大于n则肯定不行，如果小于n，还需判断(n-abs)%3是否为0，不为0则不行。</p>
 <h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> queue</span><br><span class="line">sys.setrecursionlimit(<span class="number">10</span> ** <span class="number">9</span>)</span><br><span class="line">IA = <span class="keyword">lambda</span>: map(int, input().split())</span><br><span class="line">IAL = <span class="keyword">lambda</span>: list(map(int, input().split()))</span><br><span class="line">IM = <span class="keyword">lambda</span> N: [IA() <span class="keyword">for</span> _ <span class="keyword">in</span> range(N)]</span><br><span class="line"><span class="comment"># !/usr/bin/env python3</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line">N = <span class="number">105</span></span><br><span class="line">T=int(input())</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,T):</span><br><span class="line">    a,b,c,n=IA()</span><br><span class="line">    <span class="comment">#print(n-(2*max(a,b,c)-(a+b+c-max(a,b,c))))</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="number">2</span>*max(a,b,c)-(a+b+c-max(a,b,c)))&gt;n:</span><br><span class="line">        print(<span class="string">"NO"</span>)</span><br><span class="line">    <span class="keyword">elif</span> (n-(<span class="number">2</span>*max(a,b,c)-(a+b+c-max(a,b,c))))%<span class="number">3</span>==<span class="number">0</span>:</span><br><span class="line">        print(<span class="string">"YES"</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">"NO"</span>)</span><br></pre></td></tr></table></figure>
-
-
-
 <hr>
 <h1 id="B-Collecting-Packages"><a href="#B-Collecting-Packages" class="headerlink" title="B. Collecting Packages"></a>B. Collecting Packages</h1><h2 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h2><p>time limit per test</p>
 <p>1 second</p>
@@ -351,18 +345,15 @@
 <p>input</p>
 <p>Copy</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">3</span><br><span class="line">5</span><br><span class="line">1 3</span><br><span class="line">1 2</span><br><span class="line">3 3</span><br><span class="line">5 5</span><br><span class="line">4 3</span><br><span class="line">2</span><br><span class="line">1 0</span><br><span class="line">0 1</span><br><span class="line">1</span><br><span class="line">4 3</span><br></pre></td></tr></table></figure>
-
 <p>output</p>
 <p>Copy</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">YES</span><br><span class="line">RUUURRRRUU</span><br><span class="line">NO</span><br><span class="line">YES</span><br><span class="line">RRRRUUU</span><br></pre></td></tr></table></figure>
-
 <p>Note</p>
 <p>For the first test case in the example the optimal path RUUURRRRUU is shown below:</p>
 <p><img src="https://espresso.codeforces.com/8ba8beb3d4798d0c00f093234601e29f45df5fd2.png" alt="##"></p>
 <h2 id="题意-1"><a href="#题意-1" class="headerlink" title="题意"></a><strong>题意</strong></h2><p>给出直角坐标系中的一些坐标，你只能向上(‘U’)或向右(‘R’)走，问你能否走完这些坐标，如果能请输出字典序最小的行进路线</p>
 <h2 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a><strong>思路</strong></h2><p>先x后y坐标排序，如果有一个点的纵坐标在上一个点的纵坐标下方，则无法走。输出顺序只需要从上一个点先走R再走U走到下一个点即可</p>
 <h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.setrecursionlimit(<span class="number">10</span>**<span class="number">9</span>)</span><br><span class="line">IA =<span class="keyword">lambda</span>: map(int,input().split())</span><br><span class="line"></span><br><span class="line">T=int(input())</span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> range(<span class="number">0</span>,T):</span><br><span class="line">    n=int(input())</span><br><span class="line">    a=[]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,n):</span><br><span class="line">        x,y=IA()</span><br><span class="line">        a.append([x,y])</span><br><span class="line">    a.sort()</span><br><span class="line">    sx=<span class="number">0</span></span><br><span class="line">    sy=<span class="number">0</span></span><br><span class="line">    ans=<span class="string">""</span></span><br><span class="line">    flag=<span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> a:</span><br><span class="line">        <span class="keyword">if</span> item[<span class="number">0</span>]&gt;=sx <span class="keyword">and</span> item[<span class="number">1</span>]&gt;=sy:</span><br><span class="line">            ans=ans+(item[<span class="number">0</span>]-sx)*<span class="string">'R'</span>+(item[<span class="number">1</span>]-sy)*<span class="string">'U'</span></span><br><span class="line">            sx=item[<span class="number">0</span>]</span><br><span class="line">            sy=item[<span class="number">1</span>]</span><br><span class="line">            </span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            print(<span class="string">"NO"</span>)</span><br><span class="line">            flag=<span class="number">-1</span></span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">if</span> flag==<span class="number">1</span>:</span><br><span class="line">        print(<span class="string">"YES"</span>)</span><br><span class="line">        print(ans)</span><br></pre></td></tr></table></figure>
-
 <hr>
 <h1 id="C-Product-of-Three-Numbers"><a href="#C-Product-of-Three-Numbers" class="headerlink" title="C - Product of Three Numbers"></a><strong>C - Product of Three Numbers</strong></h1><h2 id="题目-2"><a href="#题目-2" class="headerlink" title="题目"></a>题目</h2><p>C. Product of Three Numbers</p>
 <p>time limit per test</p>
@@ -386,16 +377,13 @@
 <p>input</p>
 <p>Copy</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">5</span><br><span class="line">64</span><br><span class="line">32</span><br><span class="line">97</span><br><span class="line">2</span><br><span class="line">12345</span><br></pre></td></tr></table></figure>
-
 <p>output</p>
 <p>Copy</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">YES</span><br><span class="line">2 4 8 </span><br><span class="line">NO</span><br><span class="line">NO</span><br><span class="line">NO</span><br><span class="line">YES</span><br><span class="line">3 5 823</span><br></pre></td></tr></table></figure>
-
 <h2 id="题意-2"><a href="#题意-2" class="headerlink" title="题意"></a><strong>题意</strong></h2><p>给你一个数n，问你是否能将n分解成三个不同的数相乘，可以的话则输出任一解</p>
 <h2 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a><strong>思路</strong></h2><p>只需要将遍历从2到<img src="https://img2018.cnblogs.com/i-beta/1918757/202001/1918757-20200123125243675-572954954.png" alt="img">，如果i为n的因子，就将i记录，并将n除以i。这样的操作执行三次之后，就可以跳出循环。</p>
 <p>判断条件直接暴力就行，因为就三个。</p>
 <h2 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.setrecursionlimit(<span class="number">10</span>**<span class="number">9</span>)</span><br><span class="line">IA =<span class="keyword">lambda</span>: map(int,input().split())</span><br><span class="line">ans=[<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>]</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solve</span><span class="params">(n)</span>:</span></span><br><span class="line">    num=int(<span class="number">0</span>)</span><br><span class="line">    i=int(<span class="number">2</span>)</span><br><span class="line">    tmp=<span class="number">1</span></span><br><span class="line">    m=n</span><br><span class="line">    <span class="keyword">while</span> i*i&lt;=n:</span><br><span class="line">        <span class="keyword">if</span> n%i==<span class="number">0</span>:</span><br><span class="line">            n=n//i</span><br><span class="line">            tmp*=i</span><br><span class="line">            <span class="keyword">if</span> tmp <span class="keyword">not</span> <span class="keyword">in</span> ans:</span><br><span class="line">                num+=<span class="number">1</span></span><br><span class="line">                ans[num]=tmp</span><br><span class="line">                tmp=<span class="number">1</span></span><br><span class="line">                <span class="keyword">if</span> num&gt;=<span class="number">3</span>:</span><br><span class="line">                    ans[num]*=n</span><br><span class="line">                    <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">            </span><br><span class="line">        i+=<span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> n&gt;<span class="number">1</span>:</span><br><span class="line">        <span class="keyword">if</span> tmp*n <span class="keyword">not</span> <span class="keyword">in</span> ans:</span><br><span class="line">            num+=<span class="number">1</span></span><br><span class="line">            ans[num]=n*tmp</span><br><span class="line">    <span class="keyword">if</span> num&gt;=<span class="number">3</span>: <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:<span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">        </span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">T=int(input())</span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> range(<span class="number">0</span>,T):</span><br><span class="line">    ans=[<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>]</span><br><span class="line">    n=int(input())</span><br><span class="line">    <span class="keyword">if</span> solve(n)==<span class="number">1</span>:</span><br><span class="line">        print(<span class="string">"YES"</span>)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">4</span>):</span><br><span class="line">            print(ans[i],end=<span class="string">" "</span>)</span><br><span class="line">        print()</span><br><span class="line">    <span class="keyword">else</span>:print(<span class="string">"NO"</span>)</span><br></pre></td></tr></table></figure>
-
 <hr>
 <h1 id="D-MEX-maximizing"><a href="#D-MEX-maximizing" class="headerlink" title="D. MEX maximizing"></a>D. MEX maximizing</h1><h2 id="题目-3"><a href="#题目-3" class="headerlink" title="题目"></a>题目</h2><p>D. MEX maximizing</p>
 <p>time limit per test</p>
@@ -427,19 +415,15 @@
 <p>input</p>
 <p>Copy</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">7 3</span><br><span class="line">0</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">2</span><br><span class="line">0</span><br><span class="line">0</span><br><span class="line">10</span><br></pre></td></tr></table></figure>
-
 <p>output</p>
 <p>Copy</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">4</span><br><span class="line">7</span><br></pre></td></tr></table></figure>
-
 <p>input</p>
 <p>Copy</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">4 3</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">1</span><br><span class="line">2</span><br></pre></td></tr></table></figure>
-
 <p>output</p>
 <p>Copy</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">0</span><br><span class="line">0</span><br><span class="line">0</span><br><span class="line">0</span><br></pre></td></tr></table></figure>
-
 <p>Note</p>
 <p>In the first example:</p>
 <ul>
@@ -461,16 +445,11 @@
 <p>  a=[0,1,2,2,0,0,10]a=[0,1,2,2,0,0,10]</p>
 <p>  . You can perform the following operations:</p>
 <ul>
-<li><p>a[3]:=a[3]+3=2+3=5a[3]:=a[3]+3=2+3=5,</p>
-</li>
-<li><p>a[4]:=a[4]+3=0+3=3a[4]:=a[4]+3=0+3=3,</p>
-</li>
-<li><p>a[5]:=a[5]+3=0+3=3a[5]:=a[5]+3=0+3=3,</p>
-</li>
-<li><p>a[5]:=a[5]+3=3+3=6a[5]:=a[5]+3=3+3=6,</p>
-</li>
-<li><p>a[6]:=a[6]−3=10−3=7a[6]:=a[6]−3=10−3=7,</p>
-</li>
+<li>a[3]:=a[3]+3=2+3=5a[3]:=a[3]+3=2+3=5,</li>
+<li>a[4]:=a[4]+3=0+3=3a[4]:=a[4]+3=0+3=3,</li>
+<li>a[5]:=a[5]+3=0+3=3a[5]:=a[5]+3=0+3=3,</li>
+<li>a[5]:=a[5]+3=3+3=6a[5]:=a[5]+3=3+3=6,</li>
+<li>a[6]:=a[6]−3=10−3=7a[6]:=a[6]−3=10−3=7,</li>
 <li><p>a[6]:=a[6]−3=7−3=4a[6]:=a[6]−3=7−3=4.</p>
 <p>The resulting array will be</p>
 </li>
@@ -484,7 +463,6 @@
 </ul>
 <h2 id="思路-3"><a href="#思路-3" class="headerlink" title="思路"></a>思路</h2><p>  构建mod x的剩余系，每次找到这个剩余系里面最大的加上x即可，从0开始判断即可，直接看代码，很短。</p>
 <h2 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h2>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.setrecursionlimit(<span class="number">10</span>**<span class="number">9</span>)</span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> defaultdict</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">IA =<span class="keyword">lambda</span>: map(int,input().split())</span><br><span class="line">ans=[<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">T,x=IA()</span><br><span class="line">se=defaultdict(int)</span><br><span class="line">be=<span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> range(<span class="number">0</span>,T):</span><br><span class="line">    </span><br><span class="line">    a=int(input())</span><br><span class="line">    temp=<span class="number">0</span></span><br><span class="line">    se[a%x]+=<span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> se[be%x] &gt; <span class="number">0</span>:</span><br><span class="line">        se[be%x]-=<span class="number">1</span></span><br><span class="line">        be+=<span class="number">1</span></span><br><span class="line">    print(be)</span><br></pre></td></tr></table></figure>
-
 
     </div>
 
@@ -504,7 +482,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://pxlsdz.github.io/2020/01/23/Codeforces-Round-615-Div-3-%E9%A2%98%E8%A7%A3/" title="Codeforces Round #615 (Div. 3) 题解">https://pxlsdz.github.io/2020/01/23/Codeforces-Round-615-Div-3-题解/</a>
+    <a href="https://pxlsdz.gitee.io/2020/01/23/Codeforces-Round-615-Div-3-%E9%A2%98%E8%A7%A3/" title="Codeforces Round #615 (Div. 3) 题解">https://pxlsdz.gitee.io/2020/01/23/Codeforces-Round-615-Div-3-题解/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -609,7 +587,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">56</span>
+          <span class="site-state-item-count">57</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -672,13 +650,13 @@
       <i class="fa fa-area-chart"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">284k</span>
+    <span title="站点总字数">270k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">4:18</span>
+    <span title="站点阅读时长">4:06</span>
 </div>
 
         

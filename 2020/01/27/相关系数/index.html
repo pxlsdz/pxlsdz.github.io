@@ -17,13 +17,13 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"pxlsdz.github.io","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"pxlsdz.gitee.io","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="相关系数(皮尔逊相关系数)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="相关系数">
-<meta property="og:url" content="https://pxlsdz.github.io/2020/01/27/%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0/index.html">
+<meta property="og:url" content="https://pxlsdz.gitee.io/2020/01/27/%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0/index.html">
 <meta property="og:site_name" content="pxlsdz的博客">
 <meta property="og:description" content="相关系数(皮尔逊相关系数)">
 <meta property="og:locale" content="zh_CN">
@@ -38,7 +38,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img2018.cnblogs.com/blog/1880713/202002/1880713-20200220221940227-645930610.png">
 
-<link rel="canonical" href="https://pxlsdz.github.io/2020/01/27/%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0/">
+<link rel="canonical" href="https://pxlsdz.gitee.io/2020/01/27/%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0/">
 
 
 <script id="page-configurations">
@@ -137,7 +137,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">56</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">57</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -194,7 +194,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://pxlsdz.github.io/2020/01/27/%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0/">
+    <link itemprop="mainEntityOfPage" href="https://pxlsdz.gitee.io/2020/01/27/%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -263,7 +263,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>8.7k</span>
+              <span>8.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -283,25 +283,25 @@
 
       
         <h1 id="相关系数-皮尔逊相关系数"><a href="#相关系数-皮尔逊相关系数" class="headerlink" title="相关系数(皮尔逊相关系数)"></a>相关系数(皮尔逊相关系数)</h1><a id="more"></a>
-
 <p>（1）如果两个变量本身就是<strong>线性的关系</strong>，那么皮尔逊相关系数绝对值大的就是相关性强，小的就是相关性弱；<br>（2）在不确定两个变量是什么关系的情况下，即使算出皮尔逊相关系数，发现很大，也不能说明那两个变量线性相关，甚至不能说他们相关，我们一定要画出散点图（spss很方便）来看才行。</p>
-<p><font color=red><strong>事实上，比起相关系数的大小，我们往往更关注的是显著性。（假设检验）</strong></font></p>
+<font color=red>**事实上，比起相关系数的大小，我们往往更关注的是显著性。（假设检验）**</font>
+
 <h1 id="假设检验"><a href="#假设检验" class="headerlink" title="假设检验"></a>假设检验</h1><h2 id="对皮尔逊相关系数进行假设检验"><a href="#对皮尔逊相关系数进行假设检验" class="headerlink" title="对皮尔逊相关系数进行假设检验"></a>对皮尔逊相关系数进行假设检验</h2><ol>
 <li><p>第一步：提出原假设H0和备择假设H1</p>
 <p>两个假设是截然相反,假设我们计算出了一个皮尔逊相关系数r，我们想检验它是否显著的异于0.那么我们可以这样设定原假设和备择假设：H0：r=0,H1:r≠0</p>
 </li>
 <li><p>第二步：在原假设成立的条件下，利用我们要检验的量构造出一个符合某一分布的统计量</p>
 <p>（注1：统计量相当于我们要检验的量的一个函数，里面不能有其他的随机变量）<br>（注2：这里的分布一般有四种：标准正态分布、t分布、x2分布和F分布）</p>
-<p>对于皮尔逊相关系数r而言，在满足一定条件下，我们可以构造统计量：<br>$$<br>t = r\sqrt{(n-2)/(1-r^{2})}<br>$$</p>
-</li>
+<p>对于皮尔逊相关系数r而言，在满足一定条件下，我们可以构造统计量：</p>
+<script type="math/tex; mode=display">
+t = r\sqrt{(n-2)/(1-r^{2})}</script></li>
 </ol>
 <p>   可以证明t是服从自由度为n-2的t分布</p>
-<ol start="3">
+<ol>
 <li><p>第三步：将我们要检验的这个值带入这个统计量中，可以得到一个特定的值（检验值）。<br>假设我们现在计算出来的相关系数为0.5，样本为30，那么我们带入第二步公式可以得到$t^{*}=3.05505$</p>
 </li>
 <li><p>第四步：由于我们知道统计量的分布情况，因此我们可以画出该分布的概率密度函数pdf，并给定一个置信水平，根据这个置信水平查表找到临界值，并画出检验统计量的接受域和拒绝域。<br>例如，我们知道上述统计量服从自由度为28的t分布，代码</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">-4</span>:<span class="number">0.1</span>:<span class="number">4</span>;</span><br><span class="line">y = tpdf(x,<span class="number">28</span>);</span><br><span class="line"><span class="built_in">plot</span>(x,y,<span class="string">'-'</span>)</span><br><span class="line">grid on <span class="comment">% 在画出的图上加上网格线</span></span><br></pre></td></tr></table></figure>
-
 <p>常见的置信水平有三个：90%，95%和99%，其中95%是三者中最为常用的。<br>因为我们这里是双侧检验，所以我们需要找出能覆盖0.95概率的部分t分布表：<a href="https://wenku.baidu.com/view/d94dbd116bd97f192279e94a.html" target="_blank" rel="noopener">https://wenku.baidu.com/view/d94dbd116bd97f192279e94a.html</a></p>
 <p>查表可知，对应的临界值为2.048，因此我们可以做出接受域和拒绝域。</p>
 </li>
@@ -310,22 +310,22 @@
 </ol>
 <h2 id="p值判断法"><a href="#p值判断法" class="headerlink" title="p值判断法"></a>p值判断法</h2><p>我们得到的检验值t*=3.05505，根据这个值，我们可以计算出其对应的那个概率。</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">disp</span>(<span class="string">'该检验值对应的p值为： '</span>)</span><br><span class="line"><span class="built_in">disp</span>((<span class="number">1</span>-tcdf(<span class="number">3.055</span>,<span class="number">28</span>))*<span class="number">2</span>)</span><br><span class="line"><span class="comment">%双侧检验的p值要乘以2</span></span><br></pre></td></tr></table></figure>
-
 <ul>
-<li>p&lt;0.01，说明在99%的置信水平上拒绝原假设；p值&gt;0.01，说明在99%的置信水平无法拒绝原假设；</li>
-<li>p&lt;0.05，说明在95%的置信水平上拒绝原假设；p&gt;0.05，说明在95%的置信水平上无法拒绝原假设：</li>
-<li>p&lt;0.10，说明在90%的置信水平上拒绝原假设；p&gt;0.10，说明在90%的置信水平上无法拒绝原假设；</li>
+<li>p<0.01，说明在99%的置信水平上拒绝原假设；p值>0.01，说明在99%的置信水平无法拒绝原假设；</li>
+<li>p<0.05，说明在95%的置信水平上拒绝原假设；p>0.05，说明在95%的置信水平上无法拒绝原假设：</li>
+<li>p<0.10，说明在90%的置信水平上拒绝原假设；p>0.10，说明在90%的置信水平上无法拒绝原假设；</li>
 </ul>
-<p>小补充： $0.5、 0.5* 、 0.5<strong>、 0.5*</strong>$的含义是什么？（显著性标记）  </p>
+<p>小补充： $0.5、 0.5<em> 、 0.5<strong>、 0.5</strong></em>$的含义是什么？（显著性标记）  </p>
 <ul>
 <li>0.5*:90%的水平上显著异于0，p&lt;0.1</li>
 <li>0.5**:95%的水平上显著异于0，p&lt;0.05</li>
-<li>0.5***:99%的水平上显著异于0，p&lt;0.01</li>
+<li>0.5<em>*</em>:99%的水平上显著异于0，p&lt;0.01</li>
 </ul>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">%% 计算各列之间的相关系数以及p值</span></span><br><span class="line">[R,P] = corrcoef(Test)</span><br><span class="line"><span class="comment">% 在EXCEL表格中给数据右上角标上显著性符号吧</span></span><br><span class="line">P &lt; <span class="number">0.01</span> <span class="comment">% 标记3颗星的位置</span></span><br><span class="line">(P &lt; <span class="number">0.05</span>) .* (P &gt; <span class="number">0.01</span>) <span class="comment">% 标记2颗星的位置</span></span><br><span class="line">(P &lt; <span class="number">0.1</span>) .* (P &gt; <span class="number">0.05</span>) <span class="comment">% 标记1颗星的位置</span></span><br></pre></td></tr></table></figure>
-
 <h2 id="皮尔逊相关系数假设检验的条件"><a href="#皮尔逊相关系数假设检验的条件" class="headerlink" title="皮尔逊相关系数假设检验的条件"></a>皮尔逊相关系数假设检验的条件</h2><p>第一， <strong>实验数据通常假设是成对的来自于正态分布的总体(需要验证）</strong>。 因为我们在求皮尔逊相关性系数以后，通常还会用t检验之类的方法来进行皮尔逊相关性系数检验，而t检验是基于数据呈正态分布的假设的。<br>第二， <strong>实验数据之间的差距不能太大</strong>。 皮尔逊相关性系数受异常值的影响比较<br>大。<br>第三：<strong>每组样本之间是独立抽样的</strong>。 构造t统计量时需要用到。  </p>
-<h3 id="正态分布JB检验（大样本-n-gt-30）"><a href="#正态分布JB检验（大样本-n-gt-30）" class="headerlink" title="正态分布JB检验（大样本 n&gt;30）"></a>正态分布JB检验（大样本 n&gt;30）</h3><p>对于一个随机变量{Xi}，假设其偏度为s，峰度为K，那么我们可以构造JB统计量：<br>$$<br>JB=\frac{n}{6}[S^{2}+\frac{(k-3)^{2} }{4}]<br>$$<br>可以证明，如果{Xi}是正态分布，那么在大样本情况下JB-x（2）（自由度为2的卡方分布）</p>
+<h3 id="正态分布JB检验（大样本-n-gt-30）"><a href="#正态分布JB检验（大样本-n-gt-30）" class="headerlink" title="正态分布JB检验（大样本 n&gt;30）"></a>正态分布JB检验（大样本 n&gt;30）</h3><p>对于一个随机变量{Xi}，假设其偏度为s，峰度为K，那么我们可以构造JB统计量：</p>
+<script type="math/tex; mode=display">
+JB=\frac{n}{6}[S^{2}+\frac{(k-3)^{2} }{4}]</script><p>可以证明，如果{Xi}是正态分布，那么在大样本情况下JB-x（2）（自由度为2的卡方分布）</p>
 <p>正态分布的偏度为0，峰度为3</p>
 <p>那么进行假设检验的步骤如下：<br>H0：该随机变量服从正态分布 </p>
 <p>H1：该随机变量不服从正态分布</p>
@@ -333,17 +333,17 @@
 <p>将p值与0.05比较，如果小于0.05则可拒绝原假设，否则我们不能拒绝原假设。</p>
 <p>MATLAB中进行JB检验的语法： [h,p] = jbtest(x,alpha)<br>当输出h等于1时，表示拒绝原假设； h等于0则代表不能拒绝原假设。<br>alpha就是显著性水平，一般取0.05，此时置信水平为1‐0.05=0.95<br>x就是我们要检验的随机变量，注意这里的x只能是向量。 </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">%% 假设检验部分</span><br><span class="line">x &#x3D; -4:0.1:4;</span><br><span class="line">y &#x3D; tpdf(x,28);  %求t分布的概率密度值 28是自由度  </span><br><span class="line">figure(1)</span><br><span class="line">plot(x,y,&#39;-&#39;)</span><br><span class="line">grid on  % 在画出的图上加上网格线</span><br><span class="line">hold on  % 保留原来的图，以便继续在上面操作</span><br><span class="line">% matlab可以求出临界值，函数如下</span><br><span class="line">tinv(0.975,28)    %    2.0484</span><br><span class="line">% 这个函数是累积密度函数cdf的反函数</span><br><span class="line">plot([-2.048,-2.048],[0,tpdf(-2.048,28)],&#39;r-&#39;)</span><br><span class="line">plot([2.048,2.048],[0,tpdf(2.048,28)],&#39;r-&#39;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">%% 计算p值</span><br><span class="line">x &#x3D; -4:0.1:4;</span><br><span class="line">y &#x3D; tpdf(x,28);</span><br><span class="line">figure(2)</span><br><span class="line">plot(x,y,&#39;-&#39;)</span><br><span class="line">grid on </span><br><span class="line">hold on</span><br><span class="line">% 画线段的方法</span><br><span class="line">plot([-3.055,-3.055],[0,tpdf(-3.055,28)],&#39;r-&#39;)</span><br><span class="line">plot([3.055,3.055],[0,tpdf(3.055,28)],&#39;r-&#39;)</span><br><span class="line">disp(&#39;该检验值对应的p值为：&#39;)</span><br><span class="line">disp((1-tcdf(3.055,28))*2)  %双侧检验的p值要乘以2</span><br><span class="line"></span><br><span class="line">%% 计算各列之间的相关系数以及p值</span><br><span class="line">[R,P] &#x3D; corrcoef(Test)</span><br><span class="line">% 在EXCEL表格中给数据右上角标上显著性符号吧</span><br><span class="line">P &lt; 0.01  % 标记3颗星的位置</span><br><span class="line">(P &lt; 0.05) .* (P &gt; 0.01)  % 标记2颗星的位置</span><br><span class="line">(P &lt; 0.1) .* (P &gt; 0.05) % % 标记1颗星的位置</span><br><span class="line">% 也可以使用Spss操作哦 看我演示</span><br><span class="line"></span><br><span class="line">%% 正态分布检验</span><br><span class="line">% 正态分布的偏度和峰度</span><br><span class="line">x &#x3D; normrnd(2,3,100,1);   % 生成100*1的随机向量，每个元素是均值为2，标准差为3的正态分布</span><br><span class="line">skewness(x)  %偏度</span><br><span class="line">kurtosis(x)  %峰度</span><br><span class="line">qqplot(x)</span><br><span class="line">    </span><br><span class="line">% 检验第一列数据是否为正态分布</span><br><span class="line">[h,p] &#x3D; jbtest(Test(:,1),0.05)%只能一组一组检验</span><br><span class="line">[h,p] &#x3D; jbtest(Test(:,1),0.01)</span><br><span class="line"></span><br><span class="line">% 用循环检验所有列的数据</span><br><span class="line">n_c &#x3D; size(Test,2);  % number of column 数据的列数</span><br><span class="line">H &#x3D; zeros(1,6);  % 初始化节省时间和消耗</span><br><span class="line">P &#x3D; zeros(1,6);</span><br><span class="line">for i &#x3D; 1:n_c</span><br><span class="line">    [h,p] &#x3D; jbtest(Test(:,i),0.05);</span><br><span class="line">    H(i)&#x3D;h;</span><br><span class="line">    P(i)&#x3D;p;</span><br><span class="line">end</span><br><span class="line">disp(H)</span><br><span class="line">disp(P)</span><br></pre></td></tr></table></figure>
-
-
-
-<pre><code>### 小样本3≤n≤50：Shapiro-wilk检验  </code></pre><p>H0：该随机变量服从正态分布</p>
+<pre><code>  ### 小样本3≤n≤50：Shapiro-wilk检验  
+</code></pre><p>H0：该随机变量服从正态分布</p>
 <p>H1：该随机变量不服从正态分布</p>
 <p>计算出威尔克统计量后，得到相应的p值</p>
 <p>将p值与0.05比较，如果小于0.05则可拒绝原假设，否则我们不能拒绝原假设。                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </p>
 <h3 id="Q-Q图-大样本"><a href="#Q-Q图-大样本" class="headerlink" title="Q-Q图  (大样本 )"></a>Q-Q图  (大样本 )</h3><p>在统计学中， Q‐Q图（Q代表分位数Quantile）是一种通过比较两个概率分布的分位数对这两个概率分布进行比较的概率图方法。<br>首先选定分位数的对应概率区间集合，在此概率区间上，点(x,y)对应于第一个分布的一个分位数x和第二个分布在和x相同概率区间上相同的分位数。<br>这里，我们选择正态分布和要检验的随机变量，并对其做出QQ图，可想而知，如果要检验的随机变量是正态分布，那么QQ图就是一条直线。<br>要利用Q‐Q图鉴别样本数据是否近似于正态分布,只需看Q‐Q图上的点是否近似地在一条直线附近。（要求数据量非常大）  </p>
-<h1 id="斯皮尔曼spearman相关系数"><a href="#斯皮尔曼spearman相关系数" class="headerlink" title="斯皮尔曼spearman相关系数"></a>斯皮尔曼spearman相关系数</h1><p>定义：X和Y为两组数据，其斯皮尔曼（等级）相关系数：<br>$$<br>r_{s}=1-\frac{6\sum_{i=1}^{n}d^{2}_{i} }{n(n^2-1)}<br>$$</p>
-<p>$$<br>d_{i}为X_{i}和Y_{i}之间的等级差。<br>$$</p>
-<p>（一个数的等级，就是将它所在的一列数按照从小到大排序后，这个数所在的位置）可以证明：$r_{s}$位于-1和1之间。</p>
+<h1 id="斯皮尔曼spearman相关系数"><a href="#斯皮尔曼spearman相关系数" class="headerlink" title="斯皮尔曼spearman相关系数"></a>斯皮尔曼spearman相关系数</h1><p>定义：X和Y为两组数据，其斯皮尔曼（等级）相关系数：</p>
+<script type="math/tex; mode=display">
+r_{s}=1-\frac{6\sum_{i=1}^{n}d^{2}_{i} }{n(n^2-1)}</script><script type="math/tex; mode=display">
+d_{i}为X_{i}和Y_{i}之间的等级差。</script><p>（一个数的等级，就是将它所在的一列数按照从小到大排序后，这个数所在的位置）可以证明：$r_{s}$位于-1和1之间。</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -355,7 +355,8 @@
 <th>等级差的平方</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>3</td>
 <td>5</td>
 <td>2</td>
@@ -395,23 +396,24 @@
 <td>‐1</td>
 <td>1</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>注：如果有的数值相同，则将它们所在的位置取算术平均  </p>
 <p>斯皮尔曼相关系数被定义成等级之间的皮尔逊相关系数。  </p>
 <h2 id="MATLAB中计算"><a href="#MATLAB中计算" class="headerlink" title="MATLAB中计算"></a>MATLAB中计算</h2><p>两种用法<br>（1） corr(X , Y , ‘type’ , ‘Spearman’)<br>这里的X和Y必须是列向量哦~<br>（2） corr(X , ‘type’ , ‘Spearman’)<br>这时计算X矩阵各列之间的斯皮尔曼相关系数  </p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">%% 斯皮尔曼相关系数</span></span><br><span class="line">X = [<span class="number">3</span> <span class="number">8</span> <span class="number">4</span> <span class="number">7</span> <span class="number">2</span>]'  <span class="comment">% 一定要是列向量哦，一撇'表示求转置</span></span><br><span class="line">Y = [<span class="number">5</span> <span class="number">10</span> <span class="number">9</span> <span class="number">10</span> <span class="number">6</span>]'</span><br><span class="line"><span class="comment">% 第一种计算方法</span></span><br><span class="line"><span class="number">1</span><span class="number">-6</span>*(<span class="number">1</span>+<span class="number">0.25</span>+<span class="number">0.25</span>+<span class="number">1</span>)/<span class="number">5</span>/<span class="number">24</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% 第二种计算方法</span></span><br><span class="line">coeff = corr(X , Y , <span class="string">'type'</span> , <span class="string">'Spearman'</span>)</span><br><span class="line"><span class="comment">% 等价于：</span></span><br><span class="line">RX = [<span class="number">2</span> <span class="number">5</span> <span class="number">3</span> <span class="number">4</span> <span class="number">1</span>]</span><br><span class="line">RY = [<span class="number">1</span> <span class="number">4.5</span> <span class="number">3</span> <span class="number">4.5</span> <span class="number">2</span>]</span><br><span class="line">R = corrcoef(RX,RY)</span><br><span class="line"></span><br><span class="line"><span class="comment">% 计算矩阵各列的斯皮尔曼相关系数</span></span><br><span class="line">R = corr(Test, <span class="string">'type'</span> , <span class="string">'Spearman'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">% 大样本下的假设检验</span></span><br><span class="line"><span class="comment">% 计算检验值</span></span><br><span class="line"><span class="built_in">disp</span>(<span class="built_in">sqrt</span>(<span class="number">590</span>)*<span class="number">0.0301</span>)</span><br><span class="line"><span class="comment">% 计算p值</span></span><br><span class="line"><span class="built_in">disp</span>((<span class="number">1</span>-normcdf(<span class="number">0.7311</span>))*<span class="number">2</span>) <span class="comment">% normcdf用来计算标准正态分布的累积概率密度函数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% 直接给出相关系数和p值</span></span><br><span class="line">[R,P]=corr(Test, <span class="string">'type'</span> , <span class="string">'Spearman'</span>)</span><br></pre></td></tr></table></figure>
-
 <h2 id="斯皮尔曼相关系数的假设检验"><a href="#斯皮尔曼相关系数的假设检验" class="headerlink" title="斯皮尔曼相关系数的假设检验"></a>斯皮尔曼相关系数的假设检验</h2><h3 id="小样本"><a href="#小样本" class="headerlink" title="小样本"></a>小样本</h3><p>小样本情况，即n≤30时，直接查临界值表即可。</p>
-<p>样本相关系数r必须大于等于表中的临界值，才能得出显著的结论。<br>$$<br>H_{0}:r_{s}=0<br>$$</p>
-<p>$$<br>H_{1}:r_{s}!=0<br>$$</p>
-<h3 id="大样本"><a href="#大样本" class="headerlink" title="大样本"></a>大样本</h3><p>大样本情况下，统计量$r_{s}\sqrt{n-1}~N(0,1)$<br>$$<br>H_{0}:r_{s}=0<br>$$</p>
-<p>$$<br>H_{1}:r_{s}!=0<br>$$</p>
-<p>我们计算检验值$r_{s}\sqrt{n-1}$，并求出对应的p值与0.05相比即可。</p>
+<p>样本相关系数r必须大于等于表中的临界值，才能得出显著的结论。</p>
+<script type="math/tex; mode=display">
+H_{0}:r_{s}=0</script><script type="math/tex; mode=display">
+H_{1}:r_{s}!=0</script><h3 id="大样本"><a href="#大样本" class="headerlink" title="大样本"></a>大样本</h3><p>大样本情况下，统计量$r_{s}\sqrt{n-1}~N(0,1)$</p>
+<script type="math/tex; mode=display">
+H_{0}:r_{s}=0</script><script type="math/tex; mode=display">
+H_{1}:r_{s}!=0</script><p>我们计算检验值$r_{s}\sqrt{n-1}$，并求出对应的p值与0.05相比即可。</p>
 <p>p值大于0.05,因此我们无法拒绝原假设。（和0没有显著的差异  </p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">% 大样本下的假设检验</span></span><br><span class="line"><span class="comment">% 计算检验值</span></span><br><span class="line"><span class="built_in">disp</span>(<span class="built_in">sqrt</span>(<span class="number">590</span>)*<span class="number">0.0301</span>)</span><br><span class="line"><span class="comment">% 计算p值</span></span><br><span class="line"><span class="built_in">disp</span>((<span class="number">1</span>-normcdf(<span class="number">0.7311</span>))*<span class="number">2</span>) <span class="comment">% normcdf用来计算标准正态分布的累积概率密度函数</span></span><br></pre></td></tr></table></figure>
-
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">% 直接给出相关系数和p值</span></span><br><span class="line">[R,P]=corr(Test, <span class="string">'type'</span> , <span class="string">'Spearman'</span>)</span><br></pre></td></tr></table></figure>
-
 <h1 id="斯皮尔曼相关系数和皮尔逊相关系数选择"><a href="#斯皮尔曼相关系数和皮尔逊相关系数选择" class="headerlink" title="斯皮尔曼相关系数和皮尔逊相关系数选择:"></a>斯皮尔曼相关系数和皮尔逊相关系数选择:</h1><ol>
 <li><p>连续数据，正态分布，线性关系，用pearson相关系数是最恰当，当然用spearman相关系数也可以， 就是效率没有pearson相关系数高。</p>
 </li>
@@ -422,9 +424,6 @@
 </ol>
 <p>   定序数据是指仅仅反映观测对象等级、顺序关系的数据，是由定序尺度计量形成的，表现为类别，可以进行排序，属于品质数据。<br>   例如：优、良、差；<br>   我们可以用1表示差、 2表示良、 3表示优，但请注意，用2除以1得出的2并不代表任何含义。定序数据最重要的意义代表了一组数据中的某种逻辑顺序。<br>   注：斯皮尔曼相关系数的适用条件比皮尔逊相关系数要广，只要数据满足单调关系（例如线性函数、指数函数、对数函数等）就能够使用  </p>
 <h1 id="总代码"><a href="#总代码" class="headerlink" title="总代码"></a>总代码</h1><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line">clear;clc</span><br><span class="line">load <span class="string">'physical fitness test.mat'</span>  <span class="comment">%文件名如果有空格隔开，那么需要加引号</span></span><br><span class="line"><span class="comment">% https://ww2.mathworks.cn/help/matlab/ref/corrcoef.html</span></span><br><span class="line"><span class="comment">%% 统计描述</span></span><br><span class="line">MIN = <span class="built_in">min</span>(Test);  <span class="comment">% 每一列的最小值</span></span><br><span class="line">MAX = <span class="built_in">max</span>(Test);   <span class="comment">% 每一列的最大值</span></span><br><span class="line">MEAN = <span class="built_in">mean</span>(Test);  <span class="comment">% 每一列的均值</span></span><br><span class="line">MEDIAN = median(Test);  <span class="comment">%每一列的中位数</span></span><br><span class="line">SKEWNESS = skewness(Test); <span class="comment">%每一列的偏度</span></span><br><span class="line">KURTOSIS = kurtosis(Test);  <span class="comment">%每一列的峰度</span></span><br><span class="line">STD = std(Test);  <span class="comment">% 每一列的标准差</span></span><br><span class="line">RESULT = [MIN;MAX;MEAN;MEDIAN;SKEWNESS;KURTOSIS;STD]  <span class="comment">%将这些统计量放到一个矩阵中中表示</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">%% 计算各列之间的相关系数</span></span><br><span class="line"><span class="comment">% 在计算皮尔逊相关系数之前,一定要做出散点图来看两组变量之间是否有线性关系</span></span><br><span class="line"><span class="comment">% 这里使用Spss比较方便: 图形 - 旧对话框 - 散点图/点图 - 矩阵散点图</span></span><br><span class="line"></span><br><span class="line">R = corrcoef(Test)   <span class="comment">% correlation coefficient</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">%% 假设检验部分</span></span><br><span class="line">x = <span class="number">-4</span>:<span class="number">0.1</span>:<span class="number">4</span>;</span><br><span class="line">y = tpdf(x,<span class="number">28</span>);  <span class="comment">%求t分布的概率密度值 28是自由度  </span></span><br><span class="line"><span class="built_in">figure</span>(<span class="number">1</span>)</span><br><span class="line"><span class="built_in">plot</span>(x,y,<span class="string">'-'</span>)</span><br><span class="line">grid on  <span class="comment">% 在画出的图上加上网格线</span></span><br><span class="line"><span class="built_in">hold</span> on  <span class="comment">% 保留原来的图，以便继续在上面操作</span></span><br><span class="line"><span class="comment">% matlab可以求出临界值，函数如下</span></span><br><span class="line">tinv(<span class="number">0.975</span>,<span class="number">28</span>)    <span class="comment">%    2.0484</span></span><br><span class="line"><span class="comment">% 这个函数是累积密度函数cdf的反函数</span></span><br><span class="line"><span class="built_in">plot</span>([<span class="number">-2.048</span>,<span class="number">-2.048</span>],[<span class="number">0</span>,tpdf(<span class="number">-2.048</span>,<span class="number">28</span>)],<span class="string">'r-'</span>)</span><br><span class="line"><span class="built_in">plot</span>([<span class="number">2.048</span>,<span class="number">2.048</span>],[<span class="number">0</span>,tpdf(<span class="number">2.048</span>,<span class="number">28</span>)],<span class="string">'r-'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">%% 计算p值</span></span><br><span class="line">x = <span class="number">-4</span>:<span class="number">0.1</span>:<span class="number">4</span>;</span><br><span class="line">y = tpdf(x,<span class="number">28</span>);</span><br><span class="line"><span class="built_in">figure</span>(<span class="number">2</span>)</span><br><span class="line"><span class="built_in">plot</span>(x,y,<span class="string">'-'</span>)</span><br><span class="line">grid on </span><br><span class="line"><span class="built_in">hold</span> on</span><br><span class="line"><span class="comment">% 画线段的方法</span></span><br><span class="line"><span class="built_in">plot</span>([<span class="number">-3.055</span>,<span class="number">-3.055</span>],[<span class="number">0</span>,tpdf(<span class="number">-3.055</span>,<span class="number">28</span>)],<span class="string">'r-'</span>)</span><br><span class="line"><span class="built_in">plot</span>([<span class="number">3.055</span>,<span class="number">3.055</span>],[<span class="number">0</span>,tpdf(<span class="number">3.055</span>,<span class="number">28</span>)],<span class="string">'r-'</span>)</span><br><span class="line"><span class="built_in">disp</span>(<span class="string">'该检验值对应的p值为：'</span>)</span><br><span class="line"><span class="built_in">disp</span>((<span class="number">1</span>-tcdf(<span class="number">3.055</span>,<span class="number">28</span>))*<span class="number">2</span>)  <span class="comment">%双侧检验的p值要乘以2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%% 计算各列之间的相关系数以及p值</span></span><br><span class="line">[R,P] = corrcoef(Test)</span><br><span class="line"><span class="comment">% 在EXCEL表格中给数据右上角标上显著性符号吧</span></span><br><span class="line">P &lt; <span class="number">0.01</span>  <span class="comment">% 标记3颗星的位置</span></span><br><span class="line">(P &lt; <span class="number">0.05</span>) .* (P &gt; <span class="number">0.01</span>)  <span class="comment">% 标记2颗星的位置</span></span><br><span class="line">(P &lt; <span class="number">0.1</span>) .* (P &gt; <span class="number">0.05</span>) <span class="comment">% % 标记1颗星的位置</span></span><br><span class="line"><span class="comment">% 也可以使用Spss操作哦 看我演示</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%% 正态分布检验</span></span><br><span class="line"><span class="comment">% 正态分布的偏度和峰度</span></span><br><span class="line">x = normrnd(<span class="number">2</span>,<span class="number">3</span>,<span class="number">100</span>,<span class="number">1</span>);   <span class="comment">% 生成100*1的随机向量，每个元素是均值为2，标准差为3的正态分布</span></span><br><span class="line">skewness(x)  <span class="comment">%偏度</span></span><br><span class="line">kurtosis(x)  <span class="comment">%峰度</span></span><br><span class="line">qqplot(x)</span><br><span class="line">    </span><br><span class="line"><span class="comment">% 检验第一列数据是否为正态分布</span></span><br><span class="line">[h,p] = jbtest(Test(:,<span class="number">1</span>),<span class="number">0.05</span>)<span class="comment">%只能一组一组检验</span></span><br><span class="line">[h,p] = jbtest(Test(:,<span class="number">1</span>),<span class="number">0.01</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">% 用循环检验所有列的数据</span></span><br><span class="line">n_c = <span class="built_in">size</span>(Test,<span class="number">2</span>);  <span class="comment">% number of column 数据的列数</span></span><br><span class="line">H = <span class="built_in">zeros</span>(<span class="number">1</span>,<span class="number">6</span>);  <span class="comment">% 初始化节省时间和消耗</span></span><br><span class="line">P = <span class="built_in">zeros</span>(<span class="number">1</span>,<span class="number">6</span>);</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:n_c</span><br><span class="line">    [h,p] = jbtest(Test(:,<span class="built_in">i</span>),<span class="number">0.05</span>);</span><br><span class="line">    H(<span class="built_in">i</span>)=h;</span><br><span class="line">    P(<span class="built_in">i</span>)=p;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="built_in">disp</span>(H)</span><br><span class="line"><span class="built_in">disp</span>(P)</span><br><span class="line"></span><br><span class="line"><span class="comment">% Q-Q图</span></span><br><span class="line">qqplot(Test(:,<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">%% 斯皮尔曼相关系数</span></span><br><span class="line">X = [<span class="number">3</span> <span class="number">8</span> <span class="number">4</span> <span class="number">7</span> <span class="number">2</span>]'  <span class="comment">% 一定要是列向量哦，一撇'表示求转置</span></span><br><span class="line">Y = [<span class="number">5</span> <span class="number">10</span> <span class="number">9</span> <span class="number">10</span> <span class="number">6</span>]'</span><br><span class="line"><span class="comment">% 第一种计算方法</span></span><br><span class="line"><span class="number">1</span><span class="number">-6</span>*(<span class="number">1</span>+<span class="number">0.25</span>+<span class="number">0.25</span>+<span class="number">1</span>)/<span class="number">5</span>/<span class="number">24</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% 第二种计算方法</span></span><br><span class="line">coeff = corr(X , Y , <span class="string">'type'</span> , <span class="string">'Spearman'</span>)</span><br><span class="line"><span class="comment">% 等价于：</span></span><br><span class="line">RX = [<span class="number">2</span> <span class="number">5</span> <span class="number">3</span> <span class="number">4</span> <span class="number">1</span>]</span><br><span class="line">RY = [<span class="number">1</span> <span class="number">4.5</span> <span class="number">3</span> <span class="number">4.5</span> <span class="number">2</span>]</span><br><span class="line">R = corrcoef(RX,RY)</span><br><span class="line"></span><br><span class="line"><span class="comment">% 计算矩阵各列的斯皮尔曼相关系数</span></span><br><span class="line">R = corr(Test, <span class="string">'type'</span> , <span class="string">'Spearman'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">% 大样本下的假设检验</span></span><br><span class="line"><span class="comment">% 计算检验值</span></span><br><span class="line"><span class="built_in">disp</span>(<span class="built_in">sqrt</span>(<span class="number">590</span>)*<span class="number">0.0301</span>)</span><br><span class="line"><span class="comment">% 计算p值</span></span><br><span class="line"><span class="built_in">disp</span>((<span class="number">1</span>-normcdf(<span class="number">0.7311</span>))*<span class="number">2</span>) <span class="comment">% normcdf用来计算标准正态分布的累积概率密度函数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% 直接给出相关系数和p值</span></span><br><span class="line">[R,P]=corr(Test, <span class="string">'type'</span> , <span class="string">'Spearman'</span>)</span><br></pre></td></tr></table></figure>
-
-
-
 <h1 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h1><p>写一篇文章，分析男生体测数据各指标之间的相关性，并与女生的数据得到的结论进行对比。<br>要求：要说明选择哪一种相关系数的原因，并要求做出散点图。（可以自己动手试试相关矩阵可视化哦）</p>
 <h2 id="确定相关系数"><a href="#确定相关系数" class="headerlink" title="确定相关系数"></a>确定相关系数</h2><p>​      为了度量两个变量间的线性关系，一般采用皮尔逊（Pearson）相关系数或斯皮尔曼（Spearman）相关系数进行分析。其中，只有当数据满足连续且呈线性关系时，才能使用皮尔逊（Pearson）相关系数描述变量间的相关性，且估计数据显著性时候需要数据服从正态分布；相对地，斯皮尔曼（Spearman）相关系数则没有使用条件限制。<br>​      因此，在确定使用哪种相关系数之前，应对各指标数据绘制散点图判断是否呈线性关系以及正态分布检验。</p>
 <h3 id="绘制散点图"><a href="#绘制散点图" class="headerlink" title="绘制散点图"></a>绘制散点图</h3><p><img src="https://img2018.cnblogs.com/blog/1880713/202002/1880713-20200220221940227-645930610.png" alt=""></p>
@@ -453,7 +452,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://pxlsdz.github.io/2020/01/27/%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0/" title="相关系数">https://pxlsdz.github.io/2020/01/27/相关系数/</a>
+    <a href="https://pxlsdz.gitee.io/2020/01/27/%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0/" title="相关系数">https://pxlsdz.gitee.io/2020/01/27/相关系数/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -559,7 +558,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">56</span>
+          <span class="site-state-item-count">57</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -622,13 +621,13 @@
       <i class="fa fa-area-chart"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">284k</span>
+    <span title="站点总字数">270k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">4:18</span>
+    <span title="站点阅读时长">4:06</span>
 </div>
 
         

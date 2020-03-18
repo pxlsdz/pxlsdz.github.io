@@ -17,13 +17,13 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"pxlsdz.github.io","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"pxlsdz.gitee.io","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="A. Yet Another Tetris Problem">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Codeforces Round #627 (Div. 3)题解">
-<meta property="og:url" content="https://pxlsdz.github.io/2020/03/13/Codeforces-Round-627-Div-3-%E9%A2%98%E8%A7%A3/index.html">
+<meta property="og:url" content="https://pxlsdz.gitee.io/2020/03/13/Codeforces-Round-627-Div-3-%E9%A2%98%E8%A7%A3/index.html">
 <meta property="og:site_name" content="pxlsdz的博客">
 <meta property="og:description" content="A. Yet Another Tetris Problem">
 <meta property="og:locale" content="zh_CN">
@@ -38,7 +38,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://espresso.codeforces.com/c3b3d19786c16dfd52f9729d83217c7154a5852f.png">
 
-<link rel="canonical" href="https://pxlsdz.github.io/2020/03/13/Codeforces-Round-627-Div-3-%E9%A2%98%E8%A7%A3/">
+<link rel="canonical" href="https://pxlsdz.gitee.io/2020/03/13/Codeforces-Round-627-Div-3-%E9%A2%98%E8%A7%A3/">
 
 
 <script id="page-configurations">
@@ -137,7 +137,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">56</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">57</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -194,7 +194,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://pxlsdz.github.io/2020/03/13/Codeforces-Round-627-Div-3-%E9%A2%98%E8%A7%A3/">
+    <link itemprop="mainEntityOfPage" href="https://pxlsdz.gitee.io/2020/03/13/Codeforces-Round-627-Div-3-%E9%A2%98%E8%A7%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -267,14 +267,14 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>12k</span>
+              <span>8.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>11 分钟</span>
+              <span>7 分钟</span>
             </span>
 
         </div>
@@ -287,7 +287,6 @@
 
       
         <h2 id="A-Yet-Another-Tetris-Problem"><a href="#A-Yet-Another-Tetris-Problem" class="headerlink" title="A. Yet Another Tetris Problem"></a>A. Yet Another Tetris Problem</h2><a id="more"></a>
-
 <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>time limit per test</p>
 <p>2 seconds</p>
 <p>memory limit per test</p>
@@ -315,11 +314,9 @@
 <p>input</p>
 <p>Copy</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">4</span><br><span class="line">3</span><br><span class="line">1 1 3</span><br><span class="line">4</span><br><span class="line">1 1 2 1</span><br><span class="line">2</span><br><span class="line">11 11</span><br><span class="line">1</span><br><span class="line">100</span><br></pre></td></tr></table></figure>
-
 <p>output</p>
 <p>Copy</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">YES</span><br><span class="line">NO</span><br><span class="line">YES</span><br><span class="line">YES</span><br></pre></td></tr></table></figure>
-
 <p>Note</p>
 <p>The first test case of the example field is shown below:</p>
 <p><img src="https://espresso.codeforces.com/c3b3d19786c16dfd52f9729d83217c7154a5852f.png" alt="img"></p>
@@ -333,7 +330,6 @@
 <h2 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h2><p>俄罗斯方块：给你每一列的高度 每次只能竖着放尺寸2*1的长方形，问是否能全部消</p>
 <h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>一眼题，消除的必定是相连奇偶性相同的</p>
 <h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.setrecursionlimit(<span class="number">10</span>**<span class="number">9</span>)</span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> defaultdict</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">IA = <span class="keyword">lambda</span>: map(int,input().split())</span><br><span class="line"></span><br><span class="line">T=int(input())</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,T):</span><br><span class="line"></span><br><span class="line">    n=int(input())</span><br><span class="line">    vis=[int(<span class="number">-1</span>) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,n+<span class="number">1</span>)]</span><br><span class="line">    a=list(IA())</span><br><span class="line">    le=len(a)</span><br><span class="line">    flag=<span class="number">1</span></span><br><span class="line">    t=a[<span class="number">0</span>]&amp;<span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,le):</span><br><span class="line">        <span class="keyword">if</span> (a[i]&amp;<span class="number">1</span>)!=t:</span><br><span class="line">            flag=<span class="number">0</span></span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">    <span class="keyword">if</span> flag==<span class="number">1</span>:</span><br><span class="line">        print(<span class="string">"YES"</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">"NO"</span>)</span><br><span class="line">    </span><br><span class="line"><span class="comment">#a = [int(0) for i in range(1,n+1)]</span></span><br></pre></td></tr></table></figure>
-
 <h1 id="B-Yet-Another-Palindrome-Problem"><a href="#B-Yet-Another-Palindrome-Problem" class="headerlink" title="B. Yet Another Palindrome Problem"></a><strong>B. Yet Another Palindrome Problem</strong></h1><p>B. Yet Another Palindrome Problem</p>
 <p>time limit per test</p>
 <p>2 seconds</p>
@@ -358,11 +354,9 @@
 <p>input</p>
 <p>Copy</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">5</span><br><span class="line">3</span><br><span class="line">1 2 1</span><br><span class="line">5</span><br><span class="line">1 2 2 3 2</span><br><span class="line">3</span><br><span class="line">1 1 2</span><br><span class="line">4</span><br><span class="line">1 2 2 1</span><br><span class="line">10</span><br><span class="line">1 1 2 2 3 3 4 4 5 5</span><br></pre></td></tr></table></figure>
-
 <p>output</p>
 <p>Copy</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">YES</span><br><span class="line">YES</span><br><span class="line">NO</span><br><span class="line">YES</span><br><span class="line">NO</span><br></pre></td></tr></table></figure>
-
 <p>Note</p>
 <p>In the first test case of the example, the array aa has a subsequence [1,2,1][1,2,1] which is a palindrome.</p>
 <p>In the second test case of the example, the array aa has two subsequences of length 33 which are palindromes: [2,3,2][2,3,2] and [2,2,2][2,2,2].</p>
@@ -372,9 +366,6 @@
 <h2 id="题意-1"><a href="#题意-1" class="headerlink" title="题意"></a>题意</h2><p>是否可以找至少长度为3的回文串 </p>
 <h2 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h2><p><strong>只要找到两个不相邻的数相等就满足题意</strong></p>
 <h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.setrecursionlimit(<span class="number">10</span>**<span class="number">9</span>)</span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> defaultdict</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">IA = <span class="keyword">lambda</span>: map(int,input().split())</span><br><span class="line"></span><br><span class="line">T=int(input())</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,T):</span><br><span class="line"></span><br><span class="line">    n=int(input())</span><br><span class="line">    vis=[int(<span class="number">-1</span>) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,n+<span class="number">1</span>)]</span><br><span class="line">    a=list(IA())</span><br><span class="line">    le=len(a)</span><br><span class="line">    flag=<span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,le):</span><br><span class="line">        <span class="keyword">if</span> vis[a[i]]!=<span class="number">-1</span>:</span><br><span class="line">            <span class="keyword">if</span> i-vis[a[i]]&gt;<span class="number">1</span>:</span><br><span class="line">                flag=<span class="number">1</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            </span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            vis[a[i]]=i</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">if</span> flag==<span class="number">1</span>:</span><br><span class="line">        print(<span class="string">"YES"</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">"NO"</span>)</span><br><span class="line">    </span><br><span class="line"><span class="comment">#a = [int(0) for i in range(1,n+1)]</span></span><br></pre></td></tr></table></figure>
-
-
-
 <h1 id="C-Frog-Jumps"><a href="#C-Frog-Jumps" class="headerlink" title="C. Frog Jumps"></a>C. Frog Jumps</h1><p>C. Frog Jumps</p>
 <p>time limit per test</p>
 <p>2 seconds</p>
@@ -399,11 +390,9 @@
 <p>input</p>
 <p>Copy</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">6</span><br><span class="line">LRLRRLL</span><br><span class="line">L</span><br><span class="line">LLR</span><br><span class="line">RRRR</span><br><span class="line">LLLLLL</span><br><span class="line">R</span><br></pre></td></tr></table></figure>
-
 <p>output</p>
 <p>Copy</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">3</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">1</span><br><span class="line">7</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
-
 <p>Note</p>
 <p>The picture describing the first test case of the example and one of the possible answers:</p>
 <p><img src="https://espresso.codeforces.com/de84e2ea205b39d12a73b422b7f6b0229de451ba.png" alt="img"></p>
@@ -415,7 +404,6 @@
 <h2 id="题意："><a href="#题意：" class="headerlink" title="题意："></a>题意：</h2><p>给一个长度为n里面有’L’ ‘R’ 的字符串，表示向左或者向右移动最大d长度, 在可以跳到终点n+1的情况下，问d最小是多长。</p>
 <h2 id="分析："><a href="#分析：" class="headerlink" title="分析："></a>分析：</h2><p>因为我们根本不需要往左跳，左跳只会降低我们的位置，起点终点当作两个R，然后判断两个RR之间的最大距离即可。（证明咳咳）</p>
 <h2 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> defaultdict</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">IA = <span class="keyword">lambda</span>: map(int,input().split())</span><br><span class="line"></span><br><span class="line">T=int(input())</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,T):</span><br><span class="line"></span><br><span class="line">    n=input()</span><br><span class="line">    le=len(n)</span><br><span class="line">    l=int(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    pre=<span class="number">0</span></span><br><span class="line">    i=<span class="number">0</span></span><br><span class="line">    ans=<span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> it <span class="keyword">in</span> n:</span><br><span class="line">        i+=<span class="number">1</span> </span><br><span class="line">        <span class="keyword">if</span> it==<span class="string">'R'</span>:</span><br><span class="line">            ans=max(ans,i-pre)</span><br><span class="line">            pre=i</span><br><span class="line">          </span><br><span class="line">    ans=max(ans,le+<span class="number">1</span>-pre)</span><br><span class="line">    print(ans)</span><br><span class="line">    </span><br><span class="line"><span class="comment">#a = [int(0) for i in range(1,n+1)]</span></span><br></pre></td></tr></table></figure>
-
 <h1 id="D-Pair-of-Topics"><a href="#D-Pair-of-Topics" class="headerlink" title="D. Pair of Topics"></a>D. Pair of Topics</h1><p>2 seconds</p>
 <p>memory limit per test</p>
 <p>256 megabytes</p>
@@ -424,7 +412,7 @@
 <p>output</p>
 <p>standard output</p>
 <p>The next lecture in a high school requires two topics to be discussed. The ii-th topic is interesting by aiai units for the teacher and by bibi units for the students.</p>
-<p>The pair of topics ii and jj (i&lt;ji&lt;j) is called <strong>good</strong> if ai+aj&gt;bi+bjai+aj&gt;bi+bj (i.e. it is more interesting for the teacher).</p>
+<p>The pair of topics ii and jj (i<ji<j) is called **good** if ai+aj>bi+bjai+aj&gt;bi+bj (i.e. it is more interesting for the teacher).</p>
 <p>Your task is to find the number of <strong>good</strong> pairs of topics.</p>
 <p>Input</p>
 <p>The first line of the input contains one integer nn (2≤n≤2⋅1052≤n≤2⋅105) — the number of topics.</p>
@@ -436,19 +424,15 @@
 <p>input</p>
 <p>Copy</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">5</span><br><span class="line">4 8 2 6 2</span><br><span class="line">4 5 4 1 3</span><br></pre></td></tr></table></figure>
-
 <p>output</p>
 <p>Copy</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">7</span><br></pre></td></tr></table></figure>
-
 <p>input</p>
 <p>Copy</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">4</span><br><span class="line">1 3 2 4</span><br><span class="line">1 3 2 4</span><br></pre></td></tr></table></figure>
-
 <p>output</p>
 <p>Copy</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0</span><br></pre></td></tr></table></figure>
-
 <h2 id="题意：-1"><a href="#题意：-1" class="headerlink" title="题意："></a>题意：</h2><p>给你两个长度均为n的数列a和b，找到满足a[i]+a[j]&gt;b[i]+b[j]的对数（i&lt;j).</p>
 <h2 id="分析：-1"><a href="#分析：-1" class="headerlink" title="分析："></a>分析：</h2><p>a[i]-b[i]&gt;-(a[j]-b[j])</p>
 <p>c[i]&gt;-c[j]</p>
@@ -458,11 +442,7 @@
 <li>c[i]+c[j]&gt;0,双指针或者二分</li>
 </ol>
 <h2 id="代码：-1"><a href="#代码：-1" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> defaultdict</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">IA = <span class="keyword">lambda</span>: map(int,input().split())</span><br><span class="line"></span><br><span class="line">n=int(input())</span><br><span class="line"></span><br><span class="line">a=list(IA())</span><br><span class="line">b=list(IA())</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,n):</span><br><span class="line">    a[i]=a[i]-b[i]</span><br><span class="line"></span><br><span class="line">a=sorted(a)</span><br><span class="line">l=<span class="number">0</span></span><br><span class="line">r=n<span class="number">-1</span></span><br><span class="line">ans=<span class="number">0</span></span><br><span class="line"><span class="comment">#print(a)</span></span><br><span class="line"><span class="keyword">while</span> r&gt;l:</span><br><span class="line">    <span class="keyword">if</span> a[l]+a[r]&gt;<span class="number">0</span>:</span><br><span class="line">        ans+=r-l</span><br><span class="line">        r-=<span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:l+=<span class="number">1</span></span><br><span class="line">print(ans)</span><br><span class="line"><span class="comment">#a = [int(0) for i in range(1,n+1)]</span></span><br></pre></td></tr></table></figure>
-
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> defaultdict</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solve</span><span class="params">(x,pos)</span>:</span></span><br><span class="line">    l=<span class="number">0</span></span><br><span class="line">    r=pos</span><br><span class="line">    <span class="keyword">while</span> l&lt;r:</span><br><span class="line">        mid=(l+r)&gt;&gt;<span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> a[mid]+x&gt;<span class="number">0</span>:</span><br><span class="line">            r=mid</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            l=mid+<span class="number">1</span></span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> pos-l</span><br><span class="line"></span><br><span class="line">IA = <span class="keyword">lambda</span>: map(int,input().split())</span><br><span class="line"></span><br><span class="line">n=int(input())</span><br><span class="line"></span><br><span class="line">a=list(IA())</span><br><span class="line">b=list(IA())</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,n):</span><br><span class="line">    a[i]=a[i]-b[i]</span><br><span class="line"></span><br><span class="line">a=sorted(a)</span><br><span class="line">l=<span class="number">0</span></span><br><span class="line">r=n<span class="number">-1</span></span><br><span class="line">ans=<span class="number">0</span></span><br><span class="line"><span class="comment">#print(a)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,n):</span><br><span class="line">    ans+=solve(a[i],i)</span><br><span class="line">    </span><br><span class="line">print(ans)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#a = [int(0) for i in range(1,n+1)]</span></span><br></pre></td></tr></table></figure>
-
-
-
 <h1 id="E-Sleeping-Schedule"><a href="#E-Sleeping-Schedule" class="headerlink" title="E. Sleeping Schedule"></a>E. Sleeping Schedule</h1><p>time limit per test</p>
 <p>2 seconds</p>
 <p>memory limit per test</p>
@@ -484,18 +464,15 @@
 <p>input</p>
 <p>Copy</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">7 24 21 23</span><br><span class="line">16 17 14 20 20 11 22</span><br></pre></td></tr></table></figure>
-
 <p>output</p>
 <p>Copy</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3</span><br></pre></td></tr></table></figure>
-
 <p>Note</p>
 <p>The maximum number of <strong>good</strong> times in the example is 33.</p>
 <p>The story starts from t=0t=0. Then Vova goes to sleep after a1−1a1−1 hours, now the time is 1515. This time is not good. Then Vova goes to sleep after a2−1a2−1 hours, now the time is 15+16=715+16=7. This time is also not good. Then Vova goes to sleep after a3a3 hours, now the time is 7+14=217+14=21. This time is <strong>good</strong>. Then Vova goes to sleep after a4−1a4−1 hours, now the time is 21+19=1621+19=16. This time is not good. Then Vova goes to sleep after a5a5 hours, now the time is 16+20=1216+20=12. This time is not good. Then Vova goes to sleep after a6a6 hours, now the time is 12+11=2312+11=23. This time is <strong>good</strong>. Then Vova goes to sleep after a7a7 hours, now the time is 23+22=2123+22=21. This time is also <strong>good</strong>.</p>
 <h2 id="题意-2"><a href="#题意-2" class="headerlink" title="题意"></a>题意</h2><p>一天有h小时，主人公要睡n次觉，一次可以睡a[i]小时或者a[i]-1个小时，醒了马上就要睡下一觉直到睡完n次，如果睡觉起来的时候时间（如果时间大于一天就要对h取模）在l到r之间，那么这一觉就是good，加一分，问你睡完这n次，最多得多少分?</p>
 <h2 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h2><p>t挺简单的一个DP，当时忘记了二维还能取模，算错了空间复杂度，背包的思想完全能搞。</p>
 <h2 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> defaultdict</span><br><span class="line"></span><br><span class="line">IA = <span class="keyword">lambda</span>: map(int,input().split())</span><br><span class="line"></span><br><span class="line">n,h,l,r=IA()</span><br><span class="line">a=list(IA())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">judge</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> x&lt;=r <span class="keyword">and</span> x&gt;=l:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dp=[[int(<span class="number">-1</span>) <span class="keyword">for</span> _ <span class="keyword">in</span> range(h)] <span class="keyword">for</span> _ <span class="keyword">in</span> range(n+<span class="number">1</span>)]</span><br><span class="line"></span><br><span class="line">dp[<span class="number">0</span>][<span class="number">0</span>]=<span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,n):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>,h):</span><br><span class="line">        <span class="keyword">if</span> dp[i][j]&gt;=<span class="number">0</span>:</span><br><span class="line">            </span><br><span class="line">            dp[i+<span class="number">1</span>][(j+a[i])%h]=max(dp[i][j]+int(l&lt;=(j+a[i])%h&lt;=r),dp[i+<span class="number">1</span>][(j+a[i])%h])</span><br><span class="line">            dp[i+<span class="number">1</span>][(j+a[i]<span class="number">-1</span>)%h]=max(dp[i][j]+int(l&lt;=(j+a[i]<span class="number">-1</span>)%h&lt;=r),dp[i+<span class="number">1</span>][(j+a[i]<span class="number">-1</span>)%h])</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">ans=max(dp[<span class="number">-1</span>])</span><br><span class="line">print(ans)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#a = [int(0) for i in range(1,n+1)]</span></span><br></pre></td></tr></table></figure>
-
 
     </div>
 
@@ -515,7 +492,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://pxlsdz.github.io/2020/03/13/Codeforces-Round-627-Div-3-%E9%A2%98%E8%A7%A3/" title="Codeforces Round #627 (Div. 3)题解">https://pxlsdz.github.io/2020/03/13/Codeforces-Round-627-Div-3-题解/</a>
+    <a href="https://pxlsdz.gitee.io/2020/03/13/Codeforces-Round-627-Div-3-%E9%A2%98%E8%A7%A3/" title="Codeforces Round #627 (Div. 3)题解">https://pxlsdz.gitee.io/2020/03/13/Codeforces-Round-627-Div-3-题解/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -620,7 +597,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">56</span>
+          <span class="site-state-item-count">57</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -683,13 +660,13 @@
       <i class="fa fa-area-chart"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">284k</span>
+    <span title="站点总字数">270k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">4:18</span>
+    <span title="站点阅读时长">4:06</span>
 </div>
 
         

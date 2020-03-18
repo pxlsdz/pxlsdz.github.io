@@ -17,44 +17,44 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"pxlsdz.github.io","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"pxlsdz.gitee.io","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="网上书店利用最基本的java web技术实现">
 <meta property="og:type" content="article">
 <meta property="og:title" content="网上书店">
-<meta property="og:url" content="https://pxlsdz.github.io/2019/01/14/%E7%BD%91%E4%B8%8A%E4%B9%A6%E5%BA%97%E5%AE%9E%E7%8E%B0/index.html">
+<meta property="og:url" content="https://pxlsdz.gitee.io/2019/01/14/%E7%BD%91%E4%B8%8A%E4%B9%A6%E5%BA%97%E5%AE%9E%E7%8E%B0/index.html">
 <meta property="og:site_name" content="pxlsdz的博客">
 <meta property="og:description" content="网上书店利用最基本的java web技术实现">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="g:/%E9%A1%B9%E7%9B%AE/book_store/media/c4a8b86bbfa407c35bf0cf7cbeb2f079.png">
-<meta property="og:image" content="g:/%E9%A1%B9%E7%9B%AE/book_store/media/c0529a2706122ae7a0a166ac6b4ab72d.png">
-<meta property="og:image" content="g:/%E9%A1%B9%E7%9B%AE/book_store/media/890c64cc83eb35b5288c1b310012ec71.png">
-<meta property="og:image" content="g:/%E9%A1%B9%E7%9B%AE/book_store/media/f293293d64565833d3e3ed2c1712882e.png">
-<meta property="og:image" content="g:/%E9%A1%B9%E7%9B%AE/book_store/media/fdf8b1ad3163d797f836878bf1be1211.png">
-<meta property="og:image" content="g:/%E9%A1%B9%E7%9B%AE/book_store/media/f293293d64565833d3e3ed2c1712882e.png">
-<meta property="og:image" content="g:/%E9%A1%B9%E7%9B%AE/book_store/media/a20e2ad01831d29fac4723d7000db021.png">
-<meta property="og:image" content="g:/%E9%A1%B9%E7%9B%AE/book_store/media/00f5c46ce870c9372a38f45edf63fa62.png">
-<meta property="og:image" content="g:/%E9%A1%B9%E7%9B%AE/book_store/media/ca39e39b4d5a18be69f499b18d77ccc0.png">
-<meta property="og:image" content="g:/%E9%A1%B9%E7%9B%AE/book_store/media/6e4469371edf7a715b5874a7a92e358a.png">
-<meta property="og:image" content="g:/%E9%A1%B9%E7%9B%AE/book_store/media/3838500e5c6e5ff190e365d73a5b7d26.png">
-<meta property="og:image" content="g:/%E9%A1%B9%E7%9B%AE/book_store/media/6903a6c878b32e8557fc7d13a69e1673.png">
-<meta property="og:image" content="g:/%E9%A1%B9%E7%9B%AE/book_store/media/e0a353d4958f72b1000735dc420d3543.png">
-<meta property="og:image" content="g:/%E9%A1%B9%E7%9B%AE/book_store/media/e0a353d4958f72b1000735dc420d3543.png">
-<meta property="og:image" content="g:/%E9%A1%B9%E7%9B%AE/book_store/media/848039e28aa7aa3203593cd6d85e1b2c.png">
-<meta property="og:image" content="g:/%E9%A1%B9%E7%9B%AE/book_store/media/66950f76bf9ec3931c30f29ff34b34e0.png">
-<meta property="og:image" content="g:/%E9%A1%B9%E7%9B%AE/book_store/media/2b1aeb45a989171f18c1b43a3dcd36b5.png">
-<meta property="og:image" content="g:/%E9%A1%B9%E7%9B%AE/book_store/media/2b1aeb45a989171f18c1b43a3dcd36b5.png">
-<meta property="og:image" content="g:/%E9%A1%B9%E7%9B%AE/book_store/media/e3b7d64d01548612fc83087333e254df.png">
-<meta property="og:image" content="g:/%E9%A1%B9%E7%9B%AE/book_store/media/c8267ba6d1fc8c80c52bf6ee5464ec4e.png">
+<meta property="og:image" content="g:/项目/book_store/media/c4a8b86bbfa407c35bf0cf7cbeb2f079.png">
+<meta property="og:image" content="g:/项目/book_store/media/c0529a2706122ae7a0a166ac6b4ab72d.png">
+<meta property="og:image" content="g:/项目/book_store/media/890c64cc83eb35b5288c1b310012ec71.png">
+<meta property="og:image" content="g:/项目/book_store/media/f293293d64565833d3e3ed2c1712882e.png">
+<meta property="og:image" content="g:/项目/book_store/media/fdf8b1ad3163d797f836878bf1be1211.png">
+<meta property="og:image" content="g:/项目/book_store/media/f293293d64565833d3e3ed2c1712882e.png">
+<meta property="og:image" content="g:/项目/book_store/media/a20e2ad01831d29fac4723d7000db021.png">
+<meta property="og:image" content="g:/项目/book_store/media/00f5c46ce870c9372a38f45edf63fa62.png">
+<meta property="og:image" content="g:/项目/book_store/media/ca39e39b4d5a18be69f499b18d77ccc0.png">
+<meta property="og:image" content="g:/项目/book_store/media/6e4469371edf7a715b5874a7a92e358a.png">
+<meta property="og:image" content="g:/项目/book_store/media/3838500e5c6e5ff190e365d73a5b7d26.png">
+<meta property="og:image" content="g:/项目/book_store/media/6903a6c878b32e8557fc7d13a69e1673.png">
+<meta property="og:image" content="g:/项目/book_store/media/e0a353d4958f72b1000735dc420d3543.png">
+<meta property="og:image" content="g:/项目/book_store/media/e0a353d4958f72b1000735dc420d3543.png">
+<meta property="og:image" content="g:/项目/book_store/media/848039e28aa7aa3203593cd6d85e1b2c.png">
+<meta property="og:image" content="g:/项目/book_store/media/66950f76bf9ec3931c30f29ff34b34e0.png">
+<meta property="og:image" content="g:/项目/book_store/media/2b1aeb45a989171f18c1b43a3dcd36b5.png">
+<meta property="og:image" content="g:/项目/book_store/media/2b1aeb45a989171f18c1b43a3dcd36b5.png">
+<meta property="og:image" content="g:/项目/book_store/media/e3b7d64d01548612fc83087333e254df.png">
+<meta property="og:image" content="g:/项目/book_store/media/c8267ba6d1fc8c80c52bf6ee5464ec4e.png">
 <meta property="article:published_time" content="2019-01-14T15:42:46.000Z">
 <meta property="article:modified_time" content="2020-02-27T13:29:20.766Z">
 <meta property="article:author" content="sdz">
 <meta property="article:tag" content="课程设计">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="g:/%E9%A1%B9%E7%9B%AE/book_store/media/c4a8b86bbfa407c35bf0cf7cbeb2f079.png">
+<meta name="twitter:image" content="g:/项目/book_store/media/c4a8b86bbfa407c35bf0cf7cbeb2f079.png">
 
-<link rel="canonical" href="https://pxlsdz.github.io/2019/01/14/%E7%BD%91%E4%B8%8A%E4%B9%A6%E5%BA%97%E5%AE%9E%E7%8E%B0/">
+<link rel="canonical" href="https://pxlsdz.gitee.io/2019/01/14/%E7%BD%91%E4%B8%8A%E4%B9%A6%E5%BA%97%E5%AE%9E%E7%8E%B0/">
 
 
 <script id="page-configurations">
@@ -153,7 +153,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">56</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">57</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -210,7 +210,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://pxlsdz.github.io/2019/01/14/%E7%BD%91%E4%B8%8A%E4%B9%A6%E5%BA%97%E5%AE%9E%E7%8E%B0/">
+    <link itemprop="mainEntityOfPage" href="https://pxlsdz.gitee.io/2019/01/14/%E7%BD%91%E4%B8%8A%E4%B9%A6%E5%BA%97%E5%AE%9E%E7%8E%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -300,7 +300,6 @@
       
         <h1 id="网上书店"><a href="#网上书店" class="headerlink" title="网上书店"></a>网上书店</h1><p>利用最基本的java web技术实现</p>
 <a id="more"></a>
-
 <p><u>图片未来得及修改，GitHub可以正常观看</u></p>
 <p>github源码地址：<a href="https://github.com/pxlsdz/book-store" target="_blank" rel="noopener">https://github.com/pxlsdz/book-store</a></p>
 <p>合作者：WentongXu,dengdeng337(github账号）</p>
@@ -312,7 +311,8 @@
 <p>设计实现一个网上书店的系统。</p>
 <p>要求：整个功能都能顺畅流畅的运行。</p>
 <p><strong>2、数据库设计：</strong></p>
-<h5 id="user表"><a href="#user表" class="headerlink" title="user表"></a>user表</h5><table>
+<h5 id="user表"><a href="#user表" class="headerlink" title="user表"></a>user表</h5><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>字段名</th>
@@ -322,7 +322,8 @@
 <th>备注</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>userid</td>
 <td>int</td>
 <td>用户号</td>
@@ -341,10 +342,12 @@
 <td>String</td>
 <td>密码</td>
 <td></td>
-<td></td>
 </tr>
-</tbody></table>
-<h5 id="admin表"><a href="#admin表" class="headerlink" title="admin表"></a>admin表</h5><table>
+</tbody>
+</table>
+</div>
+<h5 id="admin表"><a href="#admin表" class="headerlink" title="admin表"></a>admin表</h5><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>字段名</th>
@@ -354,7 +357,8 @@
 <th>备注</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>adminid</td>
 <td>int</td>
 <td>管理员号</td>
@@ -373,10 +377,12 @@
 <td>String</td>
 <td>密码</td>
 <td></td>
-<td></td>
 </tr>
-</tbody></table>
-<h5 id="shopcar表"><a href="#shopcar表" class="headerlink" title="shopcar表"></a>shopcar表</h5><table>
+</tbody>
+</table>
+</div>
+<h5 id="shopcar表"><a href="#shopcar表" class="headerlink" title="shopcar表"></a>shopcar表</h5><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>字段名</th>
@@ -386,7 +392,8 @@
 <th>备注</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>shopcarid</td>
 <td>int</td>
 <td>购物车号</td>
@@ -440,10 +447,12 @@
 <td>double</td>
 <td>总价</td>
 <td></td>
-<td></td>
 </tr>
-</tbody></table>
-<h5 id="orde表"><a href="#orde表" class="headerlink" title="orde表"></a>orde表</h5><table>
+</tbody>
+</table>
+</div>
+<h5 id="orde表"><a href="#orde表" class="headerlink" title="orde表"></a>orde表</h5><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>字段名</th>
@@ -453,7 +462,8 @@
 <th>备注</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>orderid</td>
 <td>int</td>
 <td>订单号</td>
@@ -500,10 +510,12 @@
 <td>double</td>
 <td>价格</td>
 <td></td>
-<td></td>
 </tr>
-</tbody></table>
-<h5 id="comment表"><a href="#comment表" class="headerlink" title="comment表"></a>comment表</h5><table>
+</tbody>
+</table>
+</div>
+<h5 id="comment表"><a href="#comment表" class="headerlink" title="comment表"></a>comment表</h5><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>字段名</th>
@@ -513,7 +525,8 @@
 <th>备注</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>commentid</td>
 <td>int</td>
 <td>评论编号</td>
@@ -539,10 +552,12 @@
 <td>String</td>
 <td>评论内容</td>
 <td></td>
-<td></td>
 </tr>
-</tbody></table>
-<h5 id="book表"><a href="#book表" class="headerlink" title="book表"></a>book表</h5><table>
+</tbody>
+</table>
+</div>
+<h5 id="book表"><a href="#book表" class="headerlink" title="book表"></a>book表</h5><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>字段名</th>
@@ -552,7 +567,8 @@
 <th>备注</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>bookid</td>
 <td>int</td>
 <td>书号</td>
@@ -620,57 +636,58 @@
 <td>int</td>
 <td>购买数量</td>
 <td></td>
-<td></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p><strong>3、整体设计：</strong></p>
 <h1 id="三、课程设计具体内容"><a href="#三、课程设计具体内容" class="headerlink" title="三、课程设计具体内容"></a>三、课程设计具体内容</h1><p><strong>（1）系统各功能的实现介绍</strong></p>
 <h5 id="1、登陆注册"><a href="#1、登陆注册" class="headerlink" title="1、登陆注册"></a>1、登陆注册</h5><p>登陆注册功能不再是一个另外的页面，而是嵌套在了主页面中，会从右面滑出一个窗口，选择进行登录或者注册的功能。</p>
-<p><img src="G:/%E9%A1%B9%E7%9B%AE/book_store/media/c4a8b86bbfa407c35bf0cf7cbeb2f079.png" alt=""></p>
+<p><img src="G:/项目/book_store/media/c4a8b86bbfa407c35bf0cf7cbeb2f079.png" alt=""></p>
 <h5 id="2、查看推荐书籍"><a href="#2、查看推荐书籍" class="headerlink" title="2、查看推荐书籍"></a>2、查看推荐书籍</h5><p>在主页面中，你可以看到为用户推荐的书籍，用户还可以滑动页面进行查看，轮播推荐。</p>
 <h5 id="media-image2-png"><a href="#media-image2-png" class="headerlink" title="./media/image2.png"></a><a href="./media/image2.png">./media/image2.png</a></h5><p>3、查看畅销书籍</p>
 <p>在主页面中，你可以看到为用户展示的畅销书籍。</p>
-<p><img src="G:/%E9%A1%B9%E7%9B%AE/book_store/media/c0529a2706122ae7a0a166ac6b4ab72d.png" alt=""></p>
+<p><img src="G:/项目/book_store/media/c0529a2706122ae7a0a166ac6b4ab72d.png" alt=""></p>
 <h5 id="4、：查看最新书籍"><a href="#4、：查看最新书籍" class="headerlink" title="4、：查看最新书籍"></a>4、：查看最新书籍</h5><p>在主页面中，你可以看到为用户展示的最新书籍。</p>
 <h5 id="media-image4-png"><a href="#media-image4-png" class="headerlink" title="./media/image4.png"></a><a href="./media/image4.png">./media/image4.png</a></h5><p>5、查看图书</p>
 <p>在全部页面，用户还可以查看全部图书，进行选择图书。还可以点击自己感兴趣的书籍点开进行单个图书的查看，再进行相关操作，下面还有对此书籍的查看。单个图书查看的时候还可以返回上一层目录。</p>
-<p><img src="G:/%E9%A1%B9%E7%9B%AE/book_store/media/890c64cc83eb35b5288c1b310012ec71.png" alt=""></p>
-<p><img src="G:/%E9%A1%B9%E7%9B%AE/book_store/media/f293293d64565833d3e3ed2c1712882e.png" alt=""></p>
+<p><img src="G:/项目/book_store/media/890c64cc83eb35b5288c1b310012ec71.png" alt=""></p>
+<p><img src="G:/项目/book_store/media/f293293d64565833d3e3ed2c1712882e.png" alt=""></p>
 <h5 id="6、查询功能"><a href="#6、查询功能" class="headerlink" title="6、查询功能"></a>6、查询功能</h5><p>在页面左上角处，有一个搜索框，用户可以根据自身情况进行查询。</p>
 <h5 id="media-image7-png"><a href="#media-image7-png" class="headerlink" title="./media/image7.png"></a><a href="./media/image7.png">./media/image7.png</a></h5><p>购物车</p>
 <p>用户可以根据自身情况，将自己喜欢的图书加入购物车，购物车的设计也是在页面右侧滑出进行查看。点击右上角的购物车图标即可进行查看。还可以在购物车中进行删除书籍并且查看当前已选书籍的价格。</p>
-<p><img src="G:/%E9%A1%B9%E7%9B%AE/book_store/media/fdf8b1ad3163d797f836878bf1be1211.png" alt=""></p>
+<p><img src="G:/项目/book_store/media/fdf8b1ad3163d797f836878bf1be1211.png" alt=""></p>
 <h5 id="图书的购买"><a href="#图书的购买" class="headerlink" title="图书的购买"></a>图书的购买</h5><p>用户不仅可以在购物车中进行全部图书的购买，而且还可以进行单个图书的购买。全部购买在购物车中，单个书籍的购买可以直接点击单本书右下角的购物车。</p>
-<p><img src="G:/%E9%A1%B9%E7%9B%AE/book_store/media/f293293d64565833d3e3ed2c1712882e.png" alt=""></p>
+<p><img src="G:/项目/book_store/media/f293293d64565833d3e3ed2c1712882e.png" alt=""></p>
 <h5 id="个人中心"><a href="#个人中心" class="headerlink" title="个人中心"></a>个人中心</h5><p>用户只有在登录后，才可以进入个人中心进行管理。个人中心中可以修改密码，查看个人的订单记录，退出登录。</p>
-<p><img src="G:/%E9%A1%B9%E7%9B%AE/book_store/media/a20e2ad01831d29fac4723d7000db021.png" alt=""></p>
-<p><img src="G:/%E9%A1%B9%E7%9B%AE/book_store/media/00f5c46ce870c9372a38f45edf63fa62.png" alt=""></p>
-<p><img src="G:/%E9%A1%B9%E7%9B%AE/book_store/media/ca39e39b4d5a18be69f499b18d77ccc0.png" alt=""></p>
-<h5 id="联系我们"><a href="#联系我们" class="headerlink" title="联系我们"></a>联系我们</h5><p><img src="G:/%E9%A1%B9%E7%9B%AE/book_store/media/6e4469371edf7a715b5874a7a92e358a.png" alt=""></p>
-<p><img src="G:/%E9%A1%B9%E7%9B%AE/book_store/media/3838500e5c6e5ff190e365d73a5b7d26.png" alt=""></p>
-<h5 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h5><p><img src="G:/%E9%A1%B9%E7%9B%AE/book_store/media/6903a6c878b32e8557fc7d13a69e1673.png" alt=""></p>
+<p><img src="G:/项目/book_store/media/a20e2ad01831d29fac4723d7000db021.png" alt=""></p>
+<p><img src="G:/项目/book_store/media/00f5c46ce870c9372a38f45edf63fa62.png" alt=""></p>
+<p><img src="G:/项目/book_store/media/ca39e39b4d5a18be69f499b18d77ccc0.png" alt=""></p>
+<h5 id="联系我们"><a href="#联系我们" class="headerlink" title="联系我们"></a>联系我们</h5><p><img src="G:/项目/book_store/media/6e4469371edf7a715b5874a7a92e358a.png" alt=""></p>
+<p><img src="G:/项目/book_store/media/3838500e5c6e5ff190e365d73a5b7d26.png" alt=""></p>
+<h5 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h5><p><img src="G:/项目/book_store/media/6903a6c878b32e8557fc7d13a69e1673.png" alt=""></p>
 <p><strong>（2）管理员功能的实现</strong></p>
-<h5 id="书籍的添加"><a href="#书籍的添加" class="headerlink" title="书籍的添加"></a>书籍的添加</h5><p><img src="G:/%E9%A1%B9%E7%9B%AE/book_store/media/e0a353d4958f72b1000735dc420d3543.png" alt="IMG_256"></p>
-<h5 id="书籍的修改"><a href="#书籍的修改" class="headerlink" title="书籍的修改"></a>书籍的修改</h5><p><img src="G:/%E9%A1%B9%E7%9B%AE/book_store/media/e0a353d4958f72b1000735dc420d3543.png" alt="IMG_256"></p>
-<h5 id="书籍的删除"><a href="#书籍的删除" class="headerlink" title="书籍的删除"></a>书籍的删除</h5><p><img src="G:/%E9%A1%B9%E7%9B%AE/book_store/media/848039e28aa7aa3203593cd6d85e1b2c.png" alt="IMG_256"></p>
-<h5 id="查看全部图书"><a href="#查看全部图书" class="headerlink" title="查看全部图书"></a>查看全部图书</h5><p><img src="G:/%E9%A1%B9%E7%9B%AE/book_store/media/66950f76bf9ec3931c30f29ff34b34e0.png" alt="IMG_256"></p>
-<h5 id="查看单个图书"><a href="#查看单个图书" class="headerlink" title="查看单个图书"></a>查看单个图书</h5><p><img src="G:/%E9%A1%B9%E7%9B%AE/book_store/media/2b1aeb45a989171f18c1b43a3dcd36b5.png" alt="IMG_256"></p>
+<h5 id="书籍的添加"><a href="#书籍的添加" class="headerlink" title="书籍的添加"></a>书籍的添加</h5><p><img src="G:/项目/book_store/media/e0a353d4958f72b1000735dc420d3543.png" alt="IMG_256"></p>
+<h5 id="书籍的修改"><a href="#书籍的修改" class="headerlink" title="书籍的修改"></a>书籍的修改</h5><p><img src="G:/项目/book_store/media/e0a353d4958f72b1000735dc420d3543.png" alt="IMG_256"></p>
+<h5 id="书籍的删除"><a href="#书籍的删除" class="headerlink" title="书籍的删除"></a>书籍的删除</h5><p><img src="G:/项目/book_store/media/848039e28aa7aa3203593cd6d85e1b2c.png" alt="IMG_256"></p>
+<h5 id="查看全部图书"><a href="#查看全部图书" class="headerlink" title="查看全部图书"></a>查看全部图书</h5><p><img src="G:/项目/book_store/media/66950f76bf9ec3931c30f29ff34b34e0.png" alt="IMG_256"></p>
+<h5 id="查看单个图书"><a href="#查看单个图书" class="headerlink" title="查看单个图书"></a>查看单个图书</h5><p><img src="G:/项目/book_store/media/2b1aeb45a989171f18c1b43a3dcd36b5.png" alt="IMG_256"></p>
 <ol>
 <li><strong>修改密码</strong></li>
 </ol>
-<p><img src="G:/%E9%A1%B9%E7%9B%AE/book_store/media/2b1aeb45a989171f18c1b43a3dcd36b5.png" alt="IMG_256"></p>
+<p><img src="G:/项目/book_store/media/2b1aeb45a989171f18c1b43a3dcd36b5.png" alt="IMG_256"></p>
 <h1 id="四、相关技术的运用"><a href="#四、相关技术的运用" class="headerlink" title="四、相关技术的运用"></a>四、相关技术的运用</h1><p>Jquery、CSS、JS、jsp、el/jstl 前端显示页面</p>
 <p>servlet，javabean 后端</p>
 <p>上传 管理员端上传图片</p>
 <h1 id="系统亮点"><a href="#系统亮点" class="headerlink" title="系统亮点"></a>系统亮点</h1><p>界面美观大方，功能整体齐全，细节到位，操作易懂，人性化。</p>
 <h1 id="系统地址及使用说明"><a href="#系统地址及使用说明" class="headerlink" title="系统地址及使用说明"></a>系统地址及使用说明</h1><h5 id="系统地址："><a href="#系统地址：" class="headerlink" title="系统地址："></a>系统地址：</h5><p><a href="http://192.144.130.39:8080/book_store/indexList" target="_blank" rel="noopener">http://192.144.130.39:8080/book_store/indexList</a></p>
 <h5 id="系统使用说明："><a href="#系统使用说明：" class="headerlink" title="系统使用说明："></a>系统使用说明：</h5><p>用户登录账号：</p>
-<p><img src="G:/%E9%A1%B9%E7%9B%AE/book_store/media/e3b7d64d01548612fc83087333e254df.png" alt=""></p>
+<p><img src="G:/项目/book_store/media/e3b7d64d01548612fc83087333e254df.png" alt=""></p>
 <p>用户登陆后才可以进行个人中心的查看以及图书的购买，在购买后填写信息时大多都是自动填充，也可自行修改。</p>
 <p>登陆后用户可根据自身兴趣进行图书的搜寻，也可以查看最新或者最热图书，点开图书后，用户可查看图书信息或者购买。</p>
 <h5 id="管理员系统地址："><a href="#管理员系统地址：" class="headerlink" title="管理员系统地址："></a>管理员系统地址：</h5><p><a href="http://192.144.130.39:8080/web11/login.jsp" target="_blank" rel="noopener">http://192.144.130.39:8080/web11/login.jsp</a></p>
 <h5 id="管理员系统说明："><a href="#管理员系统说明：" class="headerlink" title="管理员系统说明："></a>管理员系统说明：</h5><p>管理员登录账号：</p>
-<p><img src="G:/%E9%A1%B9%E7%9B%AE/book_store/media/c8267ba6d1fc8c80c52bf6ee5464ec4e.png" alt=""></p>
+<p><img src="G:/项目/book_store/media/c8267ba6d1fc8c80c52bf6ee5464ec4e.png" alt=""></p>
 <p>管理员登陆后即可对前台图书进行查看、修改、添加、删除等操作。</p>
 <h1 id="七、系统中存在的不足"><a href="#七、系统中存在的不足" class="headerlink" title="七、系统中存在的不足"></a>七、系统中存在的不足</h1><p>1、登陆注册页面只能来回点击三次。</p>
 <p>2、单个图书只能添加一次购物车。</p>
@@ -705,7 +722,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://pxlsdz.github.io/2019/01/14/%E7%BD%91%E4%B8%8A%E4%B9%A6%E5%BA%97%E5%AE%9E%E7%8E%B0/" title="网上书店">https://pxlsdz.github.io/2019/01/14/网上书店实现/</a>
+    <a href="https://pxlsdz.gitee.io/2019/01/14/%E7%BD%91%E4%B8%8A%E4%B9%A6%E5%BA%97%E5%AE%9E%E7%8E%B0/" title="网上书店">https://pxlsdz.gitee.io/2019/01/14/网上书店实现/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -806,7 +823,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">56</span>
+          <span class="site-state-item-count">57</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -869,13 +886,13 @@
       <i class="fa fa-area-chart"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">284k</span>
+    <span title="站点总字数">270k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">4:18</span>
+    <span title="站点阅读时长">4:06</span>
 </div>
 
         

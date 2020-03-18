@@ -17,13 +17,13 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"pxlsdz.github.io","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"pxlsdz.gitee.io","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="网络容量">
 <meta property="og:type" content="article">
 <meta property="og:title" content="网络测试与分析--网络系统性能和网络流量测试(2)">
-<meta property="og:url" content="https://pxlsdz.github.io/2020/02/29/%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95%E4%B8%8E%E5%88%86%E6%9E%90--%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E5%92%8C%E7%BD%91%E7%BB%9C%E6%B5%81%E9%87%8F%E6%B5%8B%E8%AF%95(2)/index.html">
+<meta property="og:url" content="https://pxlsdz.gitee.io/2020/02/29/%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95%E4%B8%8E%E5%88%86%E6%9E%90--%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E5%92%8C%E7%BD%91%E7%BB%9C%E6%B5%81%E9%87%8F%E6%B5%8B%E8%AF%95(2)/index.html">
 <meta property="og:site_name" content="pxlsdz的博客">
 <meta property="og:description" content="网络容量">
 <meta property="og:locale" content="zh_CN">
@@ -35,7 +35,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200304075504.png">
 
-<link rel="canonical" href="https://pxlsdz.github.io/2020/02/29/%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95%E4%B8%8E%E5%88%86%E6%9E%90--%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E5%92%8C%E7%BD%91%E7%BB%9C%E6%B5%81%E9%87%8F%E6%B5%8B%E8%AF%95(2)/">
+<link rel="canonical" href="https://pxlsdz.gitee.io/2020/02/29/%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95%E4%B8%8E%E5%88%86%E6%9E%90--%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E5%92%8C%E7%BD%91%E7%BB%9C%E6%B5%81%E9%87%8F%E6%B5%8B%E8%AF%95(2)/">
 
 
 <script id="page-configurations">
@@ -134,7 +134,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">56</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">57</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -191,7 +191,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://pxlsdz.github.io/2020/02/29/%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95%E4%B8%8E%E5%88%86%E6%9E%90--%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E5%92%8C%E7%BD%91%E7%BB%9C%E6%B5%81%E9%87%8F%E6%B5%8B%E8%AF%95(2)/">
+    <link itemprop="mainEntityOfPage" href="https://pxlsdz.gitee.io/2020/02/29/%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95%E4%B8%8E%E5%88%86%E6%9E%90--%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E5%92%8C%E7%BD%91%E7%BB%9C%E6%B5%81%E9%87%8F%E6%B5%8B%E8%AF%95(2)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -280,29 +280,37 @@
 
       
         <h1 id="网络容量"><a href="#网络容量" class="headerlink" title="网络容量"></a>网络容量</h1><a id="more"></a>
-
-<h2 id="交换机的交换容量"><a href="#交换机的交换容量" class="headerlink" title="交换机的交换容量"></a>交换机的交换容量</h2><p>交换机的交换容量又称为背板带宽或交换带宽，是交换机接口处理器或接口卡和数据总线间所能<strong>吞吐的最大数据量</strong>。<br>$$<br>交换容量=缓存位宽*缓存总线频率<br>$$<br>eg:</p>
-<p>交换机的缓存位宽为96bit、缓存总线频率为133MHz，那么其交换容量就为：<br>$$<br>96*133=12.8Gbps<br>$$</p>
-<p>这是交换机实际能转发的速率，也是交换机的实际工作能力。</p>
-<h2 id="端口容量"><a href="#端口容量" class="headerlink" title="端口容量"></a>端口容量</h2><p>由一台24个100Mbps口的交换机构成的子网段，各端口的连接介质都是5类的非屏蔽双绞线（速度能100Mbps），<strong>如果要求各端口都以全双工100Mbps的速度工作。</strong><br>则该交换机的端口容量是：<br>$$<br>端口容量=2<em>（n</em>100Mbps+m<em>1000Mbps）<br>             \=2</em>24*100Mbps=4.8Gbps<br>$$</p>
-<p> n：表示交换机有n个100M端口，</p>
+<h2 id="交换机的交换容量"><a href="#交换机的交换容量" class="headerlink" title="交换机的交换容量"></a>交换机的交换容量</h2><p>交换机的交换容量又称为背板带宽或交换带宽，是交换机接口处理器或接口卡和数据总线间所能<strong>吞吐的最大数据量</strong>。</p>
+<script type="math/tex; mode=display">
+交换容量=缓存位宽*缓存总线频率</script><p>eg:</p>
+<p>交换机的缓存位宽为96bit、缓存总线频率为133MHz，那么其交换容量就为：</p>
+<script type="math/tex; mode=display">
+96*133=12.8Gbps</script><p>这是交换机实际能转发的速率，也是交换机的实际工作能力。</p>
+<h2 id="端口容量"><a href="#端口容量" class="headerlink" title="端口容量"></a>端口容量</h2><p>由一台24个100Mbps口的交换机构成的子网段，各端口的连接介质都是5类的非屏蔽双绞线（速度能100Mbps），<strong>如果要求各端口都以全双工100Mbps的速度工作。</strong><br>则该交换机的端口容量是：</p>
+<script type="math/tex; mode=display">
+端口容量=2*（n*100Mbps+m*1000Mbps）       
+             \\=2*24*100Mbps=4.8Gbps</script><p> n：表示交换机有n个100M端口，</p>
 <p>m：表示交换机有m个1000M端口，含有其他速率的端口时其容量计算也类似。</p>
 <p><strong>如果要保证该网段能够全线速工作，则该交换机的交换容量必须达到4.8Gbps以上。</strong></p>
 <h2 id="帧的转发速度计算"><a href="#帧的转发速度计算" class="headerlink" title="帧的转发速度计算"></a>帧的转发速度计算</h2><p><strong>线速</strong>：物理介质上允许的最大传输速度。</p>
 <p><strong>衡量一个二层设备的性能好坏时，主要使用的是帧转发速度。</strong></p>
 <p>   一个普通的线速：物理介质上允许的最大传输速度。以太网数据帧大小可以从64字节到1518字节，长度是不固定的，那么帧的转发速度也就因帧的长度不同而各异。</p>
 <p>   以10Mbps的Ethernet来说，最小的数据帧长度为64bytes，即512bit，<strong>帧间隙最小为12bytes,即96bits，帧的前同步位8bytes，即64bit</strong>。</p>
-<p>因此10Mbps Ethernets所能达到的帧的最快转发速度为：<br>$$<br>10Mbps/（512+96+64）b\ =10^{7}bps/672b=14，881pps（帧每秒）<br>$$</p>
-<h2 id="端口转发能力"><a href="#端口转发能力" class="headerlink" title="端口转发能力"></a>端口转发能力</h2><p>$$<br>线速度bps/[8*（每帧大小byte+20）]<br>$$</p>
-<p>20:<strong>帧间隙最小为12bytes,即96bits，帧的前同步位8bytes，即64bit</strong></p>
+<p>因此10Mbps Ethernets所能达到的帧的最快转发速度为：</p>
+<script type="math/tex; mode=display">
+10Mbps/（512+96+64）b\\ =10^{7}bps/672b=14，881pps（帧每秒）</script><h2 id="端口转发能力"><a href="#端口转发能力" class="headerlink" title="端口转发能力"></a>端口转发能力</h2><script type="math/tex; mode=display">
+线速度bps/[8*（每帧大小byte+20）]</script><p>20:<strong>帧间隙最小为12bytes,即96bits，帧的前同步位8bytes，即64bit</strong></p>
 <p>我们如何去衡量一个交换机的交换容量是否够用呢？</p>
 <p>结论1.所有端口容量乘以端口数量之和的2倍应该<strong>小于交换容量</strong>，这样可实现<strong>全双工无阻塞交换</strong>，证明交换机具有发挥最大数据交换性能的条件。</p>
 <p>结论2.<strong>满配置吞吐量（Mpps）&gt;=满配置端口数×1.488Mpps</strong>，其中1个千兆端口在包长为64字节时的理论吞吐量为1.488Mpps。</p>
 <p>例如，一台最多可以提供64个千兆端口的交换机，其满配置吞吐量应达到64×1.488Mpps = 95.2Mpps，才能够确保在所有端口均线速工作时，提供<strong>无阻塞的包交换</strong>。</p>
 <p>反例：如果一台交换机最多能够提供176个千兆端口，而宣称的吞吐量为不到261.8Mpps（176×1.488Mpps = 261.8Mpps），那么用户有理由认为该交换机采用的是<strong>有阻塞的结构设计</strong>。</p>
-<h2 id="以太网有效吞吐量"><a href="#以太网有效吞吐量" class="headerlink" title="以太网有效吞吐量"></a>以太网有效吞吐量</h2><p>以太网有效吞吐量计算公式（即不含校验位、帧间隙和前<br>导位）则为：<br>$$<br>（帧大小byte*线速度bps）/（前导位+帧大小+校验位+帧间隙）<br>$$<br>例1：</p>
-<p>100M以太网口，64字节帧的最大有效吞吐量为<br>$$<br>60*100/（8+60+4+12）=71.4Mbps<br>$$</p>
-<p>例2：</p>
+<h2 id="以太网有效吞吐量"><a href="#以太网有效吞吐量" class="headerlink" title="以太网有效吞吐量"></a>以太网有效吞吐量</h2><p>以太网有效吞吐量计算公式（即不含校验位、帧间隙和前<br>导位）则为：</p>
+<script type="math/tex; mode=display">
+（帧大小byte*线速度bps）/（前导位+帧大小+校验位+帧间隙）</script><p>例1：</p>
+<p>100M以太网口，64字节帧的最大有效吞吐量为</p>
+<script type="math/tex; mode=display">
+60*100/（8+60+4+12）=71.4Mbps</script><p>例2：</p>
 <p>计算两级24口100Mbps以太网交换机构成的网络容量，线路为5类非屏蔽双绞线，<strong>假设各端口的流量都须流经上联端口，且各端口均在满负载的情况下。</strong></p>
 <p>最低端口分摊速度=100Mbps/23/23=189kbps<br>则其64字节帧的最大有效吞吐量为60*189kbps/（8+60+4+12）=135kbps</p>
 <h1 id="网络性能"><a href="#网络性能" class="headerlink" title="网络性能"></a>网络性能</h1><p>​       最常见的以太网其二层协议采用的是CSMA/CD（载波监听多路访问/冲突检测方法）的存取访问方式，<strong>资源的争用冲突是必然存在的</strong>，但过多的冲突会导致网络性能下降，以至于严重时会出现瘫痪的情况。</p>
@@ -312,14 +320,18 @@
 <p>当发送多个ping数据包时，该命令会自动计算并显示出这些数据包响应时间的平均值。<br>例如，ping  -n  10   211.84.7.10</p>
 </li>
 </ul>
-<h1 id="网络利用率"><a href="#网络利用率" class="headerlink" title="网络利用率"></a>网络利用率</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><pre><code>某一网络链路的网络利用室就是在给定时间内，该链路上**收发信息字节数的总和**除以**该链路或设备接口的总容量**。</code></pre><h2 id="公式"><a href="#公式" class="headerlink" title="公式"></a>公式</h2><p>$$<br>利用率=（（发送数据数bytes+接收数据数bytes）<em>8）/（<br>线路容量</em>统计时间）*100%<br>$$</p>
-<p>$$<br>两个远程端点之间的网络利用率=（（发送数据数bytes+<br>接收数据数bytes）<em>8）/（对应网络吞吐量</em>统计时间）<br>*100%<br>$$</p>
-<h1 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h1><ol>
+<h1 id="网络利用率"><a href="#网络利用率" class="headerlink" title="网络利用率"></a>网络利用率</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><pre><code>  某一网络链路的网络利用室就是在给定时间内，该链路上**收发信息字节数的总和**除以**该链路或设备接口的总容量**。
+</code></pre><h2 id="公式"><a href="#公式" class="headerlink" title="公式"></a>公式</h2><script type="math/tex; mode=display">
+利用率=（（发送数据数bytes+接收数据数bytes）*8）/（
+线路容量*统计时间）*100\%</script><script type="math/tex; mode=display">
+两个远程端点之间的网络利用率=（（发送数据数bytes+
+接收数据数bytes）*8）/（对应网络吞吐量*统计时间）
+*100\%</script><h1 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h1><ol>
 <li><p>一台交换机最多能够提供24个100M端口，而宣称的吞吐量为3Mpps，那么当每个端口均传输包长为64字节的以太网帧时，用户有理由认为该交换机采用的是（ A ）<br>有阻塞的结构设计<br>无阻塞的结构设计</p>
 <p><strong>24*148810=3.57Mpps&gt;3Mpps</strong></p>
 </li>
 </ol>
-<ol start="2">
+<ol>
 <li><p>100M以太网口，128字节帧的最大有效吞吐量为 124/(124+8+4+12) *100M                                                    Mbps。</p>
 </li>
 <li><p>可用于网络响应时间测试的命令为（ D  ）<br>Ping –t<br>Ping –l<br>Ping –r<br>Ping –n</p>
@@ -349,7 +361,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://pxlsdz.github.io/2020/02/29/%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95%E4%B8%8E%E5%88%86%E6%9E%90--%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E5%92%8C%E7%BD%91%E7%BB%9C%E6%B5%81%E9%87%8F%E6%B5%8B%E8%AF%95(2)/" title="网络测试与分析--网络系统性能和网络流量测试(2)">https://pxlsdz.github.io/2020/02/29/网络测试与分析--网络系统性能和网络流量测试(2)/</a>
+    <a href="https://pxlsdz.gitee.io/2020/02/29/%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95%E4%B8%8E%E5%88%86%E6%9E%90--%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E5%92%8C%E7%BD%91%E7%BB%9C%E6%B5%81%E9%87%8F%E6%B5%8B%E8%AF%95(2)/" title="网络测试与分析--网络系统性能和网络流量测试(2)">https://pxlsdz.gitee.io/2020/02/29/网络测试与分析--网络系统性能和网络流量测试(2)/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -453,7 +465,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">56</span>
+          <span class="site-state-item-count">57</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -516,13 +528,13 @@
       <i class="fa fa-area-chart"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">284k</span>
+    <span title="站点总字数">270k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">4:18</span>
+    <span title="站点阅读时长">4:06</span>
 </div>
 
         
