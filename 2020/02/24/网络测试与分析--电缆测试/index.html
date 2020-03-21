@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"pxlsdz.github.io","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="电缆测试的重要性局域网的安装是从电缆开始的，电缆是网络最基础的部分。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络测试与分析--概述">
+<meta property="og:url" content="https://pxlsdz.github.io/2020/02/24/%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95%E4%B8%8E%E5%88%86%E6%9E%90--%E7%94%B5%E7%BC%86%E6%B5%8B%E8%AF%95/index.html">
+<meta property="og:site_name" content="pxlsdz的博客">
+<meta property="og:description" content="电缆测试的重要性局域网的安装是从电缆开始的，电缆是网络最基础的部分。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200320141531.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200320143449.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200320143647.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200320150323.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200320152643.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200320154438.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200320155224.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200320173746.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200320175844.png">
+<meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200320181013.png">
+<meta property="article:published_time" content="2020-02-24T08:14:43.000Z">
+<meta property="article:modified_time" content="2020-03-20T10:25:40.564Z">
+<meta property="article:author" content="sdz">
+<meta property="article:tag" content="课堂笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200320141531.png">
+
+<link rel="canonical" href="https://pxlsdz.github.io/2020/02/24/%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95%E4%B8%8E%E5%88%86%E6%9E%90--%E7%94%B5%E7%BC%86%E6%B5%8B%E8%AF%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>网络测试与分析--概述 | pxlsdz的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">pxlsdz的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">分享，笔记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">36</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">15</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">65</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+  </div>
+</div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+  <a href="https://github.com/pxlsdz" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://pxlsdz.github.io/2020/02/24/%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95%E4%B8%8E%E5%88%86%E6%9E%90--%E7%94%B5%E7%BC%86%E6%B5%8B%E8%AF%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="sdz">
+      <meta itemprop="description" content="个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pxlsdz的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          网络测试与分析--概述
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-24 16:14:43" itemprop="dateCreated datePublished" datetime="2020-02-24T16:14:43+08:00">2020-02-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-20 18:25:40" itemprop="dateModified" datetime="2020-03-20T18:25:40+08:00">2020-03-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95%E4%B8%8E%E5%88%86%E6%9E%90/" itemprop="url" rel="index"><span itemprop="name">网络测试与分析</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/02/24/%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95%E4%B8%8E%E5%88%86%E6%9E%90--%E7%94%B5%E7%BC%86%E6%B5%8B%E8%AF%95/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/02/24/%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95%E4%B8%8E%E5%88%86%E6%9E%90--%E7%94%B5%E7%BC%86%E6%B5%8B%E8%AF%95/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>9.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>8 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="电缆测试的重要性"><a href="#电缆测试的重要性" class="headerlink" title="电缆测试的重要性"></a><strong>电缆测试的重要性</strong></h1><p>局域网的安装是从电缆开始的，电缆是网络最基础的部分。</p>
+<a id="more"></a>
+<p>最好的方法就是把电缆故障消灭在安装之中。</p>
+<h1 id="综合布线系统测试标准"><a href="#综合布线系统测试标准" class="headerlink" title="综合布线系统测试标准"></a>综合布线系统测试标准</h1><p>综合布线系统的测试标准可以分为<strong>元件标准、网络标准和测试标准</strong>。</p>
+<ol>
+<li><strong>元件标准</strong>定义电缆/连接器/硬件的性能和级别<pre><code> 例如：ISO/IEC11801，ANSI/TIA/EIA568-A
+</code></pre>   电缆的标准为电缆和连接硬件提供了最基本的元件标准，使得不同厂家生产的产品具有相同的规格和性能。</li>
+<li><strong>网络标准</strong>定义了一个网络所需的所有元素的性能<pre><code> 例如：IEEE-802
+</code></pre></li>
+<li><strong>测试标准</strong>定义了测量的方法、工具以及过程<pre><code> 例如：ASTM D 4566，TSB-67
+</code></pre></li>
+</ol>
+<p><strong>制定标准的国际化组织</strong></p>
+<ul>
+<li><p>ISO——国际标准化组织</p>
+</li>
+<li><p>ANSI——美国国家标准委员会</p>
+</li>
+<li><p>IEC——国际电工委员会</p>
+</li>
+<li><p>TIA——通信工业委员会</p>
+</li>
+<li><p>EIA——电子工业联盟</p>
+</li>
+</ul>
+<p>我国目前使用的最新国家标准为<strong>《综合布线系统工程验收规范》</strong>（GBT/T 50312-2007），该标准包括了目前使用最广泛的5类电缆、5e类电缆、6类电缆和光缆的测试方法。</p>
+<h1 id="电缆链路的测试类型"><a href="#电缆链路的测试类型" class="headerlink" title="电缆链路的测试类型"></a><strong>电缆链路的测试类型</strong></h1><p>从工程的角度，电缆测试一般分为：</p>
+<ol>
+<li>验证测试</li>
+<li>认证测试</li>
+</ol>
+<h2 id="验证测试"><a href="#验证测试" class="headerlink" title="验证测试"></a><strong>验证测试</strong></h2><p>验证测试又叫随工测试，是在施工过程中为了确保布线工程的施工质量，边施工边测试。 </p>
+<h2 id="认证测试"><a href="#认证测试" class="headerlink" title="认证测试"></a>认证测试</h2><p>认证测试又叫验收测试，是所有测试工作中最重要的环节，是在工程验收时对<strong>综合布线系统的安装、电气特性、传输性能、设计、选材和施工质量</strong>的全面检验。</p>
+<p>认证测试依据标准对综合布线系统逐项检测，以确保布线是否能达到设计要求，包括<strong>连接性能测试和电气性能测试</strong></p>
+<p>认证测试通常分为两种类型：</p>
+<ul>
+<li><p>自我认证测试</p>
+</li>
+<li><p>第三方认证测试</p>
+<p>Fluke布线系统d测试工程师“CCTT”资格认证。</p>
+</li>
+</ul>
+<h1 id="电缆链路的测试模型（重要）"><a href="#电缆链路的测试模型（重要）" class="headerlink" title="电缆链路的测试模型（重要）"></a><strong>电缆链路的测试模型</strong>（重要）</h1><p>​       对综合布线系统进行测试之前，首先要确定被测试的链路的测试模型。<br>综合布线的认证测试链路主要指<strong>双绞线水平布线链路</strong>。</p>
+<ul>
+<li><p>TSB-67定义了两种标准的测试模型：基本链路（basic link）和通道（channel）。</p>
+</li>
+<li><p>GB 50312—2007规定3类和5类布线系统按照基本链路和信道进行测试，5e类和6类布线系统按照永久链路和信道进行测试。</p>
+</li>
+</ul>
+<h2 id="基本链路模型测试"><a href="#基本链路模型测试" class="headerlink" title="基本链路模型测试"></a>基本链路模型测试</h2><p>　　基本链路包括三部分：最长为90m的在建筑物中固定的水平布线电缆、水平电缆两端的接插件（一端为工作区信息插座，另一端为楼层配线架）和两条与现场测试仪相连的2m测试设备跳线。 </p>
+<p>下图要求会画：</p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200320141531.png" alt=""></p>
+<p>F：信息插座至配线架之间的电缆<br>G、E：测试设备跳线<br><strong>G+F+E&lt;=94</strong></p>
+<p>基本链路用来测试综合布线中的<strong>固定链路部分</strong>。<br>由于综合布线承包商通常只负责这部分的链路安装，链路质量由其负责，所以<strong>基本链路又称为承包商链路</strong>。</p>
+<h2 id="永久链路模型测试"><a href="#永久链路模型测试" class="headerlink" title="永久链路模型测试"></a>永久链路模型测试</h2><p>　　由最长为90m的水平电缆（不包括链路以外的总共4m的测试跳线）、水平电缆两端的接插件（一端为工作区信息插座，另一端为楼层配线架）和链路可选的转接连接器（CP）组成。</p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200320143449.png" alt=""></p>
+<p>G：可选转接电缆<br>H：从信息插座或可选转接连接器到楼层配线设备的水平电缆<br>F：测试仪跳线<br>I：测试仪跳线<br><strong>G+H&lt;=90</strong></p>
+<p>　　<strong>基本链路包含的两根2m长的测试跳线是与测试设备配套使用的</strong>，虽然它的品质很高，但随着测试次数的增加，测试跳线的电气性能指标可能发生变化并导致测试误差，<strong>这种误差包含在总的测试结果之中</strong>，就会直接影响总的测试结果。<br>       永久链路模型用永久链路适配器连接测试仪表和被测链路，<strong>测试仪表能自动扣除</strong>F、I和2m测试线的影响，排除了测试跳线在测试过程中本身带来的误差，从技术上消除了测试跳线对整个链路测试结果的影响，使测试结果更准确、合理。</p>
+<h2 id="通道测试"><a href="#通道测试" class="headerlink" title="通道测试"></a>通道测试</h2><p>　　它包括了最长90m的在建筑物中固定的水平电缆、水平电缆两端的接插件（一端为工作区信息插座，另一端为配线架）、一个靠近工作区的可选的附属转接连接器，最长10m的在楼层配线间跳线架上的两处连接跳线和用户终端的连接跳线，信道最长为100m。 </p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200320143647.png" alt=""></p>
+<p>A：用户端连接线<br>B：转接电缆<br>C：水平电缆<br>D：配线架连接线<br>E：配线架到网络设备间的连接线<br><strong>B+C&lt;=90</strong><br><strong>A+D+E&lt;=10</strong></p>
+<p>　　通道在永久链路的基础上，增加了包括工作区和电信间的设备电缆和跳线在内的部分，即<strong>端到端的整体链路</strong>，是用户所关心的，<strong>所以通道又称作用户链路</strong>。<br>        对于用户来说，用于高速网络的传输或其他通信传输时的链路不仅仅要包含永久链路部分，而且还包括用于连接设备的用户电缆，希望得到通道的测试报告。</p>
+<h1 id="综合布线故障分类"><a href="#综合布线故障分类" class="headerlink" title="综合布线故障分类"></a><strong>综合布线故障分类</strong></h1><h2 id="物理故障"><a href="#物理故障" class="headerlink" title="物理故障"></a>物理故障</h2><p>​        物理故障主要是指由于主观因素造成的可以直接观察的故障，如：接头的线序错误，链路的开路、短路等。<br>​        <strong>物理故障中最常见的是线序错误。</strong>标准的接线方式（T568A或T568B）能够保证正确的双绞线序，在很多布线系统中，由于施工人员或用户不了解接线标准，导致很多接线故障。这些故障利用一般的通断型测试仪就能轻易检测出来，这类仪器最便宜的仅几十元。<br>​        <strong>对于开路、短路这类故障</strong>，我们通常利用具有<strong>时域反射技术(TDR)</strong>的设备进行定位。精度高的仪器距离误差可控制在2%左右。<br>​        物理故障实际上通过随工进行的<strong>验证测试</strong>是很容易发现和解决的。</p>
+<h2 id="电气性能故障"><a href="#电气性能故障" class="headerlink" title="电气性能故障"></a><strong>电气性能故障</strong></h2><p>　    电气性能故障主要是指链路的<strong>电气性能指标</strong>未达到测试标准的要求。诸如近端串扰、衰减、回波损耗等。<br>        <strong>网络传输对线路的电气性能要求也越来越高</strong>，对电气性能测试的标准也越来越高，项目也越来越多。</p>
+<h1 id="电缆链路的测试方法"><a href="#电缆链路的测试方法" class="headerlink" title="电缆链路的测试方法"></a><strong>电缆链路的测试方法</strong></h1><h2 id="电缆测试的指标参数"><a href="#电缆测试的指标参数" class="headerlink" title="电缆测试的指标参数"></a><strong>电缆测试的指标参数</strong></h2><h3 id="网线的制作与测试"><a href="#网线的制作与测试" class="headerlink" title="网线的制作与测试"></a><strong>网线的制作与测试</strong></h3><ul>
+<li><p>直通线闪灯规律：左右闪灯数字对应</p>
+<p>两端亮灯的顺序：1、2、3、4、5、6、7、8</p>
+</li>
+<li><p>交叉线闪灯规律：1对3，2对6，其他不变</p>
+<p> 一端： 1、2、3、4、5、6、7、8 （568B）</p>
+<p> 另一端：3、6、1、4、5、2、7、8（568A）</p>
+<p>一般来说，只要1236号接通，电脑就可以正常上网使用了</p>
+</li>
+</ul>
+<p>如果网线制作有问题，灯亮的顺序就不可预测</p>
+<p><strong>注：一定要先经过测试，否则断路会导致无法通信，短路有可能损坏网卡或集线器。</strong></p>
+<h3 id="接线图测试"><a href="#接线图测试" class="headerlink" title="接线图测试"></a><strong>接线图测试</strong></h3><p>双绞线存在两种不同的线序：T568A和T568B。</p>
+<p>同一个工程中，要求使用单一接线标准，而不能混用。</p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200320150323.png" alt=""></p>
+<p><strong>短路</strong></p>
+<p> 短路又可分为短路线对和线对间短路。</p>
+<p>​    短路线对：当某一线对导体在电缆内任意位置相连接时，就会出现短路线对。</p>
+<p>   线对间短路：当两根不同线对导体在电缆内任意位置连接在一起时出现的短路。</p>
+<p><strong>错对/跨接</strong></p>
+<p>​     错对/跨接指一端的1&amp;2线对接在了另一端的3&amp;6线对，而3&amp;6线对接在了另一端的1&amp;2线对。</p>
+<p>​      这种错误往往是由于两端的接线标准不统一造成的，一端用T568A，另一端用T568B。</p>
+<p><strong>反接/交叉</strong></p>
+<p>当一个线对内的两根导线在电缆的另一端被连接到与线对相反的针上时，就会出现线对反接或称线对交叉现象。</p>
+<p><strong>串绕</strong></p>
+<p>串绕指原来的两个线对分别拆开后又重新组合成新的线对。</p>
+<p>串绕线对在布线系统的安装过程中是经常出现的，最典型的就是布线施工人员不清楚接线的标准，按照1&amp;2、3&amp;4、5&amp;6、7&amp;8的线对关系进行接线。</p>
+<p>由于相关的线对没有绞结，信号通过时线对间会产生很高的串扰信号，如果超过一定限度就会影响正常信息的传输。</p>
+<p>这种错误对端到端的连通性不产生影响，普通万用表不能检查故障原因，<strong>只有专用的电缆测试仪才能检测出来</strong>。</p>
+<h3 id="电缆长度测试"><a href="#电缆长度测试" class="headerlink" title="电缆长度测试"></a><strong>电缆长度测试</strong></h3><p>​       电缆长度应该是刚开始计划网络时一项重要的考虑因素。必须将网络组件放置于合适的位置，<strong>从而不会使得连接它们的电缆超出规定的最大长度</strong>。<br>​       测量电缆长度时，通常使用DSP4000测试仪，采用TDR（时域反射计）测试技术。</p>
+<p> 注意：此处的线缆长度指的是线缆绕对的长度，并不是指线缆表皮的长度。一般，绕对的长度要比表皮的长度长，并且由于每对线对的绞率不同，4对绕对的线缆可能长度不一。<br>        测试仪进行TDR测试时，测试仪从电缆一端向一线对发出一个脉冲信号，然后测量同一线对上信号返回的总时间，用<strong>纳秒（ns）</strong>表示。<br>       依据脉冲信号往返时间、已知的信号在电缆传播的NVP（额定传播速率），测试仪就可以计算出电缆的长度。</p>
+<p>  NVP（电缆额定传输速度）是指电信号在电缆中传输的速率与光在真空中的传输速率的比值。</p>
+<script type="math/tex; mode=display">
+NVP=2×L/（T×C）</script><p>式中    L—电缆长度<br>            T—信号在传送端与接收端的时间差<br>            C—光在真空中传播速度，C为3×108m/s</p>
+<p>​       <strong>电缆的NVP值可以从电缆生产厂所公布的规格中获得</strong>，NVP值随电缆批次的不同而微有差别。通常，NVP范围为光速的60%～80%。<br>​        <strong>测量准确性取决于NVP值</strong>，正式测量前用一个已知长度（必须在15m以上）的电缆来<strong>校正</strong>测试仪的NVP值，测试样线愈长，测试结果愈精确。</p>
+<p>​        时域反射TDR也常用于<strong>定位电缆故障</strong>，如开路、短路或不正常接线时，就会将部分或全部的脉冲能量反射回测试仪。</p>
+<h3 id="衰减测试"><a href="#衰减测试" class="headerlink" title="衰减测试"></a><strong>衰减测试</strong></h3><p>​       当信号在电缆中传输时，由于其所遇到的电阻而导致传输信号的减小，信号沿电缆传输损失的能量称为<strong>衰减</strong>。如果衰减过高，信号强度会过早衰退，数据就会丢失。</p>
+<p>​      衰减是一种<strong>插入损耗</strong>，即在传输系统的某处由于元件或器件的插入而发生的负载功率的损耗。</p>
+<p>​       当考虑一条通信链路的总插入损耗时，布线链路中所有的布线部件都对链路的总衰减值有贡献。</p>
+<p>​      一条链路的总插入损耗是电缆和布线部件的衰减的总和。</p>
+<p><strong>衰减量由下述各部分构成。</strong></p>
+<ul>
+<li>（a）布线电缆对信号的衰减；</li>
+<li>（b）构成通道链路方式的10m跳线或构成基本链路方式的4m设备接线对信号的衰减量；</li>
+<li>（c）每个连接器对信号的衰减量。</li>
+</ul>
+<p>现场测试中衰减有两个原因：</p>
+<ul>
+<li><p><strong>链路超长</strong><br>   电缆越长，链路的衰减就越明显。就好比一个人在向距离很远的另一个人喊话，如果距离过远，声音衰减过大导致对方无法听清。信号传输衰减也一样，它可以导致网络速度缓慢甚至无法互联。</p>
+</li>
+<li><p><strong>链路阻抗异常</strong></p>
+<p>   生产工艺不同导致双绞线插头和插座进行对接时有匹配兼容性问题。<br>   下表描述了双绞线阻抗变化的几种原因。</p>
+<p>   <img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200320152643.png" alt=""></p>
+<p>   ​    过高的阻抗消耗了过多的信号能量，致使接收方无法判决信号。</p>
+<p>   ​    当传输通道阻抗存在时，会随着信号频率增加，使得信号的高频分量衰减加大。</p>
+<p>   衰减是频率的函数，与频率的平方成正比，以dB（分贝）来度量。</p>
+</li>
+</ul>
+<p><strong>衰减会随着频率的增高而增大，随着长度的增大而增高，也随着温度的升高而增长。</strong><br> <strong>衰减应分范围测量</strong>。例如，5类、5e类双绞线的测量范围为1~100MHz， 6类、6e类双绞线的测量范围为1~250MHz。<br>不同类型电缆在不同频率、不同链路方式下每条链路的最大允许衰减值以<strong>20摄氏度</strong>为基准。一般来说，温度每升高<strong>10摄氏度</strong>，线缆的信号衰减就增大4%。</p>
+<ul>
+<li><p>3类电缆每增加1oC，衰减量增加1.5%</p>
+</li>
+<li><p>5e类电缆每增加1oC，衰减量增加0.4%</p>
+</li>
+<li><p>6类电缆每增加1oC，衰减量增加0.3%</p>
+</li>
+</ul>
+<h3 id="近端串扰测试"><a href="#近端串扰测试" class="headerlink" title="近端串扰测试"></a>近端串扰测试</h3><p><strong>近端串扰是UTP电缆的一个关键的性能指标，也是最难精确测量的指标。</strong></p>
+<p>串扰的产生：</p>
+<ul>
+<li><p>由于每对双绞线上都有电流流过，有电流就会在线缆附近造成磁场，为了尽量抵消线与线之间的磁场干扰，包括抵消近场与远场的影响，达到平衡的目的，所以把同一线对进行双绞。</p>
+</li>
+<li><p>但是线缆制造厂商采用了彼此不同的布线设计，质量稳定性差别很大。</p>
+</li>
+<li><p>另外，在线缆连接处的水晶头和模块插座等，必须把双绞线拆开，这样就会造成1、2线对的一部分信号泄漏出来，被3、6线对接收到，泄漏出来的信号被称为串扰。</p>
+</li>
+</ul>
+<p>串扰分为两种:</p>
+<ul>
+<li><p>近端串扰（Near End Crosstalk，NEXT）</p>
+</li>
+<li><p>远端串扰（Far End Crosstalk，FEXT）</p>
+</li>
+</ul>
+<p>由于远端串扰（FEXT）的量值影响较小，因此测试仪主要测量近端串扰（NEXT）。</p>
+<p>​       从一个发送信号线对泄漏出来的能量被认为是这条电缆内部噪声，因为它会干扰其他线对中的信号传输<strong>。NEXT是测量来自其它线对泄漏过来的信号。</strong></p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200320154438.png" alt=""></p>
+<p>NEXT并不表示在近端点所产生的串扰，而只表示在<strong>信号发送端(近端)进行测量</strong>。</p>
+<p>​       一条UTP电缆上的近端串扰损害会在每一对线之间进行，共有4对线对，因此对于一条双绞线电缆，需要测试<strong>6</strong>(C(4,2))次近端串扰。<br>​      NEXT测试必须在UTP链路的所有线对之间进行测试，而且必须是双向测试。<br>​       <strong>NEXT进行双向测试的原因</strong>：当NEXT发生在距离测试端较远的远端时，尤其当链路长度超过40m时，该串扰信号经过电缆的衰减到达测试点时，其影响可能已经很小，无法被测试仪器测量而被忽略。</p>
+<p>双向测试就是对NEXT测试要在链路两端各进行一次测试，即总共需要测试12次。</p>
+<p>在一端进行测试的排列顺序为：</p>
+<p>   1&amp;2——3&amp;6</p>
+<p>   1&amp;2——4&amp;5</p>
+<p>   1&amp;2——7&amp;8</p>
+<p>   3&amp;6——4&amp;5</p>
+<p>   3&amp;6——7&amp;8</p>
+<p>   4&amp;5——7&amp;8</p>
+<p>其中横线左边的数字表示干扰信号线对，</p>
+<p>​    横线右边的数字表示被干扰信号线对。</p>
+<p>​       测试仪通过在<strong>一个线对发送测试信号并测量在另一个线对上的串扰信号幅度的方法</strong>来测定串扰。</p>
+<p>​       <strong>近端串扰的计算</strong>：在测量电缆的同一端时，串扰值是由测试信号与串扰信号幅度差来计算。</p>
+<script type="math/tex; mode=display">
+NEXT=测试信号-串扰信号</script><p><strong>NEXT值越高，串扰信号越小。</strong><br>高的NEXT值相当于低串扰和更好的电缆性能。</p>
+<p>​      NEXT是频率的函数，串扰随着频率的增大而增大，超过一定的限制就会对传输的数据产生破坏。<br>​      从图中看出，<strong>NEXT曲线呈不规则形状</strong>，因为近端串扰与频率的函数关系太复杂。并且很多频率低的地方其近端串扰大于频率高的地方，<strong>必须参照电缆带宽频率范围测试很多频率采样点</strong>，以免漏掉最差频率采样点。</p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200320155224.png" alt=""></p>
+<p>目前对串扰定位的最好技术是Fluke DSP系列电缆测试仪中提供的<strong>时域串扰分析技术（TDX</strong>）。</p>
+<p>以往发现串扰不合格时，仅知道在<strong>多少兆赫兹</strong>时串扰不合格，<strong>不利于在现场解决故障</strong>。<strong>TDX可以准确给出串扰故障发生的物理距离。</strong></p>
+<h3 id="综合近端串扰测试"><a href="#综合近端串扰测试" class="headerlink" title="综合近端串扰测试"></a>综合近端串扰测试</h3><p>​      近端串扰是一个线对对另一个线对的串扰。<br>​      如果同时考虑<strong>多对线缆之间同时发生的串扰</strong>的相互影响，即考虑同一时间3个线对对同一线对的影响，这就是综合近端串扰（Power Sum NEXT， PSNEXT）。</p>
+<p>​      综合近端串扰实际上是<strong>一个计算值</strong>，而不是直接的测量结果。 PSNEXT是在每对线受到的单独来自其他3对线的NEXT影响的基础上通过公式计算出来的。</p>
+<p>​      综合近端串扰值是双绞线布线系统中的一个新的测试指标，只有5e类和6类电缆中才要求测试PSNEXT，这种测试在<strong>千兆以太网</strong>基于<strong>4对双绞线全双工传输模式</strong>中非常重要。</p>
+<h3 id="衰减串扰比测试"><a href="#衰减串扰比测试" class="headerlink" title="衰减串扰比测试"></a><strong>衰减串扰比测试</strong></h3><p>通信链路在信号传输时，衰减和串扰都会存在，串扰反映电缆系统内的噪声，衰减反映线对本身的传输质量，这两种性能参数的混合效应（信噪比）可以反映出电缆链路的实际传输质量，用<strong>衰减与串扰比</strong>来表示这种混合效应。</p>
+<p>衰减与串扰比定义为：被测线对受相邻发送线对串扰的近端串扰值与本线对传输信号衰减值的差值(单位为dB)，即：</p>
+<script type="math/tex; mode=display">
+ACR(dB)=NEXT(dB)- Attenuation (dB) \\
+
+\quad \quad  \quad \quad    \quad   =测试信号-串扰信号-Attenuation (dB)</script><p>近端串扰越高，衰减越小，则衰减与串扰比越高。</p>
+<p>类似信号噪声比，干扰噪声强度与信号强度相比越小越好。</p>
+<p>衰减、近端串扰和衰减串扰比是频率的函数，应在同一频率下计算。</p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200320173746.png" alt=""></p>
+<h3 id="等效远端串扰和综合远端串扰测试"><a href="#等效远端串扰和综合远端串扰测试" class="headerlink" title="等效远端串扰和综合远端串扰测试"></a><strong>等效远端串扰和综合远端串扰测试</strong></h3><p>​       与NEXT定义相类似，<strong>远端串扰（ FEXT ）</strong>是信号从近端发出，而在链路的另一侧（远端），发送信号的线对向其同侧其他相邻(接收)线对造成的串扰。</p>
+<p>​       因为信号的强度与它所产生的串扰及信号的衰减有关，所以<strong>电缆长度</strong>对测量到的FEXT值影响很大，FEXT并不是一种很有效的测试指标，在测量中是用<strong>等效远端串扰（ELFEXT值）</strong>的测量代替FEXT值的测量。</p>
+<p>等效远端串扰（ELFEXT）是指某线对上远端串扰损耗与该线路传输信号的衰减差。</p>
+<script type="math/tex; mode=display">
+ELFEXT(dB)=FEXT(dB)-A(dB)</script><p>其中，A为受串扰接收线对的传输衰减。</p>
+<p>​       和PSNEXT一样，综合等效远端串扰（PSELFEXT）是几个同时传输信号的线对在接收线对形成的ELFEXT总和。对4对UTP而言，它组合了其他3对线对第4对线的ELFEXT影响。</p>
+<h3 id="传输时延与时延偏离测试"><a href="#传输时延与时延偏离测试" class="headerlink" title="传输时延与时延偏离测试"></a><strong>传输时延与时延偏离测试</strong></h3><p>​       <strong>传输时延</strong>是信号在电缆<strong>线对</strong>中传输时从电缆一端传输到另一端所需要的时间。</p>
+<p>​      传输时延随着电缆长度的增加而增加，测量标准是指信号在100m电缆上的传输时间，单位是纳秒（ns），它是衡量信号在电缆中传输快慢的物理量。</p>
+<p>​       同一电缆中各线对之间由于使用的缠绕比率不同，长度也会有所不同，因而各线对之间的传输时延也会略有不同。</p>
+<p>​       由于在千兆网中使用4对线传输，且为全双工，在数据发送时，采用了分组传输，即将数据拆分成若干个数据包，按一定顺序分配到4对线上进行传输，而在接收时又按照反向顺序将数据重新组合，当信号通过不同线对传输的到达时间相差太远时，就会造成数据丢失。</p>
+<p>​        <strong>时延偏离</strong>是指同一UTP电缆中传输速度最快的线对和传输速度最慢线对的传输延迟差值，用ns标识，一般在50ns范围以内。</p>
+<p>​       传输时延和时延偏离是某些高速LAN应用的重要特征，因此它们应该包括在性能测试组中，尤其是对于准备运行使用多线对的某一高速协议的网络。</p>
+<p><strong>对于传输时延，将报告最差的那个线对。</strong></p>
+<p><strong>对于时延偏离，则报告任意两个线对的最差组合。</strong></p>
+<h3 id="回波损耗测试"><a href="#回波损耗测试" class="headerlink" title="回波损耗测试"></a><strong>回波损耗测试</strong></h3><p>​       在<strong>全双工网络</strong>中，当一对线负责发送数据的时候，在传输过程中遇到<strong>阻抗不匹配</strong>的情况时就会引起信号的反射，即<strong>整条链路有阻抗异常点</strong>。</p>
+<p>​       信号反射的强弱与阻抗有关，例如断开时阻抗无穷大，导致信号100%的反射。</p>
+<p>​        信号在介质中传播时，介质应该是“均匀”的，即介质针对该信号的阻抗应该是一致的。</p>
+<p>​        但由于介质与设备的连接需要接线，并且介质在传输线路中不可避免的改变形状、自身的加工误差等都会影响介质的阻抗。阻抗的变化会造成传输中信号的反射和损耗。</p>
+<p>​        在全双工通信时，整条链路既负责发送信号也负责接收信号，如果遇到信号的反射，之后与正常的信号进行叠加后就会造成信号的不正常，被反射到发送端的能量会形成噪声，导致信号失真，降低通信链路的传输性能。 </p>
+<p>​       这种由于线路中<strong>阻抗不匹配所</strong>造成的能量反射而引起的损耗称为回波损耗（Return Loss）。</p>
+<p>​      这个参数是在CAT5E链路测试标准中出现的，测试该参数是出于1000BASE-T全双工传输的需要。</p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200320175844.png" alt=""></p>
+<p><strong>预期的信号</strong> <strong>=</strong> <strong>从另一端发来经过衰减的信号</strong></p>
+<p><strong>噪声</strong> <strong>=</strong> <strong>同一线对上反射回来的信号</strong></p>
+<p>接收端收到的噪声<br>NEXT (其它三对线)<br>ELFEXT (其它三对线)<br>Return Loss (自身绕对)</p>
+<p>回波损耗定义为开始输入给信号传送系统的信号与信号源接收到的反射信号的功率之比。</p>
+<script type="math/tex; mode=display">
+回波损耗=发送信号/反射信号</script><p> 回波损耗越大，则反射信号越小，意味着电缆和相关连接硬件阻抗一致性越好、传输信号越完整、噪声越小，因此回波损耗越大越好 。</p>
+<h2 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h2><h3 id="TDR（时域反射技术）"><a href="#TDR（时域反射技术）" class="headerlink" title="TDR（时域反射技术）"></a>TDR（时域反射技术）</h3><p>​      TDR是用来测试链路的长度以及确定链路故障。</p>
+<p>​      TDR在双绞线对上采用雷达原理，它向被测线对发送一个高能驱动脉冲，反射信号被捕捉、测量和输出显示出来。</p>
+<p>​       高能驱动脉冲“行走”于电缆线对上，<strong>对线缆上阻抗突然改变的故障点（开路、短路、电缆进水等）产生反射信号。</strong></p>
+<h3 id="HDTDR（High-definition-time-domain-reflectormetry）"><a href="#HDTDR（High-definition-time-domain-reflectormetry）" class="headerlink" title="HDTDR（High definition time domain reflectormetry）"></a>HDTDR（High definition time domain reflectormetry）</h3><p>   HDTDR是美国Fluke公司的测试仪中采用的高精度的时域反射技术，主要针对有阻抗变化的故障进行精确定位。</p>
+<p>   它的原理是基于TDR技术的，该技术是通过在被测线对中发送测试信号，同时检测信号在该线对的反射相位和强度来确定故障的类型，通过信号反射的时间和信号在电缆中传输的速度精确地报告故障的具体位置。</p>
+<h3 id="HDTDX（High-definition-time-domain-crosstalk）"><a href="#HDTDX（High-definition-time-domain-crosstalk）" class="headerlink" title="HDTDX（High definition time domain crosstalk）"></a>HDTDX（High definition time domain crosstalk）</h3><p>   HDTDX是高精度的时域串扰分析技术，主要针对各种导致串扰的故障进行精确的定位。</p>
+<p>   以往对串扰的测试仅能提供串扰发生的频域结果，即仅知道串扰发生在哪个频点（MHz），并不能报告串扰发生的物理位置。</p>
+<p>   HDTDX技术是通过在一个线对上发送测试信号，同时在时域上对相邻线对测试串扰信号。由于是在时域进行测试，因此根据串扰发生的时间以及信号的传输速度可以精确定位串扰发生的物理位置。</p>
+<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>考试：画图 某词定义</p>
+<ol>
+<li><p>DSP测试仪完成测试后显示了如下的屏幕，请问发现了什么错误:（  A ）<br>A. 串绕split<br>B. 反接reversed<br>C. 开路open<br>D. 跨接cross</p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200320181013.png" alt=""></p>
+</li>
+<li><p>对上题的电缆故障，选择什么测试方法来找出故障的准确位置?（   D  ）<br>A. 直流环路电阻测试<br>B. 时域反射(TDR)测试<br>C. 阻抗测试<br>D. 时域串扰(TDX)测试</p>
+</li>
+<li><p>长度测量是通过信号传输时间来计算出来的，所以准确地测量长度需要什么参数准确? （ C ）<br>A. 测试仪器的速度<br>B. 电缆的特性阻抗<br>C. 电缆的额定传输速度(NVP)<br>D. 时域反射系数</p>
+</li>
+<li><p>双绞线对由两条具有绝缘保护层的铜芯线按一定密度互相缠绕在一起组成，缠绕的目的是（ C）<br>提高传输速度<br>降低成本<br>降低信号干扰的程度<br>提高电缆的物理强度</p>
+</li>
+<li><p>下列有关衰减测试的描述，不正确的是（A ）<br>A. 通道链路的总衰减是布线电缆的衰减和连接件的衰减之和。(<strong>十米的跳线</strong>)<br>B. 布线电缆的衰减是频率和温度的连续函数<br>C. 测量衰减的常用方法是使用扫描仪在不同频率上发送0dB信号<br>D. 衰减是一种插入损耗，即在传输系统的某处由于元件或器件的插入而发生的负载功率的损耗。</p>
+</li>
+<li><p>下列有关串扰故障的描述，不正确的是（ A  ）<br>A. 出现串扰故障时端与端的连通性不正常(<strong>对连通性没有影响,影响信号的接收</strong>)<br>B. 串绕就是将原来的线对分别拆开重新组成新的线对<br>用一般的万用表或简单电缆测试仪检测不出串扰故障<br>串扰故障需要使用专门的电缆认证测试仪才能检测出来</p>
+</li>
+<li><p>近端串扰所称的“近端”是指（  B）<br>A. 串绕在近端处（发送端）最大<br>B. 串扰的测量是在测量信号发送端进行的<br>串绕测量是在测量信号的另外一端进行的<br>测量是在双方向进行的</p>
+</li>
+<li>为什么近端串扰测量不能只在几个频率点上进行:（    B）<br>A 为近端串扰随频率增加而增大<br>B. 因为近端串扰与频率的函数关系太复杂且很多频率低的地方其近端串扰大于频率高的地方<br>C. 因为测量的频率点太少不能令用户满意<br>以上都不是</li>
+<li>ACR (衰减串扰比)的实际意义是：（ C ）<br>A. 表示电缆链路的衰减性能好<br>B. 表示电缆链路的近端串绕性能好<br>C. 表示电缆链路的综合性能好<br>D. 表示电缆抗干扰的性能好</li>
+<li>下列参数中，（ A）是测试值越小越好的参数<br>A. 衰减<br>B. 近端串扰<br>C. 回波损耗<br>D. 衰减串扰比</li>
+<li>能体现布线系统信噪比的参数是（ A）<br>A 减串扰比<br>B. 近端串扰<br>C. 回波损耗<br>D. 衰减</li>
+<li><p>下列关于电缆参数与频率关系的说法不正确的是（ B ）<br>A. 串扰会随着频率增高而增大<br>B.  NEXT会随着频率增高而增大<br>C. 衰减会随着频率增高而增大<br>D. ACR会随着频率增高而减小</p>
+</li>
+<li><p>回波损耗测量反映的是电缆的（  D ）性能。<br>连通性<br>B.抗干扰特性<br>C. 物理长度<br>D. 阻抗一致性</p>
+</li>
+<li><p>HDTDR技术主要针对    <strong>有阻抗变化</strong>      的故障进行精确定位。 </p>
+</li>
+<li><p>HDTDX技术主要针对      <strong>各种导致串扰的故障</strong>    的故障进行精确定位。</p>
+</li>
+<li><p>在网线的检测中，对于交叉线的检测，如果测试仪中一端的闪灯顺序是： 1、2、3、4、5、6、7、8，则另一端的闪灯顺序为   <strong>3 6  1 4 5 2 7 8</strong> 。</p>
+<p><strong>1，2：3，6</strong></p>
+<p><strong>3，6：1，2</strong></p>
+<p><strong>4578：4578</strong></p>
+</li>
+</ol>
+<p>17.（1）请给出认证测试中基本链路和通道的概念以及他们之间的区别，并说出测试接法的不同之处。（2）请画出基本链路、永久链路和通道链路的测试模型。</p>
+
+    </div>
+
+    
+    
+    
+	
+    <div style="text-align:center;color: #ccc;font-size:14px;">
+------------- 本文结束 <i class="fa fa-heart-o"></i> 感谢您的阅读-------------
+</div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>sdz
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://pxlsdz.github.io/2020/02/24/%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95%E4%B8%8E%E5%88%86%E6%9E%90--%E7%94%B5%E7%BC%86%E6%B5%8B%E8%AF%95/" title="网络测试与分析--概述">https://pxlsdz.github.io/2020/02/24/网络测试与分析--电缆测试/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/" rel="tag"><i class="fa fa-tag"></i> 课堂笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/02/24/TOPSIS%E7%AE%97%E6%B3%95/" rel="prev" title="TOPSIS算法">
+      <i class="fa fa-chevron-left"></i> TOPSIS算法
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/02/24/%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95%E4%B8%8E%E5%88%86%E6%9E%90--%E6%A6%82%E8%BF%B0/" rel="next" title="网络测试与分析--概述">
+      网络测试与分析--概述 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#电缆测试的重要性"><span class="nav-number">1.</span> <span class="nav-text">电缆测试的重要性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#综合布线系统测试标准"><span class="nav-number">2.</span> <span class="nav-text">综合布线系统测试标准</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#电缆链路的测试类型"><span class="nav-number">3.</span> <span class="nav-text">电缆链路的测试类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#验证测试"><span class="nav-number">3.1.</span> <span class="nav-text">验证测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#认证测试"><span class="nav-number">3.2.</span> <span class="nav-text">认证测试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#电缆链路的测试模型（重要）"><span class="nav-number">4.</span> <span class="nav-text">电缆链路的测试模型（重要）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本链路模型测试"><span class="nav-number">4.1.</span> <span class="nav-text">基本链路模型测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#永久链路模型测试"><span class="nav-number">4.2.</span> <span class="nav-text">永久链路模型测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通道测试"><span class="nav-number">4.3.</span> <span class="nav-text">通道测试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#综合布线故障分类"><span class="nav-number">5.</span> <span class="nav-text">综合布线故障分类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#物理故障"><span class="nav-number">5.1.</span> <span class="nav-text">物理故障</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#电气性能故障"><span class="nav-number">5.2.</span> <span class="nav-text">电气性能故障</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#电缆链路的测试方法"><span class="nav-number">6.</span> <span class="nav-text">电缆链路的测试方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#电缆测试的指标参数"><span class="nav-number">6.1.</span> <span class="nav-text">电缆测试的指标参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网线的制作与测试"><span class="nav-number">6.1.1.</span> <span class="nav-text">网线的制作与测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接线图测试"><span class="nav-number">6.1.2.</span> <span class="nav-text">接线图测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#电缆长度测试"><span class="nav-number">6.1.3.</span> <span class="nav-text">电缆长度测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#衰减测试"><span class="nav-number">6.1.4.</span> <span class="nav-text">衰减测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#近端串扰测试"><span class="nav-number">6.1.5.</span> <span class="nav-text">近端串扰测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#综合近端串扰测试"><span class="nav-number">6.1.6.</span> <span class="nav-text">综合近端串扰测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#衰减串扰比测试"><span class="nav-number">6.1.7.</span> <span class="nav-text">衰减串扰比测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#等效远端串扰和综合远端串扰测试"><span class="nav-number">6.1.8.</span> <span class="nav-text">等效远端串扰和综合远端串扰测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#传输时延与时延偏离测试"><span class="nav-number">6.1.9.</span> <span class="nav-text">传输时延与时延偏离测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回波损耗测试"><span class="nav-number">6.1.10.</span> <span class="nav-text">回波损耗测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#技术"><span class="nav-number">6.2.</span> <span class="nav-text">技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TDR（时域反射技术）"><span class="nav-number">6.2.1.</span> <span class="nav-text">TDR（时域反射技术）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HDTDR（High-definition-time-domain-reflectormetry）"><span class="nav-number">6.2.2.</span> <span class="nav-text">HDTDR（High definition time domain reflectormetry）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HDTDX（High-definition-time-domain-crosstalk）"><span class="nav-number">6.2.3.</span> <span class="nav-text">HDTDX（High definition time domain crosstalk）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#题目"><span class="nav-number">7.</span> <span class="nav-text">题目</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="sdz"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">sdz</p>
+  <div class="site-description" itemprop="description">个人博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">36</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/pxlsdz" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;pxlsdz" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/sdz20172133" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;sdz20172133" rel="noopener" target="_blank"><i class="fa fa-fw fa-codiepie"></i>CSDN</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sdz</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">300k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:33</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'pAM5gCGYUGBwBF62VmECeV0o-gzGzoHsz',
+      appKey     : 'myehhFCNOsN4ClPFSLov1xKd',
+      placeholder: "欢迎畅所欲言",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+  <!-- 页面点击小红心 -->
+
+      <script type="text/javascript" src="/js/clicklove.js"></script>
+
+</body>
+</html>

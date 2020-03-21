@@ -119,17 +119,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">32</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">36</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">17</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">15</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">57</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">65</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -182,6 +182,417 @@
             
 
   <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://pxlsdz.github.io/2020/03/20/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90%E5%AE%9E%E9%AA%8C--%E9%85%8D%E7%BD%AESSH/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="sdz">
+      <meta itemprop="description" content="个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pxlsdz的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/20/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90%E5%AE%9E%E9%AA%8C--%E9%85%8D%E7%BD%AESSH/" class="post-title-link" itemprop="url">网络系统集成实验--配置SSH</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-03-20 08:56:49 / 修改时间：10:13:21" itemprop="dateCreated datePublished" datetime="2020-03-20T08:56:49+08:00">2020-03-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/" itemprop="url" rel="index"><span itemprop="name">网络系统集成</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/03/20/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90%E5%AE%9E%E9%AA%8C--%E9%85%8D%E7%BD%AESSH/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/20/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90%E5%AE%9E%E9%AA%8C--%E9%85%8D%E7%BD%AESSH/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200320101237.png" alt=""></p>
+<h2 id="第-1-部分：-保护密码"><a href="#第-1-部分：-保护密码" class="headerlink" title="第 1 部分： 保护密码"></a>第 1 部分： 保护密码</h2><p>a.     使用 PC1 上的命令提示符，通过 Telnet 连接到 S1。 用户执行和特权执行密码为 cisco。</p>
+<p>b.     保存当前配置，以便可通过切换 S1 的电源修复您可能做出的任何错误操作。</p>
+<p>c.     显示当前配置，注意密码都以明文显示。 输入加密纯文本密码的命令。</p>
+<p>d.     验证密码是否已加密。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt;telnet <span class="number">10.10</span><span class="number">.10</span><span class="number">.2</span></span><br><span class="line">Trying <span class="number">10.10</span><span class="number">.10</span><span class="number">.2</span> ...Open</span><br><span class="line">User Access Verification</span><br><span class="line">Password: </span><br><span class="line">S1&gt;enable</span><br><span class="line">S1<span class="comment">#show ip ssh</span></span><br><span class="line">S1<span class="comment">#copy running-config startup-config</span></span><br><span class="line">S1<span class="comment">#conf ter</span></span><br><span class="line">S1(config)<span class="comment"># service password-encryption</span></span><br><span class="line">S1(config)<span class="comment">#banner motd #Authorized Access Only!#</span></span><br><span class="line">S1(config)<span class="comment">#exit</span></span><br></pre></td></tr></table></figure>
+<h2 id="第-2-部分：-加密通信"><a href="#第-2-部分：-加密通信" class="headerlink" title="第 2 部分： 加密通信"></a>第 2 部分： 加密通信</h2><h2 id="步骤-1：设置-IP-域名并生成安全密钥。"><a href="#步骤-1：设置-IP-域名并生成安全密钥。" class="headerlink" title="步骤 1：设置 IP 域名并生成安全密钥。"></a>步骤 1：设置 IP 域名并生成安全密钥。</h2><p>通常，使用 Telnet 并不安全，因为数据是以纯文本形式传输。 因此，只要 SSH 可用，就应使用 SSH。</p>
+<p>a.     将域名配置为 netacad.pka。</p>
+<p>b.     需要使用安全密钥加密数据。 使用 1024 密钥长度生成 RSA 密钥。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">S1<span class="comment">#copy running-config startup-config</span></span><br><span class="line">S1<span class="comment">#conf ter</span></span><br><span class="line">S1(config)<span class="comment">#ip domain-name netacad.pka</span></span><br><span class="line">S1(config)<span class="comment">#crypto key generate rsa</span></span><br></pre></td></tr></table></figure>
+<h2 id="步骤-2：创建-SSH-用户，并将-VTY-线路重新配置为仅限-SSH-访问。"><a href="#步骤-2：创建-SSH-用户，并将-VTY-线路重新配置为仅限-SSH-访问。" class="headerlink" title="步骤 2：创建 SSH 用户，并将 VTY 线路重新配置为仅限 SSH 访问。"></a>步骤 2：创建 SSH 用户，并将 VTY 线路重新配置为仅限 SSH 访问。</h2><p>a.     使用 cisco 作为加密密码创建 administrator 用户。</p>
+<p>b.     配置 VTY 线路以检查本地用户名数据库的登录凭证，并只允许 SSH 进行远程访问。 删除现有 vty 线路密码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">S1(config)<span class="comment">#username administrator secret cisco</span></span><br><span class="line">S1(config)<span class="comment">#line vty 0 15</span></span><br><span class="line">S1(config-line)<span class="comment">#no password</span></span><br><span class="line">S1(config-line)<span class="comment">#transport input ssh</span></span><br><span class="line">S1(config-line)<span class="comment">#login local</span></span><br><span class="line">S1(config-line)<span class="comment">#end</span></span><br><span class="line">S1<span class="comment">#conf ter</span></span><br><span class="line">S1<span class="comment">#show ip ssh</span></span><br></pre></td></tr></table></figure>
+<h2 id="第-3-部分：-验证-SSH-实施"><a href="#第-3-部分：-验证-SSH-实施" class="headerlink" title="第 3 部分： 验证 SSH 实施"></a>第 3 部分： 验证 SSH 实施</h2><p>a 退出 Telnet 会话并尝试使用 Telnet 重新登录。该尝试应该会失败。</p>
+<p> b 尝试使用 SSH 登录。键入 ssh，然后按 Enter，不使用任何参数显示命令使用情况说明。提示：-l 选项 为字母“L”，而不是数字 1。 </p>
+<p>c 成功登录后，进入特权执行模式并保存配置。如果您无法成功访问 S1，则切换电源，然后再次从第 1 部分 开始。</p>
+<p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200320100016.png" alt=""></p>
+
+      
+    </div>
+
+    
+    
+    
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://pxlsdz.github.io/2020/03/19/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E2%80%94%E2%80%94%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="sdz">
+      <meta itemprop="description" content="个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pxlsdz的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/19/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E2%80%94%E2%80%94%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D/" class="post-title-link" itemprop="url">人工智能——模式匹配</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-03-19 16:11:34 / 修改时间：21:40:19" itemprop="dateCreated datePublished" datetime="2020-03-19T16:11:34+08:00">2020-03-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" itemprop="url" rel="index"><span itemprop="name">人工智能</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/03/19/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E2%80%94%E2%80%94%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/19/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E2%80%94%E2%80%94%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p>​       所谓模式匹配是指对两个知识模式（如两个谓词公式、两个框架片断或两个语义网络片断等）的比较与耦合，即检<strong>查这两个知识模式是否完全一致或近似一致</strong>。如果两者完全一致，或者虽不完全一致但其相似程度落在指定的限度内，就称它们是可匹配的，否则为不可匹配。<br>​        模式匹配是推理中必须进行的一项重要工作，因为只有经过模式匹配才能从知识库中选出当前适用的知识，才能进行推理。例如在产生式系统中，为了由已知的初始事实推出相应的结论，首先必须从知识库中选出可与已知事实匹配的产生式规则，然后才能应用这些产生式规则进行推理，逐步推出结论。框架推理以及语义网络推理与此类似，也需要先通过匹配选出相应的框架及语义网络片断，然后再进行推理。<br>若按匹配时两个知识模式的相似程度划分，模式匹配可分为确定性匹配与不确定性匹配两种。<br>​       所谓确定性匹配是指两个知识模式完全一致，或者经过变量代换后变得完全一致。例如，设有如下两个知识模式：</p>
+<script type="math/tex; mode=display">
+\begin{eqnarray*}
+&& P1：father（李四，李小四）and \quad man（李小四）\\ 
+&& P2：father（x，y）and  \quad man（y）
+\\
+\end{eqnarray*}</script><p>​        若用“李四”代换变量x，用“李小四”代换变量y，则P1与P2就变得完全一致。若用这两个知识模式进行匹配，则它们是确定性匹配。确定性匹配又称为完全匹配或精确匹配。<br>​       所谓不确定性匹配是指两个知识模式不完全一致，但从总体上看，它们的相似程度又落在规定的限度内。关于不确定性匹配将在第5章结合各种不确定性推理进行讨论。<br>​        无论是确定性匹配还是不确定性匹配，在进行匹配时一般都需要进行变量的代换，因此下面讨论<strong>代换与合一</strong>的有关概念及方法。</p>
+<h1 id="代换"><a href="#代换" class="headerlink" title="代换"></a>代换</h1><p>定义 代换是形如</p>
+<script type="math/tex; mode=display">
+\{ t1/x1，t2/x2，...,tn/xn \}</script><p>的有限集合。其中，t1，t2，…，tn是项；x1，x2，…，xn是互不相同的变元；ti/xi表示用ti代换xi，不允许ti与xi相同，也不允许变元xi循环地出现在另一个tj中。<br>例如</p>
+<script type="math/tex; mode=display">
+\{ a/x,f(b)/y,w/z \}</script><p>是一个代换，但是</p>
+<script type="math/tex; mode=display">
+\{ g(y)/x,f(x)/y \}</script><p>不是一个代换，因为代换的目的是使某些变元被另外的变元、常量或函数取代，使之不再在公式中出现，而$\{g（y）/x，f（x）/y\}$在x与y之间出现了循环代换的情况，它既没有消去x，也没有消去y。如果将它改为</p>
+<script type="math/tex; mode=display">
+\{g(a)/x,f(x)/y\}</script><p>就可以了，它将把公式中的x用g（a）代换，y用f(g(a))代换，从而消去了变元x和y。</p>
+<p>设</p>
+<script type="math/tex; mode=display">
+\theta=\{t1/x1，t2/x2…，ta/xa\}
+\\ \lambda=\{u1/y1，uz/y2…，um/ym\}</script><p>是两个代换，则此两个代换的复合也是一个代换，它是从</p>
+<script type="math/tex; mode=display">
+\{t1\lambda/x1,t2\lambda/x2…,tn\lambda/xn,u1/y1,u2/y2…,um/ ym\}</script><p>中删去如下两种元素：</p>
+<script type="math/tex; mode=display">
+\begin{array}{ll}
+t_{i} \lambda / x_{i} & \stackrel{}\quad \quad当t_{i} \lambda=x_{i} \\
+u_{i} / y_{i} & \quad \quad \text { 当 } y_{i} \in\left\{x_{1}, x_{2}, \cdots, x_{n} |\right.
+\end{array}</script><p>后剩下的元素所构成的集合，记为$\theta {\circ} \lambda$。<br>例如，设有代换：</p>
+<script type="math/tex; mode=display">
+\theta=\{f(y)/x,z/y\}\\ \lambda=\{a/x,b/y,y/z\}</script><h1 id="合一"><a href="#合一" class="headerlink" title="合一"></a>合一</h1><p>定义</p>
+<p>设有公式集F={F1，F2…，Fn}，若存在一个代换$\lambda$使得</p>
+<script type="math/tex; mode=display">
+F1\lambda =F2\lambda=…=Fn\lambda</script><p>则称$\lambda$为公式集F的一个<strong>合一</strong>，且称F1，F2，…，Fn是可合一的。</p>
+<p>例如，设有公式集</p>
+<script type="math/tex; mode=display">
+F={P（x，y，f（y）），P（a，g（x）,z）}</script><p>则下式是它的一个合一：</p>
+<script type="math/tex; mode=display">
+\lambda=\{a/x，g（a）/y，f（g（a））/z\}</script><p>一个公式集的合一一般来说是不唯一的。</p>
+<p>​       设$\sigma$是公式集F的一个合一，如果对任一个合一$\theta$都存在一个代换$\lambda$，使得</p>
+<script type="math/tex; mode=display">
+\theta=\sigma {\circ} \lambda</script><p>则称$\sigma$是一个最一般的合一。<br>       最一般合一是唯一的。若用最一般合一去代换那些可合一的谓词公式，可使它们变成完全一致的谓词公式。由此可知，为了使两个知识模式匹配，可用其最一般合一对它们进行代换。<br>        如何求取最一般合一呢？在给出求取算法之前，先引入差异集的概念。设有如下两个谓词公式：</p>
+<script type="math/tex; mode=display">
+\begin{array}{ll}
+F_{1}: & P(x, y, z) \\
+F_{2}: & P(x, f(a), h(b))
+\end{array}</script><p>​       分别从F1与F2的第一个符号开始，逐个向右比较，此时发现F1中的y与F2中的f(a)不同，它们构成了一个差异集：</p>
+<script type="math/tex; mode=display">
+\left.D_{1}=| y, f(a)\right\}</script><p>​      当继续向右边比较时，又发现F1中的y与F2中的f（a）不同，则又得到一个差异集：</p>
+<script type="math/tex; mode=display">
+D_{2}=\{z, h(b)\}</script><p>下面给出求取最一般合一的算法：</p>
+<ol>
+<li><p>令$k=0, F_{k}=F, \sigma_{k}=\varepsilon$。这里，F是欲求其最一般合一的公式集，$\varepsilon$是空代换，它表示不做代换。</p>
+</li>
+<li><p>若$F_{k}$ 只含一个表达式，$\sigma_{k}$则算法停止，就是最一般合一。</p>
+</li>
+<li><p>找出$F_{k}$ 的差异集Di。</p>
+</li>
+<li><p>若Dk中存在元素xk和tk，其中xk是变元，tk是项，且xk不在tk中出现，则置：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+&\left.\sigma_{k+1}=\sigma_{k} \circ \{ t_{k} / x_{k}\right\}\\
+&F_{k+1}=F_{k}\left\{t_{k} / x_{k}\right\}\\
+&k=k+1
+\end{aligned}</script><p>然后转2</p>
+</li>
+<li><p>算法终止，F的最一般合一不存在。</p>
+</li>
+</ol>
+<h2 id="最一般合一的例子"><a href="#最一般合一的例子" class="headerlink" title="最一般合一的例子"></a>最一般合一的例子</h2><p>​     例如，设</p>
+<script type="math/tex; mode=display">
+F=\{P（a，x，f（g（y））），P（z，f（x），f（u））\}</script><p>求其最一般合一。</p>
+<ol>
+<li><p>令$\sigma_{0} = \varepsilon, F_{0}=F$，因$f_{0}$中含有两个表达式，所以$\sigma_{0}$不是最一般合一。</p>
+</li>
+<li><p>差异集$D_{0}=\{a, z\}$</p>
+</li>
+<li><p>$\begin{array} {l}<br>\sigma_{1}=\sigma_{0} \circ\{a / z\}=\{a / z\} \\<br>F_{1}=\{P(a, x, f(g(y))), P(a, f(a), f(u))\}<br>\end{array}$</p>
+</li>
+<li><p>$D_{1}=\{x, f(a)\}_{0}$</p>
+</li>
+<li><p>$\left.\sigma_{2}=\sigma_{1} \cdot | f(a) / x\right\}=\{a / z, f(a) / x\}$<br>$F_{2}=F_{1}\{f(a) / x\}$<br>$=\left\{P(a, f(a), f(g(y))),\left.P(a, f(a), f(u))\right|_{0}\right.$</p>
+</li>
+<li><p>$D_{2}=\{g(y), u\}$</p>
+</li>
+<li><p>$a_{3}=\sigma_{2} \circ\{g(y) / u\}=\{a / z, f(a) / x, g(y) / u\}$</p>
+</li>
+<li><p>$\left.F_{3}=F_{2}|g(y) / u|=| P(a, f(a), f(g(y)))\right\}$</p>
+</li>
+</ol>
+<p>因为$F_{3}$只含一个表达式，所以$\sigma_{3}$就是最一般合一，即</p>
+<script type="math/tex; mode=display">
+\{a/z，f（a）/x，g（y）/u\}</script><p>是最一般合一。</p>
+<p>(4) $D_{1}=\{x, f(a)\}_{0}$<br>(5)<br>$F_{2}=F_{1}\{f(a) / x\}$<br>$=\left\{P(a, f(a), f(g(y))),\left.P(a, f(a), f(u))\right|_{0}\right.$<br>(6) $D_{2}=|g(y), u|_{0}$<br>(7) $a_{3}=\sigma_{2} \circ\{g(y) / u\}=\{a / z, f(a) / x, g(y) / u\}_{0}$<br>(8) $\left.F_{3}=F_{2}|g(y) / u|=| P(a, f(a), f(g(y)))\right\}_{0}$</p>
+
+      
+    </div>
+
+    
+    
+    
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://pxlsdz.github.io/2020/03/19/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90--%E8%B7%AF%E7%94%B1%E5%99%A8%E9%85%8D%E7%BD%AE%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="sdz">
+      <meta itemprop="description" content="个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pxlsdz的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/19/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90--%E8%B7%AF%E7%94%B1%E5%99%A8%E9%85%8D%E7%BD%AE%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">网络系统集成--路由器配置基础</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-19 11:56:49" itemprop="dateCreated datePublished" datetime="2020-03-19T11:56:49+08:00">2020-03-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-20 08:56:38" itemprop="dateModified" datetime="2020-03-20T08:56:38+08:00">2020-03-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/" itemprop="url" rel="index"><span itemprop="name">网络系统集成</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/03/19/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90--%E8%B7%AF%E7%94%B1%E5%99%A8%E9%85%8D%E7%BD%AE%E5%9F%BA%E7%A1%80/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/19/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90--%E8%B7%AF%E7%94%B1%E5%99%A8%E9%85%8D%E7%BD%AE%E5%9F%BA%E7%A1%80/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>944</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/19/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90--%E8%B7%AF%E7%94%B1%E5%99%A8%E9%85%8D%E7%BD%AE%E5%9F%BA%E7%A1%80/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
   
   
@@ -319,21 +730,23 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-03-16 15:17:06 / 修改时间：16:34:43" itemprop="dateCreated datePublished" datetime="2020-03-16T15:17:06+08:00">2020-03-16</time>
+              <time title="创建时间：2020-03-16 15:17:06" itemprop="dateCreated datePublished" datetime="2020-03-16T15:17:06+08:00">2020-03-16</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-21 17:48:28" itemprop="dateModified" datetime="2020-03-21T17:48:28+08:00">2020-03-21</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ACM/" itemprop="url" rel="index"><span itemprop="name">ACM</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ACM/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
                 </span>
             </span>
 
@@ -461,6 +874,192 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://pxlsdz.github.io/2020/03/13/EOJ%20Monthly%202020.3%E9%A2%98%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="sdz">
+      <meta itemprop="description" content="个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pxlsdz的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/13/EOJ%20Monthly%202020.3%E9%A2%98%E8%A7%A3/" class="post-title-link" itemprop="url">EOJ Monthly 2020.3题解</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-13 14:12:39" itemprop="dateCreated datePublished" datetime="2020-03-13T14:12:39+08:00">2020-03-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-21 22:27:48" itemprop="dateModified" datetime="2020-03-21T22:27:48+08:00">2020-03-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/03/13/EOJ%20Monthly%202020.3%E9%A2%98%E8%A7%A3/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/13/EOJ%20Monthly%202020.3%E9%A2%98%E8%A7%A3/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <div class="table-container">
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th style="text-align:left">标题</th>
+<th>已解出</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td style="text-align:left"><a href="https://acm.ecnu.edu.cn/contest/255/problem/A/" target="_blank" rel="noopener">迷宫</a> (1.0 sec / 512 MB)</td>
+<td><a href="https://acm.ecnu.edu.cn/contest/255/status/?problem=A&amp;verdict=v0" target="_blank" rel="noopener"> x 13</a></td>
+</tr>
+<tr>
+<td>B</td>
+<td style="text-align:left"><a href="https://acm.ecnu.edu.cn/contest/255/problem/B/" target="_blank" rel="noopener">与矩阵</a> (1.0 sec / 512 MB)</td>
+<td><a href="https://acm.ecnu.edu.cn/contest/255/status/?problem=B&amp;verdict=v0" target="_blank" rel="noopener"> x 359</a></td>
+</tr>
+<tr>
+<td>C</td>
+<td style="text-align:left"><a href="https://acm.ecnu.edu.cn/contest/255/problem/C/" target="_blank" rel="noopener">排序树</a> (10.0 sec / 512 MB)</td>
+<td><a href="https://acm.ecnu.edu.cn/contest/255/status/?problem=C&amp;verdict=v0" target="_blank" rel="noopener"> x 1</a></td>
+</tr>
+<tr>
+<td>D</td>
+<td style="text-align:left"><a href="https://acm.ecnu.edu.cn/contest/255/problem/D/" target="_blank" rel="noopener">钢琴演奏家</a> (1.5 sec / 512 MB)</td>
+<td><a href="https://acm.ecnu.edu.cn/contest/255/status/?problem=D&amp;verdict=v0" target="_blank" rel="noopener"> x 280</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id=""><a href="#" class="headerlink" title=" "></a> </h3><h2 id="B-与矩阵"><a href="#B-与矩阵" class="headerlink" title="B. 与矩阵"></a>B. 与矩阵</h2><p><strong>单点时限:</strong> 1.0 sec</p>
+<p><strong>内存限制:</strong> 512 MB</p>
+<p>前有牛顿瘟疫“家里蹲”发明微积分。</p>
+<p>现有 Cuber QQ 新冠肺炎“家里蹲”发明与矩阵。</p>
+<p>与矩阵是一个 n×n 的矩阵。规定矩阵中的第 i 行第 j 列记为 (i,j) 。</p>
+<p>生成一个与矩阵的方式是，先生成一个长度为 n 的数列 a1,a2,…,an−1,an ，而矩阵中 (i,j)=ai&amp;aj 。</p>
+<p>其中 &amp; 是指<a href="https://en.wikipedia.org/wiki/Bitwise_operation#AND" target="_blank" rel="noopener">按位与运算</a>，其计算方式是参与运算的两数各对应的二进位相与。只有对应的两个二进位都为 1 时，结果位才为 1 。</p>
+<p>Cuber QQ 发现，同一个与矩阵可能对应着一些不同的数列，不过 Cuber QQ 现在只想知道字典序最小的数列是什么样的。</p>
+<p>对于两个数列 a1,a2,…,an−1,an 和 b1,b2,…,bn−1,bn ，如果存在一个整数 k (1≤k≤n) 满足 ak+1&lt;bk+1 且 a1=b1,a2=b2,…,ak=bk ，我们就认为数列 a1,a2,…,an−1,an 的字典序要小于数列 b1,b2,…,bn−1,bn 。</p>
+<p>当然，Cuber QQ 不会这么容易让你得到答案，他会把矩阵所有的 (i,i) (1≤i≤n) 的位置全部隐藏，只显示为 0 。</p>
+<h3 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h3><p>第一行输入一个整数 n (1≤n≤1000) ，表示矩阵的大小。</p>
+<p>接下来的 n 行，每行 n 个用空格隔开的整数 ai,1,ai,2,…,ai,n (0≤ai,j≤107) ，表示与矩阵。</p>
+<p>输入保证至少存在一个可能的解。</p>
+<h3 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h3><p>输出包含一行 n 个用空格隔开的数，表示字典序最小的数列。</p>
+<h3 id="样例"><a href="#样例" class="headerlink" title="样例"></a>样例</h3><p>input</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">3</span><br><span class="line">0 0 1</span><br><span class="line">0 0 2</span><br><span class="line">1 2 0</span><br></pre></td></tr></table></figure>
+<p>output</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 2 3</span><br></pre></td></tr></table></figure>
+<h3 id="提示"><a href="#提示" class="headerlink" title="提示"></a>提示</h3><p>样例中给出的数列为 1,2,3 。</p>
+<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>肯定要按位考虑。对于一个位置 (i,j) 考虑二进制下的其中一位，如果它所在的行和列中的数在这一位上出现了 1 ，那么必然这个数这一位上一定是 1 。</p>
+<p>题目要求字典序最小的，那么我们必然会把所有可以为 0 的位置全部设为 0 ，也就是它所在的行和列中的数在这一位上没有出现了 1 。</p>
+<p>很容易证明，这样的到的一定是最小的。</p>
+<p>所以每一行直接或起来就是答案，或者模拟一下。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>C++`</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ll long long</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn=<span class="number">30</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> ans[<span class="number">1005</span>][maxn];</span><br><span class="line"><span class="keyword">int</span> a[<span class="number">1005</span>][<span class="number">1005</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> i,<span class="keyword">int</span> j)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> id=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(x&gt;<span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		id+=<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span>(x%<span class="number">2</span>==<span class="number">1</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			ans[i][maxn-id]=<span class="number">1</span>;</span><br><span class="line">			ans[j][maxn-id]=<span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		x/=<span class="number">2</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n,m;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=n;j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;a[i][j]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">	   <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;i;j++)</span><br><span class="line">	   &#123;</span><br><span class="line">	   	f(a[i][j],i,j);</span><br><span class="line">	   &#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	 <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	 &#123;</span><br><span class="line">	 	<span class="keyword">int</span> temp=<span class="number">0</span>;</span><br><span class="line">	 	<span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;maxn;j++)</span><br><span class="line">		&#123;</span><br><span class="line">			temp+=(<span class="number">1</span>&lt;&lt;(maxn-j<span class="number">-1</span>))*ans[i][j];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d "</span>,temp);</span><br><span class="line">	 &#125;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>python</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"> </span><br><span class="line">IA = <span class="keyword">lambda</span>: map(int,input().split())</span><br><span class="line">IAS= <span class="keyword">lambda</span>: map(str,input().split())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(x,i,j)</span>:</span></span><br><span class="line">    idd=<span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> x&gt;<span class="number">0</span>:</span><br><span class="line">        idd+=<span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> x%<span class="number">2</span>==<span class="number">1</span>:</span><br><span class="line">            ans[i][m-idd]=<span class="number">1</span></span><br><span class="line">            ans[j][m-idd]=<span class="number">1</span></span><br><span class="line">        x//=<span class="number">2</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">m=<span class="number">30</span></span><br><span class="line">n=int(input())</span><br><span class="line">a=[[] <span class="keyword">for</span> i <span class="keyword">in</span> range(n)]</span><br><span class="line">ans=[[<span class="number">0</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(m)] <span class="keyword">for</span> i <span class="keyword">in</span> range(n)]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">    a[i]=list(IA())</span><br><span class="line">    </span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(i):</span><br><span class="line">        f(a[i][j],i,j)</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">        </span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">    temp=<span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(m):</span><br><span class="line">        temp+=(<span class="number">1</span>&lt;&lt;(m-j<span class="number">-1</span>))*ans[i][j]</span><br><span class="line">    print(temp,end=<span class="string">" "</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"> </span><br><span class="line">IA = <span class="keyword">lambda</span>: map(int,input().split())</span><br><span class="line">IAS= <span class="keyword">lambda</span>: map(str,input().split())</span><br><span class="line">n=int(input())</span><br><span class="line">a=[[] <span class="keyword">for</span> i <span class="keyword">in</span> range(n)]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">    a[i]=list(IA())</span><br><span class="line">    </span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">    temp=<span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(n):</span><br><span class="line">        temp|=a[i][j]</span><br><span class="line">    print(temp,end=<span class="string">" "</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="D-钢琴演奏家"><a href="#D-钢琴演奏家" class="headerlink" title="D. 钢琴演奏家"></a>D. 钢琴演奏家</h2><p><strong>单点时限:</strong> 1.5 sec</p>
+<p><strong>内存限制:</strong> 512 MB</p>
+<p>Cuber QQ 在疫情期间已经宅在家两个月了。</p>
+<p>实在是无所事事的他，决定重操旧业，继续实现他曾经梦寐的钢琴演奏家梦想。</p>
+<p>掀开积满了灰尘的钢琴盖，是他许久都未触碰的琴键，按下的瞬间，他发现，钢琴坏了。</p>
+<p>Cuber QQ 有一个多年的弹奏习惯，他弹奏钢琴，同一时刻一定会同时按下 m 个琴键，他喜欢不同音调交织在一起的声音，可是现在不允许了。</p>
+<p>可能是因为时间的原因，钢琴不支持琴键并行（音乐带师 Cuber QQ 发明的词汇）了。通俗来说，当 Cuber QQ 同时按下 m 个琴键的时候，钢琴只会发出音调最高的那个琴键的声音。</p>
+<p>不甘心的 Cuber QQ 开始尝试每一个 m 键的组合。他会记录下每一次钢琴发出的音调，他会统计所有演奏出的音调之和，为了验证自己有没有算错，他邀请你来帮他再算一遍。</p>
+<p>需要注意的是，因为钢琴坏了，所以可能存在相同音调的琴键。</p>
+<p>由于这个和可能会很大，你只需要告诉 Cuber QQ 这个和模 109+7 的结果是多少。</p>
+<h3 id="输入格式-1"><a href="#输入格式-1" class="headerlink" title="输入格式"></a>输入格式</h3><p>输入数据第一行包含一个整数 T (1≤T≤1000) 表示数据组数。</p>
+<p>对于每一组数据，第一行包含两个整数 n, m (1≤m≤n≤106) ，分表表示钢琴的琴键数量和每次同时按下的琴键个数。</p>
+<p>第二行包含 n 个整数 a1,a2,…,an (0≤ai≤109)，表示琴键的音调（可能会出现相同的音调）。</p>
+<p>保证对于所有数据有 ∑n≤106 。</p>
+<h3 id="输出格式-1"><a href="#输出格式-1" class="headerlink" title="输出格式"></a>输出格式</h3><p>对于每组数据输出一行，包含一个整数表示答案。</p>
+<p>由于答案可能很大，需要对 109+7 取模。</p>
+<h3 id="样例-1"><a href="#样例-1" class="headerlink" title="样例"></a>样例</h3><p>input</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">3 2</span><br><span class="line">1 2 3</span><br></pre></td></tr></table></figure>
+<p>output</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">8</span><br></pre></td></tr></table></figure>
+<h3 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h3><p>对数组排序一下，</p>
+<script type="math/tex; mode=display">
+ans=\sum_{i = m} ^ n a_{i} C{ {m - 1} \choose {i - 1} }</script><h3 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h3><p>卢卡斯模板即可，python待更</p>
+
+      
+    </div>
+
+    
+    
+    
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://pxlsdz.github.io/2020/03/13/Codeforces-Round-627-Div-3-%E9%A2%98%E8%A7%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -492,7 +1091,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-14 00:39:53" itemprop="dateModified" datetime="2020-03-14T00:39:53+08:00">2020-03-14</time>
+                <time title="修改时间：2020-03-21 17:47:59" itemprop="dateModified" datetime="2020-03-21T17:47:59+08:00">2020-03-21</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -500,11 +1099,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ACM/" itemprop="url" rel="index"><span itemprop="name">ACM</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ACM/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
                 </span>
             </span>
 
@@ -606,7 +1201,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-17 20:22:19" itemprop="dateModified" datetime="2020-03-17T20:22:19+08:00">2020-03-17</time>
+                <time title="修改时间：2020-03-20 13:57:05" itemprop="dateModified" datetime="2020-03-20T13:57:05+08:00">2020-03-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -638,14 +1233,14 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.3k</span>
+              <span>3.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -901,427 +1496,11 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://pxlsdz.github.io/2020/03/04/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E8%8B%B1%E8%AF%AD--MEMORY%20SYSTEMS/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="sdz">
-      <meta itemprop="description" content="个人博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="pxlsdz的博客">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/04/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E8%8B%B1%E8%AF%AD--MEMORY%20SYSTEMS/" class="post-title-link" itemprop="url">计算机专业英语--MEMORY SYSTEMS</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-03-04 15:52:30" itemprop="dateCreated datePublished" datetime="2020-03-04T15:52:30+08:00">2020-03-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-12 20:08:07" itemprop="dateModified" datetime="2020-03-12T20:08:07+08:00">2020-03-12</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%8B%B1%E8%AF%AD/" itemprop="url" rel="index"><span itemprop="name">英语</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/03/04/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E8%8B%B1%E8%AF%AD--MEMORY%20SYSTEMS/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/04/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E8%8B%B1%E8%AF%AD--MEMORY%20SYSTEMS/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>433</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="笔记"><a href="#笔记" class="headerlink" title="笔记"></a>笔记</h1><p> <strong>Main point:</strong></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/03/04/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%E8%8B%B1%E8%AF%AD--MEMORY%20SYSTEMS/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://pxlsdz.github.io/2020/03/04/%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95%E4%B8%8E%E5%88%86%E6%9E%90--%E7%BB%BC%E5%90%88%E5%B8%83%E7%BA%BF%E7%B3%BB%E7%BB%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="sdz">
-      <meta itemprop="description" content="个人博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="pxlsdz的博客">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/04/%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95%E4%B8%8E%E5%88%86%E6%9E%90--%E7%BB%BC%E5%90%88%E5%B8%83%E7%BA%BF%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">网络测试与分析--综合布线系统</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-03-04 08:19:10" itemprop="dateCreated datePublished" datetime="2020-03-04T08:19:10+08:00">2020-03-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-16 23:50:03" itemprop="dateModified" datetime="2020-03-16T23:50:03+08:00">2020-03-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95%E4%B8%8E%E5%88%86%E6%9E%90/" itemprop="url" rel="index"><span itemprop="name">网络测试与分析</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/03/04/%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95%E4%B8%8E%E5%88%86%E6%9E%90--%E7%BB%BC%E5%90%88%E5%B8%83%E7%BA%BF%E7%B3%BB%E7%BB%9F/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/04/%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95%E4%B8%8E%E5%88%86%E6%9E%90--%E7%BB%BC%E5%90%88%E5%B8%83%E7%BA%BF%E7%B3%BB%E7%BB%9F/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="综合布线系统基础"><a href="#综合布线系统基础" class="headerlink" title="综合布线系统基础"></a>综合布线系统基础</h1>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/03/04/%E7%BD%91%E7%BB%9C%E6%B5%8B%E8%AF%95%E4%B8%8E%E5%88%86%E6%9E%90--%E7%BB%BC%E5%90%88%E5%B8%83%E7%BA%BF%E7%B3%BB%E7%BB%9F/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://pxlsdz.github.io/2020/03/03/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E2%80%94%E2%80%94%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA%E4%B8%8E%E6%8E%A8%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="sdz">
-      <meta itemprop="description" content="个人博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="pxlsdz的博客">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/03/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E2%80%94%E2%80%94%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA%E4%B8%8E%E6%8E%A8%E7%90%86/" class="post-title-link" itemprop="url">人工智能——知识表示与推理</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-03-03 16:11:34" itemprop="dateCreated datePublished" datetime="2020-03-03T16:11:34+08:00">2020-03-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-17 20:22:22" itemprop="dateModified" datetime="2020-03-17T20:22:22+08:00">2020-03-17</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" itemprop="url" rel="index"><span itemprop="name">人工智能</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/03/03/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E2%80%94%E2%80%94%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA%E4%B8%8E%E6%8E%A8%E7%90%86/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/03/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E2%80%94%E2%80%94%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA%E4%B8%8E%E6%8E%A8%E7%90%86/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="知识与知识表示的概念"><a href="#知识与知识表示的概念" class="headerlink" title="知识与知识表示的概念"></a>知识与知识表示的概念</h1>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/03/03/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E2%80%94%E2%80%94%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA%E4%B8%8E%E6%8E%A8%E7%90%86/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://pxlsdz.github.io/2020/03/03/linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94vim%E7%BC%96%E8%BE%91%E5%99%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="sdz">
-      <meta itemprop="description" content="个人博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="pxlsdz的博客">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/03/linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94vim%E7%BC%96%E8%BE%91%E5%99%A8/" class="post-title-link" itemprop="url">linux操作系统——vim编辑器</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-03-03 16:10:13" itemprop="dateCreated datePublished" datetime="2020-03-03T16:10:13+08:00">2020-03-03</time>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/03/03/linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94vim%E7%BC%96%E8%BE%91%E5%99%A8/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/03/linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94vim%E7%BC%96%E8%BE%91%E5%99%A8/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1389,20 +1568,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">65</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">36</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1452,13 +1631,13 @@
       <i class="fa fa-area-chart"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">270k</span>
+    <span title="站点总字数">300k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">4:06</span>
+    <span title="站点阅读时长">4:33</span>
 </div>
 
         
