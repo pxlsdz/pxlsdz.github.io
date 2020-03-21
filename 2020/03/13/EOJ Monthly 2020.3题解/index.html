@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"pxlsdz.github.io","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="# 标题 已解出     A 迷宫 (1.0 sec &#x2F; 512 MB)  x 13   B 与矩阵 (1.0 sec &#x2F; 512 MB)  x 359   C 排序树 (10.0 sec &#x2F; 512 MB)  x 1   D 钢琴演奏家 (1.5 sec &#x2F; 512 MB)  x 280      B. 与矩阵单点时限: 1.0 sec 内存限制: 512 MB 前有牛顿瘟疫“家里蹲”发">
+  <meta name="description" content="# 标题 已解出     A 迷宫 (1.0 sec &#x2F; 512 MB)  x 13   B 与矩阵 (1.0 sec &#x2F; 512 MB)  x 359   C 排序树 (10.0 sec &#x2F; 512 MB)  x 1   D 钢琴演奏家 (1.5 sec &#x2F; 512 MB)  x 280">
 <meta property="og:type" content="article">
 <meta property="og:title" content="EOJ Monthly 2020.3题解">
 <meta property="og:url" content="https://pxlsdz.github.io/2020/03/13/EOJ%20Monthly%202020.3%E9%A2%98%E8%A7%A3/index.html">
 <meta property="og:site_name" content="pxlsdz的博客">
-<meta property="og:description" content="# 标题 已解出     A 迷宫 (1.0 sec &#x2F; 512 MB)  x 13   B 与矩阵 (1.0 sec &#x2F; 512 MB)  x 359   C 排序树 (10.0 sec &#x2F; 512 MB)  x 1   D 钢琴演奏家 (1.5 sec &#x2F; 512 MB)  x 280      B. 与矩阵单点时限: 1.0 sec 内存限制: 512 MB 前有牛顿瘟疫“家里蹲”发">
+<meta property="og:description" content="# 标题 已解出     A 迷宫 (1.0 sec &#x2F; 512 MB)  x 13   B 与矩阵 (1.0 sec &#x2F; 512 MB)  x 359   C 排序树 (10.0 sec &#x2F; 512 MB)  x 1   D 钢琴演奏家 (1.5 sec &#x2F; 512 MB)  x 280">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-03-13T06:12:39.000Z">
-<meta property="article:modified_time" content="2020-03-21T14:27:48.853Z">
+<meta property="article:modified_time" content="2020-03-21T16:44:18.269Z">
 <meta property="article:author" content="sdz">
 <meta property="article:tag" content="python">
 <meta property="article:tag" content="比赛">
@@ -220,7 +220,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-21 22:27:48" itemprop="dateModified" datetime="2020-03-21T22:27:48+08:00">2020-03-21</time>
+                <time title="修改时间：2020-03-22 00:44:18" itemprop="dateModified" datetime="2020-03-22T00:44:18+08:00">2020-03-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -311,7 +311,7 @@
 </tbody>
 </table>
 </div>
-<h3 id=""><a href="#" class="headerlink" title=" "></a> </h3><h2 id="B-与矩阵"><a href="#B-与矩阵" class="headerlink" title="B. 与矩阵"></a>B. 与矩阵</h2><p><strong>单点时限:</strong> 1.0 sec</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a><a id="more"></a></h3><h2 id="B-与矩阵"><a href="#B-与矩阵" class="headerlink" title="B. 与矩阵"></a>B. 与矩阵</h2><p><strong>单点时限:</strong> 1.0 sec</p>
 <p><strong>内存限制:</strong> 512 MB</p>
 <p>前有牛顿瘟疫“家里蹲”发明微积分。</p>
 <p>现有 Cuber QQ 新冠肺炎“家里蹲”发明与矩阵。</p>
@@ -470,7 +470,7 @@ ans=\sum_{i = m} ^ n a_{i} C{ {m - 1} \choose {i - 1} }</script><h3 id="代码-1
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#"><span class="nav-number">1.</span> <span class="nav-text"> </span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-与矩阵"><span class="nav-number"></span> <span class="nav-text">B. 与矩阵</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#输入格式"><span class="nav-number">1.</span> <span class="nav-text">输入格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输出格式"><span class="nav-number">2.</span> <span class="nav-text">输出格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#样例"><span class="nav-number">3.</span> <span class="nav-text">样例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提示"><span class="nav-number">4.</span> <span class="nav-text">提示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题解"><span class="nav-number">5.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">6.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#D-钢琴演奏家"><span class="nav-number"></span> <span class="nav-text">D. 钢琴演奏家</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#输入格式-1"><span class="nav-number">1.</span> <span class="nav-text">输入格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输出格式-1"><span class="nav-number">2.</span> <span class="nav-text">输出格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#样例-1"><span class="nav-number">3.</span> <span class="nav-text">样例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题解-1"><span class="nav-number">4.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码-1"><span class="nav-number">5.</span> <span class="nav-text">代码</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#"><span class="nav-number">1.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-与矩阵"><span class="nav-number"></span> <span class="nav-text">B. 与矩阵</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#输入格式"><span class="nav-number">1.</span> <span class="nav-text">输入格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输出格式"><span class="nav-number">2.</span> <span class="nav-text">输出格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#样例"><span class="nav-number">3.</span> <span class="nav-text">样例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提示"><span class="nav-number">4.</span> <span class="nav-text">提示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题解"><span class="nav-number">5.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">6.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#D-钢琴演奏家"><span class="nav-number"></span> <span class="nav-text">D. 钢琴演奏家</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#输入格式-1"><span class="nav-number">1.</span> <span class="nav-text">输入格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输出格式-1"><span class="nav-number">2.</span> <span class="nav-text">输出格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#样例-1"><span class="nav-number">3.</span> <span class="nav-text">样例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题解-1"><span class="nav-number">4.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码-1"><span class="nav-number">5.</span> <span class="nav-text">代码</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -555,7 +555,7 @@ ans=\sum_{i = m} ^ n a_{i} C{ {m - 1} \choose {i - 1} }</script><h3 id="代码-1
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">4:33</span>
+    <span title="站点阅读时长">4:32</span>
 </div>
 
         

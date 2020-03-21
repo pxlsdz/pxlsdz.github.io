@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"pxlsdz.github.io","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="题目 第 1 部分： 保护密码a.     使用 PC1 上的命令提示符，通过 Telnet 连接到 S1。 用户执行和特权执行密码为 cisco。 b.     保存当前配置，以便可通过切换 S1 的电源修复您可能做出的任何错误操作。 c.     显示当前配置，注意密码都以明文显示。 输入加密纯文本密码的命令。 d.     验证密码是否已加密。 1234567891011C:\&gt;tel">
+  <meta name="description" content="题目">
 <meta property="og:type" content="article">
 <meta property="og:title" content="网络系统集成实验--配置SSH">
 <meta property="og:url" content="https://pxlsdz.github.io/2020/03/20/%E7%BD%91%E7%BB%9C%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90%E5%AE%9E%E9%AA%8C--%E9%85%8D%E7%BD%AESSH/index.html">
 <meta property="og:site_name" content="pxlsdz的博客">
-<meta property="og:description" content="题目 第 1 部分： 保护密码a.     使用 PC1 上的命令提示符，通过 Telnet 连接到 S1。 用户执行和特权执行密码为 cisco。 b.     保存当前配置，以便可通过切换 S1 的电源修复您可能做出的任何错误操作。 c.     显示当前配置，注意密码都以明文显示。 输入加密纯文本密码的命令。 d.     验证密码是否已加密。 1234567891011C:\&gt;tel">
+<meta property="og:description" content="题目">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200320101237.png">
 <meta property="og:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200320100016.png">
 <meta property="article:published_time" content="2020-03-20T00:56:49.000Z">
-<meta property="article:modified_time" content="2020-03-20T02:13:21.219Z">
+<meta property="article:modified_time" content="2020-03-21T16:49:36.747Z">
 <meta property="article:author" content="sdz">
-<meta property="article:tag" content="实验">
 <meta property="article:tag" content="关键知识点">
+<meta property="article:tag" content="实验">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200320101237.png">
 
@@ -215,10 +215,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-03-20 08:56:49 / 修改时间：10:13:21" itemprop="dateCreated datePublished" datetime="2020-03-20T08:56:49+08:00">2020-03-20</time>
+              <time title="创建时间：2020-03-20 08:56:49" itemprop="dateCreated datePublished" datetime="2020-03-20T08:56:49+08:00">2020-03-20</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-22 00:49:36" itemprop="dateModified" datetime="2020-03-22T00:49:36+08:00">2020-03-22</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -276,6 +282,7 @@
 
       
         <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p><img src="https://gitee.com/pxlsdz/blogImage/raw/master/img/20200320101237.png" alt=""></p>
+<a id="more"></a>
 <h2 id="第-1-部分：-保护密码"><a href="#第-1-部分：-保护密码" class="headerlink" title="第 1 部分： 保护密码"></a>第 1 部分： 保护密码</h2><p>a.     使用 PC1 上的命令提示符，通过 Telnet 连接到 S1。 用户执行和特权执行密码为 cisco。</p>
 <p>b.     保存当前配置，以便可通过切换 S1 的电源修复您可能做出的任何错误操作。</p>
 <p>c.     显示当前配置，注意密码都以明文显示。 输入加密纯文本密码的命令。</p>
@@ -323,8 +330,8 @@
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/%E5%AE%9E%E9%AA%8C/" rel="tag"><i class="fa fa-tag"></i> 实验</a>
               <a href="/tags/%E5%85%B3%E9%94%AE%E7%9F%A5%E8%AF%86%E7%82%B9/" rel="tag"><i class="fa fa-tag"></i> 关键知识点</a>
+              <a href="/tags/%E5%AE%9E%E9%AA%8C/" rel="tag"><i class="fa fa-tag"></i> 实验</a>
           </div>
 
         
@@ -482,7 +489,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">4:33</span>
+    <span title="站点阅读时长">4:32</span>
 </div>
 
         
